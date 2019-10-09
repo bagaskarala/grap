@@ -19,7 +19,7 @@
 - Visual Studio Code
 
 ### Formatting
-- Install 'Format HTML in PHP' & 'PHP intelephense' plugin from vs code marketplace
+- Install 'Format HTML in PHP' & 'PHP fmt' plugin from vs code marketplace
 - Add config below to setting.json in VS code
 
 ```json
@@ -35,10 +35,21 @@
     "html.format.preserveNewLines": true,
     "html.format.wrapLineLength": 120,
     "html.format.wrapAttributes": "force-expand-multiline",
-    // intelephense
-    "[php]": {
-        "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
-    }
+    // phpfmt
+    "intelephense.format.enable": false,
+    "phpfmt.passes": [
+        "PSR2KeywordsLowerCase",
+        "PSR2LnAfterNamespace",
+        "PSR2CurlyOpenNextLine",
+        "PSR2ModifierVisibilityStaticOrder",
+        "PSR2SingleEmptyLineAndStripClosingTag",
+        "ReindentSwitchBlocks"
+    ],
+    "phpfmt.exclude": [
+        "ReindentComments",
+        "StripNewlineWithinClassBody"
+    ],
+    "phpfmt.enable_auto_align": true,
 ```
 
 #

@@ -1,46 +1,45 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-   <title>SUPER GRAPPLER!!</title>
-   <meta charset="utf-8" />
+
+   <meta charset="utf-8">
+   <meta
+      http-equiv="X-UA-Compatible"
+      content="IE=edge"
+   >
    <meta
       name="viewport"
-      content="width=device-width, initial-scale=1, user-scalable=no"
-   />
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+   >
+   <meta
+      name="description"
+      content=""
+   >
+   <meta
+      name="author"
+      content=""
+   >
+
+   <title><?= $title ?></title>
+
+   <!-- Custom fonts for this template-->
    <link
+      href="<?= base_url('assets/vendor/fontawesome-free/css/all.min.css') ?>"
       rel="stylesheet"
-      href="<?= base_url('assets/css/main.css') ?>"
-   />
-   <noscript>
-      <link
-         rel="stylesheet"
-         href="<?= base_url('assets/css/noscript.css') ?>"
-      />
-   </noscript>
+      type="text/css"
+   >
+   <link
+      href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet"
+   >
+
+   <!-- Custom styles for this template-->
+   <link
+      href="<?= base_url('assets/css/sb-admin-2.min.css') ?>"
+      rel="stylesheet"
+   >
+
 </head>
 
-<body class="is-preload">
-   <!-- Wrapper -->
-   <div id="wrapper">
-      <!-- Header -->
-      <header id="header">
-         <div class="content">
-            <div class="inner">
-               <h1> </h1>
-               <br>
-               <br>
-               <br>
-               <br>
-               <br>
-               <br>
-               <br>
-            </div>
-         </div>
-         <nav>
-            <ul>
-               <li><a href="#login">Login</a></li>
-               <li><a href="#register">Register</a></li>
-            </ul>
-         </nav>
-      </header>
+<body class="bg-gradient-primary">
