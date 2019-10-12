@@ -16,15 +16,14 @@ class Auth extends CI_Controller
             redirect('user');
         }
 
-        $title = "Login";
+        $data['title'] = "Login";
+        $data['page']  = "auth/login";
 
         $this->form_validation->set_rules('email', 'Email', 'trim|required');
         $this->form_validation->set_rules('password', 'Password', 'trim|required');
 
         if ($this->form_validation->run() == false) {
-            $this->load->view('templates/auth_header', compact('title'));
-            $this->load->view('auth/login');
-            $this->load->view('templates/auth_footer');
+            $this->load->view('templates/auth', $data);
         } else {
             $this->_login();
         }
@@ -70,7 +69,8 @@ class Auth extends CI_Controller
             redirect('user');
         }
 
-        $title = "Registration";
+        $data['title'] = "Registration";
+        $data['page']  = 'auth/registration';
 
         // set rule
         $this->form_validation->set_rules('name', 'Name', 'required|trim');
@@ -102,9 +102,7 @@ class Auth extends CI_Controller
 
         // jalankan validasi
         if ($this->form_validation->run() == false) {
-            $this->load->view('templates/auth_header', compact('title'));
-            $this->load->view('auth/registration');
-            $this->load->view('templates/auth_footer');
+            $this->load->view('templates/auth', $data);
         } else {
             // kumpulkan data dari form
             $data = [
@@ -137,5 +135,30 @@ class Auth extends CI_Controller
     {
         $this->load->view('auth/blocked');
 
+    }
+
+    public function checkInsert()
+    {
+        $stream_clean = $this->security->xss_clean($this->input->raw_input_stream);
+        $request      = json_decode($stream_clean);
+        // $menu = $this->input->post('menu');
+
+        $result = $this->db->insert('user_menu', ['menu' => $request->menu]);
+
+        if (!$this->db->affected_rows()) {
+            return $this->output
+                ->set_status_header(200)
+                ->set_output(json_encode([
+                    'success' => false,
+                    'message' => 'gagal insert',
+                ]));
+        } else {
+            return $this->output
+                ->set_status_header(200)
+                ->set_output(json_encode([
+                    'success' => true,
+                    'message' => $result,
+                ]));
+        }
     }
 }

@@ -7,24 +7,21 @@ class Menu extends CI_Controller
     {
         parent::__construct();
         is_logged_in();
+        $this->session_email = $this->session->userdata('email');
     }
 
     public function index()
     {
         $data['title'] = "Menu Management";
-        $session       = $this->session->userdata('email');
-        $data['user']  = $this->db->get_where('user', ['email' => $session])->row_array();
+        $data['page']  = "menu/index";
+        $data['user']  = $this->db->get_where('user', ['email' => $this->session_email])->row_array();
 
         $data['menu'] = $this->db->get('user_menu')->result_array();
 
         $this->form_validation->set_rules('menu', 'Menu', 'required');
 
         if ($this->form_validation->run() == false) {
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/topbar', $data);
-            $this->load->view('menu/index', );
-            $this->load->view('templates/footer');
+            $this->load->view('templates/app', $data);
         } else {
             $menu = $this->input->post('menu');
 
@@ -38,8 +35,8 @@ class Menu extends CI_Controller
     public function submenu()
     {
         $data['title'] = "Submenu Management";
-        $session       = $this->session->userdata('email');
-        $data['user']  = $this->db->get_where('user', ['email' => $session])->row_array();
+        $data['page']  = "menu/submenu";
+        $data['user']  = $this->db->get_where('user', ['email' => $this->session_email])->row_array();
 
         $this->load->model('Menu_model', 'menu');
         $data['submenu'] = $this->menu->get_sub_menu();
@@ -51,11 +48,7 @@ class Menu extends CI_Controller
         $this->form_validation->set_rules('icon', 'Icon', 'required');
 
         if ($this->form_validation->run() == false) {
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/topbar', $data);
-            $this->load->view('menu/submenu', );
-            $this->load->view('templates/footer');
+            $this->load->view('templates/app', $data);
         } else {
             $data = [
                 'title'     => $this->input->post('title'),

@@ -4,13 +4,14 @@
    <?=$this->session->flashdata('message');?>
    <!-- Page Heading -->
    <h1 class="h3 mb-4 text-gray-800"><?=$title?></h1>
-
    <h4>Role : <?=$role['role']?></h4>
+
    <table class="table table-striped">
       <thead>
          <tr>
             <th scope="col">#</th>
             <th scope="col">Menu</th>
+            <th scope="col">Checklist</th>
          </tr>
       </thead>
       <tbody>
@@ -38,6 +39,3 @@
 
 </div>
 <!-- /.container-fluid -->
-
-</div>
-<!-- End of Main Content -->

@@ -46,9 +46,6 @@
 </div>
 <!-- /.container-fluid -->
 
-</div>
-<!-- End of Main Content -->
-
 <!-- Modal -->
 <div
    class="modal fade"

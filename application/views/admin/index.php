@@ -3,9 +3,7 @@
 
    <!-- Page Heading -->
    <h1 class="h3 mb-4 text-gray-800"><?=$title?></h1>
+   <users-list></users-list>
 
 </div>
 <!-- /.container-fluid -->
-
-</div>
-<!-- End of Main Content -->

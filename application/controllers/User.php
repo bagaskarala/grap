@@ -7,35 +7,28 @@ class User extends CI_Controller
     {
         parent::__construct();
         is_logged_in();
+        $this->session_email = $this->session->userdata('email');
     }
 
     public function index()
     {
-        $data['title'] = "My Profile";
-        $session       = $this->session->userdata('email');
-        $data['user']  = $this->db->get_where('user', ['email' => $session])->row_array();
+        $data['title'] = 'My Profile';
+        $data['page']  = 'user/index';
+        $data['user']  = $this->db->get_where('user', ['email' => $this->session_email])->row_array();
 
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar');
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('user/index', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/app', $data);
     }
 
     public function edit()
     {
         $data['title'] = "Edit Profile";
-        $session       = $this->session->userdata('email');
-        $data['user']  = $this->db->get_where('user', ['email' => $session])->row_array();
+        $data['page']  = "user/edit";
+        $data['user']  = $this->db->get_where('user', ['email' => $this->session_email])->row_array();
 
         $this->form_validation->set_rules('name', 'Name', 'trim|required');
 
         if ($this->form_validation->run() == false) {
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar');
-            $this->load->view('templates/topbar', $data);
-            $this->load->view('user/edit', $data);
-            $this->load->view('templates/footer');
+            $this->load->view('templates/app', $data);
         } else {
             $name  = $this->input->post('name');
             $email = $this->input->post('email');
@@ -46,6 +39,5 @@ class User extends CI_Controller
             $this->session->set_flashdata('message', 'Profile updated');
             redirect('user/edit');
         }
-
     }
 };

@@ -8,52 +8,56 @@ class Admin extends CI_Controller
     {
         parent::__construct();
         is_logged_in();
+        $this->session_email = $this->session->userdata('email');
     }
 
     public function index()
     {
-        $data['title'] = "Dashboard";
-        $session       = $this->session->userdata('email');
-        $data['user']  = $this->db->get_where('user', ['email' => $session])->row_array();
+        $data['title'] = 'Dashboard';
+        $data['page']  = 'admin/index';
 
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar');
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('admin/index', );
-        $this->load->view('templates/footer');
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session_email])->row_array();
+
+        $this->load->view('templates/app', $data);
+    }
+
+    public function api_get_all_users()
+    {
+        $users = $this->db->get('user')->result();
+
+        return $this->output
+            ->set_status_header(200)
+            ->set_output(json_encode([
+                'success' => true,
+                'message' => $users,
+            ]));
     }
 
     public function role()
     {
-        $data['title'] = "Role";
-        $session       = $this->session->userdata('email');
-        $data['user']  = $this->db->get_where('user', ['email' => $session])->row_array();
+        $data['title'] = 'Role';
+        $data['page']  = 'admin/role';
+
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session_email])->row_array();
 
         $data['role'] = $this->db->get('user_role')->result_array();
 
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar');
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('admin/role', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/app', $data);
     }
 
     public function role_access($role_id)
     {
         $data['title'] = "Dashboard";
-        $session       = $this->session->userdata('email');
-        $data['user']  = $this->db->get_where('user', ['email' => $session])->row_array();
+        $data['page']  = "admin/role_access";
+
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session_email])->row_array();
 
         $data['role'] = $this->db->get_where('user_role', ['id' => $role_id])->row_array();
 
         $this->db->where('id !=', 1);
         $data['menu'] = $this->db->get('user_menu')->result_array();
 
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar');
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('admin/role_access', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/app', $data);
     }
 
     public function change_access()
@@ -73,7 +77,6 @@ class Admin extends CI_Controller
             $this->db->delete('user_access_menu', $data);
         }
 
-        $this->session->set_flashdata('message', 'Acces changed');
-
+        $this->session->set_flashdata('message', 'Access changed');
     }
 };

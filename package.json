@@ -1,0 +1,32 @@
+{
+  "name": "grap",
+  "version": "1.0.0",
+  "description": "- Clone this repo\r - Import database .sql\r - Set application/config/database.php\r - Run Xampp Apache & Mysql\r - Open browser and enter localhost/grap",
+  "dependencies": {},
+  "devDependencies": {
+    "axios": "^0.19.0",
+    "cross-env": "^6.0.3",
+    "eslint": "^6.5.1",
+    "eslint-plugin-vue": "^5.2.3",
+    "laravel-mix": "^5.0.0",
+    "vue": "^2.6.10",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "scripts": {
+    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch-poll": "npm run watch -- --watch-poll",
+    "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bagaskarala/grap.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bagaskarala/grap/issues"
+  },
+  "homepage": "https://github.com/bagaskarala/grap#readme"
+}
