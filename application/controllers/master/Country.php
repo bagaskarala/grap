@@ -1,32 +1,31 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Division extends MY_Controller
+class Country extends MY_Controller
 {
 
     public function __construct()
     {
         parent::__construct();
-        is_logged_in();
     }
 
     public function index()
     {
-        $data['title'] = 'Division';
-        $data['page']  = 'master/division';
+        $data['title'] = 'Country';
+        $data['page']  = 'master/country';
 
         $this->load->view('templates/app', $data);
     }
 
     public function get_all()
     {
-        $divisions = $this->division->get_all_array();
+        $countries = $this->country->get_all_array();
 
         return $this->output
             ->set_status_header(200)
             ->set_output(json_encode([
                 'success' => true,
-                'data'    => $divisions,
+                'data'    => $countries,
             ]));
     }
 
@@ -35,13 +34,12 @@ class Division extends MY_Controller
         $request = parse_post_data();
 
         $data = [
-            'division'   => $request->division,
-            'system'     => $request->system,
-            'keterangan' => $request->keterangan,
-            'play'       => $request->play,
+            'country'     => $request->country,
+            'img'         => $request->img,
+            'description' => $request->description,
         ];
 
-        $result = $this->division->insert($data);
+        $result = $this->country->insert($data);
 
         if (!$result) {
             return $this->output
@@ -60,19 +58,18 @@ class Division extends MY_Controller
         }
     }
 
-    public function update($division_id)
+    public function update($country_id)
     {
         $request = parse_post_data();
 
         $data = [
-            'division'   => $request->division,
-            'system'     => $request->system,
-            'keterangan' => $request->keterangan,
-            'play'       => $request->play,
+            'country'     => $request->country,
+            'img'         => $request->img,
+            'description' => $request->description,
         ];
 
         // $result = $this->division->insert($data);
-        $result = $this->division->update($data, ['id' => $division_id]);
+        $result = $this->country->update($data, ['id' => $country_id]);
 
         if (!$result) {
             return $this->output
@@ -99,7 +96,7 @@ class Division extends MY_Controller
             'id' => $request->id,
         ];
 
-        $result = $this->division->delete($data);
+        $result = $this->country->delete($data);
 
         if (!$result) {
             return $this->output
@@ -117,5 +114,4 @@ class Division extends MY_Controller
                 ]));
         }
     }
-
 };

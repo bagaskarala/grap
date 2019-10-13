@@ -12,6 +12,10 @@ Vue.prototype.$axios = Axios.create({
 // deklarasi komponen
 Vue.component('UsersList', require('./components/UsersList.vue').default);
 Vue.component('DivisionList', require('./components/DivisionList.vue').default);
+Vue.component('CountryList', require('./components/CountryList.vue').default);
+Vue.component('ClubList', require('./components/ClubList.vue').default);
+Vue.component('PlayerList', require('./components/PlayerList.vue').default);
+Vue.component('WinningList', require('./components/WinningList.vue').default);
 
 new Vue({
    el: '#app'

@@ -4,43 +4,40 @@
       <div class="col">
         <div class="card card-default">
           <div class="card-header d-flex justify-content-between align-items-center">
-            <span>Division List</span>
+            <span>Player List</span>
             <!-- Button trigger modal -->
             <button
               type="button"
               class="btn btn-sm btn-primary"
               data-toggle="modal"
-              data-target="#modal-division"
+              data-target="#modal-player"
               @click="modalState = 'add'"
             >
-              Add division
+              Add player
             </button>
           </div>
 
           <div class="card-body">
             <div
-              v-show="divisions.length == 0"
+              v-show="players.length == 0"
               class="my-3 text-center"
             >Empty Data</div>
             <div class="list-group">
               <div
-                v-for="item in divisions"
+                v-for="item in players"
                 :key="item.id"
                 class="list-group-item d-flex justify-content-between align-items-center"
               >
                 <div>
                   <p class="font-weight-bold m-0">
-                    {{item.division}}
-                  </p>
-                  <p class="small text-muted m-0">
-                    System: {{item.system}}
+                    {{item.name}}
                   </p>
                 </div>
                 <div>
                   <button
                     class="btn btn-sm btn-warning"
                     data-toggle="modal"
-                    data-target="#modal-division"
+                    data-target="#modal-player"
                     @click="loadData(item)"
                   ><i class="fa fa-edit fa-fw"></i></button>
                   <button
@@ -58,7 +55,7 @@
     <!-- modal add division -->
     <div
       class="modal fade"
-      id="modal-division"
+      id="modal-player"
       tabindex="-1"
       role="dialog"
       aria-labelledby="exampleModalLabel"
@@ -86,44 +83,69 @@
           <form method="post">
             <div class="modal-body">
               <div class="form-group">
-                <label for="division">Division</label>
+                <label for="name">Name</label>
                 <input
-                  id="division"
-                  v-model="form.division"
+                  id="name"
+                  v-model="form.name"
                   type="text"
                   class="form-control"
-                  placeholder="Enter division"
+                  placeholder="Enter name"
                 >
               </div>
               <div class="form-group">
-                <label for="system">System</label>
+                <label for="country_id">Country</label>
+                <select
+                  name="country_id"
+                  id="country_id"
+                  class="form-control"
+                  v-model.number="form.country_id"
+                >
+                  <option :value="null">Select Country</option>
+                  <option
+                    v-for="item in countries"
+                    :key="item.id"
+                    :value="item.id"
+                  >{{item.country}}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="img">Image</label>
                 <input
-                  id="system"
-                  v-model="form.system"
+                  id="img"
+                  v-model="form.img"
                   type="text"
                   class="form-control"
-                  placeholder="Enter system"
+                  placeholder="Enter img"
                 >
               </div>
               <div class="form-group">
-                <label for="description">Description</label>
-                <textarea
-                  id="description"
-                  v-model="form.description"
+                <label for="height">Height</label>
+                <input
+                  id="height"
+                  v-model.number="form.height"
+                  type="number"
                   class="form-control"
-                  cols="30"
-                  rows="4"
-                  placeholder="Enter description"
-                ></textarea>
+                  placeholder="Enter height"
+                >
               </div>
               <div class="form-group">
-                <label for="play">Play</label>
+                <label for="weight">Weight</label>
                 <input
-                  id="play"
-                  v-model="form.play"
-                  type="text"
+                  id="weight"
+                  v-model.number="form.weight"
+                  type="number"
                   class="form-control"
-                  placeholder="Enter play"
+                  placeholder="Enter weight"
+                >
+              </div>
+              <div class="form-group">
+                <label for="achievement">Achievement</label>
+                <input
+                  id="achievement"
+                  v-model.number="form.achievement"
+                  type="number"
+                  class="form-control"
+                  placeholder="Enter achievement"
                 >
               </div>
             </div>
@@ -153,50 +175,61 @@
 
 <script>
 export default {
-  name: 'DivisionList',
+  name: 'PlayerList',
   data() {
     return {
-      divisions: [],
+      players: [],
+      countries: [],
       form: {
-        id: null,
-        division: null,
-        system: null,
-        description: null,
-        play: null
+        country_id: null,
+        name: null,
+        img: null,
+        height: null,
+        weight: null,
+        achievement: null
       },
       modalState: null
     };
   },
   methods: {
-    async getAllDivisions() {
-      const divisions = await this.$axios.get('master/division/get_all');
-      this.divisions = divisions.data.data;
+    async getCountries() {
+      const countries = await this.$axios.get('master/country/get_all');
+      this.countries = countries.data.data;
+    },
+
+    async getAllPlayers() {
+      const players = await this.$axios.get('master/player/get_all');
+      this.players = players.data.data;
     },
 
     async addData() {
-      const result = await this.$axios.post('master/division/insert', {
-        division: this.form.division,
-        system: this.form.system,
-        description: this.form.description,
-        play: this.form.play
+      const result = await this.$axios.post('master/player/insert', {
+        country_id: this.form.country_id,
+        name: this.form.name,
+        img: this.form.img,
+        height: this.form.height,
+        weight: this.form.weight,
+        achievement: this.form.achievement
       });
 
       this.triggerAlert(result.data.status, 'Insert');
     },
 
     async updateData() {
-      const result = await this.$axios.post(`master/division/update/${this.form.id}`, {
-        division: this.form.division,
-        system: this.form.system,
-        description: this.form.description,
-        play: this.form.play
+      const result = await this.$axios.post(`master/player/update/${this.form.id}`, {
+        country_id: this.form.country_id,
+        name: this.form.name,
+        img: this.form.img,
+        height: this.form.height,
+        weight: this.form.weight,
+        achievement: this.form.achievement
       });
 
       this.triggerAlert(result.data.status, 'Update');
     },
 
     async deleteData(item) {
-      const result = await this.$axios.post('master/division/delete', {
+      const result = await this.$axios.post('master/player/delete', {
         id: item.id
       });
 
@@ -205,12 +238,14 @@ export default {
 
     loadData(item) {
       this.modalState = 'update';
-      let { id, division, system, description, play } = item;
+      let { id, country_id, name, img, height, weight, achievement } = item;
       this.form.id = id;
-      this.form.division = division;
-      this.form.system = system;
-      this.form.description = description;
-      this.form.play = play;
+      this.form.country_id = country_id;
+      this.form.name = name;
+      this.form.img = img;
+      this.form.height = height;
+      this.form.weight = weight;
+      this.form.achievement = achievement;
     },
 
     triggerAlert(status, type = 'Action') {
@@ -220,20 +255,12 @@ export default {
       } else {
         alert(`Failed ${type} Data`);
       }
-    },
-
-    resetData() {
-      this.form = {
-        division: null,
-        system: null,
-        description: null,
-        play: null
-      };
     }
   },
 
   created() {
-    this.getAllDivisions();
+    this.getAllPlayers();
+    this.getCountries();
   }
 };
 </script>

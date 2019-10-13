@@ -28,5 +28,6 @@ class MY_Controller extends CI_Controller
             $this->load->model($model_classname . '_model', $model_classname, true);
         }
 
+        is_logged_in();
     }
 }

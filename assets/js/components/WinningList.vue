@@ -4,43 +4,40 @@
       <div class="col">
         <div class="card card-default">
           <div class="card-header d-flex justify-content-between align-items-center">
-            <span>Division List</span>
+            <span>Winning List</span>
             <!-- Button trigger modal -->
             <button
               type="button"
               class="btn btn-sm btn-primary"
               data-toggle="modal"
-              data-target="#modal-division"
+              data-target="#modal-winning"
               @click="modalState = 'add'"
             >
-              Add division
+              Add winning
             </button>
           </div>
 
           <div class="card-body">
             <div
-              v-show="divisions.length == 0"
+              v-show="winnings.length == 0"
               class="my-3 text-center"
             >Empty Data</div>
             <div class="list-group">
               <div
-                v-for="item in divisions"
+                v-for="item in winnings"
                 :key="item.id"
                 class="list-group-item d-flex justify-content-between align-items-center"
               >
                 <div>
                   <p class="font-weight-bold m-0">
-                    {{item.division}}
-                  </p>
-                  <p class="small text-muted m-0">
-                    System: {{item.system}}
+                    {{item.winning}}
                   </p>
                 </div>
                 <div>
                   <button
                     class="btn btn-sm btn-warning"
                     data-toggle="modal"
-                    data-target="#modal-division"
+                    data-target="#modal-winning"
                     @click="loadData(item)"
                   ><i class="fa fa-edit fa-fw"></i></button>
                   <button
@@ -58,7 +55,7 @@
     <!-- modal add division -->
     <div
       class="modal fade"
-      id="modal-division"
+      id="modal-winning"
       tabindex="-1"
       role="dialog"
       aria-labelledby="exampleModalLabel"
@@ -86,27 +83,17 @@
           <form method="post">
             <div class="modal-body">
               <div class="form-group">
-                <label for="division">Division</label>
+                <label for="winning">Winning by</label>
                 <input
-                  id="division"
-                  v-model="form.division"
+                  id="winning"
+                  v-model="form.winning"
                   type="text"
                   class="form-control"
-                  placeholder="Enter division"
+                  placeholder="Enter winning"
                 >
               </div>
               <div class="form-group">
-                <label for="system">System</label>
-                <input
-                  id="system"
-                  v-model="form.system"
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter system"
-                >
-              </div>
-              <div class="form-group">
-                <label for="description">Description</label>
+                <label for="description">description</label>
                 <textarea
                   id="description"
                   v-model="form.description"
@@ -115,16 +102,6 @@
                   rows="4"
                   placeholder="Enter description"
                 ></textarea>
-              </div>
-              <div class="form-group">
-                <label for="play">Play</label>
-                <input
-                  id="play"
-                  v-model="form.play"
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter play"
-                >
               </div>
             </div>
             <div class="modal-footer">
@@ -153,50 +130,43 @@
 
 <script>
 export default {
-  name: 'DivisionList',
+  name: 'WinningList',
   data() {
     return {
-      divisions: [],
+      winnings: [],
       form: {
-        id: null,
-        division: null,
-        system: null,
-        description: null,
-        play: null
+        winning: null,
+        description: null
       },
       modalState: null
     };
   },
   methods: {
-    async getAllDivisions() {
-      const divisions = await this.$axios.get('master/division/get_all');
-      this.divisions = divisions.data.data;
+    async getAllWinnings() {
+      const winnings = await this.$axios.get('master/winning/get_all');
+      this.winnings = winnings.data.data;
     },
 
     async addData() {
-      const result = await this.$axios.post('master/division/insert', {
-        division: this.form.division,
-        system: this.form.system,
-        description: this.form.description,
-        play: this.form.play
+      const result = await this.$axios.post('master/winning/insert', {
+        winning: this.form.winning,
+        description: this.form.description
       });
 
       this.triggerAlert(result.data.status, 'Insert');
     },
 
     async updateData() {
-      const result = await this.$axios.post(`master/division/update/${this.form.id}`, {
-        division: this.form.division,
-        system: this.form.system,
-        description: this.form.description,
-        play: this.form.play
+      const result = await this.$axios.post(`master/winning/update/${this.form.id}`, {
+        winning: this.form.winning,
+        description: this.form.description
       });
 
       this.triggerAlert(result.data.status, 'Update');
     },
 
     async deleteData(item) {
-      const result = await this.$axios.post('master/division/delete', {
+      const result = await this.$axios.post('master/winning/delete', {
         id: item.id
       });
 
@@ -205,12 +175,10 @@ export default {
 
     loadData(item) {
       this.modalState = 'update';
-      let { id, division, system, description, play } = item;
+      let { id, winning, description } = item;
       this.form.id = id;
-      this.form.division = division;
-      this.form.system = system;
+      this.form.winning = winning;
       this.form.description = description;
-      this.form.play = play;
     },
 
     triggerAlert(status, type = 'Action') {
@@ -220,20 +188,11 @@ export default {
       } else {
         alert(`Failed ${type} Data`);
       }
-    },
-
-    resetData() {
-      this.form = {
-        division: null,
-        system: null,
-        description: null,
-        play: null
-      };
     }
   },
 
   created() {
-    this.getAllDivisions();
+    this.getAllWinnings();
   }
 };
 </script>
