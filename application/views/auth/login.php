@@ -24,23 +24,24 @@
                               <input
                                  type="text"
                                  class="form-control"
-                                 id="email"
-                                 name="email"
+                                 id="login_email"
+                                 name="login_email"
                                  placeholder="Email"
                                  autofocus=""
                                  class="form-control form-control-user"
                               >
-                              <?=form_error('email', '<small class="text-danger">', '</small>')?>
+                              <?=form_error('login_email')?>
                            </div>
                            <div class="form-group">
                               <input
                                  type="password"
                                  class="form-control"
-                                 id="password"
-                                 name="password"
+                                 id="login_password"
+                                 name="login_password"
                                  placeholder="Password"
                                  class="form-control form-control-user"
                               >
+                              <?=form_error('login_password')?>
                            </div>
                            <button
                               type="submit"

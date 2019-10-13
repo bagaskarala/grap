@@ -7,6 +7,7 @@
             <div class="col-lg">
                <div class="p-5">
                   <div class="text-center">
+                     <div class="alert alert-danger"><?=validation_errors();?></div>
                      <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                   </div>
                   <form
@@ -22,7 +23,7 @@
                            placeholder="Enter your name"
                            value="<?=set_value('name')?>"
                         >
-                        <?=form_error('name', '<small class="text-danger">', '</small>')?>
+                        <?=form_error('name')?>
                      </div>
                      <div class="form-group">
                         <input
@@ -33,7 +34,7 @@
                            placeholder="Enter your email"
                            value="<?=set_value('email')?>"
                         >
-                        <?=form_error('email', '<small class="text-danger">', '</small>')?>
+                        <?=form_error('email')?>
                      </div>
                      <div class="form-group row">
                         <div class="col-sm-6 mb-3 mb-sm-0">
@@ -44,7 +45,7 @@
                               class="form-control form-control-user"
                               placeholder="Password"
                            >
-                           <?=form_error('password1', '<small class="text-danger">', '</small>')?>
+                           <?=form_error('password1')?>
                         </div>
                         <div class="col-sm-6">
                            <input
@@ -54,7 +55,7 @@
                               class="form-control form-control-user"
                               placeholder="Re-Type Password"
                            >
-                           <?=form_error('password2', '<small class="text-danger">', '</small>')?>
+                           <?=form_error('password2')?>
                         </div>
                      </div>
                      <button
