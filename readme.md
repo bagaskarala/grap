@@ -22,13 +22,16 @@
 - Visual Studio Code
 
 ### Formatting
-- Install 'Format HTML in PHP' & 'PHP fmt' plugin from vs code marketplace
+- Install **'Format HTML in PHP'**, **'phpfmt'**, **'eslint'**, **'vetur'** plugin from vs code marketplace
 - Add config below to setting.json in VS code
 
 ```json
-    // HTML formatting (Format HTML in PHP)
+    // Editor setting
     "editor.insertSpaces": true,
     "editor.tabSize": 3,
+    "editor.formatOnSave": true,
+    "editor.autoClosingQuotes": "always",
+    // HTML formatting (Format HTML in PHP)
     "html.format.contentUnformatted": "pre,code,textarea",
     "html.format.endWithNewline": false,
     "html.format.extraLiners": "head, body, /html",
@@ -38,7 +41,6 @@
     "html.format.preserveNewLines": true,
     "html.format.wrapLineLength": 120,
     "html.format.wrapAttributes": "force-expand-multiline",
-
     // PHP formatting (phpfmt)
     "intelephense.format.enable": false,
     "phpfmt.passes": [
@@ -54,9 +56,7 @@
         "StripNewlineWithinClassBody"
     ],
     "phpfmt.enable_auto_align": true,
-
     // Javascript-vue formatting (Vetur)
-    "editor.formatOnSave": true,
     "eslint.autoFixOnSave": true,
     "eslint.validate": [
         {
@@ -73,8 +73,6 @@
         }
     ],
     "javascript.preferences.quoteStyle": "single",
-    "typescript.preferences.quoteStyle": "single",
-    "editor.autoClosingQuotes": "always",
     "vetur.experimental.templateInterpolationService": false,
     "vetur.format.defaultFormatter.js": "vscode-typescript",
     "vetur.validation.template": false,
