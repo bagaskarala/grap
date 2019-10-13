@@ -49,7 +49,7 @@
    </div>
 
    <!-- Vue dist files -->
-   <script src="<?=base_url('dist/app.js')?>"></script>
+   <script src="<?=base_url('assets/dist/app.js')?>"></script>
 
    <!-- Bootstrap core JavaScript-->
    <script src="<?=base_url('assets/vendor/jquery/jquery.min.js')?>"></script>

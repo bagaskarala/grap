@@ -75,29 +75,4 @@ class Auth extends MY_Controller
     {
         $this->load->view('auth/blocked');
     }
-
-    // public function checkInsert()
-    // {
-    //     $stream_clean = $this->security->xss_clean($this->input->raw_input_stream);
-    //     $request      = json_decode($stream_clean);
-    //     // $menu = $this->input->post('menu');
-
-    //     $result = $this->db->insert('user_menu', ['menu' => $request->menu]);
-
-    //     if (!$this->db->affected_rows()) {
-    //         return $this->output
-    //             ->set_status_header(200)
-    //             ->set_output(json_encode([
-    //                 'success' => false,
-    //                 'message' => 'gagal insert',
-    //             ]));
-    //     } else {
-    //         return $this->output
-    //             ->set_status_header(200)
-    //             ->set_output(json_encode([
-    //                 'success' => true,
-    //                 'message' => $result,
-    //             ]));
-    //     }
-    // }
 }

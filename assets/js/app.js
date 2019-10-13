@@ -11,6 +11,7 @@ Vue.prototype.$axios = Axios.create({
 
 // deklarasi komponen
 Vue.component('UsersList', require('./components/UsersList.vue').default);
+Vue.component('DivisionList', require('./components/DivisionList.vue').default);
 
 new Vue({
    el: '#app'

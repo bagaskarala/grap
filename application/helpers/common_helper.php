@@ -18,9 +18,9 @@ function is_logged_in()
             'menu_id' => $menu_id,
         ]);
 
-        if ($user_access->num_rows() < 1) {
-            redirect('auth/blocked');
-        }
+        // if ($user_access->num_rows() < 1) {
+        //     redirect('auth/blocked');
+        // }
     }
 
 }
@@ -37,4 +37,11 @@ function check_access($role_id, $menu_id)
         return "checked='checked'";
     }
 
+}
+
+function parse_post_data()
+{
+    $ci           = get_instance();
+    $stream_clean = $ci->security->xss_clean($ci->input->raw_input_stream);
+    return json_decode($stream_clean);
 }

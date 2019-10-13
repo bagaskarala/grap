@@ -13,7 +13,7 @@ $this->load->view('templates/sidebar');
    <div id="content">
 
       <!-- Topbar -->
-      <?php $this->load->view('templates/topbar', $user);?>
+      <?php $this->load->view('templates/topbar');?>
 
       <div id="app">
          <!-- Page -->
