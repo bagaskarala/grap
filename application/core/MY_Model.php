@@ -45,7 +45,7 @@ class MY_Model extends CI_Model
     public function update($data, $where)
     {
         $this->db->update($this->table, $data, $where);
-        return $this;
+        return $this->db->affected_rows();
     }
 
     public function delete($where)

@@ -1,5 +1,6 @@
 <?php
 
+// mengecek user yang login dicocokan dengan tabel menu
 function is_logged_in()
 {
     $ci = get_instance();
@@ -25,6 +26,7 @@ function is_logged_in()
 
 }
 
+// checklist pada akses menu
 function check_access($role_id, $menu_id)
 {
     $ci = get_instance();
@@ -39,6 +41,7 @@ function check_access($role_id, $menu_id)
 
 }
 
+// mengambil post data dari client
 function parse_post_data()
 {
     $ci           = get_instance();

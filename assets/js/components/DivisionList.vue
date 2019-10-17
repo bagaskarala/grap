@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container-fluid">
     <div class="row justify-content-center">
       <div class="col">
         <div class="card card-default">
@@ -9,9 +9,7 @@
             <button
               type="button"
               class="btn btn-sm btn-primary"
-              data-toggle="modal"
-              data-target="#modal-division"
-              @click="modalState = 'add'"
+              @click.prevent="addData()"
             >
               Add division
             </button>
@@ -33,19 +31,17 @@
                     {{item.division}}
                   </p>
                   <p class="small text-muted m-0">
-                    System: {{item.system}}
+                    {{item.system}}
                   </p>
                 </div>
                 <div>
                   <button
                     class="btn btn-sm btn-warning"
-                    data-toggle="modal"
-                    data-target="#modal-division"
-                    @click="loadData(item)"
+                    @click.prevent="loadData(item)"
                   ><i class="fa fa-edit fa-fw"></i></button>
                   <button
                     class="btn btn-sm btn-danger"
-                    @click="deleteData(item)"
+                    @click.prevent="confirmDelete(item)"
                   ><i class="fa fa-trash fa-fw"></i></button>
                 </div>
               </div>
@@ -56,98 +52,78 @@
     </div>
 
     <!-- modal add division -->
-    <div
-      class="modal fade"
+    <b-modal
       id="modal-division"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
+      hide-footer
+      :title="modalState == 'add'? 'Add Item' : 'Update Item'"
+      @show="modalState = 'add'"
     >
-      <div
-        class="modal-dialog"
-        role="document"
-      >
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5
-              class="modal-title"
-              id="exampleModalLabel"
-            >{{modalState == 'add'? 'Add Item' : 'Update Item'}}</h5>
+      <form method="post">
+        <div class="form-group">
+          <label for="division">Division</label>
+          <input
+            id="division"
+            v-model="form.division"
+            type="text"
+            class="form-control"
+            placeholder="Enter division"
+          >
+        </div>
+        <div class="form-group">
+          <label for="system">System</label>
+          <input
+            id="system"
+            v-model="form.system"
+            type="text"
+            class="form-control"
+            placeholder="Enter system"
+          >
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            v-model="form.description"
+            class="form-control"
+            cols="30"
+            rows="4"
+            placeholder="Enter description"
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="play">Play</label>
+          <input
+            id="play"
+            v-model="form.play"
+            type="text"
+            class="form-control"
+            placeholder="Enter play"
+          >
+        </div>
+        <div class="d-flex justify-content-end">
+          <div
+            class="btn-group"
+            role="group"
+          >
             <button
               type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
+              class="btn btn-secondary"
+              @click="resetData()"
+            >Reset</button>
+            <button
+              v-if="modalState=='add'"
+              class="btn btn-primary"
+              @click.prevent="insertData()"
+            >Add</button>
+            <button
+              v-else
+              class="btn btn-primary"
+              @click.prevent="updateData()"
+            >Update</button>
           </div>
-          <form method="post">
-            <div class="modal-body">
-              <div class="form-group">
-                <label for="division">Division</label>
-                <input
-                  id="division"
-                  v-model="form.division"
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter division"
-                >
-              </div>
-              <div class="form-group">
-                <label for="system">System</label>
-                <input
-                  id="system"
-                  v-model="form.system"
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter system"
-                >
-              </div>
-              <div class="form-group">
-                <label for="description">Description</label>
-                <textarea
-                  id="description"
-                  v-model="form.description"
-                  class="form-control"
-                  cols="30"
-                  rows="4"
-                  placeholder="Enter description"
-                ></textarea>
-              </div>
-              <div class="form-group">
-                <label for="play">Play</label>
-                <input
-                  id="play"
-                  v-model="form.play"
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter play"
-                >
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-dismiss="modal"
-              >Close</button>
-              <button
-                v-if="modalState=='add'"
-                class="btn btn-primary"
-                @click.prevent="addData()"
-              >Add</button>
-              <button
-                v-else
-                class="btn btn-primary"
-                @click.prevent="updateData()"
-              >Update</button>
-            </div>
-          </form>
         </div>
-      </div>
-    </div>
+      </form>
+    </b-modal>
   </div>
 </template>
 
@@ -167,44 +143,98 @@ export default {
       modalState: null
     };
   },
+
   methods: {
     async getAllDivisions() {
-      const divisions = await this.$axios.get('master/division/get_all');
-      this.divisions = divisions.data.data;
+      try {
+        const divisions = await this.$axios.get('master/division/get_all');
+        this.divisions = divisions.data.data;
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Get Data');
+      }
     },
 
-    async addData() {
-      const result = await this.$axios.post('master/division/insert', {
-        division: this.form.division,
-        system: this.form.system,
-        description: this.form.description,
-        play: this.form.play
-      });
+    async insertData() {
+      try {
+        await this.$axios.post('master/division/insert', {
+          division: this.form.division,
+          system: this.form.system,
+          description: this.form.description,
+          play: this.form.play
+        });
 
-      this.triggerAlert(result.data.status, 'Insert');
+        this.$noty.success('Success Insert Data');
+        this.getAllDivisions();
+        this.$bvModal.hide('modal-division');
+
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Insert Data');
+      }
     },
 
     async updateData() {
-      const result = await this.$axios.post(`master/division/update/${this.form.id}`, {
-        division: this.form.division,
-        system: this.form.system,
-        description: this.form.description,
-        play: this.form.play
-      });
+      try {
+        await this.$axios.post(`master/division/update/${this.form.id}`, {
+          division: this.form.division,
+          system: this.form.system,
+          description: this.form.description,
+          play: this.form.play
+        });
 
-      this.triggerAlert(result.data.status, 'Update');
+        this.$noty.success('Success Update Data');
+        this.getAllDivisions();
+        this.$bvModal.hide('modal-division');
+
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Update Data');
+      }
     },
 
     async deleteData(item) {
-      const result = await this.$axios.post('master/division/delete', {
-        id: item.id
-      });
+      try {
+        await this.$axios.post('master/division/delete', {
+          id: item.id
+        });
 
-      this.triggerAlert(result.data.status, 'Delete');
+        this.$noty.success('Success Delete Data');
+        this.getAllDivisions();
+        this.$bvModal.hide('modal-division');
+
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Delete Data');
+      }
+    },
+
+    confirmDelete(item) {
+      this.$bvModal.msgBoxConfirm(`Please confirm that you want to delete ${item.division}`, {
+        title: 'Delete Data',
+        size: 'md',
+        okVariant: 'danger',
+        centered: true
+      })
+        .then(value => {
+          if (value) {
+            this.deleteData(item);
+          }
+        })
+        .catch(err => {
+          console.log('Error ', err);
+        });
+    },
+
+    addData() {
+      this.resetData();
+      this.$bvModal.show('modal-division');
     },
 
     loadData(item) {
+      this.$bvModal.show('modal-division');
       this.modalState = 'update';
+      // populate form
       let { id, division, system, description, play } = item;
       this.form.id = id;
       this.form.division = division;
@@ -213,22 +243,11 @@ export default {
       this.form.play = play;
     },
 
-    triggerAlert(status, type = 'Action') {
-      if (status) {
-        alert(`Success ${type} Data`);
-        location.reload();
-      } else {
-        alert(`Failed ${type} Data`);
-      }
-    },
-
     resetData() {
-      this.form = {
-        division: null,
-        system: null,
-        description: null,
-        play: null
-      };
+      this.form.division = null;
+      this.form.system = null;
+      this.form.description = null;
+      this.form.play = null;
     }
   },
 

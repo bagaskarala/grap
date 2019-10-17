@@ -28,9 +28,31 @@ class MY_Controller extends CI_Controller
             $this->load->model($model_classname . '_model', $model_classname, true);
         }
 
-        // dont run this fitur on guest page
+        // mengatasi redirect loop di login
         if ($model_classname != 'auth') {
             is_logged_in();
         }
+    }
+
+    // generate json output API
+    public function send_json_output($result, Bool $status, Int $status_code)
+    {
+        if ($status) {
+            // if success
+            $output = [
+                'status' => $status,
+                'data'   => $result,
+            ];
+        } else {
+            // if error
+            $output = [
+                'status'  => $status,
+                'message' => $result,
+            ];
+        };
+        return $this->output
+            ->set_status_header($status_code)
+            ->set_content_type('application/json')
+            ->set_output(json_encode($output));
     }
 }

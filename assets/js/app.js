@@ -1,7 +1,23 @@
 import Vue from 'vue';
-import Axios from 'axios';
+
+// notifikasi toast
+import VueNoty from 'vuejs-noty';
+import 'vuejs-noty/dist/vuejs-noty.css';
+Vue.use(VueNoty, {
+   layout: 'topRight',
+   timeout: 2000,
+   theme: 'bootstrap-v4',
+   progressBar: false,
+   closeWith: ['click', 'button']
+});
+
+// modal bootstrap-vue
+import { ModalPlugin } from 'bootstrap-vue';
+Vue.use(ModalPlugin);
+import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 // membuat instance axios
+import Axios from 'axios';
 Vue.prototype.$axios = Axios.create({
    baseURL: 'http://localhost/grap',
    headers: {

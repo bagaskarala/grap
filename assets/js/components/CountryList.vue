@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container-fluid">
     <div class="row justify-content-center">
       <div class="col">
         <div class="card card-default">
@@ -9,9 +9,7 @@
             <button
               type="button"
               class="btn btn-sm btn-primary"
-              data-toggle="modal"
-              data-target="#modal-country"
-              @click="modalState = 'add'"
+              @click="addData()"
             >
               Add country
             </button>
@@ -33,19 +31,17 @@
                     {{item.country}}
                   </p>
                   <p class="small text-muted m-0">
-                    img: {{item.img}}
+                    {{item.img}}
                   </p>
                 </div>
                 <div>
                   <button
                     class="btn btn-sm btn-warning"
-                    data-toggle="modal"
-                    data-target="#modal-country"
-                    @click="loadData(item)"
+                    @click.prevent="loadData(item)"
                   ><i class="fa fa-edit fa-fw"></i></button>
                   <button
                     class="btn btn-sm btn-danger"
-                    @click="deleteData(item)"
+                    @click.prevent="confirmDelete(item)"
                   ><i class="fa fa-trash fa-fw"></i></button>
                 </div>
               </div>
@@ -55,89 +51,69 @@
       </div>
     </div>
 
-    <!-- modal add division -->
-    <div
-      class="modal fade"
+    <!-- modal add country -->
+    <b-modal
       id="modal-country"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
+      hide-footer
+      :title="modalState == 'add'? 'Add Item' : 'Update Item'"
+      @show="modalState = 'add'"
     >
-      <div
-        class="modal-dialog"
-        role="document"
-      >
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5
-              class="modal-title"
-              id="exampleModalLabel"
-            >{{modalState == 'add'? 'Add Item' : 'Update Item'}}</h5>
+      <form method="post">
+        <div class="form-group">
+          <label for="country">Country</label>
+          <input
+            id="country"
+            v-model="form.country"
+            type="text"
+            class="form-control"
+            placeholder="Enter country"
+          >
+        </div>
+        <div class="form-group">
+          <label for="img">Img</label>
+          <input
+            id="img"
+            v-model="form.img"
+            type="text"
+            class="form-control"
+            placeholder="Enter img"
+          >
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            v-model="form.description"
+            class="form-control"
+            cols="30"
+            rows="4"
+            placeholder="Enter description"
+          ></textarea>
+        </div>
+        <div class="d-flex justify-content-end">
+          <div
+            class="btn-group"
+            role="group"
+          >
             <button
               type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
+              class="btn btn-secondary"
+              @click="resetData()"
+            >Reset</button>
+            <button
+              v-if="modalState=='add'"
+              class="btn btn-primary"
+              @click.prevent="insertData()"
+            >Add</button>
+            <button
+              v-else
+              class="btn btn-primary"
+              @click.prevent="updateData()"
+            >Update</button>
           </div>
-          <form method="post">
-            <div class="modal-body">
-              <div class="form-group">
-                <label for="country">Country</label>
-                <input
-                  id="country"
-                  v-model="form.country"
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter country"
-                >
-              </div>
-              <div class="form-group">
-                <label for="img">Img</label>
-                <input
-                  id="img"
-                  v-model="form.img"
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter img"
-                >
-              </div>
-              <div class="form-group">
-                <label for="description">Description</label>
-                <textarea
-                  id="description"
-                  v-model="form.description"
-                  class="form-control"
-                  cols="30"
-                  rows="4"
-                  placeholder="Enter description"
-                ></textarea>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-dismiss="modal"
-              >Close</button>
-              <button
-                v-if="modalState=='add'"
-                class="btn btn-primary"
-                @click.prevent="addData()"
-              >Add</button>
-              <button
-                v-else
-                class="btn btn-primary"
-                @click.prevent="updateData()"
-              >Update</button>
-            </div>
-          </form>
         </div>
-      </div>
-    </div>
+      </form>
+    </b-modal>
   </div>
 </template>
 
@@ -157,39 +133,88 @@ export default {
   },
   methods: {
     async getAllCountries() {
-      const countries = await this.$axios.get('master/country/get_all');
-      this.countries = countries.data.data;
+      try {
+        const countries = await this.$axios.get('master/country/get_all');
+        this.countries = countries.data.data;
+      } catch (error) {
+        this.$noty.error('Failed Get Data');
+        console.log(error.response);
+      }
     },
 
-    async addData() {
-      const result = await this.$axios.post('master/country/insert', {
-        country: this.form.country,
-        img: this.form.img,
-        description: this.form.description
-      });
+    async insertData() {
+      try {
+        await this.$axios.post('master/country/insert', {
+          country: this.form.country,
+          img: this.form.img,
+          description: this.form.description
+        });
 
-      this.triggerAlert(result.data.status, 'Insert');
+        this.$noty.success('Success Insert Data');
+        this.getAllCountries();
+        this.$bvModal.hide('modal-country');
+      } catch (error) {
+        this.$noty.error('Failed Insert Data');
+        console.log(error.response);
+      }
     },
 
     async updateData() {
-      const result = await this.$axios.post(`master/country/update/${this.form.id}`, {
-        country: this.form.country,
-        img: this.form.img,
-        description: this.form.description
-      });
+      try {
+        await this.$axios.post(`master/country/update/${this.form.id}`, {
+          country: this.form.country,
+          img: this.form.img,
+          description: this.form.description
+        });
 
-      this.triggerAlert(result.data.status, 'Update');
+        this.$noty.success('Success Update Data');
+        this.getAllCountries();
+        this.$bvModal.hide('modal-country');
+      } catch (error) {
+        this.$noty.error('Failed Update Data');
+        console.log(error.response);
+      }
     },
 
     async deleteData(item) {
-      const result = await this.$axios.post('master/country/delete', {
-        id: item.id
-      });
+      try {
+        await this.$axios.post('master/country/delete', {
+          id: item.id
+        });
 
-      this.triggerAlert(result.data.status, 'Delete');
+        this.$noty.success('Success Delete Data');
+        this.getAllCountries();
+        this.$bvModal.hide('modal-country');
+      } catch (error) {
+        this.$noty.error('Failed Delete Data');
+        console.log(error.response);
+      }
+    },
+
+    confirmDelete(item) {
+      this.$bvModal.msgBoxConfirm(`Please confirm that you want to delete ${item.country}`, {
+        title: 'Delete Data',
+        size: 'md',
+        okVariant: 'danger',
+        centered: true
+      })
+        .then(value => {
+          if (value) {
+            this.deleteData(item);
+          }
+        })
+        .catch(err => {
+          console.log('Error ', err);
+        });
+    },
+
+    addData() {
+      this.resetData();
+      this.$bvModal.show('modal-country');
     },
 
     loadData(item) {
+      this.$bvModal.show('modal-country');
       this.modalState = 'update';
       let { id, country, img, description } = item;
       this.form.id = id;
@@ -198,21 +223,10 @@ export default {
       this.form.description = description;
     },
 
-    triggerAlert(status, type = 'Action') {
-      if (status) {
-        alert(`Success ${type} Data`);
-        location.reload();
-      } else {
-        alert(`Failed ${type} Data`);
-      }
-    },
-
     resetData() {
-      this.form = {
-        country: null,
-        img: null,
-        description: null
-      };
+      this.form.country = null;
+      this.form.img = null;
+      this.form.description = null;
     }
   },
 

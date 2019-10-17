@@ -2,7 +2,10 @@
   "name": "grap",
   "version": "1.0.0",
   "description": "- Clone this repo\r - Import database .sql\r - Set application/config/database.php\r - Run Xampp Apache & Mysql\r - Open browser and enter localhost/grap",
-  "dependencies": {},
+  "dependencies": {
+    "bootstrap-vue": "^2.0.4",
+    "vuejs-noty": "^0.1.3"
+  },
   "devDependencies": {
     "axios": "^0.19.0",
     "cross-env": "^6.0.3",
