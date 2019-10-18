@@ -55,6 +55,12 @@
       :title="modalState == 'add'? 'Add Item' : 'Update Item'"
       @show="modalState = 'add'"
     >
+      <div
+        v-if="errorValidation"
+        class="alert alert-danger"
+        v-html="errorValidation"
+      ></div>
+
       <form method="post">
         <div class="form-group">
           <label for="club">club</label>
@@ -114,7 +120,8 @@ export default {
         club: null,
         description: null
       },
-      modalState: null
+      modalState: null,
+      errorValidation: null
     };
   },
   methods: {
@@ -141,6 +148,7 @@ export default {
 
       } catch (error) {
         console.log(error.response);
+        this.errorValidation = error.response.data.message;
         this.$noty.error('Failed Insert Data');
       }
     },
@@ -158,6 +166,7 @@ export default {
 
       } catch (error) {
         console.log(error.response);
+        this.errorValidation = error.response.data.message;
         this.$noty.error('Failed Update Data');
       }
     },
@@ -201,6 +210,7 @@ export default {
     },
 
     loadData(item) {
+      this.resetData();
       this.$bvModal.show('modal-club');
       this.modalState = 'update';
       // populate form
@@ -211,6 +221,7 @@ export default {
     },
 
     resetData() {
+      this.errorValidation = null;
       this.form.id = null;
       this.form.club = null;
       this.form.description = null;

@@ -54,6 +54,12 @@
       hide-footer
       :title="modalState == 'add'? 'Add Item' : 'Update Item'"
     >
+      <div
+        v-if="errorValidation"
+        class="alert alert-danger"
+        v-html="errorValidation"
+      ></div>
+
       <form method="post">
         <div class="form-group">
           <label for="winning">Winning by</label>
@@ -66,7 +72,7 @@
           >
         </div>
         <div class="form-group">
-          <label for="description">description</label>
+          <label for="description">Description</label>
           <textarea
             id="description"
             v-model="form.description"
@@ -113,7 +119,8 @@ export default {
         winning: null,
         description: null
       },
-      modalState: null
+      modalState: null,
+      errorValidation: null
     };
   },
   methods: {
@@ -130,7 +137,7 @@ export default {
 
     async insertData() {
       try {
-        await this.$axios.post('master/winning/insert', {
+        const ins = await this.$axios.post('master/winning/insert', {
           winning: this.form.winning,
           description: this.form.description
         });
@@ -138,16 +145,18 @@ export default {
         this.$noty.success('Success Insert Data');
         this.getAllWinnings();
         this.$bvModal.hide('modal-winning');
+        console.log(ins);
 
       } catch (error) {
         console.log(error.response);
+        this.errorValidation = error.response.data.message;
         this.$noty.error('Failed Insert Data');
       }
     },
 
     async updateData() {
       try {
-        await this.$axios.post(`master/winning/update/${this.form.id}`, {
+        const upd = await this.$axios.post(`master/winning/update/${this.form.id}`, {
           winning: this.form.winning,
           description: this.form.description
         });
@@ -155,9 +164,11 @@ export default {
         this.$noty.success('Success Update Data');
         this.getAllWinnings();
         this.$bvModal.hide('modal-winning');
+        console.log(upd);
 
       } catch (error) {
         console.log(error.response);
+        this.errorValidation = error.response.data.message;
         this.$noty.error('Failed Update Data');
       }
     },
@@ -202,6 +213,7 @@ export default {
     },
 
     loadData(item) {
+      this.resetData();
       this.$bvModal.show('modal-winning');
       this.modalState = 'update';
       // populate form
@@ -212,6 +224,7 @@ export default {
     },
 
     resetData() {
+      this.errorValidation = null;
       this.form.winning = null;
       this.form.description = null;
     }

@@ -2434,6 +2434,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ClubList',
   data: function data() {
@@ -2443,7 +2449,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         club: null,
         description: null
       },
-      modalState: null
+      modalState: null,
+      errorValidation: null
     };
   },
   methods: {
@@ -2505,16 +2512,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.$noty.success('Success Insert Data');
                 this.getAllClubs();
                 this.$bvModal.hide('modal-club');
-                _context2.next = 12;
+                _context2.next = 13;
                 break;
 
               case 8:
                 _context2.prev = 8;
                 _context2.t0 = _context2["catch"](0);
                 console.log(_context2.t0.response);
+                this.errorValidation = _context2.t0.response.data.message;
                 this.$noty.error('Failed Insert Data');
 
-              case 12:
+              case 13:
               case "end":
                 return _context2.stop();
             }
@@ -2547,16 +2555,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.$noty.success('Success Update Data');
                 this.getAllClubs();
                 this.$bvModal.hide('modal-club');
-                _context3.next = 12;
+                _context3.next = 13;
                 break;
 
               case 8:
                 _context3.prev = 8;
                 _context3.t0 = _context3["catch"](0);
                 console.log(_context3.t0.response);
+                this.errorValidation = _context3.t0.response.data.message;
                 this.$noty.error('Failed Update Data');
 
-              case 12:
+              case 13:
               case "end":
                 return _context3.stop();
             }
@@ -2632,6 +2641,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.$bvModal.show('modal-club');
     },
     loadData: function loadData(item) {
+      this.resetData();
       this.$bvModal.show('modal-club');
       this.modalState = 'update'; // populate form
 
@@ -2643,6 +2653,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.form.description = description;
     },
     resetData: function resetData() {
+      this.errorValidation = null;
       this.form.id = null;
       this.form.club = null;
       this.form.description = null;
@@ -2790,6 +2801,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'CountryList',
   data: function data() {
@@ -2800,7 +2817,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         img: null,
         description: null
       },
-      modalState: null
+      modalState: null,
+      errorValidation: null
     };
   },
   methods: {
@@ -2863,16 +2881,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.$noty.success('Success Insert Data');
                 this.getAllCountries();
                 this.$bvModal.hide('modal-country');
-                _context2.next = 12;
+                _context2.next = 13;
                 break;
 
               case 8:
                 _context2.prev = 8;
                 _context2.t0 = _context2["catch"](0);
                 this.$noty.error('Failed Insert Data');
+                this.errorValidation = _context2.t0.response.data.message;
                 console.log(_context2.t0.response);
 
-              case 12:
+              case 13:
               case "end":
                 return _context2.stop();
             }
@@ -2906,16 +2925,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.$noty.success('Success Update Data');
                 this.getAllCountries();
                 this.$bvModal.hide('modal-country');
-                _context3.next = 12;
+                _context3.next = 13;
                 break;
 
               case 8:
                 _context3.prev = 8;
                 _context3.t0 = _context3["catch"](0);
                 this.$noty.error('Failed Update Data');
+                this.errorValidation = _context3.t0.response.data.message;
                 console.log(_context3.t0.response);
 
-              case 12:
+              case 13:
               case "end":
                 return _context3.stop();
             }
@@ -2992,6 +3012,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.modalState = 'add';
     },
     loadData: function loadData(item) {
+      this.resetData();
       this.$bvModal.show('modal-country');
       this.modalState = 'update';
       var id = item.id,
@@ -3004,6 +3025,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.form.description = description;
     },
     resetData: function resetData() {
+      this.errorValidation = null;
       this.form.country = null;
       this.form.img = null;
       this.form.description = null;
@@ -3161,6 +3183,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'DivisionList',
   data: function data() {
@@ -3173,7 +3201,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         description: null,
         play: null
       },
-      modalState: null
+      modalState: null,
+      errorValidation: null
     };
   },
   methods: {
@@ -3237,16 +3266,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.$noty.success('Success Insert Data');
                 this.getAllDivisions();
                 this.$bvModal.hide('modal-division');
-                _context2.next = 12;
+                _context2.next = 13;
                 break;
 
               case 8:
                 _context2.prev = 8;
                 _context2.t0 = _context2["catch"](0);
                 console.log(_context2.t0.response);
+                this.errorValidation = _context2.t0.response.data.message;
                 this.$noty.error('Failed Insert Data');
 
-              case 12:
+              case 13:
               case "end":
                 return _context2.stop();
             }
@@ -3281,16 +3311,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.$noty.success('Success Update Data');
                 this.getAllDivisions();
                 this.$bvModal.hide('modal-division');
-                _context3.next = 12;
+                _context3.next = 13;
                 break;
 
               case 8:
                 _context3.prev = 8;
                 _context3.t0 = _context3["catch"](0);
                 console.log(_context3.t0.response);
+                this.errorValidation = _context3.t0.response.data.message;
                 this.$noty.error('Failed Update Data');
 
-              case 12:
+              case 13:
               case "end":
                 return _context3.stop();
             }
@@ -3367,6 +3398,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.modalState = 'add';
     },
     loadData: function loadData(item) {
+      this.resetData();
       this.$bvModal.show('modal-division');
       this.modalState = 'update'; // populate form
 
@@ -3382,6 +3414,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.form.play = play;
     },
     resetData: function resetData() {
+      this.errorValidation = null;
       this.form.division = null;
       this.form.system = null;
       this.form.description = null;
@@ -3562,6 +3595,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PlayerList',
   data: function data() {
@@ -3576,7 +3615,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         weight: null,
         achievement: null
       },
-      modalState: null
+      modalState: null,
+      errorValidation: null
     };
   },
   methods: {
@@ -3681,16 +3721,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.$noty.success('Success Insert Data');
                 this.getAllPlayers();
                 this.$bvModal.hide('modal-player');
-                _context3.next = 12;
+                _context3.next = 13;
                 break;
 
               case 8:
                 _context3.prev = 8;
                 _context3.t0 = _context3["catch"](0);
                 console.log(_context3.t0.response);
+                this.errorValidation = _context3.t0.response.data.message;
                 this.$noty.error('Failed Insert Data');
 
-              case 12:
+              case 13:
               case "end":
                 return _context3.stop();
             }
@@ -3727,16 +3768,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.$noty.success('Success Update Data');
                 this.getAllPlayers();
                 this.$bvModal.hide('modal-player');
-                _context4.next = 12;
+                _context4.next = 13;
                 break;
 
               case 8:
                 _context4.prev = 8;
                 _context4.t0 = _context4["catch"](0);
                 console.log(_context4.t0.response);
+                this.errorValidation = _context4.t0.response.data.message;
                 this.$noty.error('Failed Update Data');
 
-              case 12:
+              case 13:
               case "end":
                 return _context4.stop();
             }
@@ -3813,6 +3855,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.modalState = 'add';
     },
     loadData: function loadData(item) {
+      this.resetData();
       this.$bvModal.show('modal-player');
       this.modalState = 'update'; // populate form
 
@@ -3832,6 +3875,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.form.achievement = achievement;
     },
     resetData: function resetData() {
+      this.errorValidation = null;
       this.form.country_id = null;
       this.form.name = null;
       this.form.img = null;
@@ -4063,6 +4107,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'WinningList',
   data: function data() {
@@ -4072,7 +4122,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         winning: null,
         description: null
       },
-      modalState: null
+      modalState: null,
+      errorValidation: null
     };
   },
   methods: {
@@ -4119,6 +4170,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _insertData = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var ins;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -4131,24 +4183,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 3:
+                ins = _context2.sent;
                 this.$noty.success('Success Insert Data');
                 this.getAllWinnings();
                 this.$bvModal.hide('modal-winning');
-                _context2.next = 12;
+                console.log(ins);
+                _context2.next = 15;
                 break;
 
-              case 8:
-                _context2.prev = 8;
+              case 10:
+                _context2.prev = 10;
                 _context2.t0 = _context2["catch"](0);
                 console.log(_context2.t0.response);
+                this.errorValidation = _context2.t0.response.data.message;
                 this.$noty.error('Failed Insert Data');
 
-              case 12:
+              case 15:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[0, 8]]);
+        }, _callee2, this, [[0, 10]]);
       }));
 
       function insertData() {
@@ -4161,6 +4216,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _updateData = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var upd;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
@@ -4173,24 +4229,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 3:
+                upd = _context3.sent;
                 this.$noty.success('Success Update Data');
                 this.getAllWinnings();
                 this.$bvModal.hide('modal-winning');
-                _context3.next = 12;
+                console.log(upd);
+                _context3.next = 15;
                 break;
 
-              case 8:
-                _context3.prev = 8;
+              case 10:
+                _context3.prev = 10;
                 _context3.t0 = _context3["catch"](0);
                 console.log(_context3.t0.response);
+                this.errorValidation = _context3.t0.response.data.message;
                 this.$noty.error('Failed Update Data');
 
-              case 12:
+              case 15:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, this, [[0, 8]]);
+        }, _callee3, this, [[0, 10]]);
       }));
 
       function updateData() {
@@ -4262,6 +4321,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.modalState = 'add';
     },
     loadData: function loadData(item) {
+      this.resetData();
       this.$bvModal.show('modal-winning');
       this.modalState = 'update'; // populate form
 
@@ -4273,6 +4333,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.form.description = description;
     },
     resetData: function resetData() {
+      this.errorValidation = null;
       this.form.winning = null;
       this.form.description = null;
     }
@@ -37787,6 +37848,13 @@ var render = function() {
           }
         },
         [
+          _vm.errorValidation
+            ? _c("div", {
+                staticClass: "alert alert-danger",
+                domProps: { innerHTML: _vm._s(_vm.errorValidation) }
+              })
+            : _vm._e(),
+          _vm._v(" "),
           _c("form", { attrs: { method: "post" } }, [
             _c("div", { staticClass: "form-group" }, [
               _c("label", { attrs: { for: "club" } }, [_vm._v("club")]),
@@ -38053,6 +38121,13 @@ var render = function() {
           }
         },
         [
+          _vm.errorValidation
+            ? _c("div", {
+                staticClass: "alert alert-danger",
+                domProps: { innerHTML: _vm._s(_vm.errorValidation) }
+              })
+            : _vm._e(),
+          _vm._v(" "),
           _c("form", { attrs: { method: "post" } }, [
             _c("div", { staticClass: "form-group" }, [
               _c("label", { attrs: { for: "country" } }, [_vm._v("Country")]),
@@ -38350,6 +38425,13 @@ var render = function() {
           }
         },
         [
+          _vm.errorValidation
+            ? _c("div", {
+                staticClass: "alert alert-danger",
+                domProps: { innerHTML: _vm._s(_vm.errorValidation) }
+              })
+            : _vm._e(),
+          _vm._v(" "),
           _c("form", { attrs: { method: "post" } }, [
             _c("div", { staticClass: "form-group" }, [
               _c("label", { attrs: { for: "division" } }, [_vm._v("Division")]),
@@ -38412,6 +38494,32 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "play" } }, [_vm._v("Play")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.play,
+                    expression: "form.play"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { id: "play", type: "text", placeholder: "Enter play" },
+                domProps: { value: _vm.form.play },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "play", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
               _c("label", { attrs: { for: "description" } }, [
                 _vm._v("Description")
               ]),
@@ -38439,32 +38547,6 @@ var render = function() {
                       return
                     }
                     _vm.$set(_vm.form, "description", $event.target.value)
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "play" } }, [_vm._v("Play")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.form.play,
-                    expression: "form.play"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { id: "play", type: "text", placeholder: "Enter play" },
-                domProps: { value: _vm.form.play },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.form, "play", $event.target.value)
                   }
                 }
               })
@@ -38669,6 +38751,13 @@ var render = function() {
           }
         },
         [
+          _vm.errorValidation
+            ? _c("div", {
+                staticClass: "alert alert-danger",
+                domProps: { innerHTML: _vm._s(_vm.errorValidation) }
+              })
+            : _vm._e(),
+          _vm._v(" "),
           _c("form", { attrs: { method: "post" } }, [
             _c("div", { staticClass: "form-group" }, [
               _c("label", { attrs: { for: "name" } }, [_vm._v("Name")]),
@@ -39154,6 +39243,13 @@ var render = function() {
           }
         },
         [
+          _vm.errorValidation
+            ? _c("div", {
+                staticClass: "alert alert-danger",
+                domProps: { innerHTML: _vm._s(_vm.errorValidation) }
+              })
+            : _vm._e(),
+          _vm._v(" "),
           _c("form", { attrs: { method: "post" } }, [
             _c("div", { staticClass: "form-group" }, [
               _c("label", { attrs: { for: "winning" } }, [
@@ -39189,7 +39285,7 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
               _c("label", { attrs: { for: "description" } }, [
-                _vm._v("description")
+                _vm._v("Description")
               ]),
               _vm._v(" "),
               _c("textarea", {

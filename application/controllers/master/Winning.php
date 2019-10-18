@@ -39,7 +39,12 @@ class Winning extends MY_Controller
             'description' => $request->description,
         ];
 
-        $result = $this->winning->insert($data);
+        // validasi
+        if ($this->winning->validate($data) == false) {
+            return $this->send_json_output(validation_errors(), false, 422);
+        } else {
+            $result = $this->winning->insert($data);
+        }
 
         if ($result) {
             return $this->send_json_output($result, true, 200);
@@ -57,7 +62,12 @@ class Winning extends MY_Controller
             'description' => $request->description,
         ];
 
-        $result = $this->winning->update($data, ['id' => $winning_id]);
+        // validasi
+        if ($this->winning->validate($data) == false) {
+            return $this->send_json_output(validation_errors(), false, 422);
+        } else {
+            $result = $this->winning->update($data, ['id' => $winning_id]);
+        }
 
         if ($result) {
             return $this->send_json_output($result, true, 200);

@@ -57,6 +57,12 @@
       hide-footer
       :title="modalState == 'add'? 'Add Item' : 'Update Item'"
     >
+      <div
+        v-if="errorValidation"
+        class="alert alert-danger"
+        v-html="errorValidation"
+      ></div>
+
       <form method="post">
         <div class="form-group">
           <label for="country">Country</label>
@@ -127,7 +133,8 @@ export default {
         img: null,
         description: null
       },
-      modalState: null
+      modalState: null,
+      errorValidation: null
     };
   },
   methods: {
@@ -154,6 +161,7 @@ export default {
         this.$bvModal.hide('modal-country');
       } catch (error) {
         this.$noty.error('Failed Insert Data');
+        this.errorValidation = error.response.data.message;
         console.log(error.response);
       }
     },
@@ -171,6 +179,7 @@ export default {
         this.$bvModal.hide('modal-country');
       } catch (error) {
         this.$noty.error('Failed Update Data');
+        this.errorValidation = error.response.data.message;
         console.log(error.response);
       }
     },
@@ -214,6 +223,7 @@ export default {
     },
 
     loadData(item) {
+      this.resetData();
       this.$bvModal.show('modal-country');
       this.modalState = 'update';
       let { id, country, img, description } = item;
@@ -224,6 +234,7 @@ export default {
     },
 
     resetData() {
+      this.errorValidation = null;
       this.form.country = null;
       this.form.img = null;
       this.form.description = null;

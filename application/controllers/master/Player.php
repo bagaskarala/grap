@@ -43,7 +43,12 @@ class Player extends MY_Controller
             'achievement' => $request->achievement,
         ];
 
-        $result = $this->player->insert($data);
+        // validasi
+        if ($this->player->validate($data) == false) {
+            return $this->send_json_output(validation_errors(), false, 422);
+        } else {
+            $result = $this->player->insert($data);
+        }
 
         if ($result) {
             return $this->send_json_output($result, true, 200);
@@ -65,8 +70,12 @@ class Player extends MY_Controller
             'achievement' => $request->achievement,
         ];
 
-        // $result = $this->division->insert($data);
-        $result = $this->player->update($data, ['id' => $player_id]);
+        // validasi
+        if ($this->player->validate($data) == false) {
+            return $this->send_json_output(validation_errors(), false, 422);
+        } else {
+            $result = $this->player->update($data, ['id' => $player_id]);
+        }
 
         if ($result) {
             return $this->send_json_output($result, true, 200);

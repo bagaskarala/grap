@@ -40,7 +40,12 @@ class Country extends MY_Controller
             'description' => $request->description,
         ];
 
-        $result = $this->country->insert($data);
+        // validasi
+        if ($this->country->validate($data) == false) {
+            return $this->send_json_output(validation_errors(), false, 422);
+        } else {
+            $result = $this->country->insert($data);
+        }
 
         if ($result) {
             return $this->send_json_output($result, true, 200);
@@ -59,8 +64,12 @@ class Country extends MY_Controller
             'description' => $request->description,
         ];
 
-        // $result = $this->division->insert($data);
-        $result = $this->country->update($data, ['id' => $country_id]);
+        // validasi
+        if ($this->country->validate($data) == false) {
+            return $this->send_json_output(validation_errors(), false, 422);
+        } else {
+            $result = $this->country->update($data, ['id' => $country_id]);
+        }
 
         if ($result) {
             return $this->send_json_output($result, true, 200);

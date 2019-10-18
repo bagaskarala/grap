@@ -57,6 +57,12 @@
       hide-footer
       :title="modalState == 'add'? 'Add Item' : 'Update Item'"
     >
+      <div
+        v-if="errorValidation"
+        class="alert alert-danger"
+        v-html="errorValidation"
+      ></div>
+
       <form method="post">
         <div class="form-group">
           <label for="division">Division</label>
@@ -79,6 +85,16 @@
           >
         </div>
         <div class="form-group">
+          <label for="play">Play</label>
+          <input
+            id="play"
+            v-model="form.play"
+            type="text"
+            class="form-control"
+            placeholder="Enter play"
+          >
+        </div>
+        <div class="form-group">
           <label for="description">Description</label>
           <textarea
             id="description"
@@ -88,16 +104,6 @@
             rows="4"
             placeholder="Enter description"
           ></textarea>
-        </div>
-        <div class="form-group">
-          <label for="play">Play</label>
-          <input
-            id="play"
-            v-model="form.play"
-            type="text"
-            class="form-control"
-            placeholder="Enter play"
-          >
         </div>
         <div class="d-flex justify-content-end">
           <div
@@ -139,7 +145,8 @@ export default {
         description: null,
         play: null
       },
-      modalState: null
+      modalState: null,
+      errorValidation: null
     };
   },
 
@@ -169,6 +176,7 @@ export default {
 
       } catch (error) {
         console.log(error.response);
+        this.errorValidation = error.response.data.message;
         this.$noty.error('Failed Insert Data');
       }
     },
@@ -188,6 +196,7 @@ export default {
 
       } catch (error) {
         console.log(error.response);
+        this.errorValidation = error.response.data.message;
         this.$noty.error('Failed Update Data');
       }
     },
@@ -232,6 +241,7 @@ export default {
     },
 
     loadData(item) {
+      this.resetData();
       this.$bvModal.show('modal-division');
       this.modalState = 'update';
       // populate form
@@ -244,6 +254,7 @@ export default {
     },
 
     resetData() {
+      this.errorValidation = null;
       this.form.division = null;
       this.form.system = null;
       this.form.description = null;

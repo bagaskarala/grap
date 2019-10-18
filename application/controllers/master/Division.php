@@ -40,7 +40,12 @@ class Division extends MY_Controller
             'play'        => $request->play,
         ];
 
-        $result = $this->division->insert($data);
+        // validasi
+        if ($this->division->validate($data) == false) {
+            return $this->send_json_output(validation_errors(), false, 422);
+        } else {
+            $result = $this->division->insert($data);
+        }
 
         if ($result) {
             return $this->send_json_output($result, true, 200);
@@ -60,7 +65,11 @@ class Division extends MY_Controller
             'play'        => $request->play,
         ];
 
-        $result = $this->division->update($data, ['id' => $division_id]);
+        if ($this->division->validate($data) == false) {
+            return $this->send_json_output(validation_errors(), false, 422);
+        } else {
+            $result = $this->division->update($data, ['id' => $division_id]);
+        }
 
         if ($result) {
             return $this->send_json_output($result, true, 200);

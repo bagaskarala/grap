@@ -31,7 +31,7 @@ $name = $this->session->userdata('name');
             <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?=$name?></span>
             <img
                class="img-profile rounded-circle"
-               src="https://source.unsplash.com/QAB-WJcbgJk/60x60"
+               src="<?=base_url('assets/img/user_default.png')?>"
             >
          </a>
          <!-- Dropdown - User Information -->
@@ -41,7 +41,7 @@ $name = $this->session->userdata('name');
          >
             <a
                class="dropdown-item"
-               href="#"
+               href="<?=base_url('user')?>"
             >
                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                Profile

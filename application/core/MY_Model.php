@@ -39,13 +39,25 @@ class MY_Model extends CI_Model
     public function insert($data)
     {
         $this->db->insert($this->table, $data);
-        return $this->db->insert_id();
+
+        // jika sukses kembalikan array data
+        if ($this->db->insert_id()) {
+            return $data;
+        } else {
+            return false;
+        }
     }
 
     public function update($data, $where)
     {
         $this->db->update($this->table, $data, $where);
-        return $this->db->affected_rows();
+
+        // jika sukses kembalikan array data
+        if ($this->db->affected_rows()) {
+            return $data;
+        } else {
+            return false;
+        }
     }
 
     public function delete($where)
@@ -60,16 +72,23 @@ class MY_Model extends CI_Model
         return $this;
     }
 
-    public function validate()
+    public function validate($data = null)
     {
         // validasi form
         $this->load->library('form_validation');
-        $this->form_validation->set_error_delimiters('<p class="small text-danger m-0">', '</p>');
+        $this->form_validation->set_error_delimiters('<p class="small m-0">', '</p>');
+
+        // jika diberikan array, maka memvalidasi array tersebut
+        // jika tidak maka validasi langsung dari $_POST
+        if ($data) {
+            $this->form_validation->set_data($data);
+        }
 
         // rules validasi ada di tiap model
         $validationRules = $this->getValidationRules();
         $this->form_validation->set_rules($validationRules);
 
+        // true or false
         return $this->form_validation->run();
     }
 }

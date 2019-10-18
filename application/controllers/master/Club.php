@@ -39,7 +39,12 @@ class Club extends MY_Controller
             'description' => $request->description,
         ];
 
-        $result = $this->club->insert($data);
+        // validasi
+        if ($this->club->validate($data) == false) {
+            return $this->send_json_output(validation_errors(), false, 422);
+        } else {
+            $result = $this->club->insert($data);
+        }
 
         if ($result) {
             return $this->send_json_output($result, true, 200);
@@ -57,8 +62,12 @@ class Club extends MY_Controller
             'description' => $request->description,
         ];
 
-        // $result = $this->division->insert($data);
-        $result = $this->club->update($data, ['id' => $club_id]);
+        // validasi
+        if ($this->club->validate($data) == false) {
+            return $this->send_json_output(validation_errors(), false, 422);
+        } else {
+            $result = $this->club->update($data, ['id' => $club_id]);
+        }
 
         if ($result) {
             return $this->send_json_output($result, true, 200);
