@@ -50,10 +50,13 @@ class MY_Model extends CI_Model
 
     public function update($data, $where)
     {
-        $this->db->update($this->table, $data, $where);
+        // cek dulu apakah datanya ada
+        if ($this->db->get_where($this->table, $where)->num_rows() == 0) {
+            return false;
+        }
 
         // jika sukses kembalikan array data
-        if ($this->db->affected_rows()) {
+        if ($this->db->update($this->table, $data, $where)) {
             return $data;
         } else {
             return false;
