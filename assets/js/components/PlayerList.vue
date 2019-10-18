@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container-fluid">
     <div class="row justify-content-center">
       <div class="col">
         <div class="card card-default">
@@ -9,9 +9,7 @@
             <button
               type="button"
               class="btn btn-sm btn-primary"
-              data-toggle="modal"
-              data-target="#modal-player"
-              @click="modalState = 'add'"
+              @click.prevent="addData()"
             >
               Add player
             </button>
@@ -36,13 +34,11 @@
                 <div>
                   <button
                     class="btn btn-sm btn-warning"
-                    data-toggle="modal"
-                    data-target="#modal-player"
-                    @click="loadData(item)"
+                    @click.prevent="loadData(item)"
                   ><i class="fa fa-edit fa-fw"></i></button>
                   <button
                     class="btn btn-sm btn-danger"
-                    @click="deleteData(item)"
+                    @click.prevent="confirmDelete(item)"
                   ><i class="fa fa-trash fa-fw"></i></button>
                 </div>
               </div>
@@ -52,124 +48,103 @@
       </div>
     </div>
 
-    <!-- modal add division -->
-    <div
-      class="modal fade"
+    <!-- modal add player -->
+    <b-modal
       id="modal-player"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
+      hide-footer
+      :title="modalState == 'add'? 'Add Item' : 'Update Item'"
     >
-      <div
-        class="modal-dialog"
-        role="document"
-      >
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5
-              class="modal-title"
-              id="exampleModalLabel"
-            >{{modalState == 'add'? 'Add Item' : 'Update Item'}}</h5>
+      <form method="post">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input
+            id="name"
+            v-model="form.name"
+            type="text"
+            class="form-control"
+            placeholder="Enter name"
+          >
+        </div>
+        <div class="form-group">
+          <label for="country_id">Country</label>
+          <select
+            name="country_id"
+            id="country_id"
+            class="form-control"
+            v-model.number="form.country_id"
+          >
+            <option :value="null">Select Country</option>
+            <option
+              v-for="item in countries"
+              :key="item.id"
+              :value="item.id"
+            >{{item.country}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="img">Image</label>
+          <input
+            id="img"
+            v-model="form.img"
+            type="text"
+            class="form-control"
+            placeholder="Enter img"
+          >
+        </div>
+        <div class="form-group">
+          <label for="height">Height</label>
+          <input
+            id="height"
+            v-model.number="form.height"
+            type="number"
+            class="form-control"
+            placeholder="Enter height"
+          >
+        </div>
+        <div class="form-group">
+          <label for="weight">Weight</label>
+          <input
+            id="weight"
+            v-model.number="form.weight"
+            type="number"
+            class="form-control"
+            placeholder="Enter weight"
+          >
+        </div>
+        <div class="form-group">
+          <label for="achievement">Achievement</label>
+          <input
+            id="achievement"
+            v-model.number="form.achievement"
+            type="number"
+            class="form-control"
+            placeholder="Enter achievement"
+          >
+        </div>
+        <div class="d-flex justify-content-end">
+          <div
+            class="btn-group"
+            role="group"
+          >
             <button
               type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
+              class="btn btn-secondary"
+              @click="resetData()"
+            >Reset</button>
+            <button
+              v-if="modalState=='add'"
+              class="btn btn-primary"
+              @click.prevent="insertData()"
+            >Add</button>
+            <button
+              v-else
+              class="btn btn-primary"
+              @click.prevent="updateData()"
+            >Update</button>
           </div>
-          <form method="post">
-            <div class="modal-body">
-              <div class="form-group">
-                <label for="name">Name</label>
-                <input
-                  id="name"
-                  v-model="form.name"
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter name"
-                >
-              </div>
-              <div class="form-group">
-                <label for="country_id">Country</label>
-                <select
-                  name="country_id"
-                  id="country_id"
-                  class="form-control"
-                  v-model.number="form.country_id"
-                >
-                  <option :value="null">Select Country</option>
-                  <option
-                    v-for="item in countries"
-                    :key="item.id"
-                    :value="item.id"
-                  >{{item.country}}</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="img">Image</label>
-                <input
-                  id="img"
-                  v-model="form.img"
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter img"
-                >
-              </div>
-              <div class="form-group">
-                <label for="height">Height</label>
-                <input
-                  id="height"
-                  v-model.number="form.height"
-                  type="number"
-                  class="form-control"
-                  placeholder="Enter height"
-                >
-              </div>
-              <div class="form-group">
-                <label for="weight">Weight</label>
-                <input
-                  id="weight"
-                  v-model.number="form.weight"
-                  type="number"
-                  class="form-control"
-                  placeholder="Enter weight"
-                >
-              </div>
-              <div class="form-group">
-                <label for="achievement">Achievement</label>
-                <input
-                  id="achievement"
-                  v-model.number="form.achievement"
-                  type="number"
-                  class="form-control"
-                  placeholder="Enter achievement"
-                >
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-dismiss="modal"
-              >Close</button>
-              <button
-                v-if="modalState=='add'"
-                class="btn btn-primary"
-                @click.prevent="addData()"
-              >Add</button>
-              <button
-                v-else
-                class="btn btn-primary"
-                @click.prevent="updateData()"
-              >Update</button>
-            </div>
-          </form>
         </div>
-      </div>
-    </div>
+      </form>
+    </b-modal>
   </div>
 </template>
 
@@ -193,51 +168,113 @@ export default {
   },
   methods: {
     async getCountries() {
-      const countries = await this.$axios.get('master/country/get_all');
-      this.countries = countries.data.data;
+      try {
+        const countries = await this.$axios.get('master/country/get_all');
+        this.countries = countries.data.data;
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Fetch Countries');
+      }
+
     },
 
     async getAllPlayers() {
-      const players = await this.$axios.get('master/player/get_all');
-      this.players = players.data.data;
+      try {
+        const players = await this.$axios.get('master/player/get_all');
+        this.players = players.data.data;
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Get Data');
+      }
+
     },
 
-    async addData() {
-      const result = await this.$axios.post('master/player/insert', {
-        country_id: this.form.country_id,
-        name: this.form.name,
-        img: this.form.img,
-        height: this.form.height,
-        weight: this.form.weight,
-        achievement: this.form.achievement
-      });
+    async insertData() {
+      try {
+        await this.$axios.post('master/player/insert', {
+          country_id: this.form.country_id,
+          name: this.form.name,
+          img: this.form.img,
+          height: this.form.height,
+          weight: this.form.weight,
+          achievement: this.form.achievement
+        });
 
-      this.triggerAlert(result.data.status, 'Insert');
+        this.$noty.success('Success Insert Data');
+        this.getAllPlayers();
+        this.$bvModal.hide('modal-player');
+
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Insert Data');
+      }
+
     },
 
     async updateData() {
-      const result = await this.$axios.post(`master/player/update/${this.form.id}`, {
-        country_id: this.form.country_id,
-        name: this.form.name,
-        img: this.form.img,
-        height: this.form.height,
-        weight: this.form.weight,
-        achievement: this.form.achievement
-      });
+      try {
+        await this.$axios.post(`master/player/update/${this.form.id}`, {
+          country_id: this.form.country_id,
+          name: this.form.name,
+          img: this.form.img,
+          height: this.form.height,
+          weight: this.form.weight,
+          achievement: this.form.achievement
+        });
 
-      this.triggerAlert(result.data.status, 'Update');
+        this.$noty.success('Success Update Data');
+        this.getAllPlayers();
+        this.$bvModal.hide('modal-player');
+
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Update Data');
+      }
     },
 
     async deleteData(item) {
-      const result = await this.$axios.post('master/player/delete', {
-        id: item.id
-      });
+      try {
+        await this.$axios.post('master/player/delete', {
+          id: item.id
+        });
 
-      this.triggerAlert(result.data.status, 'Delete');
+        this.$noty.success('Success Delete Data');
+        this.getAllPlayers();
+        this.$bvModal.hide('modal-player');
+
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Delete Data');
+      }
+    },
+
+    confirmDelete(item) {
+      this.$bvModal.msgBoxConfirm(`Please confirm that you want to delete ${item.name}`, {
+        title: 'Delete Data',
+        size: 'md',
+        okVariant: 'danger',
+        centered: true
+      })
+        .then(value => {
+          if (value) {
+            this.deleteData(item);
+          }
+        })
+        .catch(err => {
+          console.log('Error ', err);
+        });
+    },
+
+    addData() {
+      this.resetData();
+      this.$bvModal.show('modal-player');
+      this.modalState = 'add';
     },
 
     loadData(item) {
+      this.$bvModal.show('modal-player');
       this.modalState = 'update';
+      // populate form
       let { id, country_id, name, img, height, weight, achievement } = item;
       this.form.id = id;
       this.form.country_id = country_id;
@@ -248,13 +285,13 @@ export default {
       this.form.achievement = achievement;
     },
 
-    triggerAlert(status, type = 'Action') {
-      if (status) {
-        alert(`Success ${type} Data`);
-        location.reload();
-      } else {
-        alert(`Failed ${type} Data`);
-      }
+    resetData() {
+      this.form.country_id = null;
+      this.form.name = null;
+      this.form.img = null;
+      this.form.height = null;
+      this.form.weight = null;
+      this.form.achievement = null;
     }
   },
 

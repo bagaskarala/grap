@@ -47,7 +47,7 @@ class Admin extends CI_Controller
 
     public function role_access($role_id)
     {
-        $data['title'] = "Dashboard";
+        $data['title'] = "Role";
         $data['page']  = "admin/role_access";
 
         $data['user'] = $this->db->get_where('user', ['email' => $this->session_email])->row_array();

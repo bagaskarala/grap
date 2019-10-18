@@ -21,12 +21,13 @@ class Winning extends MY_Controller
     {
         $winnings = $this->winning->get_all_array();
 
-        return $this->output
-            ->set_status_header(200)
-            ->set_output(json_encode([
-                'success' => true,
-                'data'    => $winnings,
-            ]));
+        if (count($winnings) == 0) {
+            return $this->send_json_output([], true, 200);
+        } else if ($winnings) {
+            return $this->send_json_output($winnings, true, 200);
+        } else {
+            return $this->send_json_output("Failed get data", false, 400);
+        }
     }
 
     public function insert()
@@ -40,20 +41,10 @@ class Winning extends MY_Controller
 
         $result = $this->winning->insert($data);
 
-        if (!$result) {
-            return $this->output
-                ->set_status_header(200)
-                ->set_output(json_encode([
-                    'status'  => false,
-                    'message' => 'gagal insert',
-                ]));
+        if ($result) {
+            return $this->send_json_output($result, true, 200);
         } else {
-            return $this->output
-                ->set_status_header(200)
-                ->set_output(json_encode([
-                    'status'  => true,
-                    'message' => ['insert_id' => $result],
-                ]));
+            return $this->send_json_output("Failed Insert Data", false, 400);
         }
     }
 
@@ -68,20 +59,10 @@ class Winning extends MY_Controller
 
         $result = $this->winning->update($data, ['id' => $winning_id]);
 
-        if (!$result) {
-            return $this->output
-                ->set_status_header(200)
-                ->set_output(json_encode([
-                    'status'  => false,
-                    'message' => 'gagal update',
-                ]));
+        if ($result) {
+            return $this->send_json_output($result, true, 200);
         } else {
-            return $this->output
-                ->set_status_header(200)
-                ->set_output(json_encode([
-                    'status'  => true,
-                    'message' => $result,
-                ]));
+            return $this->send_json_output("Failed Update Data", false, 400);
         }
     }
 
@@ -95,20 +76,10 @@ class Winning extends MY_Controller
 
         $result = $this->winning->delete($data);
 
-        if (!$result) {
-            return $this->output
-                ->set_status_header(200)
-                ->set_output(json_encode([
-                    'status'  => false,
-                    'message' => 'gagal delete',
-                ]));
+        if ($result) {
+            return $this->send_json_output($result, true, 200);
         } else {
-            return $this->output
-                ->set_status_header(200)
-                ->set_output(json_encode([
-                    'status'  => true,
-                    'message' => $result,
-                ]));
+            return $this->send_json_output("Failed Delete Data", false, 400);
         }
     }
 };

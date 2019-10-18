@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container-fluid">
     <div class="row justify-content-center">
       <div class="col">
         <div class="card card-default">
@@ -9,9 +9,7 @@
             <button
               type="button"
               class="btn btn-sm btn-primary"
-              data-toggle="modal"
-              data-target="#modal-club"
-              @click="modalState = 'add'"
+              @click.prevent="addData()"
             >
               Add club
             </button>
@@ -36,13 +34,11 @@
                 <div>
                   <button
                     class="btn btn-sm btn-warning"
-                    data-toggle="modal"
-                    data-target="#modal-club"
-                    @click="loadData(item)"
+                    @click.prevent="loadData(item)"
                   ><i class="fa fa-edit fa-fw"></i></button>
                   <button
                     class="btn btn-sm btn-danger"
-                    @click="deleteData(item)"
+                    @click.prevent="confirmDelete(item)"
                   ><i class="fa fa-trash fa-fw"></i></button>
                 </div>
               </div>
@@ -52,79 +48,59 @@
       </div>
     </div>
 
-    <!-- modal add division -->
-    <div
-      class="modal fade"
+    <!-- modal add club -->
+    <b-modal
       id="modal-club"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
+      hide-footer
+      :title="modalState == 'add'? 'Add Item' : 'Update Item'"
+      @show="modalState = 'add'"
     >
-      <div
-        class="modal-dialog"
-        role="document"
-      >
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5
-              class="modal-title"
-              id="exampleModalLabel"
-            >{{modalState == 'add'? 'Add Item' : 'Update Item'}}</h5>
+      <form method="post">
+        <div class="form-group">
+          <label for="club">club</label>
+          <input
+            id="club"
+            v-model="form.club"
+            type="text"
+            class="form-control"
+            placeholder="Enter club"
+          >
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            v-model="form.description"
+            class="form-control"
+            cols="30"
+            rows="4"
+            placeholder="Enter description"
+          ></textarea>
+        </div>
+        <div class="d-flex justify-content-end">
+          <div
+            class="btn-group"
+            role="group"
+          >
             <button
               type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
+              class="btn btn-secondary"
+              @click="resetData()"
+            >Reset</button>
+            <button
+              v-if="modalState=='add'"
+              class="btn btn-primary"
+              @click.prevent="insertData()"
+            >Add</button>
+            <button
+              v-else
+              class="btn btn-primary"
+              @click.prevent="updateData()"
+            >Update</button>
           </div>
-          <form method="post">
-            <div class="modal-body">
-              <div class="form-group">
-                <label for="club">club</label>
-                <input
-                  id="club"
-                  v-model="form.club"
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter club"
-                >
-              </div>
-              <div class="form-group">
-                <label for="description">Description</label>
-                <textarea
-                  id="description"
-                  v-model="form.description"
-                  class="form-control"
-                  cols="30"
-                  rows="4"
-                  placeholder="Enter description"
-                ></textarea>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-dismiss="modal"
-              >Close</button>
-              <button
-                v-if="modalState=='add'"
-                class="btn btn-primary"
-                @click.prevent="addData()"
-              >Add</button>
-              <button
-                v-else
-                class="btn btn-primary"
-                @click.prevent="updateData()"
-              >Update</button>
-            </div>
-          </form>
         </div>
-      </div>
-    </div>
+      </form>
+    </b-modal>
   </div>
 </template>
 
@@ -143,58 +119,101 @@ export default {
   },
   methods: {
     async getAllClubs() {
-      const clubs = await this.$axios.get('master/club/get_all');
-      this.clubs = clubs.data.data;
+      try {
+        const clubs = await this.$axios.get('master/club/get_all');
+        this.clubs = clubs.data.data;
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Get Data');
+      }
     },
 
-    async addData() {
-      const result = await this.$axios.post('master/club/insert', {
-        club: this.form.club,
-        description: this.form.description
-      });
+    async insertData() {
+      try {
+        await this.$axios.post('master/club/insert', {
+          club: this.form.club,
+          description: this.form.description
+        });
 
-      this.triggerAlert(result.data.status, 'Insert');
+        this.$noty.success('Success Insert Data');
+        this.getAllClubs();
+        this.$bvModal.hide('modal-club');
+
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Insert Data');
+      }
     },
 
     async updateData() {
-      const result = await this.$axios.post(`master/club/update/${this.form.id}`, {
-        club: this.form.club,
-        description: this.form.description
-      });
+      try {
+        await this.$axios.post(`master/club/update/${this.form.id}`, {
+          club: this.form.club,
+          description: this.form.description
+        });
 
-      this.triggerAlert(result.data.status, 'Update');
+        this.$noty.success('Success Update Data');
+        this.getAllClubs();
+        this.$bvModal.hide('modal-club');
+
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Update Data');
+      }
     },
 
     async deleteData(item) {
-      const result = await this.$axios.post('master/club/delete', {
-        id: item.id
-      });
+      try {
+        await this.$axios.post('master/club/delete', {
+          id: item.id
+        });
 
-      this.triggerAlert(result.data.status, 'Delete');
+        this.$noty.success('Success Delete Data');
+        this.getAllClubs();
+        this.$bvModal.hide('modal-club');
+
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Delete Data');
+      }
+    },
+
+    confirmDelete(item) {
+      this.$bvModal.msgBoxConfirm(`Please confirm that you want to delete ${item.club}`, {
+        title: 'Delete Data',
+        size: 'md',
+        okVariant: 'danger',
+        centered: true
+      })
+        .then(value => {
+          if (value) {
+            this.deleteData(item);
+          }
+        })
+        .catch(err => {
+          console.log('Error ', err);
+        });
+    },
+
+    addData() {
+      this.resetData();
+      this.$bvModal.show('modal-club');
     },
 
     loadData(item) {
+      this.$bvModal.show('modal-club');
       this.modalState = 'update';
+      // populate form
       let { id, club, description } = item;
       this.form.id = id;
       this.form.club = club;
       this.form.description = description;
     },
 
-    triggerAlert(status, type = 'Action') {
-      if (status) {
-        alert(`Success ${type} Data`);
-        location.reload();
-      } else {
-        alert(`Failed ${type} Data`);
-      }
-    },
-
     resetData() {
-      this.form = {
-        club: null,
-        description: null
-      };
+      this.form.id = null;
+      this.form.club = null;
+      this.form.description = null;
     }
   },
 

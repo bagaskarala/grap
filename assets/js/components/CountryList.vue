@@ -56,7 +56,6 @@
       id="modal-country"
       hide-footer
       :title="modalState == 'add'? 'Add Item' : 'Update Item'"
-      @show="modalState = 'add'"
     >
       <form method="post">
         <div class="form-group">
@@ -211,6 +210,7 @@ export default {
     addData() {
       this.resetData();
       this.$bvModal.show('modal-country');
+      this.modalState = 'add';
     },
 
     loadData(item) {

@@ -21,12 +21,13 @@ class Club extends MY_Controller
     {
         $clubs = $this->club->get_all_array();
 
-        return $this->output
-            ->set_status_header(200)
-            ->set_output(json_encode([
-                'success' => true,
-                'data'    => $clubs,
-            ]));
+        if (count($clubs) == 0) {
+            return $this->send_json_output([], true, 200);
+        } else if ($clubs) {
+            return $this->send_json_output($clubs, true, 200);
+        } else {
+            return $this->send_json_output("Failed get data", false, 400);
+        }
     }
 
     public function insert()
@@ -40,20 +41,10 @@ class Club extends MY_Controller
 
         $result = $this->club->insert($data);
 
-        if (!$result) {
-            return $this->output
-                ->set_status_header(200)
-                ->set_output(json_encode([
-                    'status'  => false,
-                    'message' => 'gagal insert',
-                ]));
+        if ($result) {
+            return $this->send_json_output($result, true, 200);
         } else {
-            return $this->output
-                ->set_status_header(200)
-                ->set_output(json_encode([
-                    'status'  => true,
-                    'message' => ['insert_id' => $result],
-                ]));
+            return $this->send_json_output("Failed Insert Data", false, 400);
         }
     }
 
@@ -69,20 +60,10 @@ class Club extends MY_Controller
         // $result = $this->division->insert($data);
         $result = $this->club->update($data, ['id' => $club_id]);
 
-        if (!$result) {
-            return $this->output
-                ->set_status_header(200)
-                ->set_output(json_encode([
-                    'status'  => false,
-                    'message' => 'gagal update',
-                ]));
+        if ($result) {
+            return $this->send_json_output($result, true, 200);
         } else {
-            return $this->output
-                ->set_status_header(200)
-                ->set_output(json_encode([
-                    'status'  => true,
-                    'message' => $result,
-                ]));
+            return $this->send_json_output("Failed Update Data", false, 400);
         }
     }
 
@@ -96,20 +77,10 @@ class Club extends MY_Controller
 
         $result = $this->club->delete($data);
 
-        if (!$result) {
-            return $this->output
-                ->set_status_header(200)
-                ->set_output(json_encode([
-                    'status'  => false,
-                    'message' => 'gagal delete',
-                ]));
+        if ($result) {
+            return $this->send_json_output($result, true, 200);
         } else {
-            return $this->output
-                ->set_status_header(200)
-                ->set_output(json_encode([
-                    'status'  => true,
-                    'message' => $result,
-                ]));
+            return $this->send_json_output("Failed Delete Data", false, 400);
         }
     }
 };
