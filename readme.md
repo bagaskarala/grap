@@ -1,6 +1,14 @@
 # Grap
+Grappling Match System
 
-## How to install
+## How to use (end-user)
+- Download this repo
+- Install Xampp PHP 7
+- Import sql into phpmyadmin
+- Open in browser `localhost/grap`
+
+## Development
+### How to develop
 - Clone this repo
 - Import database .sql
 - Set application/config/database.php
@@ -10,8 +18,7 @@
 - Open browser and enter `localhost/grap`
 - Every browser reload will also update compiled javascript
 
-## Development
-## App
+### App
 - PHP framework - Codeigniter
 - CSS framework - Bootstrap
 - Admin template - SBAdmin2
