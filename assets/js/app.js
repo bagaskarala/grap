@@ -11,10 +11,16 @@ Vue.use(VueNoty, {
    closeWith: ['click', 'button']
 });
 
+// bootstrap-vue css
+import 'bootstrap-vue/dist/bootstrap-vue.css';
+
 // modal bootstrap-vue
 import { ModalPlugin } from 'bootstrap-vue';
 Vue.use(ModalPlugin);
-import 'bootstrap-vue/dist/bootstrap-vue.css';
+
+// table bootstrap-vue
+import { TablePlugin } from 'bootstrap-vue';
+Vue.use(TablePlugin);
 
 // membuat instance axios
 import Axios from 'axios';
@@ -32,6 +38,7 @@ Vue.component('CountryList', require('./components/CountryList.vue').default);
 Vue.component('ClubList', require('./components/ClubList.vue').default);
 Vue.component('PlayerList', require('./components/PlayerList.vue').default);
 Vue.component('WinningList', require('./components/WinningList.vue').default);
+Vue.component('PlayerDivision', require('./components/PlayerDivision.vue').default);
 
 new Vue({
    el: '#app'
