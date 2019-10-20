@@ -12,6 +12,11 @@ class Country_model extends MY_Model
                 'rules' => 'required|trim',
             ],
             [
+                'field' => 'alias',
+                'label' => 'alias',
+                'rules' => 'trim',
+            ],
+            [
                 'field' => 'img',
                 'label' => 'img',
                 'rules' => 'trim',

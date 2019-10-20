@@ -35,6 +35,9 @@ class Division extends MY_Controller
 
         $data = [
             'division'    => $request->division,
+            'min_weight'  => $request->min_weight,
+            'max_weight'  => $request->max_weight,
+            'gender'      => $request->gender,
             'system'      => $request->system,
             'description' => $request->description,
             'play'        => $request->play,
@@ -60,6 +63,9 @@ class Division extends MY_Controller
 
         $data = [
             'division'    => $request->division,
+            'min_weight'  => $request->min_weight,
+            'max_weight'  => $request->max_weight,
+            'gender'      => $request->gender,
             'system'      => $request->system,
             'description' => $request->description,
             'play'        => $request->play,

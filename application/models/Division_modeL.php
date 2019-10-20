@@ -9,6 +9,21 @@ class Division_model extends MY_Model
             [
                 'field' => 'division',
                 'label' => 'division',
+                'rules' => 'trim',
+            ],
+            [
+                'field' => 'min_weight',
+                'label' => 'min_weight',
+                'rules' => 'required|trim',
+            ],
+            [
+                'field' => 'max_weight',
+                'label' => 'max_weight',
+                'rules' => 'required|trim',
+            ],
+            [
+                'field' => 'gender',
+                'label' => 'gender',
                 'rules' => 'required|trim',
             ],
             [

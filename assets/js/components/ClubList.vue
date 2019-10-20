@@ -63,13 +63,25 @@
 
       <form method="post">
         <div class="form-group">
-          <label for="club">club</label>
+          <label for="club">Club</label>
           <input
             id="club"
             v-model="form.club"
             type="text"
             class="form-control"
             placeholder="Enter club"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="alias">Alias</label>
+          <input
+            id="alias"
+            v-model="form.alias"
+            type="text"
+            class="form-control"
+            placeholder="Enter alias"
+            maxlength="3"
           >
         </div>
         <div class="form-group">
@@ -118,6 +130,7 @@ export default {
       clubs: [],
       form: {
         club: null,
+        alias: null,
         description: null
       },
       modalState: null,
@@ -139,6 +152,7 @@ export default {
       try {
         await this.$axios.post('master/club/insert', {
           club: this.form.club,
+          alias: this.form.alias,
           description: this.form.description
         });
 
@@ -157,6 +171,7 @@ export default {
       try {
         await this.$axios.post(`master/club/update/${this.form.id}`, {
           club: this.form.club,
+          alias: this.form.alias,
           description: this.form.description
         });
 
@@ -214,8 +229,9 @@ export default {
       this.$bvModal.show('modal-club');
       this.modalState = 'update';
       // populate form
-      let { id, club, description } = item;
+      let { id, club, alias, description } = item;
       this.form.id = id;
+      this.form.alias = alias;
       this.form.club = club;
       this.form.description = description;
     },
@@ -223,6 +239,7 @@ export default {
     resetData() {
       this.errorValidation = null;
       this.form.id = null;
+      this.form.alias = null;
       this.form.club = null;
       this.form.description = null;
     }

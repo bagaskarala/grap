@@ -36,6 +36,7 @@ class Club extends MY_Controller
 
         $data = [
             'club'        => $request->club,
+            'alias'       => $request->alias,
             'description' => $request->description,
         ];
 
@@ -59,6 +60,7 @@ class Club extends MY_Controller
 
         $data = [
             'club'        => $request->club,
+            'alias'       => $request->alias,
             'description' => $request->description,
         ];
 

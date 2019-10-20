@@ -36,6 +36,7 @@ class Country extends MY_Controller
 
         $data = [
             'country'     => $request->country,
+            'alias'       => $request->alias,
             'img'         => $request->img,
             'description' => $request->description,
         ];
@@ -60,6 +61,7 @@ class Country extends MY_Controller
 
         $data = [
             'country'     => $request->country,
+            'alias'       => $request->alias,
             'img'         => $request->img,
             'description' => $request->description,
         ];

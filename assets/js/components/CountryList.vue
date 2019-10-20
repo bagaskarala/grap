@@ -75,6 +75,17 @@
           >
         </div>
         <div class="form-group">
+          <label for="alias">Alias</label>
+          <input
+            id="alias"
+            v-model="form.alias"
+            type="text"
+            class="form-control"
+            placeholder="Enter Alias"
+            maxlength="3"
+          >
+        </div>
+        <div class="form-group">
           <label for="img">Img</label>
           <input
             id="img"
@@ -130,6 +141,7 @@ export default {
       countries: [],
       form: {
         country: null,
+        alias: null,
         img: null,
         description: null
       },
@@ -150,12 +162,13 @@ export default {
 
     async insertData() {
       try {
-        await this.$axios.post('master/country/insert', {
+        var ganteng = await this.$axios.post('master/country/insert', {
           country: this.form.country,
+          alias: this.form.alias,
           img: this.form.img,
           description: this.form.description
         });
-
+        console.log(ganteng);
         this.$noty.success('Success Insert Data');
         this.getAllCountries();
         this.$bvModal.hide('modal-country');
@@ -170,6 +183,7 @@ export default {
       try {
         await this.$axios.post(`master/country/update/${this.form.id}`, {
           country: this.form.country,
+          alias: this.form.alias,
           img: this.form.img,
           description: this.form.description
         });
@@ -226,9 +240,10 @@ export default {
       this.resetData();
       this.$bvModal.show('modal-country');
       this.modalState = 'update';
-      let { id, country, img, description } = item;
+      let { id, country, alias, img, description } = item;
       this.form.id = id;
       this.form.country = country;
+      this.form.alias = alias;
       this.form.img = img;
       this.form.description = description;
     },
@@ -236,6 +251,7 @@ export default {
     resetData() {
       this.errorValidation = null;
       this.form.country = null;
+      this.form.alias = null;
       this.form.img = null;
       this.form.description = null;
     }

@@ -31,7 +31,10 @@
                     {{item.division}}
                   </p>
                   <p class="small text-muted m-0">
-                    {{item.system}}
+                    Gender: {{item.gender}}
+                  </p>
+                  <p class="small text-muted m-0">
+                    System : {{item.system}}
                   </p>
                 </div>
                 <div>
@@ -68,11 +71,47 @@
           <label for="division">Division</label>
           <input
             id="division"
-            v-model="form.division"
             type="text"
             class="form-control"
-            placeholder="Enter division"
+            disabled
+            :value="divisionName"
           >
+        </div>
+        <div class="form-group">
+          <label for="min_weight">Min. Weight</label>
+          <input
+            id="min_weight"
+            v-model="form.min_weight"
+            type="text"
+            class="form-control"
+            placeholder="Enter minimal weight"
+          >
+          <div class="form-group">
+            <label for="max_weight">Max. Weight</label>
+            <input
+              id="max_weight"
+              v-model="form.max_weight"
+              type="text"
+              class="form-control"
+              placeholder="Enter maximum weght"
+            >
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="gender">Gender</label>
+          <select
+            name="gender"
+            id="gender"
+            class="form-control"
+            v-model.number="form.gender"
+          >
+            <option :value="null">Select Gender</option>
+            <option
+              v-for="item in gender"
+              :key="item.value"
+              :value="item.value"
+            >{{item.text}}</option>
+          </select>
         </div>
         <div class="form-group">
           <label for="system">System</label>
@@ -138,9 +177,16 @@ export default {
   data() {
     return {
       divisions: [],
+      gender: [
+        { text: 'Pria', value: 'pria' },
+        { text: 'Wanita', value: 'wanita' }
+      ],
       form: {
         id: null,
         division: null,
+        min_weight: null,
+        max_weight: null,
+        gender: null,
         system: null,
         description: null,
         play: null
@@ -148,6 +194,14 @@ export default {
       modalState: null,
       errorValidation: null
     };
+  },
+
+  computed: {
+    // getter
+    divisionName() {
+      return this.form.min_weight + '-' + this.form.max_weight;
+    }
+
   },
 
   methods: {
@@ -164,7 +218,10 @@ export default {
     async insertData() {
       try {
         await this.$axios.post('master/division/insert', {
-          division: this.form.division,
+          division: this.divisionName,
+          min_weight: this.form.min_weight,
+          max_weight: this.form.max_weight,
+          gender: this.form.gender,
           system: this.form.system,
           description: this.form.description,
           play: this.form.play
@@ -185,6 +242,9 @@ export default {
       try {
         await this.$axios.post(`master/division/update/${this.form.id}`, {
           division: this.form.division,
+          min_weight: this.form.min_weight,
+          max_weight: this.form.max_weight,
+          gender: this.form.gender,
           system: this.form.system,
           description: this.form.description,
           play: this.form.play
@@ -245,9 +305,12 @@ export default {
       this.$bvModal.show('modal-division');
       this.modalState = 'update';
       // populate form
-      let { id, division, system, description, play } = item;
+      let { id, division, min_weight, max_weight, gender, system, description, play } = item;
       this.form.id = id;
       this.form.division = division;
+      this.form.min_weight = min_weight;
+      this.form.max_weight = max_weight;
+      this.form.gender = gender;
       this.form.system = system;
       this.form.description = description;
       this.form.play = play;
@@ -256,6 +319,9 @@ export default {
     resetData() {
       this.errorValidation = null;
       this.form.division = null;
+      this.min_weight = null;
+      this.max_weight = null;
+      this.form.gender = null;
       this.form.system = null;
       this.form.description = null;
       this.form.play = null;

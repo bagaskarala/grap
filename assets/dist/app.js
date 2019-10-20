@@ -2514,6 +2514,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ClubList',
   data: function data() {
@@ -2521,6 +2533,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       clubs: [],
       form: {
         club: null,
+        alias: null,
         description: null
       },
       modalState: null,
@@ -2579,6 +2592,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context2.next = 3;
                 return this.$axios.post('master/club/insert', {
                   club: this.form.club,
+                  alias: this.form.alias,
                   description: this.form.description
                 });
 
@@ -2622,6 +2636,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context3.next = 3;
                 return this.$axios.post("master/club/update/".concat(this.form.id), {
                   club: this.form.club,
+                  alias: this.form.alias,
                   description: this.form.description
                 });
 
@@ -2721,14 +2736,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       var id = item.id,
           club = item.club,
+          alias = item.alias,
           description = item.description;
       this.form.id = id;
+      this.form.alias = alias;
       this.form.club = club;
       this.form.description = description;
     },
     resetData: function resetData() {
       this.errorValidation = null;
       this.form.id = null;
+      this.form.alias = null;
       this.form.club = null;
       this.form.description = null;
     }
@@ -2881,6 +2899,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'CountryList',
   data: function data() {
@@ -2888,6 +2917,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       countries: [],
       form: {
         country: null,
+        alias: null,
         img: null,
         description: null
       },
@@ -2939,6 +2969,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _insertData = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var ganteng;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -2947,30 +2978,33 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context2.next = 3;
                 return this.$axios.post('master/country/insert', {
                   country: this.form.country,
+                  alias: this.form.alias,
                   img: this.form.img,
                   description: this.form.description
                 });
 
               case 3:
+                ganteng = _context2.sent;
+                console.log(ganteng);
                 this.$noty.success('Success Insert Data');
                 this.getAllCountries();
                 this.$bvModal.hide('modal-country');
-                _context2.next = 13;
+                _context2.next = 15;
                 break;
 
-              case 8:
-                _context2.prev = 8;
+              case 10:
+                _context2.prev = 10;
                 _context2.t0 = _context2["catch"](0);
                 this.$noty.error('Failed Insert Data');
                 this.errorValidation = _context2.t0.response.data.message;
                 console.log(_context2.t0.response);
 
-              case 13:
+              case 15:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[0, 8]]);
+        }, _callee2, this, [[0, 10]]);
       }));
 
       function insertData() {
@@ -2991,6 +3025,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context3.next = 3;
                 return this.$axios.post("master/country/update/".concat(this.form.id), {
                   country: this.form.country,
+                  alias: this.form.alias,
                   img: this.form.img,
                   description: this.form.description
                 });
@@ -3091,16 +3126,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.modalState = 'update';
       var id = item.id,
           country = item.country,
+          alias = item.alias,
           img = item.img,
           description = item.description;
       this.form.id = id;
       this.form.country = country;
+      this.form.alias = alias;
       this.form.img = img;
       this.form.description = description;
     },
     resetData: function resetData() {
       this.errorValidation = null;
       this.form.country = null;
+      this.form.alias = null;
       this.form.img = null;
       this.form.description = null;
     }
@@ -3263,14 +3301,63 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'DivisionList',
   data: function data() {
     return {
       divisions: [],
+      gender: [{
+        text: 'Pria',
+        value: 'pria'
+      }, {
+        text: 'Wanita',
+        value: 'wanita'
+      }],
       form: {
         id: null,
         division: null,
+        min_weight: null,
+        max_weight: null,
+        gender: null,
         system: null,
         description: null,
         play: null
@@ -3278,6 +3365,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       modalState: null,
       errorValidation: null
     };
+  },
+  computed: {
+    // getter
+    divisionName: function divisionName() {
+      return this.form.min_weight + '-' + this.form.max_weight;
+    }
   },
   methods: {
     getAllDivisions: function () {
@@ -3330,7 +3423,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context2.prev = 0;
                 _context2.next = 3;
                 return this.$axios.post('master/division/insert', {
-                  division: this.form.division,
+                  division: this.divisionName,
+                  min_weight: this.form.min_weight,
+                  max_weight: this.form.max_weight,
+                  gender: this.form.gender,
                   system: this.form.system,
                   description: this.form.description,
                   play: this.form.play
@@ -3376,6 +3472,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context3.next = 3;
                 return this.$axios.post("master/division/update/".concat(this.form.id), {
                   division: this.form.division,
+                  min_weight: this.form.min_weight,
+                  max_weight: this.form.max_weight,
+                  gender: this.form.gender,
                   system: this.form.system,
                   description: this.form.description,
                   play: this.form.play
@@ -3478,11 +3577,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       var id = item.id,
           division = item.division,
+          min_weight = item.min_weight,
+          max_weight = item.max_weight,
+          gender = item.gender,
           system = item.system,
           description = item.description,
           play = item.play;
       this.form.id = id;
       this.form.division = division;
+      this.form.min_weight = min_weight;
+      this.form.max_weight = max_weight;
+      this.form.gender = gender;
       this.form.system = system;
       this.form.description = description;
       this.form.play = play;
@@ -3490,6 +3595,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     resetData: function resetData() {
       this.errorValidation = null;
       this.form.division = null;
+      this.min_weight = null;
+      this.max_weight = null;
+      this.form.gender = null;
       this.form.system = null;
       this.form.description = null;
       this.form.play = null;
@@ -38461,7 +38569,7 @@ var render = function() {
           _vm._v(" "),
           _c("form", { attrs: { method: "post" } }, [
             _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "club" } }, [_vm._v("club")]),
+              _c("label", { attrs: { for: "club" } }, [_vm._v("Club")]),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -38481,6 +38589,37 @@ var render = function() {
                       return
                     }
                     _vm.$set(_vm.form, "club", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "alias" } }, [_vm._v("Alias")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.alias,
+                    expression: "form.alias"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  id: "alias",
+                  type: "text",
+                  placeholder: "Enter alias",
+                  maxlength: "3"
+                },
+                domProps: { value: _vm.form.alias },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "alias", $event.target.value)
                   }
                 }
               })
@@ -38764,6 +38903,37 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "alias" } }, [_vm._v("Alias")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.alias,
+                    expression: "form.alias"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  id: "alias",
+                  type: "text",
+                  placeholder: "Enter Alias",
+                  maxlength: "3"
+                },
+                domProps: { value: _vm.form.alias },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "alias", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
               _c("label", { attrs: { for: "img" } }, [_vm._v("Img")]),
               _vm._v(" "),
               _c("input", {
@@ -38973,7 +39143,15 @@ var render = function() {
                         _vm._v(" "),
                         _c("p", { staticClass: "small text-muted m-0" }, [
                           _vm._v(
-                            "\n                  " +
+                            "\n                  Gender: " +
+                              _vm._s(item.gender) +
+                              "\n                "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "small text-muted m-0" }, [
+                          _vm._v(
+                            "\n                  System : " +
                               _vm._s(item.system) +
                               "\n                "
                           )
@@ -39041,30 +39219,128 @@ var render = function() {
               _c("label", { attrs: { for: "division" } }, [_vm._v("Division")]),
               _vm._v(" "),
               _c("input", {
+                staticClass: "form-control",
+                attrs: { id: "division", type: "text", disabled: "" },
+                domProps: { value: _vm.divisionName }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "min_weight" } }, [
+                _vm._v("Min. Weight")
+              ]),
+              _vm._v(" "),
+              _c("input", {
                 directives: [
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.form.division,
-                    expression: "form.division"
+                    value: _vm.form.min_weight,
+                    expression: "form.min_weight"
                   }
                 ],
                 staticClass: "form-control",
                 attrs: {
-                  id: "division",
+                  id: "min_weight",
                   type: "text",
-                  placeholder: "Enter division"
+                  placeholder: "Enter minimal weight"
                 },
-                domProps: { value: _vm.form.division },
+                domProps: { value: _vm.form.min_weight },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(_vm.form, "division", $event.target.value)
+                    _vm.$set(_vm.form, "min_weight", $event.target.value)
                   }
                 }
-              })
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "max_weight" } }, [
+                  _vm._v("Max. Weight")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.max_weight,
+                      expression: "form.max_weight"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    id: "max_weight",
+                    type: "text",
+                    placeholder: "Enter maximum weght"
+                  },
+                  domProps: { value: _vm.form.max_weight },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "max_weight", $event.target.value)
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "gender" } }, [_vm._v("Gender")]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model.number",
+                      value: _vm.form.gender,
+                      expression: "form.gender",
+                      modifiers: { number: true }
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "gender", id: "gender" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return _vm._n(val)
+                        })
+                      _vm.$set(
+                        _vm.form,
+                        "gender",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                [
+                  _c("option", { domProps: { value: null } }, [
+                    _vm._v("Select Gender")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.gender, function(item) {
+                    return _c(
+                      "option",
+                      { key: item.value, domProps: { value: item.value } },
+                      [_vm._v(_vm._s(item.text))]
+                    )
+                  })
+                ],
+                2
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
