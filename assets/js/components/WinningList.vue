@@ -137,7 +137,7 @@ export default {
 
     async insertData() {
       try {
-        const ins = await this.$axios.post('master/winning/insert', {
+        await this.$axios.post('master/winning/insert', {
           winning: this.form.winning,
           description: this.form.description
         });
@@ -145,7 +145,6 @@ export default {
         this.$noty.success('Success Insert Data');
         this.getAllWinnings();
         this.$bvModal.hide('modal-winning');
-        console.log(ins);
 
       } catch (error) {
         console.log(error.response);
@@ -156,7 +155,7 @@ export default {
 
     async updateData() {
       try {
-        const upd = await this.$axios.post(`master/winning/update/${this.form.id}`, {
+        await this.$axios.post(`master/winning/update/${this.form.id}`, {
           winning: this.form.winning,
           description: this.form.description
         });
@@ -164,7 +163,6 @@ export default {
         this.$noty.success('Success Update Data');
         this.getAllWinnings();
         this.$bvModal.hide('modal-winning');
-        console.log(upd);
 
       } catch (error) {
         console.log(error.response);

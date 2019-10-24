@@ -14,7 +14,7 @@ class Club_model extends MY_Model
             [
                 'field' => 'alias',
                 'label' => 'alias',
-                'rules' => 'required|trim',
+                'rules' => 'trim',
             ],
             [
                 'field' => 'description',

@@ -88,6 +88,22 @@
           </select>
         </div>
         <div class="form-group">
+          <label for="club_id">Club</label>
+          <select
+            name="club_id"
+            id="club_id"
+            class="form-control"
+            v-model.number="form.club_id"
+          >
+            <option :value="null">Select Club</option>
+            <option
+              v-for="item in clubs"
+              :key="item.id"
+              :value="item.id"
+            >{{item.club}}</option>
+          </select>
+        </div>
+        <div class="form-group">
           <label for="img">Image</label>
           <input
             id="img"
@@ -99,23 +115,33 @@
         </div>
         <div class="form-group">
           <label for="height">Height</label>
-          <input
-            id="height"
-            v-model.number="form.height"
-            type="number"
-            class="form-control"
-            placeholder="Enter height"
-          >
+          <div class="input-group mb-3">
+            <input
+              id="height"
+              v-model.number="form.height"
+              type="number"
+              class="form-control"
+              placeholder="Enter height"
+            >
+            <div class="input-group-append">
+              <span class="input-group-text">cm</span>
+            </div>
+          </div>
         </div>
         <div class="form-group">
           <label for="weight">Weight</label>
-          <input
-            id="weight"
-            v-model.number="form.weight"
-            type="number"
-            class="form-control"
-            placeholder="Enter weight"
-          >
+          <div class="input-group mb-3">
+            <input
+              id="weight"
+              v-model.number="form.weight"
+              type="number"
+              class="form-control"
+              placeholder="Enter weight"
+            >
+            <div class="input-group-append">
+              <span class="input-group-text">kg</span>
+            </div>
+          </div>
         </div>
         <div class="form-group">
           <label for="achievement">Achievement</label>
@@ -161,8 +187,10 @@ export default {
     return {
       players: [],
       countries: [],
+      clubs: [],
       form: {
         country_id: null,
+        club_id: null,
         name: null,
         img: null,
         height: null,
@@ -182,7 +210,16 @@ export default {
         console.log(error.response);
         this.$noty.error('Failed Fetch Countries');
       }
+    },
 
+    async getClubs() {
+      try {
+        const clubs = await this.$axios.get('master/club/get_all');
+        this.clubs = clubs.data.data;
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Fetch Clubs');
+      }
     },
 
     async getAllPlayers() {
@@ -200,6 +237,8 @@ export default {
       try {
         await this.$axios.post('master/player/insert', {
           country_id: this.form.country_id,
+          club_id: this.form.club_id,
+          club_id: this.form.club_id,
           name: this.form.name,
           img: this.form.img,
           height: this.form.height,
@@ -223,6 +262,7 @@ export default {
       try {
         await this.$axios.post(`master/player/update/${this.form.id}`, {
           country_id: this.form.country_id,
+          club_id: this.form.club_id,
           name: this.form.name,
           img: this.form.img,
           height: this.form.height,
@@ -285,9 +325,10 @@ export default {
       this.$bvModal.show('modal-player');
       this.modalState = 'update';
       // populate form
-      let { id, country_id, name, img, height, weight, achievement } = item;
+      let { id, country_id, club_id, name, img, height, weight, achievement } = item;
       this.form.id = id;
       this.form.country_id = country_id;
+      this.form.club_id = club_id;
       this.form.name = name;
       this.form.img = img;
       this.form.height = height;
@@ -298,6 +339,7 @@ export default {
     resetData() {
       this.errorValidation = null;
       this.form.country_id = null;
+      this.form.club_id = null;
       this.form.name = null;
       this.form.img = null;
       this.form.height = null;
@@ -309,6 +351,7 @@ export default {
   created() {
     this.getAllPlayers();
     this.getCountries();
+    this.getClubs();
   }
 };
 </script>

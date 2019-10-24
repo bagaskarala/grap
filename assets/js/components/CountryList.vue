@@ -30,9 +30,6 @@
                   <p class="font-weight-bold m-0">
                     {{item.country}}
                   </p>
-                  <p class="small text-muted m-0">
-                    {{item.img}}
-                  </p>
                 </div>
                 <div>
                   <button

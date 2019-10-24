@@ -35,6 +35,7 @@ class Player extends MY_Controller
 
         $data = [
             'country_id'  => $request->country_id,
+            'club_id'     => $request->club_id,
             'name'        => $request->name,
             'img'         => $request->img,
             'height'      => $request->height,
@@ -62,6 +63,7 @@ class Player extends MY_Controller
 
         $data = [
             'country_id'  => $request->country_id,
+            'club_id'     => $request->club_id,
             'name'        => $request->name,
             'img'         => $request->img,
             'height'      => $request->height,

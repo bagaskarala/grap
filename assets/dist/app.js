@@ -2907,9 +2907,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'CountryList',
   data: function data() {
@@ -3340,17 +3337,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'DivisionList',
   data: function data() {
     return {
       divisions: [],
       gender: [{
-        text: 'Pria',
-        value: 'pria'
+        text: 'Male',
+        value: 'male'
       }, {
-        text: 'Wanita',
-        value: 'wanita'
+        text: 'Female',
+        value: 'female'
       }],
       form: {
         id: null,
@@ -3369,7 +3367,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   computed: {
     // getter
     divisionName: function divisionName() {
-      return this.form.min_weight + '-' + this.form.max_weight;
+      if (!this.form.min_weight || !this.form.max_weight) {
+        return '--- Fill min weight and max weight ---';
+      } else {
+        return "Division ".concat(this.form.min_weight, " - ").concat(this.form.max_weight);
+      }
     }
   },
   methods: {
@@ -3595,8 +3597,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     resetData: function resetData() {
       this.errorValidation = null;
       this.form.division = null;
-      this.min_weight = null;
-      this.max_weight = null;
+      this.form.min_weight = null;
+      this.form.max_weight = null;
       this.form.gender = null;
       this.form.system = null;
       this.form.description = null;
@@ -4153,10 +4155,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4319,8 +4349,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       players: [],
       countries: [],
+      clubs: [],
       form: {
         country_id: null,
+        club_id: null,
         name: null,
         img: null,
         height: null,
@@ -4371,22 +4403,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return getCountries;
     }(),
-    getAllPlayers: function () {
-      var _getAllPlayers = _asyncToGenerator(
+    getClubs: function () {
+      var _getClubs = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var players;
+        var clubs;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.prev = 0;
                 _context2.next = 3;
-                return this.$axios.get('master/player/get_all');
+                return this.$axios.get('master/club/get_all');
 
               case 3:
-                players = _context2.sent;
-                this.players = players.data.data;
+                clubs = _context2.sent;
+                this.clubs = clubs.data.data;
                 _context2.next = 11;
                 break;
 
@@ -4394,7 +4426,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context2.prev = 7;
                 _context2.t0 = _context2["catch"](0);
                 console.log(_context2.t0.response);
-                this.$noty.error('Failed Get Data');
+                this.$noty.error('Failed Fetch Clubs');
 
               case 11:
               case "end":
@@ -4402,6 +4434,45 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee2, this, [[0, 7]]);
+      }));
+
+      function getClubs() {
+        return _getClubs.apply(this, arguments);
+      }
+
+      return getClubs;
+    }(),
+    getAllPlayers: function () {
+      var _getAllPlayers = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var players;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.prev = 0;
+                _context3.next = 3;
+                return this.$axios.get('master/player/get_all');
+
+              case 3:
+                players = _context3.sent;
+                this.players = players.data.data;
+                _context3.next = 11;
+                break;
+
+              case 7:
+                _context3.prev = 7;
+                _context3.t0 = _context3["catch"](0);
+                console.log(_context3.t0.response);
+                this.$noty.error('Failed Get Data');
+
+              case 11:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this, [[0, 7]]);
       }));
 
       function getAllPlayers() {
@@ -4413,42 +4484,40 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     insertData: function () {
       var _insertData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var _this$$axios$post;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                _context3.prev = 0;
-                _context3.next = 3;
-                return this.$axios.post('master/player/insert', {
+                _context4.prev = 0;
+                _context4.next = 3;
+                return this.$axios.post('master/player/insert', (_this$$axios$post = {
                   country_id: this.form.country_id,
-                  name: this.form.name,
-                  img: this.form.img,
-                  height: this.form.height,
-                  weight: this.form.weight,
-                  achievement: this.form.achievement
-                });
+                  club_id: this.form.club_id
+                }, _defineProperty(_this$$axios$post, "club_id", this.form.club_id), _defineProperty(_this$$axios$post, "name", this.form.name), _defineProperty(_this$$axios$post, "img", this.form.img), _defineProperty(_this$$axios$post, "height", this.form.height), _defineProperty(_this$$axios$post, "weight", this.form.weight), _defineProperty(_this$$axios$post, "achievement", this.form.achievement), _this$$axios$post));
 
               case 3:
                 this.$noty.success('Success Insert Data');
                 this.getAllPlayers();
                 this.$bvModal.hide('modal-player');
-                _context3.next = 13;
+                _context4.next = 13;
                 break;
 
               case 8:
-                _context3.prev = 8;
-                _context3.t0 = _context3["catch"](0);
-                console.log(_context3.t0.response);
-                this.errorValidation = _context3.t0.response.data.message;
+                _context4.prev = 8;
+                _context4.t0 = _context4["catch"](0);
+                console.log(_context4.t0.response);
+                this.errorValidation = _context4.t0.response.data.message;
                 this.$noty.error('Failed Insert Data');
 
               case 13:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, this, [[0, 8]]);
+        }, _callee4, this, [[0, 8]]);
       }));
 
       function insertData() {
@@ -4460,15 +4529,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     updateData: function () {
       var _updateData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
-                _context4.prev = 0;
-                _context4.next = 3;
+                _context5.prev = 0;
+                _context5.next = 3;
                 return this.$axios.post("master/player/update/".concat(this.form.id), {
                   country_id: this.form.country_id,
+                  club_id: this.form.club_id,
                   name: this.form.name,
                   img: this.form.img,
                   height: this.form.height,
@@ -4480,22 +4550,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.$noty.success('Success Update Data');
                 this.getAllPlayers();
                 this.$bvModal.hide('modal-player');
-                _context4.next = 13;
+                _context5.next = 13;
                 break;
 
               case 8:
-                _context4.prev = 8;
-                _context4.t0 = _context4["catch"](0);
-                console.log(_context4.t0.response);
-                this.errorValidation = _context4.t0.response.data.message;
+                _context5.prev = 8;
+                _context5.t0 = _context5["catch"](0);
+                console.log(_context5.t0.response);
+                this.errorValidation = _context5.t0.response.data.message;
                 this.$noty.error('Failed Update Data');
 
               case 13:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4, this, [[0, 8]]);
+        }, _callee5, this, [[0, 8]]);
       }));
 
       function updateData() {
@@ -4507,13 +4577,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     deleteData: function () {
       var _deleteData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(item) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(item) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
-                _context5.prev = 0;
-                _context5.next = 3;
+                _context6.prev = 0;
+                _context6.next = 3;
                 return this.$axios.post('master/player/delete', {
                   id: item.id
                 });
@@ -4522,21 +4592,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.$noty.success('Success Delete Data');
                 this.getAllPlayers();
                 this.$bvModal.hide('modal-player');
-                _context5.next = 12;
+                _context6.next = 12;
                 break;
 
               case 8:
-                _context5.prev = 8;
-                _context5.t0 = _context5["catch"](0);
-                console.log(_context5.t0.response);
+                _context6.prev = 8;
+                _context6.t0 = _context6["catch"](0);
+                console.log(_context6.t0.response);
                 this.$noty.error('Failed Delete Data');
 
               case 12:
               case "end":
-                return _context5.stop();
+                return _context6.stop();
             }
           }
-        }, _callee5, this, [[0, 8]]);
+        }, _callee6, this, [[0, 8]]);
       }));
 
       function deleteData(_x) {
@@ -4573,6 +4643,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       var id = item.id,
           country_id = item.country_id,
+          club_id = item.club_id,
           name = item.name,
           img = item.img,
           height = item.height,
@@ -4580,6 +4651,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           achievement = item.achievement;
       this.form.id = id;
       this.form.country_id = country_id;
+      this.form.club_id = club_id;
       this.form.name = name;
       this.form.img = img;
       this.form.height = height;
@@ -4589,6 +4661,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     resetData: function resetData() {
       this.errorValidation = null;
       this.form.country_id = null;
+      this.form.club_id = null;
       this.form.name = null;
       this.form.img = null;
       this.form.height = null;
@@ -4599,6 +4672,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   created: function created() {
     this.getAllPlayers();
     this.getCountries();
+    this.getClubs();
   }
 });
 
@@ -4882,7 +4956,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _insertData = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var ins;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -4895,27 +4968,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 3:
-                ins = _context2.sent;
                 this.$noty.success('Success Insert Data');
                 this.getAllWinnings();
                 this.$bvModal.hide('modal-winning');
-                console.log(ins);
-                _context2.next = 15;
+                _context2.next = 13;
                 break;
 
-              case 10:
-                _context2.prev = 10;
+              case 8:
+                _context2.prev = 8;
                 _context2.t0 = _context2["catch"](0);
                 console.log(_context2.t0.response);
                 this.errorValidation = _context2.t0.response.data.message;
                 this.$noty.error('Failed Insert Data');
 
-              case 15:
+              case 13:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[0, 10]]);
+        }, _callee2, this, [[0, 8]]);
       }));
 
       function insertData() {
@@ -4928,7 +4999,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _updateData = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var upd;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
@@ -4941,27 +5011,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 3:
-                upd = _context3.sent;
                 this.$noty.success('Success Update Data');
                 this.getAllWinnings();
                 this.$bvModal.hide('modal-winning');
-                console.log(upd);
-                _context3.next = 15;
+                _context3.next = 13;
                 break;
 
-              case 10:
-                _context3.prev = 10;
+              case 8:
+                _context3.prev = 8;
                 _context3.t0 = _context3["catch"](0);
                 console.log(_context3.t0.response);
                 this.errorValidation = _context3.t0.response.data.message;
                 this.$noty.error('Failed Update Data');
 
-              case 15:
+              case 13:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, this, [[0, 10]]);
+        }, _callee3, this, [[0, 8]]);
       }));
 
       function updateData() {
@@ -38804,14 +38872,6 @@ var render = function() {
                               _vm._s(item.country) +
                               "\n                "
                           )
-                        ]),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "small text-muted m-0" }, [
-                          _vm._v(
-                            "\n                  " +
-                              _vm._s(item.img) +
-                              "\n                "
-                          )
                         ])
                       ]),
                       _vm._v(" "),
@@ -39134,19 +39194,17 @@ var render = function() {
                     [
                       _c("div", [
                         _c("p", { staticClass: "font-weight-bold m-0" }, [
-                          _vm._v(
-                            "\n                  " +
-                              _vm._s(item.division) +
-                              "\n                "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "small text-muted m-0" }, [
-                          _vm._v(
-                            "\n                  Gender: " +
-                              _vm._s(item.gender) +
-                              "\n                "
-                          )
+                          _c("span", [_vm._v(_vm._s(item.division))]),
+                          _vm._v(" "),
+                          _c("i", {
+                            class: [
+                              item.gender == "male"
+                                ? "fa-male text-primary"
+                                : "fa-female text-danger",
+                              "fa"
+                            ],
+                            attrs: { title: item.gender }
+                          })
                         ]),
                         _vm._v(" "),
                         _c("p", { staticClass: "small text-muted m-0" }, [
@@ -39216,7 +39274,9 @@ var render = function() {
           _vm._v(" "),
           _c("form", { attrs: { method: "post" } }, [
             _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "division" } }, [_vm._v("Division")]),
+              _c("label", { attrs: { for: "division" } }, [
+                _vm._v("Division Name (auto)")
+              ]),
               _vm._v(" "),
               _c("input", {
                 staticClass: "form-control",
@@ -39234,15 +39294,16 @@ var render = function() {
                 directives: [
                   {
                     name: "model",
-                    rawName: "v-model",
+                    rawName: "v-model.number",
                     value: _vm.form.min_weight,
-                    expression: "form.min_weight"
+                    expression: "form.min_weight",
+                    modifiers: { number: true }
                   }
                 ],
                 staticClass: "form-control",
                 attrs: {
                   id: "min_weight",
-                  type: "text",
+                  type: "number",
                   placeholder: "Enter minimal weight"
                 },
                 domProps: { value: _vm.form.min_weight },
@@ -39251,42 +39312,57 @@ var render = function() {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(_vm.form, "min_weight", $event.target.value)
+                    _vm.$set(
+                      _vm.form,
+                      "min_weight",
+                      _vm._n($event.target.value)
+                    )
+                  },
+                  blur: function($event) {
+                    return _vm.$forceUpdate()
                   }
                 }
-              }),
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "max_weight" } }, [
+                _vm._v("Max. Weight")
+              ]),
               _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "max_weight" } }, [
-                  _vm._v("Max. Weight")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.form.max_weight,
-                      expression: "form.max_weight"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    id: "max_weight",
-                    type: "text",
-                    placeholder: "Enter maximum weght"
-                  },
-                  domProps: { value: _vm.form.max_weight },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.form, "max_weight", $event.target.value)
-                    }
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model.number",
+                    value: _vm.form.max_weight,
+                    expression: "form.max_weight",
+                    modifiers: { number: true }
                   }
-                })
-              ])
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  id: "max_weight",
+                  type: "number",
+                  placeholder: "Enter maximum weght"
+                },
+                domProps: { value: _vm.form.max_weight },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.form,
+                      "max_weight",
+                      _vm._n($event.target.value)
+                    )
+                  },
+                  blur: function($event) {
+                    return _vm.$forceUpdate()
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
@@ -40148,6 +40224,60 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "club_id" } }, [_vm._v("Club")]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model.number",
+                      value: _vm.form.club_id,
+                      expression: "form.club_id",
+                      modifiers: { number: true }
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "club_id", id: "club_id" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return _vm._n(val)
+                        })
+                      _vm.$set(
+                        _vm.form,
+                        "club_id",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                [
+                  _c("option", { domProps: { value: null } }, [
+                    _vm._v("Select Club")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.clubs, function(item) {
+                    return _c(
+                      "option",
+                      { key: item.id, domProps: { value: item.id } },
+                      [_vm._v(_vm._s(item.club))]
+                    )
+                  })
+                ],
+                2
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
               _c("label", { attrs: { for: "img" } }, [_vm._v("Image")]),
               _vm._v(" "),
               _c("input", {
@@ -40176,69 +40306,85 @@ var render = function() {
             _c("div", { staticClass: "form-group" }, [
               _c("label", { attrs: { for: "height" } }, [_vm._v("Height")]),
               _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model.number",
-                    value: _vm.form.height,
-                    expression: "form.height",
-                    modifiers: { number: true }
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: {
-                  id: "height",
-                  type: "number",
-                  placeholder: "Enter height"
-                },
-                domProps: { value: _vm.form.height },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+              _c("div", { staticClass: "input-group mb-3" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model.number",
+                      value: _vm.form.height,
+                      expression: "form.height",
+                      modifiers: { number: true }
                     }
-                    _vm.$set(_vm.form, "height", _vm._n($event.target.value))
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    id: "height",
+                    type: "number",
+                    placeholder: "Enter height"
                   },
-                  blur: function($event) {
-                    return _vm.$forceUpdate()
+                  domProps: { value: _vm.form.height },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "height", _vm._n($event.target.value))
+                    },
+                    blur: function($event) {
+                      return _vm.$forceUpdate()
+                    }
                   }
-                }
-              })
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "input-group-append" }, [
+                  _c("span", { staticClass: "input-group-text" }, [
+                    _vm._v("cm")
+                  ])
+                ])
+              ])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
               _c("label", { attrs: { for: "weight" } }, [_vm._v("Weight")]),
               _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model.number",
-                    value: _vm.form.weight,
-                    expression: "form.weight",
-                    modifiers: { number: true }
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: {
-                  id: "weight",
-                  type: "number",
-                  placeholder: "Enter weight"
-                },
-                domProps: { value: _vm.form.weight },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+              _c("div", { staticClass: "input-group mb-3" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model.number",
+                      value: _vm.form.weight,
+                      expression: "form.weight",
+                      modifiers: { number: true }
                     }
-                    _vm.$set(_vm.form, "weight", _vm._n($event.target.value))
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    id: "weight",
+                    type: "number",
+                    placeholder: "Enter weight"
                   },
-                  blur: function($event) {
-                    return _vm.$forceUpdate()
+                  domProps: { value: _vm.form.weight },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "weight", _vm._n($event.target.value))
+                    },
+                    blur: function($event) {
+                      return _vm.$forceUpdate()
+                    }
                   }
-                }
-              })
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "input-group-append" }, [
+                  _c("span", { staticClass: "input-group-text" }, [
+                    _vm._v("kg")
+                  ])
+                ])
+              ])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [

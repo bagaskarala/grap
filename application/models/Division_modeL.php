@@ -13,12 +13,12 @@ class Division_model extends MY_Model
             ],
             [
                 'field' => 'min_weight',
-                'label' => 'min_weight',
+                'label' => 'min weight',
                 'rules' => 'required|trim',
             ],
             [
                 'field' => 'max_weight',
-                'label' => 'max_weight',
+                'label' => 'max weight',
                 'rules' => 'required|trim',
             ],
             [

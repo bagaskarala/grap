@@ -28,10 +28,11 @@
               >
                 <div>
                   <p class="font-weight-bold m-0">
-                    {{item.division}}
-                  </p>
-                  <p class="small text-muted m-0">
-                    Gender: {{item.gender}}
+                    <span>{{item.division}}</span>
+                    <i
+                      :class="[item.gender == 'male'? 'fa-male text-primary':'fa-female text-danger', 'fa']"
+                      :title="item.gender"
+                    ></i>
                   </p>
                   <p class="small text-muted m-0">
                     System : {{item.system}}
@@ -68,7 +69,7 @@
 
       <form method="post">
         <div class="form-group">
-          <label for="division">Division</label>
+          <label for="division">Division Name (auto)</label>
           <input
             id="division"
             type="text"
@@ -81,21 +82,21 @@
           <label for="min_weight">Min. Weight</label>
           <input
             id="min_weight"
-            v-model="form.min_weight"
-            type="text"
+            v-model.number="form.min_weight"
+            type="number"
             class="form-control"
             placeholder="Enter minimal weight"
           >
-          <div class="form-group">
-            <label for="max_weight">Max. Weight</label>
-            <input
-              id="max_weight"
-              v-model="form.max_weight"
-              type="text"
-              class="form-control"
-              placeholder="Enter maximum weght"
-            >
-          </div>
+        </div>
+        <div class="form-group">
+          <label for="max_weight">Max. Weight</label>
+          <input
+            id="max_weight"
+            v-model.number="form.max_weight"
+            type="number"
+            class="form-control"
+            placeholder="Enter maximum weght"
+          >
         </div>
         <div class="form-group">
           <label for="gender">Gender</label>
@@ -178,8 +179,8 @@ export default {
     return {
       divisions: [],
       gender: [
-        { text: 'Pria', value: 'pria' },
-        { text: 'Wanita', value: 'wanita' }
+        { text: 'Male', value: 'male' },
+        { text: 'Female', value: 'female' }
       ],
       form: {
         id: null,
@@ -199,7 +200,11 @@ export default {
   computed: {
     // getter
     divisionName() {
-      return this.form.min_weight + '-' + this.form.max_weight;
+      if (!this.form.min_weight || !this.form.max_weight) {
+        return '--- Fill min weight and max weight ---';
+      } else {
+        return `Division ${this.form.min_weight} - ${this.form.max_weight}`;
+      }
     }
 
   },
@@ -319,8 +324,8 @@ export default {
     resetData() {
       this.errorValidation = null;
       this.form.division = null;
-      this.min_weight = null;
-      this.max_weight = null;
+      this.form.min_weight = null;
+      this.form.max_weight = null;
       this.form.gender = null;
       this.form.system = null;
       this.form.description = null;

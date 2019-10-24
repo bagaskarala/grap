@@ -17,6 +17,11 @@ class Player_model extends MY_Model
                 'rules' => 'required|trim',
             ],
             [
+                'field' => 'club_id',
+                'label' => 'club',
+                'rules' => 'required|trim',
+            ],
+            [
                 'field' => 'img',
                 'label' => 'img',
                 'rules' => 'trim',
