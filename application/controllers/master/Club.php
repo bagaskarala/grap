@@ -19,6 +19,7 @@ class Club extends MY_Controller
 
     public function get_all()
     {
+        $this->club->order_by('club');
         $clubs = $this->club->get_all_array();
 
         if (count($clubs) == 0) {

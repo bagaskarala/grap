@@ -30,6 +30,7 @@
                   <p class="font-weight-bold m-0">
                     {{item.winning}}
                   </p>
+                  <span>{{item.description}}</span>
                 </div>
                 <div>
                   <button

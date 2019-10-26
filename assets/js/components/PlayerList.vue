@@ -28,8 +28,14 @@
               >
                 <div>
                   <p class="font-weight-bold m-0">
-                    {{item.name}}
+                    <span>{{item.name}}</span>
+                    <i
+                      :class="[item.gender == 'male'? 'fa-male text-primary':'fa-female text-danger', 'fa']"
+                      :title="item.gender"
+                    ></i>
                   </p>
+                  <p class="mb-0">{{item.alias}}</p>
+                  <p class="badge badge-secondary mb-0">{{item.weight}} kg</p>
                 </div>
                 <div>
                   <button
@@ -101,6 +107,33 @@
               :key="item.id"
               :value="item.id"
             >{{item.club}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="alias">Alias</label>
+          <input
+            id="alias"
+            v-model="form.alias"
+            type="text"
+            class="form-control"
+            placeholder="Enter Alias"
+            maxlength="3"
+          >
+        </div>
+        <div class="form-group">
+          <label for="gender">Gender</label>
+          <select
+            name="gender"
+            id="gender"
+            class="form-control"
+            v-model="form.gender"
+          >
+            <option :value="null">Select Gender</option>
+            <option
+              v-for="item in genderOptions"
+              :key="item.value"
+              :value="item.value"
+            >{{item.text}}</option>
           </select>
         </div>
         <div class="form-group">
@@ -188,10 +221,16 @@ export default {
       players: [],
       countries: [],
       clubs: [],
+      genderOptions: [
+        { text: 'Male', value: 'male' },
+        { text: 'Female', value: 'female' }
+      ],
       form: {
         country_id: null,
         club_id: null,
         name: null,
+        alias: null,
+        gender: null,
         img: null,
         height: null,
         weight: null,
@@ -238,8 +277,9 @@ export default {
         await this.$axios.post('master/player/insert', {
           country_id: this.form.country_id,
           club_id: this.form.club_id,
-          club_id: this.form.club_id,
           name: this.form.name,
+          alias: this.form.alias,
+          gender: this.form.gender,
           img: this.form.img,
           height: this.form.height,
           weight: this.form.weight,
@@ -264,6 +304,8 @@ export default {
           country_id: this.form.country_id,
           club_id: this.form.club_id,
           name: this.form.name,
+          alias: this.form.alias,
+          gender: this.form.gender,
           img: this.form.img,
           height: this.form.height,
           weight: this.form.weight,
@@ -325,11 +367,13 @@ export default {
       this.$bvModal.show('modal-player');
       this.modalState = 'update';
       // populate form
-      let { id, country_id, club_id, name, img, height, weight, achievement } = item;
+      let { id, country_id, club_id, name, alias, gender, img, height, weight, achievement } = item;
       this.form.id = id;
       this.form.country_id = country_id;
       this.form.club_id = club_id;
       this.form.name = name;
+      this.form.alias = alias;
+      this.form.gender = gender;
       this.form.img = img;
       this.form.height = height;
       this.form.weight = weight;
@@ -341,6 +385,8 @@ export default {
       this.form.country_id = null;
       this.form.club_id = null;
       this.form.name = null;
+      this.form.alias = null;
+      this.form.gender = null;
       this.form.img = null;
       this.form.height = null;
       this.form.weight = null;

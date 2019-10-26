@@ -18,6 +18,8 @@ class Division extends MY_Controller
 
     public function get_all()
     {
+        $this->division->order_by('min_weight');
+        $this->division->order_by('max_weight');
         $divisions = $this->division->get_all_array();
 
         if (count($divisions) == 0) {

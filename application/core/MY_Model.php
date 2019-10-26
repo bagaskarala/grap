@@ -94,6 +94,12 @@ class MY_Model extends CI_Model
         // true or false
         return $this->form_validation->run();
     }
+
+    public function order_by($column, $order = 'asc')
+    {
+        $this->db->order_by($column, $order);
+        return $this;
+    }
 }
 
 /* End of file MY_Model.php */

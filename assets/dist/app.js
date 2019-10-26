@@ -2526,6 +2526,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ClubList',
   data: function data() {
@@ -2775,6 +2776,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
 //
 //
 //
@@ -3338,6 +3340,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'DivisionList',
   data: function data() {
@@ -3361,16 +3392,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         play: null
       },
       modalState: null,
-      errorValidation: null
+      errorValidation: null,
+      customName: false
     };
   },
   computed: {
-    // getter
-    divisionName: function divisionName() {
+    generateName: function generateName() {
       if (!this.form.min_weight || !this.form.max_weight) {
-        return '--- Fill min weight and max weight ---';
+        return '--- Auto generate name by weight range ---';
       } else {
-        return "Division ".concat(this.form.min_weight, " - ").concat(this.form.max_weight);
+        return "Division ".concat(this.form.min_weight, " kg - ").concat(this.form.max_weight, " kg");
+      }
+    },
+    divisonName: function divisonName() {
+      if (this.customName) {
+        return this.form.division;
+      } else {
+        return this.generateName;
       }
     }
   },
@@ -3425,13 +3463,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context2.prev = 0;
                 _context2.next = 3;
                 return this.$axios.post('master/division/insert', {
-                  division: this.divisionName,
+                  division: this.divisonName,
                   min_weight: this.form.min_weight,
                   max_weight: this.form.max_weight,
                   gender: this.form.gender,
                   system: this.form.system,
                   description: this.form.description,
-                  play: this.form.play
+                  play: this.form.play ? 1 : 0
                 });
 
               case 3:
@@ -3473,13 +3511,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context3.prev = 0;
                 _context3.next = 3;
                 return this.$axios.post("master/division/update/".concat(this.form.id), {
-                  division: this.form.division,
+                  division: this.divisonName,
                   min_weight: this.form.min_weight,
                   max_weight: this.form.max_weight,
                   gender: this.form.gender,
                   system: this.form.system,
                   description: this.form.description,
-                  play: this.form.play
+                  play: this.form.play ? 1 : 0
                 });
 
               case 3:
@@ -3592,7 +3630,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.form.gender = gender;
       this.form.system = system;
       this.form.description = description;
-      this.form.play = play;
+      this.form.play = play == 1 ? true : false;
+      this.customName = true;
     },
     resetData: function resetData() {
       this.errorValidation = null;
@@ -3603,6 +3642,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.form.system = null;
       this.form.description = null;
       this.form.play = null;
+      this.customName = false;
     }
   },
   created: function created() {
@@ -4155,12 +4195,43 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4350,10 +4421,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       players: [],
       countries: [],
       clubs: [],
+      genderOptions: [{
+        text: 'Male',
+        value: 'male'
+      }, {
+        text: 'Female',
+        value: 'female'
+      }],
       form: {
         country_id: null,
         club_id: null,
         name: null,
+        alias: null,
+        gender: null,
         img: null,
         height: null,
         weight: null,
@@ -4485,18 +4565,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _insertData = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var _this$$axios$post;
-
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
                 _context4.prev = 0;
                 _context4.next = 3;
-                return this.$axios.post('master/player/insert', (_this$$axios$post = {
+                return this.$axios.post('master/player/insert', {
                   country_id: this.form.country_id,
-                  club_id: this.form.club_id
-                }, _defineProperty(_this$$axios$post, "club_id", this.form.club_id), _defineProperty(_this$$axios$post, "name", this.form.name), _defineProperty(_this$$axios$post, "img", this.form.img), _defineProperty(_this$$axios$post, "height", this.form.height), _defineProperty(_this$$axios$post, "weight", this.form.weight), _defineProperty(_this$$axios$post, "achievement", this.form.achievement), _this$$axios$post));
+                  club_id: this.form.club_id,
+                  name: this.form.name,
+                  alias: this.form.alias,
+                  gender: this.form.gender,
+                  img: this.form.img,
+                  height: this.form.height,
+                  weight: this.form.weight,
+                  achievement: this.form.achievement
+                });
 
               case 3:
                 this.$noty.success('Success Insert Data');
@@ -4540,6 +4625,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   country_id: this.form.country_id,
                   club_id: this.form.club_id,
                   name: this.form.name,
+                  alias: this.form.alias,
+                  gender: this.form.gender,
                   img: this.form.img,
                   height: this.form.height,
                   weight: this.form.weight,
@@ -4645,6 +4732,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           country_id = item.country_id,
           club_id = item.club_id,
           name = item.name,
+          alias = item.alias,
+          gender = item.gender,
           img = item.img,
           height = item.height,
           weight = item.weight,
@@ -4653,6 +4742,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.form.country_id = country_id;
       this.form.club_id = club_id;
       this.form.name = name;
+      this.form.alias = alias;
+      this.form.gender = gender;
       this.form.img = img;
       this.form.height = height;
       this.form.weight = weight;
@@ -4663,6 +4754,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.form.country_id = null;
       this.form.club_id = null;
       this.form.name = null;
+      this.form.alias = null;
+      this.form.gender = null;
       this.form.img = null;
       this.form.height = null;
       this.form.weight = null;
@@ -4788,6 +4881,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
 //
 //
 //
@@ -38571,7 +38665,9 @@ var render = function() {
                               _vm._s(item.club) +
                               "\n                "
                           )
-                        ])
+                        ]),
+                        _vm._v(" "),
+                        _c("span", [_vm._v(_vm._s(item.alias))])
                       ]),
                       _vm._v(" "),
                       _c("div", [
@@ -38872,7 +38968,9 @@ var render = function() {
                               _vm._s(item.country) +
                               "\n                "
                           )
-                        ])
+                        ]),
+                        _vm._v(" "),
+                        _c("span", [_vm._v(_vm._s(item.alias))])
                       ]),
                       _vm._v(" "),
                       _c("div", [
@@ -39207,13 +39305,24 @@ var render = function() {
                           })
                         ]),
                         _vm._v(" "),
-                        _c("p", { staticClass: "small text-muted m-0" }, [
-                          _vm._v(
-                            "\n                  System : " +
-                              _vm._s(item.system) +
-                              "\n                "
-                          )
-                        ])
+                        _c(
+                          "span",
+                          {
+                            staticClass: "badge",
+                            class: [
+                              item.play == 1
+                                ? "badge-success"
+                                : "badge-secondary"
+                            ]
+                          },
+                          [
+                            _vm._v(
+                              "\n                  " +
+                                _vm._s(item.play == 1 ? "Play" : "Not Play") +
+                                "\n                "
+                            )
+                          ]
+                        )
                       ]),
                       _vm._v(" "),
                       _c("div", [
@@ -39275,14 +39384,83 @@ var render = function() {
           _c("form", { attrs: { method: "post" } }, [
             _c("div", { staticClass: "form-group" }, [
               _c("label", { attrs: { for: "division" } }, [
-                _vm._v("Division Name (auto)")
+                _vm._v("Division Name")
               ]),
               _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: { id: "division", type: "text", disabled: "" },
-                domProps: { value: _vm.divisionName }
-              })
+              _c("div", { staticClass: "input-group mb-3" }, [
+                _c("div", { staticClass: "input-group-prepend" }, [
+                  _c("div", { staticClass: "input-group-text" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.customName,
+                          expression: "customName"
+                        }
+                      ],
+                      attrs: {
+                        type: "checkbox",
+                        title: "Custom name division"
+                      },
+                      domProps: {
+                        checked: Array.isArray(_vm.customName)
+                          ? _vm._i(_vm.customName, null) > -1
+                          : _vm.customName
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.customName,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 && (_vm.customName = $$a.concat([$$v]))
+                            } else {
+                              $$i > -1 &&
+                                (_vm.customName = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
+                            }
+                          } else {
+                            _vm.customName = $$c
+                          }
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                !_vm.customName
+                  ? _c("input", {
+                      staticClass: "form-control",
+                      attrs: { id: "division", type: "text", disabled: "" },
+                      domProps: { value: _vm.generateName }
+                    })
+                  : _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.division,
+                          expression: "form.division"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { id: "division", type: "text" },
+                      domProps: { value: _vm.form.division },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "division", $event.target.value)
+                        }
+                      }
+                    })
+              ])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
@@ -39374,10 +39552,9 @@ var render = function() {
                   directives: [
                     {
                       name: "model",
-                      rawName: "v-model.number",
+                      rawName: "v-model",
                       value: _vm.form.gender,
-                      expression: "form.gender",
-                      modifiers: { number: true }
+                      expression: "form.gender"
                     }
                   ],
                   staticClass: "form-control",
@@ -39390,7 +39567,7 @@ var render = function() {
                         })
                         .map(function(o) {
                           var val = "_value" in o ? o._value : o.value
-                          return _vm._n(val)
+                          return val
                         })
                       _vm.$set(
                         _vm.form,
@@ -39450,29 +39627,58 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "play" } }, [_vm._v("Play")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.form.play,
-                    expression: "form.play"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { id: "play", type: "text", placeholder: "Enter play" },
-                domProps: { value: _vm.form.play },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+              _c("div", { staticClass: "form-check" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.play,
+                      expression: "form.play"
                     }
-                    _vm.$set(_vm.form, "play", $event.target.value)
+                  ],
+                  staticClass: "form-check-input",
+                  attrs: { type: "checkbox", id: "defaultCheck1" },
+                  domProps: {
+                    checked: Array.isArray(_vm.form.play)
+                      ? _vm._i(_vm.form.play, null) > -1
+                      : _vm.form.play
+                  },
+                  on: {
+                    change: function($event) {
+                      var $$a = _vm.form.play,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 &&
+                            _vm.$set(_vm.form, "play", $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            _vm.$set(
+                              _vm.form,
+                              "play",
+                              $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                            )
+                        }
+                      } else {
+                        _vm.$set(_vm.form, "play", $$c)
+                      }
+                    }
                   }
-                }
-              })
+                }),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "form-check-label",
+                    attrs: { for: "defaultCheck1" }
+                  },
+                  [_vm._v("\n            Play Status\n          ")]
+                )
+              ])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
@@ -40076,11 +40282,25 @@ var render = function() {
                     [
                       _c("div", [
                         _c("p", { staticClass: "font-weight-bold m-0" }, [
-                          _vm._v(
-                            "\n                  " +
-                              _vm._s(item.name) +
-                              "\n                "
-                          )
+                          _c("span", [_vm._v(_vm._s(item.name))]),
+                          _vm._v(" "),
+                          _c("i", {
+                            class: [
+                              item.gender == "male"
+                                ? "fa-male text-primary"
+                                : "fa-female text-danger",
+                              "fa"
+                            ],
+                            attrs: { title: item.gender }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "mb-0" }, [
+                          _vm._v(_vm._s(item.alias))
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "badge badge-secondary mb-0" }, [
+                          _vm._v(_vm._s(item.weight) + " kg")
                         ])
                       ]),
                       _vm._v(" "),
@@ -40270,6 +40490,90 @@ var render = function() {
                       "option",
                       { key: item.id, domProps: { value: item.id } },
                       [_vm._v(_vm._s(item.club))]
+                    )
+                  })
+                ],
+                2
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "alias" } }, [_vm._v("Alias")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.alias,
+                    expression: "form.alias"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  id: "alias",
+                  type: "text",
+                  placeholder: "Enter Alias",
+                  maxlength: "3"
+                },
+                domProps: { value: _vm.form.alias },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "alias", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "gender" } }, [_vm._v("Gender")]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.gender,
+                      expression: "form.gender"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "gender", id: "gender" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.form,
+                        "gender",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                [
+                  _c("option", { domProps: { value: null } }, [
+                    _vm._v("Select Gender")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.genderOptions, function(item) {
+                    return _c(
+                      "option",
+                      { key: item.value, domProps: { value: item.value } },
+                      [_vm._v(_vm._s(item.text))]
                     )
                   })
                 ],
@@ -40643,7 +40947,9 @@ var render = function() {
                               _vm._s(item.winning) +
                               "\n                "
                           )
-                        ])
+                        ]),
+                        _vm._v(" "),
+                        _c("span", [_vm._v(_vm._s(item.description))])
                       ]),
                       _vm._v(" "),
                       _c("div", [

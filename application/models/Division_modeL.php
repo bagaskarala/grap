@@ -29,7 +29,7 @@ class Division_model extends MY_Model
             [
                 'field' => 'system',
                 'label' => 'system',
-                'rules' => 'required|trim',
+                'rules' => 'trim',
             ],
             [
                 'field' => 'description',

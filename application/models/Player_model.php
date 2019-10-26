@@ -22,6 +22,16 @@ class Player_model extends MY_Model
                 'rules' => 'required|trim',
             ],
             [
+                'field' => 'alias',
+                'label' => 'alias',
+                'rules' => 'trim',
+            ],
+            [
+                'field' => 'gender',
+                'label' => 'gender',
+                'rules' => 'required|trim',
+            ],
+            [
                 'field' => 'img',
                 'label' => 'img',
                 'rules' => 'trim',

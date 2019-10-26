@@ -18,6 +18,8 @@ class Player extends MY_Controller
 
     public function get_all()
     {
+        $this->player->order_by('gender');
+        $this->player->order_by('name');
         $players = $this->player->get_all_array();
 
         if (count($players) == 0) {
@@ -37,6 +39,8 @@ class Player extends MY_Controller
             'country_id'  => $request->country_id,
             'club_id'     => $request->club_id,
             'name'        => $request->name,
+            'alias'       => $request->alias,
+            'gender'      => $request->gender,
             'img'         => $request->img,
             'height'      => $request->height,
             'weight'      => $request->weight,
@@ -65,6 +69,8 @@ class Player extends MY_Controller
             'country_id'  => $request->country_id,
             'club_id'     => $request->club_id,
             'name'        => $request->name,
+            'alias'       => $request->alias,
+            'gender'      => $request->gender,
             'img'         => $request->img,
             'height'      => $request->height,
             'weight'      => $request->weight,

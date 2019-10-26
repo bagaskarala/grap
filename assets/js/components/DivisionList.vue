@@ -34,9 +34,12 @@
                       :title="item.gender"
                     ></i>
                   </p>
-                  <p class="small text-muted m-0">
-                    System : {{item.system}}
-                  </p>
+                  <span
+                    class="badge"
+                    :class="[item.play == 1 ? 'badge-success':'badge-secondary']"
+                  >
+                    {{item.play == 1? 'Play' : 'Not Play'}}
+                  </span>
                 </div>
                 <div>
                   <button
@@ -69,14 +72,34 @@
 
       <form method="post">
         <div class="form-group">
-          <label for="division">Division Name (auto)</label>
-          <input
-            id="division"
-            type="text"
-            class="form-control"
-            disabled
-            :value="divisionName"
-          >
+          <label for="division">Division Name</label>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <input
+                  type="checkbox"
+                  v-model="customName"
+                  title="Custom name division"
+                >
+              </div>
+            </div>
+            <input
+              v-if="!customName"
+              id="division"
+              type="text"
+              class="form-control"
+              disabled
+              :value="generateName"
+            >
+            <input
+              v-else
+              id="division"
+              type="text"
+              class="form-control"
+              v-model="form.division"
+            >
+          </div>
+
         </div>
         <div class="form-group">
           <label for="min_weight">Min. Weight</label>
@@ -104,7 +127,7 @@
             name="gender"
             id="gender"
             class="form-control"
-            v-model.number="form.gender"
+            v-model="form.gender"
           >
             <option :value="null">Select Gender</option>
             <option
@@ -125,14 +148,20 @@
           >
         </div>
         <div class="form-group">
-          <label for="play">Play</label>
-          <input
-            id="play"
-            v-model="form.play"
-            type="text"
-            class="form-control"
-            placeholder="Enter play"
-          >
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              v-model="form.play"
+              id="defaultCheck1"
+            >
+            <label
+              class="form-check-label"
+              for="defaultCheck1"
+            >
+              Play Status
+            </label>
+          </div>
         </div>
         <div class="form-group">
           <label for="description">Description</label>
@@ -193,20 +222,27 @@ export default {
         play: null
       },
       modalState: null,
-      errorValidation: null
+      errorValidation: null,
+      customName: false
     };
   },
 
   computed: {
-    // getter
-    divisionName() {
+    generateName() {
       if (!this.form.min_weight || !this.form.max_weight) {
-        return '--- Fill min weight and max weight ---';
+        return '--- Auto generate name by weight range ---';
       } else {
-        return `Division ${this.form.min_weight} - ${this.form.max_weight}`;
+        return `Division ${this.form.min_weight} kg - ${this.form.max_weight} kg`;
+      }
+    },
+
+    divisonName() {
+      if (this.customName) {
+        return this.form.division;
+      } else {
+        return this.generateName;
       }
     }
-
   },
 
   methods: {
@@ -223,13 +259,13 @@ export default {
     async insertData() {
       try {
         await this.$axios.post('master/division/insert', {
-          division: this.divisionName,
+          division: this.divisonName,
           min_weight: this.form.min_weight,
           max_weight: this.form.max_weight,
           gender: this.form.gender,
           system: this.form.system,
           description: this.form.description,
-          play: this.form.play
+          play: this.form.play ? 1 : 0
         });
 
         this.$noty.success('Success Insert Data');
@@ -246,13 +282,13 @@ export default {
     async updateData() {
       try {
         await this.$axios.post(`master/division/update/${this.form.id}`, {
-          division: this.form.division,
+          division: this.divisonName,
           min_weight: this.form.min_weight,
           max_weight: this.form.max_weight,
           gender: this.form.gender,
           system: this.form.system,
           description: this.form.description,
-          play: this.form.play
+          play: this.form.play ? 1 : 0
         });
 
         this.$noty.success('Success Update Data');
@@ -318,7 +354,8 @@ export default {
       this.form.gender = gender;
       this.form.system = system;
       this.form.description = description;
-      this.form.play = play;
+      this.form.play = play == 1 ? true : false;
+      this.customName = true;
     },
 
     resetData() {
@@ -330,6 +367,7 @@ export default {
       this.form.system = null;
       this.form.description = null;
       this.form.play = null;
+      this.customName = false;
     }
   },
 

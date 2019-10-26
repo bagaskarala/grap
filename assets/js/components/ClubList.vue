@@ -30,6 +30,7 @@
                   <p class="font-weight-bold m-0">
                     {{item.club}}
                   </p>
+                  <span>{{item.alias}}</span>
                 </div>
                 <div>
                   <button
