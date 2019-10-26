@@ -4,14 +4,14 @@
       <div class="col">
         <div class="card card-default">
           <div class="card-header d-flex justify-content-between align-items-center">
-            <span>Player Division List</span>
+            <span>Log Match List</span>
             <!-- Button trigger modal -->
             <button
               type="button"
               class="btn btn-sm btn-primary"
               @click.prevent="addData()"
             >
-              Add player division
+              Add log match
             </button>
           </div>
 
@@ -42,19 +42,40 @@
 
           <div class="card-body">
             <div
-              v-show="playerDivisions.length == 0"
+              v-show="logMatchs.length == 0"
               class="my-3 text-center"
             >Empty Data</div>
 
             <b-table
-              v-if="playerDivisions.length != 0"
+              v-if="logMatchs.length != 0"
               striped
               hover
-              :items="playerDivisions"
-              :fields="fieldPlayerDivision"
+              responsive
+              :items="logMatchs"
+              :fields="fieldLogMatch"
             >
+              <template v-slot:cell(division)="data">
+                <div class="min-width-7">
+                  <span>{{data.item.division}}</span><br>
+                </div>
+              </template>
+              <template v-slot:cell(player1_name)="data">
+                <div class="min-width-10">
+                  <span class="font-weight-bold">{{data.item.player1_name}}</span><br>
+                  <span class="small text-muted">{{data.item.player1_club}}</span>
+                </div>
+              </template>
+              <template v-slot:cell(player2_name)="data">
+                <div class="min-width-10">
+                  <span class="font-weight-bold">{{data.item.player2_name}}</span><br>
+                  <span class="small text-muted">{{data.item.player2_club}}</span>
+                </div>
+              </template>
+              <template v-slot:cell(vs)="data">
+                <span class="h5 font-weight-bold">VS</span>
+              </template>
               <template v-slot:cell(action)="data">
-                <div>
+                <div class="min-width-7">
                   <button
                     class="btn btn-sm btn-warning"
                     @click.prevent="loadData(data.item)"
@@ -73,7 +94,7 @@
 
     <!-- modal add player division-->
     <b-modal
-      id="modal-player-division"
+      id="modal-log-match"
       hide-footer
       :title="modalState == 'add'? 'Add Item' : 'Update Item'"
     >
@@ -101,30 +122,52 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="player_id">Player</label>
+          <label for="pd1_id">Player Division 1</label>
           <select
-            name="player_id"
-            id="player_id"
+            name="pd1_id"
+            id="pd1_id"
             class="form-control"
-            v-model.number="form.player_id"
+            v-model.number="form.pd1_id"
           >
             <option :value="null">Select Player</option>
             <option
-              v-for="item in players"
+              v-for="item in playerDivisions"
               :key="item.id"
               :value="item.id"
             >{{item.name}}</option>
           </select>
         </div>
         <div class="form-group">
-          <label for="pool_number">Pool Number</label>
-          <input
-            id="pool_number"
-            v-model="form.pool_number"
-            type="text"
+          <label for="pd2_id">Player Division 2</label>
+          <select
+            name="pd2_id"
+            id="pd2_id"
             class="form-control"
-            placeholder="Enter pool number"
+            v-model.number="form.pd2_id"
           >
+            <option :value="null">Select Player</option>
+            <option
+              v-for="item in playerDivisions"
+              :key="item.id"
+              :value="item.id"
+            >{{item.name}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="match_system">Match System</label>
+          <select
+            name="match_system"
+            id="match_system"
+            class="form-control"
+            v-model="form.match_system"
+          >
+            <option :value="null">Select Match System</option>
+            <option
+              v-for="item in matchSystem"
+              :key="item.value"
+              :value="item.value"
+            >{{item.text}}</option>
+          </select>
         </div>
         <div class="d-flex justify-content-end">
           <div
@@ -158,17 +201,42 @@ export default {
   name: 'PlayerDivision',
   data() {
     return {
-      fieldPlayerDivision: ['division', 'name', 'win', 'draw', 'lose', 'action'],
+      fieldLogMatch: [
+        {
+          'key': 'division'
+        },
+        {
+          'key': 'match_system'
+        },
+        {
+          'key': 'player1_name',
+          'label': 'Player 1'
+        },
+        {
+          'key': 'vs',
+          'label': ''
+        },
+        {
+          'key': 'player2_name',
+          'label': 'Player 2'
+        },
+        {
+          'key': 'action'
+        }
+      ],
+      matchSystem: [
+        { text: 'Round Robin', value: 'roundrobin' },
+        { text: 'Elimination', value: 'elimination' }
+      ],
+      logMatchs: [],
       playerDivisions: [],
       divisions: [],
-      players: [],
+      winnings: [],
       form: {
-        division_id: null,
-        name: null,
-        player_id: null,
-        height: null,
-        weight: null,
-        achievement: null
+        division: null,
+        pd1_id: null,
+        pd2_id: null,
+        match_system: null
       },
       modalState: null,
       errorValidation: null,
@@ -187,20 +255,30 @@ export default {
       }
     },
 
-    async getPlayers() {
+    async getWinnings() {
       try {
-        const players = await this.$axios.get('master/player/get_all');
-        this.players = players.data.data;
+        const winnings = await this.$axios.get('master/winning/get_all');
+        this.winnings = winnings.data.data;
       } catch (error) {
         console.log(error.response);
-        this.$noty.error('Failed Fetch Players');
+        this.$noty.error('Failed Fetch Winnings');
       }
     },
 
-    async getAllPlayerDivisions() {
+    async getPlayerDivisions() {
       try {
         const playerDivisions = await this.$axios.get('entry/player_division/get_all');
         this.playerDivisions = playerDivisions.data.data;
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Fetch player division');
+      }
+    },
+
+    async getAllLogMatchs() {
+      try {
+        const logMatchs = await this.$axios.get('entry/log_match/get_all');
+        this.logMatchs = logMatchs.data.data;
       } catch (error) {
         console.log(error.response);
         this.$noty.error('Failed Get Data');
@@ -209,15 +287,16 @@ export default {
 
     async insertData() {
       try {
-        await this.$axios.post('entry/player_division/insert', {
+        await this.$axios.post('entry/log_match/insert', {
           division_id: this.form.division_id,
-          player_id: this.form.player_id,
-          pool_number: this.form.pool_number
+          pd1_id: this.form.pd1_id,
+          pd2_id: this.form.pd2_id,
+          match_system: this.form.match_system
         });
 
         this.$noty.success('Success Insert Data');
-        this.getAllPlayerDivisions();
-        this.$bvModal.hide('modal-player-division');
+        this.getAllLogMatchs();
+        this.$bvModal.hide('modal-log-match');
 
       } catch (error) {
         console.log(error.response);
@@ -228,15 +307,16 @@ export default {
 
     async updateData() {
       try {
-        await this.$axios.post(`entry/player_division/update/${this.form.id}`, {
+        await this.$axios.post(`entry/log_match/update/${this.form.id}`, {
           division_id: this.form.division_id,
-          player_id: this.form.player_id,
-          pool_number: this.form.pool_number
+          pd1_id: this.form.pd1_id,
+          pd2_id: this.form.pd2_id,
+          match_system: this.form.match_system
         });
 
         this.$noty.success('Success Update Data');
-        this.getAllPlayerDivisions();
-        this.$bvModal.hide('modal-player-division');
+        this.getAllLogMatchs();
+        this.$bvModal.hide('modal-log-match');
 
       } catch (error) {
         console.log(error.response);
@@ -247,13 +327,13 @@ export default {
 
     async deleteData(item) {
       try {
-        await this.$axios.post('entry/player_division/delete', {
+        await this.$axios.post('entry/log_match/delete', {
           id: item.id
         });
 
         this.$noty.success('Success Delete Data');
-        this.getAllPlayerDivisions();
-        this.$bvModal.hide('modal-player-division');
+        this.getAllLogMatchs();
+        this.$bvModal.hide('modal-log-match');
 
       } catch (error) {
         console.log(error.response);
@@ -280,8 +360,8 @@ export default {
 
     async filterData(divisionId) {
       try {
-        const playerDivisions = await this.$axios.get(`entry/player_division/filter_division/${divisionId}`);
-        this.playerDivisions = playerDivisions.data.data;
+        const logMatchs = await this.$axios.get(`entry/log_match/filter_division/${divisionId}`);
+        this.logMatchs = logMatchs.data.data;
       } catch (error) {
         console.log(error.response);
         this.$noty.error('Failed Filter Data');
@@ -290,34 +370,46 @@ export default {
 
     addData() {
       this.resetData();
-      this.$bvModal.show('modal-player-division');
+      this.$bvModal.show('modal-log-match');
       this.modalState = 'add';
     },
 
     loadData(item) {
       this.resetData();
-      this.$bvModal.show('modal-player-division');
+      this.$bvModal.show('modal-log-match');
       this.modalState = 'update';
       // populate form
-      let { id, division_id, player_id, pool_number } = item;
+      let { id, division_id, pd1_id, pd2_id, match_system } = item;
       this.form.id = id;
       this.form.division_id = division_id;
-      this.form.player_id = player_id;
-      this.form.pool_number = pool_number;
+      this.form.pd1_id = pd1_id;
+      this.form.pd2_id = pd2_id;
+      this.form.match_system = match_system;
     },
 
     resetData() {
       this.errorValidation = null;
       this.form.division_id = null;
-      this.form.player_id = null;
-      this.form.pool_number = null;
+      this.form.pd1_id = null;
+      this.form.pd2_id = null;
+      this.form.match_system = null;
     }
   },
 
   created() {
-    this.getAllPlayerDivisions();
+    this.getWinnings();
     this.getDivisions();
-    this.getPlayers();
+    this.getAllLogMatchs();
+    this.getPlayerDivisions();
   }
 };
 </script>
+
+<style lang="css">
+.min-width-10 {
+  min-width: 10rem;
+}
+.min-width-7 {
+  min-width: 7rem;
+}
+</style>

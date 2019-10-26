@@ -100,6 +100,12 @@ class MY_Model extends CI_Model
         $this->db->order_by($column, $order);
         return $this;
     }
+
+    public function join($table, $type = 'left')
+    {
+        $this->db->join($table, "$this->table.{$table}_id = $table.id", $type);
+        return $this;
+    }
 }
 
 /* End of file MY_Model.php */

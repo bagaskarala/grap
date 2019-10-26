@@ -34,8 +34,8 @@
                       :title="item.gender"
                     ></i>
                   </p>
-                  <p class="mb-0">{{item.alias}}</p>
-                  <p class="badge badge-secondary mb-0">{{item.weight}} kg</p>
+                  <p class="mb-0">{{item.club}} - {{item.country}}</p>
+                  <p class="badge badge-secondary mb-0 small">{{item.weight}} kg</p>
                 </div>
                 <div>
                   <button

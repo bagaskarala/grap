@@ -26,24 +26,27 @@ class Player_division_model extends MY_Model
         return $validationRules;
     }
 
-    public function get_all_player_division()
+    public function query_player_division()
     {
         //  get all player division
         // join with division and player
-        $this->db->select('player.name, division.division, player_division.id, player_id, division_id, pool_number');
-        $this->db->join('division', 'division.id = player_division.division_id', 'left');
-        $this->db->join('player', 'player.id = player_division.player_id', 'left');
-        $this->db->order_by('division', 'DESC');
-        return $this->db->get($this->table)->result_array();
+        $this->db->select("$this->table.*, player.name, division.division");
+        $this->join('division');
+        $this->join('player');
+        $this->order_by('division');
+    }
+
+    public function get_all_player_division()
+    {
+        $this->query_player_division();
+        return $this->get_all_array();
     }
 
     public function filter_division($division_id)
     {
-        $this->db->select('player.name, division.division, player_division.id, player_id, division_id, pool_number');
-        $this->db->join('division', 'division.id = player_division.division_id', 'left');
-        $this->db->join('player', 'player.id = player_division.player_id', 'left');
+        $this->query_player_division();
         $this->db->where('division_id', $division_id);
-        return $this->db->get($this->table)->result_array();
+        return $this->get_all_array();
     }
 }
 

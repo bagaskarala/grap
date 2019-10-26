@@ -39,6 +39,7 @@ Vue.component('ClubList', require('./components/ClubList.vue').default);
 Vue.component('PlayerList', require('./components/PlayerList.vue').default);
 Vue.component('WinningList', require('./components/WinningList.vue').default);
 Vue.component('PlayerDivision', require('./components/PlayerDivision.vue').default);
+Vue.component('LogMatch', require('./components/LogMatch.vue').default);
 
 new Vue({
    el: '#app'

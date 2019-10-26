@@ -55,6 +55,16 @@ class Player_model extends MY_Model
 
         return $validationRules;
     }
+
+    public function get_all_player()
+    {
+        $this->db->select("$this->table.*, club.club, country.country");
+        $this->join('club');
+        $this->join('country');
+        $this->order_by('gender');
+        $this->order_by('name');
+        return $this->get_all_array();
+    }
 }
 
 /* End of file Player_model.php */

@@ -18,9 +18,7 @@ class Player extends MY_Controller
 
     public function get_all()
     {
-        $this->player->order_by('gender');
-        $this->player->order_by('name');
-        $players = $this->player->get_all_array();
+        $players = $this->player->get_all_player();
 
         if (count($players) == 0) {
             return $this->send_json_output([], true, 200);
