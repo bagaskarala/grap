@@ -17,11 +17,15 @@
 
           <div class="mx-3 mt-3">
             <div class="input-group input-group-sm">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Division</span>
+              </div>
               <select
                 name="filter_division"
                 id="filter_division"
                 class="form-control"
                 v-model.number="filterDivisionId"
+                @change="filterData(filterDivisionId)"
               >
                 <option :value="null">All Division</option>
                 <option
@@ -30,13 +34,21 @@
                   :value="item.id"
                 >{{item.division}}</option>
               </select>
-              <div class="input-group-append">
-                <button
-                  class="btn btn-primary"
-                  type="button"
-                  @click.prevent="filterData(filterDivisionId)"
-                >Filter</button>
-              </div>
+            </div>
+
+            <div class="d-flex justify-content-start mt-3">
+              <button
+                class="btn btn-sm btn-success mr-1"
+                type="button"
+                :disabled="playerDivisions.length==0"
+                @click.prevent="generatePool()"
+              >Generate Pool</button>
+              <button
+                class="btn btn-sm btn-secondary"
+                type="button"
+                :disabled="playerDivisions.length==0"
+                @click.prevent="resetPool()"
+              >Reset Pool</button>
             </div>
           </div>
 
@@ -53,8 +65,16 @@
               :items="playerDivisions"
               :fields="fieldPlayerDivision"
             >
+              <template v-slot:cell(pool_number)="data">
+                <span
+                  class="badge"
+                  :class="[data.item.pool_number ? data.item.pool_number == 'A'? 'badge-dark':'badge-danger' : null]"
+                >
+                  {{data.item.pool_number != null? data.item.pool_number : ''}}
+                </span>
+              </template>
               <template v-slot:cell(action)="data">
-                <div>
+                <div class="min-width-7">
                   <button
                     class="btn btn-sm btn-warning"
                     @click.prevent="loadData(data.item)"
@@ -118,13 +138,19 @@
         </div>
         <div class="form-group">
           <label for="pool_number">Pool Number</label>
-          <input
+          <select
+            name="pool_number"
             id="pool_number"
-            v-model="form.pool_number"
-            type="text"
             class="form-control"
-            placeholder="Enter pool number"
+            v-model="form.pool_number"
           >
+            <option :value="null">Select pool number</option>
+            <option
+              v-for="item in poolOptions"
+              :key="item.value"
+              :value="item.value"
+            >{{item.text}}</option>
+          </select>
         </div>
         <div class="d-flex justify-content-end">
           <div
@@ -158,7 +184,11 @@ export default {
   name: 'PlayerDivision',
   data() {
     return {
-      fieldPlayerDivision: ['division', 'name', 'win', 'draw', 'lose', 'action'],
+      fieldPlayerDivision: ['club', 'name', 'pool_number', 'win', 'draw', 'lose', 'action'],
+      poolOptions: [
+        { text: 'Pool A', value: 'A' },
+        { text: 'Pool B', value: 'B' }
+      ],
       playerDivisions: [],
       divisions: [],
       players: [],
@@ -168,7 +198,8 @@ export default {
         player_id: null,
         height: null,
         weight: null,
-        achievement: null
+        achievement: null,
+        pool_number: null
       },
       modalState: null,
       errorValidation: null,
@@ -201,6 +232,7 @@ export default {
       try {
         const playerDivisions = await this.$axios.get('entry/player_division/get_all');
         this.playerDivisions = playerDivisions.data.data;
+        this.filterDivisionId = null;
       } catch (error) {
         console.log(error.response);
         this.$noty.error('Failed Get Data');
@@ -288,6 +320,42 @@ export default {
       }
     },
 
+    async generatePool() {
+      if (this.filterDivisionId == null) {
+        this.$noty.warning('Select division first before generate pool');
+        return;
+      }
+
+      try {
+        await this.$axios.post('entry/player_division/generate_pool', {
+          division_id: this.filterDivisionId
+        });
+        this.filterData(this.filterDivisionId);
+        this.$noty.success('Success Generate Pool');
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Generate Pool. ' + error.response.data.message);
+      }
+    },
+
+    async resetPool() {
+      if (this.filterDivisionId == null) {
+        this.$noty.warning('Select division first before reset pool');
+        return;
+      }
+
+      try {
+        await this.$axios.post('entry/player_division/reset_pool', {
+          division_id: this.filterDivisionId
+        });
+        this.filterData(this.filterDivisionId);
+        this.$noty.success('Success Reset Pool');
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Reset Pool');
+      }
+    },
+
     addData() {
       this.resetData();
       this.$bvModal.show('modal-player-division');
@@ -321,3 +389,12 @@ export default {
   }
 };
 </script>
+
+<style lang="css">
+.min-width-10 {
+  min-width: 10rem;
+}
+.min-width-7 {
+  min-width: 7rem;
+}
+</style>

@@ -112,4 +112,30 @@ class Log_match extends MY_Controller
             return $this->send_json_output("Failed filter data", false, 400);
         }
     }
+
+    public function generate_schedule()
+    {
+        $request = parse_post_data();
+
+        $result = $this->log_match->generate_schedule($request->division_id, $request->match_system);
+
+        if ($result['status']) {
+            return $this->send_json_output($result['data'], true, 200);
+        } else {
+            return $this->send_json_output($result['message'], false, 400);
+        }
+    }
+
+    public function reset_schedule()
+    {
+        $request = parse_post_data();
+
+        $result = $this->log_match->reset_schedule($request->division_id);
+
+        if ($result) {
+            return $this->send_json_output($result, true, 200);
+        } else {
+            return $this->send_json_output("Failed Reset Schedule", false, 400);
+        }
+    }
 };

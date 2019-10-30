@@ -72,6 +72,77 @@ class Log_match_model extends MY_Model
         $this->db->where('lm.division_id', $division_id);
         return $this->db->get()->result_array();
     }
+
+    public function generate_schedule($division_id, $match_system)
+    {
+        if (!$division_id or !$match_system) {
+            return [
+                'status'  => false,
+                'message' => 'Error! division_id or match_system undefined',
+            ];
+        }
+
+        // check if log match has been created
+        // avoid create multiple logmatch per division
+        $this->where('division_id', $division_id);
+        $log_match_count = $this->count();
+        if ($log_match_count > 0) {
+            return [
+                'status'  => false,
+                'message' => 'This division log match has been generated',
+            ];
+        }
+
+        $this->where('division_id', $division_id);
+        $player_count = $this->count('player_division');
+        if ($player_count == 0) {
+            return [
+                'status'  => false,
+                'message' => 'This division has no player',
+            ];
+        } else if ($player_count < 4) {
+            return [
+                'status'  => false,
+                'message' => 'Minimal 4 players',
+            ];
+        }
+
+        $max_match_index = pow(2, ceil(log($player_count, 2)));
+        $arr_log_match   = [];
+
+        $divider = $max_match_index / 2;
+        for ($idx = 1; $idx <= $max_match_index; $idx++) {
+            $next_num = 1;
+            for ($num = 1; $num <= $divider; $num++) {
+                $next_idx = $idx + 1;
+                array_push($arr_log_match, ['idx' => $idx, 'num' => $num, 'next' => "$next_idx.$next_num"]);
+                $this->insert([
+                    'division_id'  => $division_id,
+                    'match_index'  => $idx,
+                    'match_system' => $match_system,
+                    'match_number' => $num,
+                    'next_match'   => "$next_idx.$next_num",
+                ]);
+                // increment next_num setiap dua loop
+                if ($num % 2 == 0) {
+                    $next_num++;
+                }
+            }
+            // setiap next index, jumlah pemain separo index sebelumnya
+            $divider /= 2;
+        }
+
+        return [
+            'status' => true,
+            'data'   => $arr_log_match,
+        ];
+    }
+
+    public function reset_schedule($division_id)
+    {
+        $this->where('division_id', $division_id);
+        return $this->delete(['division_id' => $division_id]);
+    }
 }
 
 /* End of file Log_match_model.php */

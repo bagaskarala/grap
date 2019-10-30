@@ -97,8 +97,10 @@ class Player_division extends MY_Controller
     public function filter_division($division_id)
     {
         if ($division_id === 'null') {
+            $this->player_division->order_by('pool_number');
             $result = $this->player_division->get_all_player_division();
         } else {
+            $this->player_division->order_by('pool_number');
             $result = $this->player_division->filter_division($division_id);
         }
 
@@ -108,6 +110,32 @@ class Player_division extends MY_Controller
             return $this->send_json_output($result, true, 200);
         } else {
             return $this->send_json_output("Failed filter data", false, 400);
+        }
+    }
+
+    public function generate_pool()
+    {
+        $request = parse_post_data();
+
+        $result = $this->player_division->generate_pool($request->division_id);
+
+        if ($result['status']) {
+            return $this->send_json_output($result['data'], true, 200);
+        } else {
+            return $this->send_json_output($result['message'], false, 400);
+        }
+    }
+
+    public function reset_pool()
+    {
+        $request = parse_post_data();
+
+        $result = $this->player_division->reset_pool($request->division_id);
+
+        if ($result) {
+            return $this->send_json_output($result, true, 200);
+        } else {
+            return $this->send_json_output("Failed Reset Pool", false, 400);
         }
     }
 };

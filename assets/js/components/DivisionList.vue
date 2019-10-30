@@ -131,7 +131,7 @@
           >
             <option :value="null">Select Gender</option>
             <option
-              v-for="item in gender"
+              v-for="item in genderOptions"
               :key="item.value"
               :value="item.value"
             >{{item.text}}</option>
@@ -207,7 +207,7 @@ export default {
   data() {
     return {
       divisions: [],
-      gender: [
+      genderOptions: [
         { text: 'Male', value: 'male' },
         { text: 'Female', value: 'female' }
       ],

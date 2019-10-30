@@ -17,11 +17,15 @@
 
           <div class="mx-3 mt-3">
             <div class="input-group input-group-sm">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Division</span>
+              </div>
               <select
                 name="filter_division"
                 id="filter_division"
                 class="form-control"
                 v-model.number="filterDivisionId"
+                @change="filterData(filterDivisionId)"
               >
                 <option :value="null">All Division</option>
                 <option
@@ -32,10 +36,39 @@
               </select>
               <div class="input-group-append">
                 <button
-                  class="btn btn-primary"
+                  class="btn btn-secondary btn-sm"
                   type="button"
-                  @click.prevent="filterData(filterDivisionId)"
-                >Filter</button>
+                  :disabled="logMatchs.length == 0"
+                  @click.prevent="resetSchedule()"
+                >Clear</button>
+              </div>
+            </div>
+
+            <div class="mt-3">
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">System</span>
+                </div>
+                <select
+                  name="match_system"
+                  id="match_system"
+                  class="form-control"
+                  v-model="selectedMatchSystem"
+                >
+                  <option
+                    v-for="item in matchSystemOptions"
+                    :key="item.value"
+                    :value="item.value"
+                  >{{item.text}}</option>
+                </select>
+                <div class="input-group-append">
+                  <button
+                    class="btn btn-success"
+                    type="button"
+                    :disabled="logMatchs.length > 0"
+                    @click.prevent="generateSchedule()"
+                  >Generate Schedule</button>
+                </div>
               </div>
             </div>
           </div>
@@ -163,7 +196,7 @@
           >
             <option :value="null">Select Match System</option>
             <option
-              v-for="item in matchSystem"
+              v-for="item in matchSystemOptions"
               :key="item.value"
               :value="item.value"
             >{{item.text}}</option>
@@ -209,6 +242,12 @@ export default {
           'key': 'match_system'
         },
         {
+          'key': 'match_index'
+        },
+        {
+          'key': 'match_number'
+        },
+        {
           'key': 'player1_name',
           'label': 'Player 1'
         },
@@ -224,7 +263,7 @@ export default {
           'key': 'action'
         }
       ],
-      matchSystem: [
+      matchSystemOptions: [
         { text: 'Round Robin', value: 'roundrobin' },
         { text: 'Elimination', value: 'elimination' }
       ],
@@ -233,14 +272,15 @@ export default {
       divisions: [],
       winnings: [],
       form: {
-        division: null,
+        division_id: null,
         pd1_id: null,
         pd2_id: null,
         match_system: null
       },
       modalState: null,
       errorValidation: null,
-      filterDivisionId: null
+      filterDivisionId: null,
+      selectedMatchSystem: 'elimination'
     };
   },
 
@@ -279,6 +319,7 @@ export default {
       try {
         const logMatchs = await this.$axios.get('entry/log_match/get_all');
         this.logMatchs = logMatchs.data.data;
+        this.filterDivisionId = null;
       } catch (error) {
         console.log(error.response);
         this.$noty.error('Failed Get Data');
@@ -365,6 +406,44 @@ export default {
       } catch (error) {
         console.log(error.response);
         this.$noty.error('Failed Filter Data');
+      }
+    },
+
+    async generateSchedule() {
+      if (this.filterDivisionId == null) {
+        this.$noty.warning('Select division first before generate schedule');
+        return;
+      }
+
+      try {
+        const a = await this.$axios.post('entry/log_match/generate_schedule', {
+          division_id: this.filterDivisionId,
+          match_system: this.selectedMatchSystem
+        });
+        console.log(a.data.data);
+        this.filterData(this.filterDivisionId);
+        this.$noty.success('Success Generate Schedule');
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Generate Schedule. ' + error.response.data.message);
+      }
+    },
+
+    async resetSchedule() {
+      if (this.filterDivisionId == null) {
+        this.$noty.warning('Select division first before reset schedule');
+        return;
+      }
+
+      try {
+        await this.$axios.post('entry/log_match/reset_schedule', {
+          division_id: this.filterDivisionId
+        });
+        this.filterData(this.filterDivisionId);
+        this.$noty.success('Success Reset Schedule');
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Reset Schedule');
       }
     },
 

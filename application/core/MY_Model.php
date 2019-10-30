@@ -16,8 +16,23 @@ class MY_Model extends CI_Model
         }
     }
 
+    public function checkTable($table)
+    {
+        if ($table == null) {
+            $table = $this->table;
+        }
+        return $table;
+    }
+
+    public function count($table = null)
+    {
+        $table = $this->checkTable($table);
+        return $this->db->count_all_results($table);
+    }
+
     public function get_all_array()
     {
+
         return $this->db->get($this->table)->result_array();
     }
 
@@ -35,6 +50,14 @@ class MY_Model extends CI_Model
     {
         return $this->db->get($this->table)->row();
     }
+
+    // public function get_where($column, $condition)
+    // {
+    //     $this->where($column, $condition);
+    //     return $this->count();
+
+    //     // $this->db->get_where($this->table, $where);
+    // }
 
     public function insert($data)
     {
@@ -104,6 +127,12 @@ class MY_Model extends CI_Model
     public function join($table, $type = 'left')
     {
         $this->db->join($table, "$this->table.{$table}_id = $table.id", $type);
+        return $this;
+    }
+
+    public function join_table($table1, $table2, $type = 'left')
+    {
+        $this->db->join($table1, "$table2.{$table1}_id = $table1.id", $type);
         return $this;
     }
 }
