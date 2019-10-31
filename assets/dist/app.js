@@ -4006,6 +4006,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PlayerDivision',
   data: function data() {
@@ -4401,7 +4414,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _generateSchedule = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
-        var a;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
           while (1) {
             switch (_context9.prev = _context9.next) {
@@ -4423,25 +4435,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 6:
-                a = _context9.sent;
-                console.log(a.data.data);
                 this.filterData(this.filterDivisionId);
                 this.$noty.success('Success Generate Schedule');
-                _context9.next = 16;
+                _context9.next = 14;
                 break;
 
-              case 12:
-                _context9.prev = 12;
+              case 10:
+                _context9.prev = 10;
                 _context9.t0 = _context9["catch"](3);
                 console.log(_context9.t0.response);
                 this.$noty.error('Failed Generate Schedule. ' + _context9.t0.response.data.message);
 
-              case 16:
+              case 14:
               case "end":
                 return _context9.stop();
             }
           }
-        }, _callee9, this, [[3, 12]]);
+        }, _callee9, this, [[3, 10]]);
       }));
 
       function generateSchedule() {
@@ -4498,6 +4508,104 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return resetSchedule;
+    }(),
+    generatePlayer: function () {
+      var _generatePlayer = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
+          while (1) {
+            switch (_context11.prev = _context11.next) {
+              case 0:
+                if (!(this.filterDivisionId == null)) {
+                  _context11.next = 3;
+                  break;
+                }
+
+                this.$noty.warning('Select division first before generate player');
+                return _context11.abrupt("return");
+
+              case 3:
+                _context11.prev = 3;
+                _context11.next = 6;
+                return this.$axios.post('entry/log_match/generate_player', {
+                  division_id: this.filterDivisionId
+                });
+
+              case 6:
+                this.filterData(this.filterDivisionId);
+                this.$noty.success('Success Generate Player');
+                _context11.next = 14;
+                break;
+
+              case 10:
+                _context11.prev = 10;
+                _context11.t0 = _context11["catch"](3);
+                console.log(_context11.t0.response);
+                this.$noty.error('Failed Generate Player. ' + _context11.t0.response.data.message);
+
+              case 14:
+              case "end":
+                return _context11.stop();
+            }
+          }
+        }, _callee11, this, [[3, 10]]);
+      }));
+
+      function generatePlayer() {
+        return _generatePlayer.apply(this, arguments);
+      }
+
+      return generatePlayer;
+    }(),
+    resetPlayer: function () {
+      var _resetPlayer = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
+          while (1) {
+            switch (_context12.prev = _context12.next) {
+              case 0:
+                if (!(this.filterDivisionId == null)) {
+                  _context12.next = 3;
+                  break;
+                }
+
+                this.$noty.warning('Select division first before reset player');
+                return _context12.abrupt("return");
+
+              case 3:
+                _context12.prev = 3;
+                _context12.next = 6;
+                return this.$axios.post('entry/log_match/reset_player', {
+                  division_id: this.filterDivisionId
+                });
+
+              case 6:
+                this.filterData(this.filterDivisionId);
+                this.$noty.success('Success Reset Player');
+                _context12.next = 14;
+                break;
+
+              case 10:
+                _context12.prev = 10;
+                _context12.t0 = _context12["catch"](3);
+                console.log(_context12.t0.response);
+                this.$noty.error('Failed Reset Player');
+
+              case 14:
+              case "end":
+                return _context12.stop();
+            }
+          }
+        }, _callee12, this, [[3, 10]]);
+      }));
+
+      function resetPlayer() {
+        return _resetPlayer.apply(this, arguments);
+      }
+
+      return resetPlayer;
     }(),
     addData: function addData() {
       this.resetData();
@@ -41004,7 +41112,10 @@ var render = function() {
                       staticClass: "btn btn-secondary btn-sm",
                       attrs: {
                         type: "button",
-                        disabled: _vm.logMatchs.length == 0
+                        title: "Clear Schedule",
+                        disabled:
+                          _vm.logMatchs.length == 0 ||
+                          _vm.filterDivisionId == null
                       },
                       on: {
                         click: function($event) {
@@ -41068,7 +41179,9 @@ var render = function() {
                         staticClass: "btn btn-success",
                         attrs: {
                           type: "button",
-                          disabled: _vm.logMatchs.length > 0
+                          disabled:
+                            _vm.logMatchs.length > 0 ||
+                            _vm.filterDivisionId == null
                         },
                         on: {
                           click: function($event) {
@@ -41081,7 +41194,40 @@ var render = function() {
                     )
                   ])
                 ])
-              ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-sm btn-primary mt-3",
+                  attrs: {
+                    type: "button",
+                    disabled: _vm.logMatchs.length == 0
+                  },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.generatePlayer()
+                    }
+                  }
+                },
+                [_vm._v("Generate Player")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-sm btn-secondary mt-3",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.resetPlayer()
+                    }
+                  }
+                },
+                [_vm._v("Reset Player")]
+              )
             ]),
             _vm._v(" "),
             _c(

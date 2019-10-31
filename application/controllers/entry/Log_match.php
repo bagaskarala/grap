@@ -138,4 +138,26 @@ class Log_match extends MY_Controller
             return $this->send_json_output("Failed Reset Schedule", false, 400);
         }
     }
+
+    public function generate_player()
+    {
+        $request = parse_post_data();
+
+        $result = $this->log_match->generate_player($request->division_id);
+
+        if ($result['status']) {
+            return $this->send_json_output($result['data'], true, 200);
+        } else {
+            return $this->send_json_output($result['message'], false, 400);
+        }
+    }
+
+    public function reset_player()
+    {
+        $request = parse_post_data();
+
+        $result = $this->log_match->reset_player($request->division_id);
+
+        return $result;
+    }
 };

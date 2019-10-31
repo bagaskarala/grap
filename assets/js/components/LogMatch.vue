@@ -38,7 +38,8 @@
                 <button
                   class="btn btn-secondary btn-sm"
                   type="button"
-                  :disabled="logMatchs.length == 0"
+                  title="Clear Schedule"
+                  :disabled="logMatchs.length == 0 || filterDivisionId==null"
                   @click.prevent="resetSchedule()"
                 >Clear</button>
               </div>
@@ -65,12 +66,24 @@
                   <button
                     class="btn btn-success"
                     type="button"
-                    :disabled="logMatchs.length > 0"
+                    :disabled="logMatchs.length > 0 || filterDivisionId==null"
                     @click.prevent="generateSchedule()"
                   >Generate Schedule</button>
                 </div>
               </div>
             </div>
+
+            <button
+              class="btn btn-sm btn-primary mt-3"
+              type="button"
+              :disabled="logMatchs.length == 0"
+              @click.prevent="generatePlayer()"
+            >Generate Player</button>
+            <button
+              class="btn btn-sm btn-secondary mt-3"
+              type="button"
+              @click.prevent="resetPlayer()"
+            >Reset Player</button>
           </div>
 
           <div class="card-body">
@@ -416,11 +429,10 @@ export default {
       }
 
       try {
-        const a = await this.$axios.post('entry/log_match/generate_schedule', {
+        await this.$axios.post('entry/log_match/generate_schedule', {
           division_id: this.filterDivisionId,
           match_system: this.selectedMatchSystem
         });
-        console.log(a.data.data);
         this.filterData(this.filterDivisionId);
         this.$noty.success('Success Generate Schedule');
       } catch (error) {
@@ -444,6 +456,42 @@ export default {
       } catch (error) {
         console.log(error.response);
         this.$noty.error('Failed Reset Schedule');
+      }
+    },
+
+    async generatePlayer() {
+      if (this.filterDivisionId == null) {
+        this.$noty.warning('Select division first before generate player');
+        return;
+      }
+
+      try {
+        await this.$axios.post('entry/log_match/generate_player', {
+          division_id: this.filterDivisionId
+        });
+        this.filterData(this.filterDivisionId);
+        this.$noty.success('Success Generate Player');
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Generate Player. ' + error.response.data.message);
+      }
+    },
+
+    async resetPlayer() {
+      if (this.filterDivisionId == null) {
+        this.$noty.warning('Select division first before reset player');
+        return;
+      }
+
+      try {
+        await this.$axios.post('entry/log_match/reset_player', {
+          division_id: this.filterDivisionId
+        });
+        this.filterData(this.filterDivisionId);
+        this.$noty.success('Success Reset Player');
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Reset Player');
       }
     },
 

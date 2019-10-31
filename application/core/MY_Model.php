@@ -30,10 +30,10 @@ class MY_Model extends CI_Model
         return $this->db->count_all_results($table);
     }
 
-    public function get_all_array()
+    public function get_all_array($table = null)
     {
-
-        return $this->db->get($this->table)->result_array();
+        $table = $this->checkTable($table);
+        return $this->db->get($table)->result_array();
     }
 
     public function get_single_array()
@@ -130,9 +130,15 @@ class MY_Model extends CI_Model
         return $this;
     }
 
-    public function join_table($table1, $table2, $type = 'left')
+    public function join_table($table_to, $table_from, $type = 'left')
     {
-        $this->db->join($table1, "$table2.{$table1}_id = $table1.id", $type);
+        $this->db->join($table_to, "$table_from.{$table_to}_id = $table_to.id", $type);
+        return $this;
+    }
+
+    public function select($columns)
+    {
+        $this->db->select($columns);
         return $this;
     }
 }

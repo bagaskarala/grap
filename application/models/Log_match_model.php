@@ -143,6 +143,80 @@ class Log_match_model extends MY_Model
         $this->where('division_id', $division_id);
         return $this->delete(['division_id' => $division_id]);
     }
+
+    public function generate_player($division_id)
+    {
+        // get player division, urutkan club_id untuk minimalisir club sama bertemu
+        $this->select('player_division.*, player.club_id');
+        $this->join_table('player', 'player_division');
+        $this->where('division_id', $division_id);
+        $this->order_by('club_id');
+        $player_divisions = $this->get_all_array('player_division');
+        if (count($player_divisions) == 0) {
+            return [
+                'status'  => false,
+                'message' => 'This division has no player',
+            ];
+        }
+
+        // hitung max log_match index 1
+        $this->where('division_id', $division_id);
+        $this->where('match_index', 1);
+        $log_match_count = $this->count();
+        if ($log_match_count == 0) {
+            return [
+                'status'  => false,
+                'message' => 'No schedule in this match',
+            ];
+        }
+
+        $arr_generate_player = [];
+
+        // loop player_division,
+        $index_counter = 1;
+        $flag          = true;
+        foreach ($player_divisions as $player_division) {
+            // flag true menandakan player1 sudah penuh,
+            // setelah itu set flag false untuk mengisi player2
+            if ($index_counter == $log_match_count + 1) {
+                $flag          = false;
+                $index_counter = 1;
+            }
+
+            if ($flag) {
+                // isi player1
+                $where = [
+                    'match_index'  => 1,
+                    'match_number' => $index_counter,
+                ];
+                $this->update(['pd1_id' => $player_division['id']], $where);
+                array_push($arr_generate_player, ['pd1' => $player_division['id'], 'idx' => $index_counter]);
+            } else {
+                // isi player2
+                $where = [
+                    'match_index'  => 1,
+                    'match_number' => $index_counter,
+                ];
+                $this->update(['pd2_id' => $player_division['id']], $where);
+                array_push($arr_generate_player, ['pd2' => $player_division['id'], 'idx' => $index_counter]);
+            }
+            $index_counter++;
+        }
+
+        return [
+            'status' => true,
+            'data'   => $arr_generate_player,
+        ];
+    }
+
+    public function reset_player($division_id)
+    {
+        $data = [
+            'pd1_id' => null,
+            'pd2_id' => null,
+        ];
+        return $this->update($data, ['division_id' => $division_id]);
+    }
 }
 
 /* End of file Log_match_model.php */
