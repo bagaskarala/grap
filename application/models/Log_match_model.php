@@ -39,25 +39,29 @@ class Log_match_model extends MY_Model
         $this->db->select(
             'lm.*,
             d.division,
+            w.winning,
             pd1.player_id as player1_id,
             p1.name as player1_name,
+            p1.weight as player1_weight,
             c1.club as player1_club,
-            d1.division as player1_division,
+            ct1.country as player1_country,
             pd2.player_id as player2_id,
             p2.name as player2_name,
+            p2.weight as player2_weight,
             c2.club as player2_club,
-            d2.division as player2_division'
+            ct2.country as player2_country'
         );
         $this->db->from("$this->table as lm");
         $this->db->join('player_division as pd1', 'pd1.id = lm.pd1_id', 'left');
         $this->db->join('player as p1', 'p1.id = pd1.player_id', 'left');
         $this->db->join('club as c1', 'c1.id = p1.club_id', 'left');
-        $this->db->join('division as d1', 'd1.id = pd1.division_id', 'left');
+        $this->db->join('country as ct1', 'ct1.id = p1.country_id', 'left');
         $this->db->join('player_division as pd2', 'pd2.id = lm.pd2_id', 'left');
         $this->db->join('player as p2', 'p2.id = pd2.player_id', 'left');
         $this->db->join('club as c2', 'c2.id = p2.club_id', 'left');
-        $this->db->join('division as d2', 'd2.id = pd2.division_id', 'left');
+        $this->db->join('country as ct2', 'ct2.id = p2.country_id', 'left');
         $this->db->join('division as d', 'd.id = lm.division_id', 'left');
+        $this->db->join('winning as w', 'w.id = lm.winning_id', 'left');
     }
 
     public function get_all_log_match()
@@ -188,6 +192,7 @@ class Log_match_model extends MY_Model
                 $where = [
                     'match_index'  => 1,
                     'match_number' => $index_counter,
+                    'division_id'  => $division_id,
                 ];
                 $this->update(['pd1_id' => $player_division['id']], $where);
                 array_push($arr_generate_player, ['pd1' => $player_division['id'], 'idx' => $index_counter]);
@@ -196,6 +201,7 @@ class Log_match_model extends MY_Model
                 $where = [
                     'match_index'  => 1,
                     'match_number' => $index_counter,
+                    'division_id'  => $division_id,
                 ];
                 $this->update(['pd2_id' => $player_division['id']], $where);
                 array_push($arr_generate_player, ['pd2' => $player_division['id'], 'idx' => $index_counter]);
@@ -216,6 +222,13 @@ class Log_match_model extends MY_Model
             'pd2_id' => null,
         ];
         return $this->update($data, ['division_id' => $division_id]);
+    }
+
+    public function get_detail_log_match($log_match_id)
+    {
+        $this->query_log_match();
+        $this->db->where('lm.id', $log_match_id);
+        return $this->db->get()->row_array();
     }
 }
 

@@ -4,7 +4,7 @@
       <div class="col">
         <div class="card card-default">
           <div class="card-header d-flex justify-content-between align-items-center">
-            <span>Log Match List</span>
+            <span>Log Match</span>
             <!-- Button trigger modal -->
             <button
               type="button"
@@ -48,13 +48,14 @@
             <div class="mt-3">
               <div class="input-group input-group-sm">
                 <div class="input-group-prepend">
-                  <span class="input-group-text">System</span>
+                  <span class="input-group-text">Choose System</span>
                 </div>
                 <select
                   name="match_system"
                   id="match_system"
                   class="form-control"
                   v-model="selectedMatchSystem"
+                  :disabled="logMatchs.length > 0 || filterDivisionId==null"
                 >
                   <option
                     v-for="item in matchSystemOptions"
@@ -121,7 +122,11 @@
                 <span class="h5 font-weight-bold">VS</span>
               </template>
               <template v-slot:cell(action)="data">
-                <div class="min-width-7">
+                <div class="min-width-10">
+                  <button
+                    class="btn btn-sm btn-primary"
+                    @click.prevent="goToDetail(data.item)"
+                  ><i class="fa fa-eye fa-fw"></i></button>
                   <button
                     class="btn btn-sm btn-warning"
                     @click.prevent="loadData(data.item)"
@@ -245,6 +250,9 @@
 <script>
 export default {
   name: 'PlayerDivision',
+  props: {
+    baseUrl: String
+  },
   data() {
     return {
       fieldLogMatch: [
@@ -396,7 +404,7 @@ export default {
     },
 
     confirmDelete(item) {
-      this.$bvModal.msgBoxConfirm(`Please confirm that you want to delete ${item.name}`, {
+      this.$bvModal.msgBoxConfirm('Please confirm that you want to delete this match', {
         title: 'Delete Data',
         size: 'md',
         okVariant: 'danger',
@@ -493,6 +501,10 @@ export default {
         console.log(error.response);
         this.$noty.error('Failed Reset Player');
       }
+    },
+
+    goToDetail(item) {
+      window.location.href = `log_match/detail/${item.id}`;
     },
 
     addData() {

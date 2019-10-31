@@ -160,4 +160,25 @@ class Log_match extends MY_Controller
 
         return $result;
     }
+
+    public function detail()
+    {
+        $data['title'] = 'Log Match Detail';
+        $data['page']  = 'entry/log_match_detail';
+
+        $this->load->view('templates/app', $data);
+    }
+
+    public function get_detail($log_match_id)
+    {
+        $log_matchs = $this->log_match->get_detail_log_match($log_match_id);
+
+        if (count($log_matchs) == 0) {
+            return $this->send_json_output([], true, 200);
+        } else if ($log_matchs) {
+            return $this->send_json_output($log_matchs, true, 200);
+        } else {
+            return $this->send_json_output("Failed get data", false, 400);
+        }
+    }
 };
