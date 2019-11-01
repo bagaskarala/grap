@@ -39,12 +39,12 @@ class Player_model extends MY_Model
             [
                 'field' => 'height',
                 'label' => 'height',
-                'rules' => 'integer|trim',
+                'rules' => 'numeric|trim',
             ],
             [
                 'field' => 'weight',
                 'label' => 'weight',
-                'rules' => 'integer|trim',
+                'rules' => 'numeric|trim',
             ],
             [
                 'field' => 'achievement',
@@ -62,6 +62,26 @@ class Player_model extends MY_Model
         $this->join('club');
         $this->join('country');
         $this->order_by('gender');
+        $this->order_by('name');
+        return $this->get_all_array();
+    }
+
+    public function filter($min_weight, $max_weight)
+    {
+        if (!$min_weight) {
+            $min_weight = 0;
+        }
+        if (!$max_weight) {
+            $max_weight = 200;
+        }
+
+        // get filtered player
+        $this->select("$this->table.*, club.club, country.country");
+        $this->join('club');
+        $this->join('country');
+        $this->where('weight >', $min_weight);
+        $this->where('weight <', $max_weight);
+        $this->order_by('weight');
         $this->order_by('name');
         return $this->get_all_array();
     }

@@ -5,14 +5,6 @@
         <div class="card card-default">
           <div class="card-header d-flex justify-content-between align-items-center">
             <span>Log Match</span>
-            <!-- Button trigger modal -->
-            <button
-              type="button"
-              class="btn btn-sm btn-primary"
-              @click.prevent="addData()"
-            >
-              Add log match
-            </button>
           </div>
 
           <div class="mx-3 mt-3">
@@ -41,7 +33,7 @@
                   title="Clear Schedule"
                   :disabled="logMatchs.length == 0 || filterDivisionId==null"
                   @click.prevent="resetSchedule()"
-                >Clear</button>
+                >Clear Schedule</button>
               </div>
             </div>
 
@@ -67,24 +59,28 @@
                   <button
                     class="btn btn-success"
                     type="button"
-                    :disabled="logMatchs.length > 0 || filterDivisionId==null"
+                    :disabled="logMatchs.length > 0"
                     @click.prevent="generateSchedule()"
                   >Generate Schedule</button>
                 </div>
               </div>
             </div>
 
-            <button
-              class="btn btn-sm btn-primary mt-3"
-              type="button"
-              :disabled="logMatchs.length == 0"
-              @click.prevent="generatePlayer()"
-            >Generate Player</button>
-            <button
-              class="btn btn-sm btn-secondary mt-3"
-              type="button"
-              @click.prevent="resetPlayer()"
-            >Reset Player</button>
+            <div v-if="filterDivisionId != null">
+              <button
+                class="btn btn-sm btn-primary mt-3"
+                type="button"
+                title="Generate Player after generate schedule"
+                :disabled="logMatchs.length == 0"
+                @click.prevent="generatePlayer()"
+              >Generate Player</button>
+              <button
+                class="btn btn-sm btn-secondary mt-3"
+                type="button"
+                :disabled="logMatchs.length == 0"
+                @click.prevent="resetPlayer()"
+              >Reset Player</button>
+            </div>
           </div>
 
           <div class="card-body">
@@ -204,22 +200,6 @@
             >{{item.name}}</option>
           </select>
         </div>
-        <div class="form-group">
-          <label for="match_system">Match System</label>
-          <select
-            name="match_system"
-            id="match_system"
-            class="form-control"
-            v-model="form.match_system"
-          >
-            <option :value="null">Select Match System</option>
-            <option
-              v-for="item in matchSystemOptions"
-              :key="item.value"
-              :value="item.value"
-            >{{item.text}}</option>
-          </select>
-        </div>
         <div class="d-flex justify-content-end">
           <div
             class="btn-group"
@@ -316,16 +296,6 @@ export default {
       }
     },
 
-    async getWinnings() {
-      try {
-        const winnings = await this.$axios.get('master/winning/get_all');
-        this.winnings = winnings.data.data;
-      } catch (error) {
-        console.log(error.response);
-        this.$noty.error('Failed Fetch Winnings');
-      }
-    },
-
     async getPlayerDivisions() {
       try {
         const playerDivisions = await this.$axios.get('entry/player_division/get_all');
@@ -347,25 +317,29 @@ export default {
       }
     },
 
-    async insertData() {
-      try {
-        await this.$axios.post('entry/log_match/insert', {
-          division_id: this.form.division_id,
-          pd1_id: this.form.pd1_id,
-          pd2_id: this.form.pd2_id,
-          match_system: this.form.match_system
-        });
+    // async insertData() {
+    //   try {
+    //     await this.$axios.post('entry/log_match/insert', {
+    //       division_id: this.form.division_id,
+    //       pd1_id: this.form.pd1_id,
+    //       pd2_id: this.form.pd2_id,
+    //       match_system: this.form.match_system
+    //     });
 
-        this.$noty.success('Success Insert Data');
-        this.getAllLogMatchs();
-        this.$bvModal.hide('modal-log-match');
+    //     // tampilkan data setelah aksi
+    //     // menuju tampilan divisi yang telah terinput
+    //     this.filterData(this.form.division_id);
+    //     this.filterDivisionId = this.form.division_id;
 
-      } catch (error) {
-        console.log(error.response);
-        this.errorValidation = error.response.data.message;
-        this.$noty.error('Failed Insert Data');
-      }
-    },
+    //     this.$noty.success('Success Insert Data');
+    //     this.$bvModal.hide('modal-log-match');
+
+    //   } catch (error) {
+    //     console.log(error.response);
+    //     this.errorValidation = error.response.data.message;
+    //     this.$noty.error('Failed Insert Data');
+    //   }
+    // },
 
     async updateData() {
       try {
@@ -376,8 +350,14 @@ export default {
           match_system: this.form.match_system
         });
 
+        // tampilkan data setelah aksi
+        if (this.filterDivisionId) {
+          this.filterData(this.filterDivisionId);
+        } else {
+          this.getAllPlayerDivisions();
+        }
+
         this.$noty.success('Success Update Data');
-        this.getAllLogMatchs();
         this.$bvModal.hide('modal-log-match');
 
       } catch (error) {
@@ -393,8 +373,14 @@ export default {
           id: item.id
         });
 
+        // tampilkan data setelah aksi
+        if (this.filterDivisionId) {
+          this.filterData(this.filterDivisionId);
+        } else {
+          this.getAllPlayerDivisions();
+        }
+
         this.$noty.success('Success Delete Data');
-        this.getAllLogMatchs();
         this.$bvModal.hide('modal-log-match');
 
       } catch (error) {
@@ -507,11 +493,15 @@ export default {
       window.location.href = `log_match/detail/${item.id}`;
     },
 
-    addData() {
-      this.resetData();
-      this.$bvModal.show('modal-log-match');
-      this.modalState = 'add';
-    },
+    // addData() {
+    //   this.resetData();
+    //   this.$bvModal.show('modal-log-match');
+    //   this.modalState = 'add';
+    //   // auto select division, ketika filternya sedang aktif
+    //   if (this.filterDivisionId) {
+    //     this.form.division_id = this.filterDivisionId;
+    //   }
+    // },
 
     loadData(item) {
       this.resetData();
@@ -536,7 +526,6 @@ export default {
   },
 
   created() {
-    this.getWinnings();
     this.getDivisions();
     this.getAllLogMatchs();
     this.getPlayerDivisions();

@@ -5,14 +5,6 @@
         <div class="card card-default">
           <div class="card-header d-flex justify-content-between align-items-center">
             <span>Player Division List</span>
-            <!-- Button trigger modal -->
-            <button
-              type="button"
-              class="btn btn-sm btn-primary"
-              @click.prevent="addData()"
-            >
-              Add player division
-            </button>
           </div>
 
           <div class="mx-3 mt-3">
@@ -34,9 +26,21 @@
                   :value="item.id"
                 >{{item.division}}</option>
               </select>
+              <div class="input-group-append">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-primary"
+                  @click.prevent="addData()"
+                >
+                  Add player
+                </button>
+              </div>
             </div>
 
-            <div class="d-flex justify-content-start mt-3">
+            <div
+              v-if="filterDivisionId"
+              class="d-flex justify-content-start mt-3"
+            >
               <button
                 class="btn btn-sm btn-success mr-1"
                 type="button"
@@ -62,6 +66,7 @@
               v-if="playerDivisions.length != 0"
               striped
               hover
+              responsive
               :items="playerDivisions"
               :fields="fieldPlayerDivision"
             >
@@ -105,7 +110,7 @@
 
       <form method="post">
         <div class="form-group">
-          <label for="division_id">Division</label>
+          <label for="division_id">Assign to Division</label>
           <select
             name="division_id"
             id="division_id"
@@ -121,7 +126,30 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="player_id">Player</label>
+          <label for="player_id">Select Player</label>
+          <div class="input-group input-group-sm mb-2">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Filter by Weight</span>
+            </div>
+            <input
+              id="min_weight"
+              v-model="playerFilter.minWeight"
+              type="text"
+              class="form-control"
+              placeholder="Enter Min Weight"
+              title="Min Weight"
+              maxlength="3"
+            >
+            <input
+              id="max_weight"
+              v-model="playerFilter.maxWeight"
+              type="text"
+              class="form-control"
+              placeholder="Enter Max Weight"
+              title="Max Weight"
+              maxlength="3"
+            >
+          </div>
           <select
             name="player_id"
             id="player_id"
@@ -133,7 +161,7 @@
               v-for="item in players"
               :key="item.id"
               :value="item.id"
-            >{{item.name}}</option>
+            >{{item.name}} ({{item.club}}) {{item.weight}}kg</option>
           </select>
         </div>
         <div class="form-group">
@@ -184,7 +212,7 @@ export default {
   name: 'PlayerDivision',
   data() {
     return {
-      fieldPlayerDivision: ['club', 'name', 'pool_number', 'win', 'draw', 'lose', 'action'],
+      fieldPlayerDivision: ['division', 'club', 'name', 'pool_number', 'win', 'draw', 'lose', 'action'],
       poolOptions: [
         { text: 'Pool A', value: 'A' },
         { text: 'Pool B', value: 'B' }
@@ -200,6 +228,10 @@ export default {
         weight: null,
         achievement: null,
         pool_number: null
+      },
+      playerFilter: {
+        minWeight: 0,
+        maxWeight: 200
       },
       modalState: null,
       errorValidation: null,
@@ -228,6 +260,19 @@ export default {
       }
     },
 
+    async getFilteredPlayers() {
+      try {
+        const players = await this.$axios.post('master/player/filter', {
+          min_weight: this.playerFilter.minWeight,
+          max_weight: this.playerFilter.maxWeight
+        });
+        this.players = players.data.data;
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Fetch Filtered Players');
+      }
+    },
+
     async getAllPlayerDivisions() {
       try {
         const playerDivisions = await this.$axios.get('entry/player_division/get_all');
@@ -247,8 +292,12 @@ export default {
           pool_number: this.form.pool_number
         });
 
+        // tampilkan data setelah aksi
+        // menuju tampilan divisi yang telah terinput
+        this.filterData(this.form.division_id);
+        this.filterDivisionId = this.form.division_id;
+
         this.$noty.success('Success Insert Data');
-        this.getAllPlayerDivisions();
         this.$bvModal.hide('modal-player-division');
 
       } catch (error) {
@@ -266,8 +315,14 @@ export default {
           pool_number: this.form.pool_number
         });
 
+        // tampilkan data setelah aksi
+        if (this.filterDivisionId) {
+          this.filterData(this.filterDivisionId);
+        } else {
+          this.getAllPlayerDivisions();
+        }
+
         this.$noty.success('Success Update Data');
-        this.getAllPlayerDivisions();
         this.$bvModal.hide('modal-player-division');
 
       } catch (error) {
@@ -283,8 +338,14 @@ export default {
           id: item.id
         });
 
+        // tampilkan data setelah aksi
+        if (this.filterDivisionId) {
+          this.filterData(this.filterDivisionId);
+        } else {
+          this.getAllPlayerDivisions();
+        }
+
         this.$noty.success('Success Delete Data');
-        this.getAllPlayerDivisions();
         this.$bvModal.hide('modal-player-division');
 
       } catch (error) {
@@ -360,6 +421,10 @@ export default {
       this.resetData();
       this.$bvModal.show('modal-player-division');
       this.modalState = 'add';
+      // auto select division, ketika filternya sedang aktif
+      if (this.filterDivisionId) {
+        this.form.division_id = this.filterDivisionId;
+      }
     },
 
     loadData(item) {
@@ -386,6 +451,34 @@ export default {
     this.getAllPlayerDivisions();
     this.getDivisions();
     this.getPlayers();
+  },
+
+  watch: {
+    'form.division_id'(val) {
+      let findDivision = this.divisions.find(item => item.id === val);
+      // jika divisi tidak ditemukan, set min max ke default
+      if (!val || !findDivision) {
+        findDivision = {
+          min_weight: 0,
+          max_weight: 200
+        };
+      }
+
+      // set max min weight
+      this.playerFilter.minWeight = findDivision.min_weight;
+      this.playerFilter.maxWeight = findDivision.max_weight;
+    },
+
+    playerFilter: {
+      handler: function (newValue) {
+        this.playerFilter.minWeight = newValue.minWeight;
+        this.playerFilter.maxWeight = newValue.maxWeight;
+        // NEED DEBOUNCE, HEMAT RESOURCE
+        this.getFilteredPlayers();
+      },
+      deep: true,
+      immediate: true
+    }
   }
 };
 </script>

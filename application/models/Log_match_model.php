@@ -21,11 +21,6 @@ class Log_match_model extends MY_Model
                 'label' => 'player 2',
                 'rules' => 'trim',
             ],
-            [
-                'field' => 'match_system',
-                'label' => 'match system',
-                'rules' => 'trim',
-            ],
         ];
 
         return $validationRules;

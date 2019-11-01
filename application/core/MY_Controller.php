@@ -53,6 +53,6 @@ class MY_Controller extends CI_Controller
         return $this->output
             ->set_status_header($status_code)
             ->set_content_type('application/json')
-            ->set_output(json_encode($output));
+            ->set_output(json_encode($output, JSON_NUMERIC_CHECK));
     }
 }

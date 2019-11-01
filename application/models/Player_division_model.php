@@ -34,7 +34,9 @@ class Player_division_model extends MY_Model
         $this->join('division');
         $this->join('player');
         $this->join_table('club', 'player');
-        // $this->order_by('pool_number');
+        $this->order_by('division');
+        $this->order_by('club');
+        $this->order_by('name');
     }
 
     public function get_all_player_division()

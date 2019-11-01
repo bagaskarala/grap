@@ -105,4 +105,19 @@ class Player extends MY_Controller
             return $this->send_json_output("Failed Delete Data", false, 400);
         }
     }
+
+    public function filter()
+    {
+        $request = parse_post_data();
+
+        $result = $this->player->filter($request->min_weight, $request->max_weight);
+
+        if (count($result) == 0) {
+            return $this->send_json_output([], true, 200);
+        } else if ($result) {
+            return $this->send_json_output($result, true, 200);
+        } else {
+            return $this->send_json_output("Failed get data", false, 400);
+        }
+    }
 };

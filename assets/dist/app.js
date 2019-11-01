@@ -4092,26 +4092,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PlayerDivision',
   props: {
@@ -4202,22 +4182,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return getDivisions;
     }(),
-    getWinnings: function () {
-      var _getWinnings = _asyncToGenerator(
+    getPlayerDivisions: function () {
+      var _getPlayerDivisions = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var winnings;
+        var playerDivisions;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.prev = 0;
                 _context2.next = 3;
-                return this.$axios.get('master/winning/get_all');
+                return this.$axios.get('entry/player_division/get_all');
 
               case 3:
-                winnings = _context2.sent;
-                this.winnings = winnings.data.data;
+                playerDivisions = _context2.sent;
+                this.playerDivisions = playerDivisions.data.data;
                 _context2.next = 11;
                 break;
 
@@ -4225,7 +4205,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context2.prev = 7;
                 _context2.t0 = _context2["catch"](0);
                 console.log(_context2.t0.response);
-                this.$noty.error('Failed Fetch Winnings');
+                this.$noty.error('Failed Fetch player division');
 
               case 11:
               case "end":
@@ -4233,45 +4213,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee2, this, [[0, 7]]);
-      }));
-
-      function getWinnings() {
-        return _getWinnings.apply(this, arguments);
-      }
-
-      return getWinnings;
-    }(),
-    getPlayerDivisions: function () {
-      var _getPlayerDivisions = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var playerDivisions;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _context3.prev = 0;
-                _context3.next = 3;
-                return this.$axios.get('entry/player_division/get_all');
-
-              case 3:
-                playerDivisions = _context3.sent;
-                this.playerDivisions = playerDivisions.data.data;
-                _context3.next = 11;
-                break;
-
-              case 7:
-                _context3.prev = 7;
-                _context3.t0 = _context3["catch"](0);
-                console.log(_context3.t0.response);
-                this.$noty.error('Failed Fetch player division');
-
-              case 11:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, this, [[0, 7]]);
       }));
 
       function getPlayerDivisions() {
@@ -4283,35 +4224,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getAllLogMatchs: function () {
       var _getAllLogMatchs = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var logMatchs;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
-                _context4.prev = 0;
-                _context4.next = 3;
+                _context3.prev = 0;
+                _context3.next = 3;
                 return this.$axios.get('entry/log_match/get_all');
 
               case 3:
-                logMatchs = _context4.sent;
+                logMatchs = _context3.sent;
                 this.logMatchs = logMatchs.data.data;
                 this.filterDivisionId = null;
-                _context4.next = 12;
+                _context3.next = 12;
                 break;
 
               case 8:
-                _context4.prev = 8;
-                _context4.t0 = _context4["catch"](0);
-                console.log(_context4.t0.response);
+                _context3.prev = 8;
+                _context3.t0 = _context3["catch"](0);
+                console.log(_context3.t0.response);
                 this.$noty.error('Failed Get Data');
 
               case 12:
               case "end":
-                return _context4.stop();
+                return _context3.stop();
             }
           }
-        }, _callee4, this, [[0, 8]]);
+        }, _callee3, this, [[0, 8]]);
       }));
 
       function getAllLogMatchs() {
@@ -4320,61 +4261,36 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return getAllLogMatchs;
     }(),
-    insertData: function () {
-      var _insertData = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                _context5.prev = 0;
-                _context5.next = 3;
-                return this.$axios.post('entry/log_match/insert', {
-                  division_id: this.form.division_id,
-                  pd1_id: this.form.pd1_id,
-                  pd2_id: this.form.pd2_id,
-                  match_system: this.form.match_system
-                });
-
-              case 3:
-                this.$noty.success('Success Insert Data');
-                this.getAllLogMatchs();
-                this.$bvModal.hide('modal-log-match');
-                _context5.next = 13;
-                break;
-
-              case 8:
-                _context5.prev = 8;
-                _context5.t0 = _context5["catch"](0);
-                console.log(_context5.t0.response);
-                this.errorValidation = _context5.t0.response.data.message;
-                this.$noty.error('Failed Insert Data');
-
-              case 13:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5, this, [[0, 8]]);
-      }));
-
-      function insertData() {
-        return _insertData.apply(this, arguments);
-      }
-
-      return insertData;
-    }(),
+    // async insertData() {
+    //   try {
+    //     await this.$axios.post('entry/log_match/insert', {
+    //       division_id: this.form.division_id,
+    //       pd1_id: this.form.pd1_id,
+    //       pd2_id: this.form.pd2_id,
+    //       match_system: this.form.match_system
+    //     });
+    //     // tampilkan data setelah aksi
+    //     // menuju tampilan divisi yang telah terinput
+    //     this.filterData(this.form.division_id);
+    //     this.filterDivisionId = this.form.division_id;
+    //     this.$noty.success('Success Insert Data');
+    //     this.$bvModal.hide('modal-log-match');
+    //   } catch (error) {
+    //     console.log(error.response);
+    //     this.errorValidation = error.response.data.message;
+    //     this.$noty.error('Failed Insert Data');
+    //   }
+    // },
     updateData: function () {
       var _updateData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context6.prev = _context6.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                _context6.prev = 0;
-                _context6.next = 3;
+                _context4.prev = 0;
+                _context4.next = 3;
                 return this.$axios.post("entry/log_match/update/".concat(this.form.id), {
                   division_id: this.form.division_id,
                   pd1_id: this.form.pd1_id,
@@ -4383,25 +4299,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 3:
+                // tampilkan data setelah aksi
+                if (this.filterDivisionId) {
+                  this.filterData(this.filterDivisionId);
+                } else {
+                  this.getAllPlayerDivisions();
+                }
+
                 this.$noty.success('Success Update Data');
-                this.getAllLogMatchs();
                 this.$bvModal.hide('modal-log-match');
-                _context6.next = 13;
+                _context4.next = 13;
                 break;
 
               case 8:
-                _context6.prev = 8;
-                _context6.t0 = _context6["catch"](0);
-                console.log(_context6.t0.response);
-                this.errorValidation = _context6.t0.response.data.message;
+                _context4.prev = 8;
+                _context4.t0 = _context4["catch"](0);
+                console.log(_context4.t0.response);
+                this.errorValidation = _context4.t0.response.data.message;
                 this.$noty.error('Failed Update Data');
 
               case 13:
               case "end":
-                return _context6.stop();
+                return _context4.stop();
             }
           }
-        }, _callee6, this, [[0, 8]]);
+        }, _callee4, this, [[0, 8]]);
       }));
 
       function updateData() {
@@ -4413,36 +4335,42 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     deleteData: function () {
       var _deleteData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(item) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(item) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context7.prev = _context7.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
-                _context7.prev = 0;
-                _context7.next = 3;
+                _context5.prev = 0;
+                _context5.next = 3;
                 return this.$axios.post('entry/log_match/delete', {
                   id: item.id
                 });
 
               case 3:
+                // tampilkan data setelah aksi
+                if (this.filterDivisionId) {
+                  this.filterData(this.filterDivisionId);
+                } else {
+                  this.getAllPlayerDivisions();
+                }
+
                 this.$noty.success('Success Delete Data');
-                this.getAllLogMatchs();
                 this.$bvModal.hide('modal-log-match');
-                _context7.next = 12;
+                _context5.next = 12;
                 break;
 
               case 8:
-                _context7.prev = 8;
-                _context7.t0 = _context7["catch"](0);
-                console.log(_context7.t0.response);
+                _context5.prev = 8;
+                _context5.t0 = _context5["catch"](0);
+                console.log(_context5.t0.response);
                 this.$noty.error('Failed Delete Data');
 
               case 12:
               case "end":
-                return _context7.stop();
+                return _context5.stop();
             }
           }
-        }, _callee7, this, [[0, 8]]);
+        }, _callee5, this, [[0, 8]]);
       }));
 
       function deleteData(_x) {
@@ -4470,34 +4398,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     filterData: function () {
       var _filterData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(divisionId) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(divisionId) {
         var logMatchs;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context8.prev = _context8.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
-                _context8.prev = 0;
-                _context8.next = 3;
+                _context6.prev = 0;
+                _context6.next = 3;
                 return this.$axios.get("entry/log_match/filter_division/".concat(divisionId));
 
               case 3:
-                logMatchs = _context8.sent;
+                logMatchs = _context6.sent;
                 this.logMatchs = logMatchs.data.data;
-                _context8.next = 11;
+                _context6.next = 11;
                 break;
 
               case 7:
-                _context8.prev = 7;
-                _context8.t0 = _context8["catch"](0);
-                console.log(_context8.t0.response);
+                _context6.prev = 7;
+                _context6.t0 = _context6["catch"](0);
+                console.log(_context6.t0.response);
                 this.$noty.error('Failed Filter Data');
 
               case 11:
               case "end":
-                return _context8.stop();
+                return _context6.stop();
             }
           }
-        }, _callee8, this, [[0, 7]]);
+        }, _callee6, this, [[0, 7]]);
       }));
 
       function filterData(_x2) {
@@ -4509,22 +4437,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     generateSchedule: function () {
       var _generateSchedule = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context9.prev = _context9.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
                 if (!(this.filterDivisionId == null)) {
-                  _context9.next = 3;
+                  _context7.next = 3;
                   break;
                 }
 
                 this.$noty.warning('Select division first before generate schedule');
-                return _context9.abrupt("return");
+                return _context7.abrupt("return");
 
               case 3:
-                _context9.prev = 3;
-                _context9.next = 6;
+                _context7.prev = 3;
+                _context7.next = 6;
                 return this.$axios.post('entry/log_match/generate_schedule', {
                   division_id: this.filterDivisionId,
                   match_system: this.selectedMatchSystem
@@ -4533,21 +4461,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 6:
                 this.filterData(this.filterDivisionId);
                 this.$noty.success('Success Generate Schedule');
-                _context9.next = 14;
+                _context7.next = 14;
                 break;
 
               case 10:
-                _context9.prev = 10;
-                _context9.t0 = _context9["catch"](3);
-                console.log(_context9.t0.response);
-                this.$noty.error('Failed Generate Schedule. ' + _context9.t0.response.data.message);
+                _context7.prev = 10;
+                _context7.t0 = _context7["catch"](3);
+                console.log(_context7.t0.response);
+                this.$noty.error('Failed Generate Schedule. ' + _context7.t0.response.data.message);
 
               case 14:
               case "end":
-                return _context9.stop();
+                return _context7.stop();
             }
           }
-        }, _callee9, this, [[3, 10]]);
+        }, _callee7, this, [[3, 10]]);
       }));
 
       function generateSchedule() {
@@ -4559,22 +4487,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     resetSchedule: function () {
       var _resetSchedule = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
           while (1) {
-            switch (_context10.prev = _context10.next) {
+            switch (_context8.prev = _context8.next) {
               case 0:
                 if (!(this.filterDivisionId == null)) {
-                  _context10.next = 3;
+                  _context8.next = 3;
                   break;
                 }
 
                 this.$noty.warning('Select division first before reset schedule');
-                return _context10.abrupt("return");
+                return _context8.abrupt("return");
 
               case 3:
-                _context10.prev = 3;
-                _context10.next = 6;
+                _context8.prev = 3;
+                _context8.next = 6;
                 return this.$axios.post('entry/log_match/reset_schedule', {
                   division_id: this.filterDivisionId
                 });
@@ -4582,21 +4510,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 6:
                 this.filterData(this.filterDivisionId);
                 this.$noty.success('Success Reset Schedule');
-                _context10.next = 14;
+                _context8.next = 14;
                 break;
 
               case 10:
-                _context10.prev = 10;
-                _context10.t0 = _context10["catch"](3);
-                console.log(_context10.t0.response);
+                _context8.prev = 10;
+                _context8.t0 = _context8["catch"](3);
+                console.log(_context8.t0.response);
                 this.$noty.error('Failed Reset Schedule');
 
               case 14:
               case "end":
-                return _context10.stop();
+                return _context8.stop();
             }
           }
-        }, _callee10, this, [[3, 10]]);
+        }, _callee8, this, [[3, 10]]);
       }));
 
       function resetSchedule() {
@@ -4608,22 +4536,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     generatePlayer: function () {
       var _generatePlayer = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
           while (1) {
-            switch (_context11.prev = _context11.next) {
+            switch (_context9.prev = _context9.next) {
               case 0:
                 if (!(this.filterDivisionId == null)) {
-                  _context11.next = 3;
+                  _context9.next = 3;
                   break;
                 }
 
                 this.$noty.warning('Select division first before generate player');
-                return _context11.abrupt("return");
+                return _context9.abrupt("return");
 
               case 3:
-                _context11.prev = 3;
-                _context11.next = 6;
+                _context9.prev = 3;
+                _context9.next = 6;
                 return this.$axios.post('entry/log_match/generate_player', {
                   division_id: this.filterDivisionId
                 });
@@ -4631,21 +4559,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 6:
                 this.filterData(this.filterDivisionId);
                 this.$noty.success('Success Generate Player');
-                _context11.next = 14;
+                _context9.next = 14;
                 break;
 
               case 10:
-                _context11.prev = 10;
-                _context11.t0 = _context11["catch"](3);
-                console.log(_context11.t0.response);
-                this.$noty.error('Failed Generate Player. ' + _context11.t0.response.data.message);
+                _context9.prev = 10;
+                _context9.t0 = _context9["catch"](3);
+                console.log(_context9.t0.response);
+                this.$noty.error('Failed Generate Player. ' + _context9.t0.response.data.message);
 
               case 14:
               case "end":
-                return _context11.stop();
+                return _context9.stop();
             }
           }
-        }, _callee11, this, [[3, 10]]);
+        }, _callee9, this, [[3, 10]]);
       }));
 
       function generatePlayer() {
@@ -4657,22 +4585,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     resetPlayer: function () {
       var _resetPlayer = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
           while (1) {
-            switch (_context12.prev = _context12.next) {
+            switch (_context10.prev = _context10.next) {
               case 0:
                 if (!(this.filterDivisionId == null)) {
-                  _context12.next = 3;
+                  _context10.next = 3;
                   break;
                 }
 
                 this.$noty.warning('Select division first before reset player');
-                return _context12.abrupt("return");
+                return _context10.abrupt("return");
 
               case 3:
-                _context12.prev = 3;
-                _context12.next = 6;
+                _context10.prev = 3;
+                _context10.next = 6;
                 return this.$axios.post('entry/log_match/reset_player', {
                   division_id: this.filterDivisionId
                 });
@@ -4680,21 +4608,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 6:
                 this.filterData(this.filterDivisionId);
                 this.$noty.success('Success Reset Player');
-                _context12.next = 14;
+                _context10.next = 14;
                 break;
 
               case 10:
-                _context12.prev = 10;
-                _context12.t0 = _context12["catch"](3);
-                console.log(_context12.t0.response);
+                _context10.prev = 10;
+                _context10.t0 = _context10["catch"](3);
+                console.log(_context10.t0.response);
                 this.$noty.error('Failed Reset Player');
 
               case 14:
               case "end":
-                return _context12.stop();
+                return _context10.stop();
             }
           }
-        }, _callee12, this, [[3, 10]]);
+        }, _callee10, this, [[3, 10]]);
       }));
 
       function resetPlayer() {
@@ -4706,11 +4634,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     goToDetail: function goToDetail(item) {
       window.location.href = "log_match/detail/".concat(item.id);
     },
-    addData: function addData() {
-      this.resetData();
-      this.$bvModal.show('modal-log-match');
-      this.modalState = 'add';
-    },
+    // addData() {
+    //   this.resetData();
+    //   this.$bvModal.show('modal-log-match');
+    //   this.modalState = 'add';
+    //   // auto select division, ketika filternya sedang aktif
+    //   if (this.filterDivisionId) {
+    //     this.form.division_id = this.filterDivisionId;
+    //   }
+    // },
     loadData: function loadData(item) {
       this.resetData();
       this.$bvModal.show('modal-log-match');
@@ -4736,7 +4668,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   created: function created() {
-    this.getWinnings();
     this.getDivisions();
     this.getAllLogMatchs();
     this.getPlayerDivisions();
@@ -5168,11 +5099,39 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PlayerDivision',
   data: function data() {
     return {
-      fieldPlayerDivision: ['club', 'name', 'pool_number', 'win', 'draw', 'lose', 'action'],
+      fieldPlayerDivision: ['division', 'club', 'name', 'pool_number', 'win', 'draw', 'lose', 'action'],
       poolOptions: [{
         text: 'Pool A',
         value: 'A'
@@ -5191,6 +5150,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         weight: null,
         achievement: null,
         pool_number: null
+      },
+      playerFilter: {
+        minWeight: 0,
+        maxWeight: 200
       },
       modalState: null,
       errorValidation: null,
@@ -5276,38 +5239,80 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return getPlayers;
     }(),
-    getAllPlayerDivisions: function () {
-      var _getAllPlayerDivisions = _asyncToGenerator(
+    getFilteredPlayers: function () {
+      var _getFilteredPlayers = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var playerDivisions;
+        var players;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.prev = 0;
                 _context3.next = 3;
-                return this.$axios.get('entry/player_division/get_all');
+                return this.$axios.post('master/player/filter', {
+                  min_weight: this.playerFilter.minWeight,
+                  max_weight: this.playerFilter.maxWeight
+                });
 
               case 3:
-                playerDivisions = _context3.sent;
-                this.playerDivisions = playerDivisions.data.data;
-                this.filterDivisionId = null;
-                _context3.next = 12;
+                players = _context3.sent;
+                this.players = players.data.data;
+                _context3.next = 11;
                 break;
 
-              case 8:
-                _context3.prev = 8;
+              case 7:
+                _context3.prev = 7;
                 _context3.t0 = _context3["catch"](0);
                 console.log(_context3.t0.response);
-                this.$noty.error('Failed Get Data');
+                this.$noty.error('Failed Fetch Filtered Players');
 
-              case 12:
+              case 11:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, this, [[0, 8]]);
+        }, _callee3, this, [[0, 7]]);
+      }));
+
+      function getFilteredPlayers() {
+        return _getFilteredPlayers.apply(this, arguments);
+      }
+
+      return getFilteredPlayers;
+    }(),
+    getAllPlayerDivisions: function () {
+      var _getAllPlayerDivisions = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var playerDivisions;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.prev = 0;
+                _context4.next = 3;
+                return this.$axios.get('entry/player_division/get_all');
+
+              case 3:
+                playerDivisions = _context4.sent;
+                this.playerDivisions = playerDivisions.data.data;
+                this.filterDivisionId = null;
+                _context4.next = 12;
+                break;
+
+              case 8:
+                _context4.prev = 8;
+                _context4.t0 = _context4["catch"](0);
+                console.log(_context4.t0.response);
+                this.$noty.error('Failed Get Data');
+
+              case 12:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this, [[0, 8]]);
       }));
 
       function getAllPlayerDivisions() {
@@ -5319,13 +5324,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     insertData: function () {
       var _insertData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
-                _context4.prev = 0;
-                _context4.next = 3;
+                _context5.prev = 0;
+                _context5.next = 3;
                 return this.$axios.post('entry/player_division/insert', {
                   division_id: this.form.division_id,
                   player_id: this.form.player_id,
@@ -5333,25 +5338,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 3:
+                // tampilkan data setelah aksi
+                // menuju tampilan divisi yang telah terinput
+                this.filterData(this.form.division_id);
+                this.filterDivisionId = this.form.division_id;
                 this.$noty.success('Success Insert Data');
-                this.getAllPlayerDivisions();
                 this.$bvModal.hide('modal-player-division');
-                _context4.next = 13;
+                _context5.next = 14;
                 break;
 
-              case 8:
-                _context4.prev = 8;
-                _context4.t0 = _context4["catch"](0);
-                console.log(_context4.t0.response);
-                this.errorValidation = _context4.t0.response.data.message;
+              case 9:
+                _context5.prev = 9;
+                _context5.t0 = _context5["catch"](0);
+                console.log(_context5.t0.response);
+                this.errorValidation = _context5.t0.response.data.message;
                 this.$noty.error('Failed Insert Data');
 
-              case 13:
+              case 14:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4, this, [[0, 8]]);
+        }, _callee5, this, [[0, 9]]);
       }));
 
       function insertData() {
@@ -5363,13 +5371,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     updateData: function () {
       var _updateData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
-                _context5.prev = 0;
-                _context5.next = 3;
+                _context6.prev = 0;
+                _context6.next = 3;
                 return this.$axios.post("entry/player_division/update/".concat(this.form.id), {
                   division_id: this.form.division_id,
                   player_id: this.form.player_id,
@@ -5377,25 +5385,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 3:
+                // tampilkan data setelah aksi
+                if (this.filterDivisionId) {
+                  this.filterData(this.filterDivisionId);
+                } else {
+                  this.getAllPlayerDivisions();
+                }
+
                 this.$noty.success('Success Update Data');
-                this.getAllPlayerDivisions();
                 this.$bvModal.hide('modal-player-division');
-                _context5.next = 13;
+                _context6.next = 13;
                 break;
 
               case 8:
-                _context5.prev = 8;
-                _context5.t0 = _context5["catch"](0);
-                console.log(_context5.t0.response);
-                this.errorValidation = _context5.t0.response.data.message;
+                _context6.prev = 8;
+                _context6.t0 = _context6["catch"](0);
+                console.log(_context6.t0.response);
+                this.errorValidation = _context6.t0.response.data.message;
                 this.$noty.error('Failed Update Data');
 
               case 13:
               case "end":
-                return _context5.stop();
+                return _context6.stop();
             }
           }
-        }, _callee5, this, [[0, 8]]);
+        }, _callee6, this, [[0, 8]]);
       }));
 
       function updateData() {
@@ -5407,36 +5421,42 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     deleteData: function () {
       var _deleteData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(item) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(item) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context6.prev = _context6.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
-                _context6.prev = 0;
-                _context6.next = 3;
+                _context7.prev = 0;
+                _context7.next = 3;
                 return this.$axios.post('entry/player_division/delete', {
                   id: item.id
                 });
 
               case 3:
+                // tampilkan data setelah aksi
+                if (this.filterDivisionId) {
+                  this.filterData(this.filterDivisionId);
+                } else {
+                  this.getAllPlayerDivisions();
+                }
+
                 this.$noty.success('Success Delete Data');
-                this.getAllPlayerDivisions();
                 this.$bvModal.hide('modal-player-division');
-                _context6.next = 12;
+                _context7.next = 12;
                 break;
 
               case 8:
-                _context6.prev = 8;
-                _context6.t0 = _context6["catch"](0);
-                console.log(_context6.t0.response);
+                _context7.prev = 8;
+                _context7.t0 = _context7["catch"](0);
+                console.log(_context7.t0.response);
                 this.$noty.error('Failed Delete Data');
 
               case 12:
               case "end":
-                return _context6.stop();
+                return _context7.stop();
             }
           }
-        }, _callee6, this, [[0, 8]]);
+        }, _callee7, this, [[0, 8]]);
       }));
 
       function deleteData(_x) {
@@ -5464,34 +5484,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     filterData: function () {
       var _filterData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(divisionId) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(divisionId) {
         var playerDivisions;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
           while (1) {
-            switch (_context7.prev = _context7.next) {
+            switch (_context8.prev = _context8.next) {
               case 0:
-                _context7.prev = 0;
-                _context7.next = 3;
+                _context8.prev = 0;
+                _context8.next = 3;
                 return this.$axios.get("entry/player_division/filter_division/".concat(divisionId));
 
               case 3:
-                playerDivisions = _context7.sent;
+                playerDivisions = _context8.sent;
                 this.playerDivisions = playerDivisions.data.data;
-                _context7.next = 11;
+                _context8.next = 11;
                 break;
 
               case 7:
-                _context7.prev = 7;
-                _context7.t0 = _context7["catch"](0);
-                console.log(_context7.t0.response);
+                _context8.prev = 7;
+                _context8.t0 = _context8["catch"](0);
+                console.log(_context8.t0.response);
                 this.$noty.error('Failed Filter Data');
 
               case 11:
               case "end":
-                return _context7.stop();
+                return _context8.stop();
             }
           }
-        }, _callee7, this, [[0, 7]]);
+        }, _callee8, this, [[0, 7]]);
       }));
 
       function filterData(_x2) {
@@ -5503,22 +5523,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     generatePool: function () {
       var _generatePool = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
           while (1) {
-            switch (_context8.prev = _context8.next) {
+            switch (_context9.prev = _context9.next) {
               case 0:
                 if (!(this.filterDivisionId == null)) {
-                  _context8.next = 3;
+                  _context9.next = 3;
                   break;
                 }
 
                 this.$noty.warning('Select division first before generate pool');
-                return _context8.abrupt("return");
+                return _context9.abrupt("return");
 
               case 3:
-                _context8.prev = 3;
-                _context8.next = 6;
+                _context9.prev = 3;
+                _context9.next = 6;
                 return this.$axios.post('entry/player_division/generate_pool', {
                   division_id: this.filterDivisionId
                 });
@@ -5526,21 +5546,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 6:
                 this.filterData(this.filterDivisionId);
                 this.$noty.success('Success Generate Pool');
-                _context8.next = 14;
+                _context9.next = 14;
                 break;
 
               case 10:
-                _context8.prev = 10;
-                _context8.t0 = _context8["catch"](3);
-                console.log(_context8.t0.response);
-                this.$noty.error('Failed Generate Pool. ' + _context8.t0.response.data.message);
+                _context9.prev = 10;
+                _context9.t0 = _context9["catch"](3);
+                console.log(_context9.t0.response);
+                this.$noty.error('Failed Generate Pool. ' + _context9.t0.response.data.message);
 
               case 14:
               case "end":
-                return _context8.stop();
+                return _context9.stop();
             }
           }
-        }, _callee8, this, [[3, 10]]);
+        }, _callee9, this, [[3, 10]]);
       }));
 
       function generatePool() {
@@ -5552,22 +5572,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     resetPool: function () {
       var _resetPool = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
           while (1) {
-            switch (_context9.prev = _context9.next) {
+            switch (_context10.prev = _context10.next) {
               case 0:
                 if (!(this.filterDivisionId == null)) {
-                  _context9.next = 3;
+                  _context10.next = 3;
                   break;
                 }
 
                 this.$noty.warning('Select division first before reset pool');
-                return _context9.abrupt("return");
+                return _context10.abrupt("return");
 
               case 3:
-                _context9.prev = 3;
-                _context9.next = 6;
+                _context10.prev = 3;
+                _context10.next = 6;
                 return this.$axios.post('entry/player_division/reset_pool', {
                   division_id: this.filterDivisionId
                 });
@@ -5575,21 +5595,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 6:
                 this.filterData(this.filterDivisionId);
                 this.$noty.success('Success Reset Pool');
-                _context9.next = 14;
+                _context10.next = 14;
                 break;
 
               case 10:
-                _context9.prev = 10;
-                _context9.t0 = _context9["catch"](3);
-                console.log(_context9.t0.response);
+                _context10.prev = 10;
+                _context10.t0 = _context10["catch"](3);
+                console.log(_context10.t0.response);
                 this.$noty.error('Failed Reset Pool');
 
               case 14:
               case "end":
-                return _context9.stop();
+                return _context10.stop();
             }
           }
-        }, _callee9, this, [[3, 10]]);
+        }, _callee10, this, [[3, 10]]);
       }));
 
       function resetPool() {
@@ -5601,7 +5621,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     addData: function addData() {
       this.resetData();
       this.$bvModal.show('modal-player-division');
-      this.modalState = 'add';
+      this.modalState = 'add'; // auto select division, ketika filternya sedang aktif
+
+      if (this.filterDivisionId) {
+        this.form.division_id = this.filterDivisionId;
+      }
     },
     loadData: function loadData(item) {
       this.resetData();
@@ -5628,6 +5652,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     this.getAllPlayerDivisions();
     this.getDivisions();
     this.getPlayers();
+  },
+  watch: {
+    'form.division_id': function formDivision_id(val) {
+      var findDivision = this.divisions.find(function (item) {
+        return item.id === val;
+      }); // jika divisi tidak ditemukan, set min max ke default
+
+      if (!val || !findDivision) {
+        findDivision = {
+          min_weight: 0,
+          max_weight: 200
+        };
+      } // set max min weight
+
+
+      this.playerFilter.minWeight = findDivision.min_weight;
+      this.playerFilter.maxWeight = findDivision.max_weight;
+    },
+    playerFilter: {
+      handler: function handler(newValue) {
+        this.playerFilter.minWeight = newValue.minWeight;
+        this.playerFilter.maxWeight = newValue.maxWeight; // NEED DEBOUNCE, HEMAT RESOURCE
+
+        this.getFilteredPlayers();
+      },
+      deep: true,
+      immediate: true
+    }
   }
 });
 
@@ -41397,35 +41449,11 @@ var render = function() {
       _c("div", { staticClass: "row justify-content-center" }, [
         _c("div", { staticClass: "col" }, [
           _c("div", { staticClass: "card card-default" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "card-header d-flex justify-content-between align-items-center"
-              },
-              [
-                _c("span", [_vm._v("Log Match")]),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-sm btn-primary",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        return _vm.addData()
-                      }
-                    }
-                  },
-                  [_vm._v("\n            Add log match\n          ")]
-                )
-              ]
-            ),
+            _vm._m(0),
             _vm._v(" "),
             _c("div", { staticClass: "mx-3 mt-3" }, [
               _c("div", { staticClass: "input-group input-group-sm" }, [
-                _vm._m(0),
+                _vm._m(1),
                 _vm._v(" "),
                 _c(
                   "select",
@@ -41497,14 +41525,14 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("Clear")]
+                    [_vm._v("Clear Schedule")]
                   )
                 ])
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "mt-3" }, [
                 _c("div", { staticClass: "input-group input-group-sm" }, [
-                  _vm._m(1),
+                  _vm._m(2),
                   _vm._v(" "),
                   _c(
                     "select",
@@ -41558,9 +41586,7 @@ var render = function() {
                         staticClass: "btn btn-success",
                         attrs: {
                           type: "button",
-                          disabled:
-                            _vm.logMatchs.length > 0 ||
-                            _vm.filterDivisionId == null
+                          disabled: _vm.logMatchs.length > 0
                         },
                         on: {
                           click: function($event) {
@@ -41575,38 +41601,46 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-sm btn-primary mt-3",
-                  attrs: {
-                    type: "button",
-                    disabled: _vm.logMatchs.length == 0
-                  },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.generatePlayer()
-                    }
-                  }
-                },
-                [_vm._v("Generate Player")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-sm btn-secondary mt-3",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.resetPlayer()
-                    }
-                  }
-                },
-                [_vm._v("Reset Player")]
-              )
+              _vm.filterDivisionId != null
+                ? _c("div", [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-sm btn-primary mt-3",
+                        attrs: {
+                          type: "button",
+                          title: "Generate Player after generate schedule",
+                          disabled: _vm.logMatchs.length == 0
+                        },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.generatePlayer()
+                          }
+                        }
+                      },
+                      [_vm._v("Generate Player")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-sm btn-secondary mt-3",
+                        attrs: {
+                          type: "button",
+                          disabled: _vm.logMatchs.length == 0
+                        },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.resetPlayer()
+                          }
+                        }
+                      },
+                      [_vm._v("Reset Player")]
+                    )
+                  ])
+                : _vm._e()
             ]),
             _vm._v(" "),
             _c(
@@ -41969,61 +42003,6 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "match_system" } }, [
-                _vm._v("Match System")
-              ]),
-              _vm._v(" "),
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.form.match_system,
-                      expression: "form.match_system"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { name: "match_system", id: "match_system" },
-                  on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.$set(
-                        _vm.form,
-                        "match_system",
-                        $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      )
-                    }
-                  }
-                },
-                [
-                  _c("option", { domProps: { value: null } }, [
-                    _vm._v("Select Match System")
-                  ]),
-                  _vm._v(" "),
-                  _vm._l(_vm.matchSystemOptions, function(item) {
-                    return _c(
-                      "option",
-                      { key: item.value, domProps: { value: item.value } },
-                      [_vm._v(_vm._s(item.text))]
-                    )
-                  })
-                ],
-                2
-              )
-            ]),
-            _vm._v(" "),
             _c("div", { staticClass: "d-flex justify-content-end" }, [
               _c(
                 "div",
@@ -42081,6 +42060,19 @@ var render = function() {
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "card-header d-flex justify-content-between align-items-center"
+      },
+      [_c("span", [_vm._v("Log Match")])]
+    )
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -42577,35 +42569,11 @@ var render = function() {
       _c("div", { staticClass: "row justify-content-center" }, [
         _c("div", { staticClass: "col" }, [
           _c("div", { staticClass: "card card-default" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "card-header d-flex justify-content-between align-items-center"
-              },
-              [
-                _c("span", [_vm._v("Player Division List")]),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-sm btn-primary",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        return _vm.addData()
-                      }
-                    }
-                  },
-                  [_vm._v("\n            Add player division\n          ")]
-                )
-              ]
-            ),
+            _vm._m(0),
             _vm._v(" "),
             _c("div", { staticClass: "mx-3 mt-3" }, [
               _c("div", { staticClass: "input-group input-group-sm" }, [
-                _vm._m(0),
+                _vm._m(1),
                 _vm._v(" "),
                 _c(
                   "select",
@@ -42656,46 +42624,69 @@ var render = function() {
                     })
                   ],
                   2
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "d-flex justify-content-start mt-3" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-sm btn-success mr-1",
-                    attrs: {
-                      type: "button",
-                      disabled: _vm.playerDivisions.length == 0
-                    },
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        return _vm.generatePool()
-                      }
-                    }
-                  },
-                  [_vm._v("Generate Pool")]
                 ),
                 _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-sm btn-secondary",
-                    attrs: {
-                      type: "button",
-                      disabled: _vm.playerDivisions.length == 0
-                    },
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        return _vm.resetPool()
+                _c("div", { staticClass: "input-group-append" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-sm btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.addData()
+                        }
                       }
-                    }
-                  },
-                  [_vm._v("Reset Pool")]
-                )
-              ])
+                    },
+                    [_vm._v("\n                Add player\n              ")]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _vm.filterDivisionId
+                ? _c(
+                    "div",
+                    { staticClass: "d-flex justify-content-start mt-3" },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-sm btn-success mr-1",
+                          attrs: {
+                            type: "button",
+                            disabled: _vm.playerDivisions.length == 0
+                          },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.generatePool()
+                            }
+                          }
+                        },
+                        [_vm._v("Generate Pool")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-sm btn-secondary",
+                          attrs: {
+                            type: "button",
+                            disabled: _vm.playerDivisions.length == 0
+                          },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.resetPool()
+                            }
+                          }
+                        },
+                        [_vm._v("Reset Pool")]
+                      )
+                    ]
+                  )
+                : _vm._e()
             ]),
             _vm._v(" "),
             _c(
@@ -42723,6 +42714,7 @@ var render = function() {
                       attrs: {
                         striped: "",
                         hover: "",
+                        responsive: "",
                         items: _vm.playerDivisions,
                         fields: _vm.fieldPlayerDivision
                       },
@@ -42837,7 +42829,7 @@ var render = function() {
           _c("form", { attrs: { method: "post" } }, [
             _c("div", { staticClass: "form-group" }, [
               _c("label", { attrs: { for: "division_id" } }, [
-                _vm._v("Division")
+                _vm._v("Assign to Division")
               ]),
               _vm._v(" "),
               _c(
@@ -42892,7 +42884,81 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "player_id" } }, [_vm._v("Player")]),
+              _c("label", { attrs: { for: "player_id" } }, [
+                _vm._v("Select Player")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "input-group input-group-sm mb-2" }, [
+                _c("div", { staticClass: "input-group-prepend" }, [
+                  _c("span", { staticClass: "input-group-text" }, [
+                    _vm._v("Filter by Weight")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.playerFilter.minWeight,
+                      expression: "playerFilter.minWeight"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    id: "min_weight",
+                    type: "text",
+                    placeholder: "Enter Min Weight",
+                    title: "Min Weight",
+                    maxlength: "3"
+                  },
+                  domProps: { value: _vm.playerFilter.minWeight },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.playerFilter,
+                        "minWeight",
+                        $event.target.value
+                      )
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.playerFilter.maxWeight,
+                      expression: "playerFilter.maxWeight"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    id: "max_weight",
+                    type: "text",
+                    placeholder: "Enter Max Weight",
+                    title: "Max Weight",
+                    maxlength: "3"
+                  },
+                  domProps: { value: _vm.playerFilter.maxWeight },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.playerFilter,
+                        "maxWeight",
+                        $event.target.value
+                      )
+                    }
+                  }
+                })
+              ]),
               _vm._v(" "),
               _c(
                 "select",
@@ -42937,7 +43003,16 @@ var render = function() {
                     return _c(
                       "option",
                       { key: item.id, domProps: { value: item.id } },
-                      [_vm._v(_vm._s(item.name))]
+                      [
+                        _vm._v(
+                          _vm._s(item.name) +
+                            " (" +
+                            _vm._s(item.club) +
+                            ") " +
+                            _vm._s(item.weight) +
+                            "kg"
+                        )
+                      ]
                     )
                   })
                 ],
@@ -43057,6 +43132,19 @@ var render = function() {
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "card-header d-flex justify-content-between align-items-center"
+      },
+      [_c("span", [_vm._v("Player Division List")])]
+    )
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
