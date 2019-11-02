@@ -58,12 +58,12 @@ class Log_match extends MY_Controller
     {
         $request = parse_post_data();
 
-        $data = [
-            'division_id'  => $request->division_id,
-            'pd1_id'       => $request->pd1_id,
-            'pd2_id'       => $request->pd2_id,
-            'match_system' => $request->match_system,
-        ];
+        // dynamic data input dari logmatch detail and logmatch list
+        // ubah object jadi array untuk ke database
+        $data = [];
+        foreach ($request as $key => $value) {
+            $data[$key] = $value;
+        }
 
         // validasi
         if ($this->log_match->validate($data) == false) {
@@ -72,8 +72,13 @@ class Log_match extends MY_Controller
             $result = $this->log_match->update($data, ['id' => $log_match_id]);
         }
 
+        // isi tabel next match
+        if ($request->match_status == 2 and ($request->winner == 1 or $request->winner == 2)) {
+            $test = $this->log_match->next_play($log_match_id);
+        }
+
         if ($result) {
-            return $this->send_json_output($result, true, 200);
+            return $this->send_json_output($test, true, 200);
         } else {
             return $this->send_json_output("Failed Update Data", false, 400);
         }
@@ -146,6 +151,8 @@ class Log_match extends MY_Controller
         $result = $this->log_match->generate_player($request->division_id);
 
         if ($result['status']) {
+            // start play, pemain yang ga punya musuh langsung next ke match berikutnya
+            $this->log_match->start_play($request->division_id);
             return $this->send_json_output($result['data'], true, 200);
         } else {
             return $this->send_json_output($result['message'], false, 400);

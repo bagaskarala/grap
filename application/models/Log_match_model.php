@@ -145,6 +145,19 @@ class Log_match_model extends MY_Model
 
     public function generate_player($division_id)
     {
+        // handling, generate player hanya sekali
+        $this->where('division_id', $division_id);
+        $this->where('pd1_id !=', null);
+        $this->where('pd2_id !=', null);
+        $count_generated_player = $this->count();
+        if ($count_generated_player > 0) {
+            return [
+                'status'  => false,
+                'message' => 'Player has been generated',
+            ];
+            exit();
+        }
+
         // get player division, urutkan club_id untuk minimalisir club sama bertemu
         $this->select('player_division.*, player.club_id');
         $this->join_table('player', 'player_division');
@@ -213,8 +226,20 @@ class Log_match_model extends MY_Model
     public function reset_player($division_id)
     {
         $data = [
-            'pd1_id' => null,
-            'pd2_id' => null,
+            'pd1_id'         => null,
+            'pd1_redcard'    => 0,
+            'pd1_yellowcard' => 0,
+            'pd1_greencard'  => 0,
+            'pd1_point'      => 0,
+            'pd2_id'         => null,
+            'pd2_redcard'    => 0,
+            'pd2_yellowcard' => 0,
+            'pd2_greencard'  => 0,
+            'pd2_point'      => 0,
+            'winning_id'     => null,
+            'winner'         => null,
+            'match_status'   => 0,
+            'time'           => null,
         ];
         return $this->update($data, ['division_id' => $division_id]);
     }
@@ -225,6 +250,110 @@ class Log_match_model extends MY_Model
         $this->db->where('lm.id', $log_match_id);
         return $this->db->get()->row_array();
     }
+
+    public function start_play($division_id)
+    {
+        $this->where('division_id', $division_id);
+        $this->where('match_index', 1);
+        $log_matchs_first = $this->get_all_array();
+
+        // loop logmatch berindex 1/ pertandingan pertama
+        foreach ($log_matchs_first as $lm) {
+            if ($lm['pd1_id'] == null or $lm['pd2_id'] == null) {
+                // baca index dan number untuk next-match
+                $index  = explode('.', $lm['next_match'])[0];
+                $number = explode('.', $lm['next_match'])[1];
+
+                // pilih playerdivision yang ada isinya
+                if ($lm['pd1_id']) {
+                    $pd_selected = 'pd1_id';
+                } else {
+                    $pd_selected = 'pd2_id';
+                }
+
+                // logmatch tujuan
+                $where = [
+                    'match_index'  => $index,
+                    'match_number' => $number,
+                    'division_id'  => $division_id,
+                ];
+                $destination = $this->get_where($where);
+
+                // update logmatch tujuan
+                if ($destination['pd1_id'] == null) {
+                    $data = ['pd1_id' => $lm[$pd_selected]];
+                    $this->update($data, $where);
+                } else {
+                    $data = ['pd2_id' => $lm[$pd_selected]];
+                    $this->update($data, $where);
+                }
+
+                // update logmatch asal
+                $data = [
+                    'winner'       => 4, // bye
+                    'match_status' => 2, // finish
+                    'pd1_id'       => null,
+                    'pd2_id'       => null,
+                ];
+                $this->update($data, ['id' => $lm['id']]);
+            }
+        }
+    }
+
+    public function next_play($log_match_id)
+    {
+        // ambil log match asal
+        $log_match = $this->get_where(['id' => $log_match_id]);
+
+        // update winner pada match final ke playerdivision
+        $this->db->select('MAX(match_index) as max_match_index');
+        $idx = $this->get_single_array();
+        if ($idx['max_match_index'] == $log_match['match_index']) {
+            $this->update(['division_winner' => 1], ['id' => $log_match['division_id']], 'player_division');
+            exit();
+        }
+
+        // baca index dan number untuk next-match
+        $index  = explode('.', $log_match['next_match'])[0];
+        $number = explode('.', $log_match['next_match'])[1];
+
+        // pilih playerdivision yang menang
+        $pd_selected = null;
+        if ($log_match['winner'] == 1) {
+            $pd_selected = 'pd1_id';
+        } elseif ($log_match['winner'] == 2) {
+            $pd_selected = 'pd2_id';
+        }
+
+        // logmatch tujuan
+        $where = [
+            'match_index'  => $index,
+            'match_number' => $number,
+            'division_id'  => $log_match['division_id'],
+        ];
+        $destination = $this->get_where($where);
+
+        // update logmatch tujuan
+        $arr_source = [$log_match['pd1_id'], $log_match['pd2_id']];
+        if ($destination['pd1_id'] != null) {
+            // jika pd1 tujuan terisi
+            // cek apakah pd1 tujuan mempunyai id yang sama dengan sumber
+            if (in_array($destination['pd1_id'], $arr_source)) {
+                // jika sama, maka update pd1
+                $data = ['pd1_id' => $log_match[$pd_selected]];
+                $this->update($data, $where);
+            } else {
+                // jika beda, maka update pd2 / mengisi kolom yang kosong
+                $data = ['pd2_id' => $log_match[$pd_selected]];
+                $this->update($data, $where);
+            }
+        } elseif ($destination['pd1_id'] == null) {
+            // jika pd1 tujuan kosong
+            $data = ['pd1_id' => $log_match[$pd_selected]];
+            $this->update($data, $where);
+        }
+    }
+
 }
 
 /* End of file Log_match_model.php */

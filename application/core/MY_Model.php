@@ -51,13 +51,11 @@ class MY_Model extends CI_Model
         return $this->db->get($this->table)->row();
     }
 
-    // public function get_where($column, $condition)
-    // {
-    //     $this->where($column, $condition);
-    //     return $this->count();
-
-    //     // $this->db->get_where($this->table, $where);
-    // }
+    public function get_where($where, $table = "")
+    {
+        $table = $this->checkTable($table);
+        return $this->db->get_where($table, $where)->row_array();
+    }
 
     public function insert($data)
     {
@@ -71,15 +69,17 @@ class MY_Model extends CI_Model
         }
     }
 
-    public function update($data, $where)
+    public function update($data, $where, $table = null)
     {
+        $table = $this->checkTable($table);
+
         // cek dulu apakah datanya ada
-        if ($this->db->get_where($this->table, $where)->num_rows() == 0) {
+        if ($this->db->get_where($table, $where)->num_rows() == 0) {
             return false;
         }
 
         // jika sukses kembalikan array data
-        if ($this->db->update($this->table, $data, $where)) {
+        if ($this->db->update($table, $data, $where)) {
             return $data;
         } else {
             return false;

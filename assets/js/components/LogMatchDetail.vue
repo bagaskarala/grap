@@ -1,9 +1,20 @@
 <template>
   <div class="container-fluid">
-    <div class="mb-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
       <a :href="baseUrl + 'entry/log_match'"><i class="fa fa-angle-double-left"></i> Back to Log Match</a>
+      <div>
+        <button
+          type="button"
+          class="btn btn-danger"
+          @click="resetData()"
+        >Reset Match</button>
+        <button
+          class="btn btn-warning"
+          @click="loadData()"
+        >Update Match</button>
+      </div>
     </div>
-    <div class="row justify-content-center">
+    <div class="row">
       <div class="col p-3 order-2 order-md-1">
         <img
           :src="baseUrl + '/assets/img/user_avatar.png'"
@@ -34,8 +45,8 @@
               <span>Status <i class="fa fa-angle-double-right"></i></span>
               <span
                 class="badge"
-                :class="this.logMatchDetail.play == 1? 'badge-success': 'badge-dark'"
-              >{{this.logMatchDetail.play == 0? 'Not Play' : this.logMatchDetail.play == 1? 'Playing' : 'Finished' }}</span>
+                :class="this.logMatchDetail.match_status == 1? 'badge-success': 'badge-dark'"
+              >{{this.logMatchDetail.match_status == 0? 'Idle' : this.logMatchDetail.match_status == 1? 'Playing' : 'Finished' }}</span>
             </div>
             <div class="d-flex justify-content-between align-items-center mb-2">
               <span>Winning by <i class="fa fa-angle-double-right"></i></span>
@@ -138,6 +149,244 @@
         </div>
       </div>
     </div>
+
+    <!-- modal update log match-->
+    <b-modal
+      id="modal-update-log-match"
+      hide-footer
+      title="Update Log Match"
+      size="lg"
+    >
+      <div
+        v-if="errorValidation"
+        class="alert alert-danger"
+        v-html="errorValidation"
+      ></div>
+
+      <form method="post">
+        <div class="form-group">
+          <label for="time">Time</label>
+          <input
+            id="time"
+            v-model.number="form.time"
+            type="text"
+            class="form-control"
+            placeholder="Enter time"
+          >
+        </div>
+        <div class="form-group">
+          <label for="match_status">Match Status</label>
+          <select
+            name="match_status"
+            id="match_status"
+            class="form-control"
+            v-model.number="form.match_status"
+          >
+            <option
+              v-for="item in matchStatusOptions"
+              :key="item.value"
+              :value="item.value"
+            >{{item.text}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="winner">Winner</label>
+          <select
+            name="winner"
+            id="winner"
+            class="form-control"
+            v-model.number="form.winner"
+          >
+            <option :value="null">Select Winner</option>
+            <option
+              v-for="item in winnerOptions"
+              :key="item.value"
+              :value="item.value"
+            >{{item.text}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="winning">Winning by</label>
+          <select
+            name="winning"
+            id="winning"
+            class="form-control"
+            v-model.number="form.winning_id"
+          >
+            <option :value="null">Select Winning by</option>
+            <option
+              v-for="item in winningOptions"
+              :key="item.id"
+              :value="item.id"
+            >{{item.winning}}</option>
+          </select>
+        </div>
+        <hr>
+        <div class="row">
+          <div
+            class="col border rounded m-2 p-3"
+            :class="[form.winner==1? 'border-success' : '']"
+          >
+            <p class="font-weight-bold mb-3">PLAYER 1
+              <span :class="[form.winner==1? 'd-inline-block badge badge-success' : 'd-none']">Winner</span>
+            </p>
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input
+                id="name"
+                readonly
+                :value="logMatchDetail.player1_name"
+                type="text"
+                class="form-control"
+              >
+            </div>
+            <div class="form-group">
+              <label for="club">Club</label>
+              <input
+                id="club"
+                readonly
+                :value="logMatchDetail.player1_club"
+                type="text"
+                class="form-control"
+              >
+            </div>
+            <div class="form-group">
+              <label for="country">Country</label>
+              <input
+                id="country"
+                readonly
+                :value="logMatchDetail.player1_country"
+                type="text"
+                class="form-control"
+              >
+            </div>
+            <div class="form-group">
+              <label for="weight">Weight</label>
+              <input
+                id="weight"
+                readonly
+                :value="logMatchDetail.player1_weight"
+                type="text"
+                class="form-control"
+              >
+            </div>
+            <div class="form-group">
+              <label for="yellow_card">Yellow card</label>
+              <input
+                id="yellow_card"
+                v-model.number="form.pd1_yellowcard"
+                type="number"
+                class="form-control"
+              >
+            </div>
+            <div class="form-group">
+              <label for="red_card">Red card</label>
+              <input
+                id="red_card"
+                v-model.number="form.pd1_redcard"
+                type="number"
+                class="form-control"
+              >
+            </div>
+            <div class="form-group">
+              <label for="green_card">Green card</label>
+              <input
+                id="green_card"
+                v-model.number="form.pd1_greencard"
+                type="number"
+                class="form-control"
+              >
+            </div>
+          </div>
+          <div
+            class="col border rounded m-2 p-3"
+            :class="[form.winner==2? 'border-success' : '']"
+          >
+            <p class="font-weight-bold mb-3">PLAYER 2
+              <span :class="[form.winner==2? 'd-inline-block badge badge-success' : 'd-none']">Winner</span>
+            </p>
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input
+                id="name"
+                readonly
+                :value="logMatchDetail.player2_name"
+                type="text"
+                class="form-control"
+              >
+            </div>
+            <div class="form-group">
+              <label for="club">Club</label>
+              <input
+                id="club"
+                readonly
+                :value="logMatchDetail.player2_club"
+                type="text"
+                class="form-control"
+              >
+            </div>
+            <div class="form-group">
+              <label for="country">Country</label>
+              <input
+                id="country"
+                readonly
+                :value="logMatchDetail.player2_country"
+                type="text"
+                class="form-control"
+              >
+            </div>
+            <div class="form-group">
+              <label for="weight">Weight</label>
+              <input
+                id="weight"
+                readonly
+                :value="logMatchDetail.player2_weight"
+                type="text"
+                class="form-control"
+              >
+            </div>
+            <div class="form-group">
+              <label for="yellow_card">Yellow card</label>
+              <input
+                id="yellow_card"
+                v-model.number="form.pd2_yellowcard"
+                type="number"
+                class="form-control"
+              >
+            </div>
+            <div class="form-group">
+              <label for="red_card">Red card</label>
+              <input
+                id="red_card"
+                v-model.number="form.pd2_redcard"
+                type="number"
+                class="form-control"
+              >
+            </div>
+            <div class="form-group">
+              <label for="green_card">Green card</label>
+              <input
+                id="green_card"
+                v-model.number="form.pd2_greencard"
+                type="number"
+                class="form-control"
+              >
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end">
+          <div
+            class="btn-group"
+            role="group"
+          >
+            <button
+              class="btn btn-primary"
+              @click.prevent="updateData()"
+            >Update</button>
+          </div>
+        </div>
+      </form>
+    </b-modal>
   </div>
 </template>
 
@@ -147,9 +396,38 @@ export default {
   props: {
     baseUrl: String
   },
+
   data() {
     return {
-      logMatchDetail: {}
+      logMatchDetail: {},
+      errorValidation: null,
+      matchStatusOptions: [
+        {
+          value: 0,
+          text: 'Idle'
+        },
+        {
+          value: 1,
+          text: 'Playing'
+        },
+        {
+          value: 2,
+          text: 'Finished'
+        }
+      ],
+      form: {
+        time: null,
+        match_status: 0,
+        winner: null,
+        winning_id: null,
+        pd1_yellowcard: 0,
+        pd1_redcard: 0,
+        pd1_greencard: 0,
+        pd2_yellowcard: 0,
+        pd2_redcard: 0,
+        pd2_greencard: 0
+      },
+      winningOptions: null
     };
   },
 
@@ -158,6 +436,23 @@ export default {
       const url = window.location.href;
       const split = url.split('/');
       return split[split.length - 1];
+    },
+
+    winnerOptions() {
+      return [
+        {
+          value: 0,
+          text: 'Draw'
+        },
+        {
+          value: 1,
+          text: `Player 1 - ${this.logMatchDetail.player1_name}`
+        },
+        {
+          value: 2,
+          text: `Player 2 - ${this.logMatchDetail.player2_name}`
+        }
+      ];
     }
   },
 
@@ -170,11 +465,94 @@ export default {
         console.log(error.response);
         this.$noty.error('Failed fetch logmatch detail');
       }
+    },
+
+    async getWinning() {
+      try {
+        const winning = await this.$axios.get('master/winning/get_all');
+        this.winningOptions = winning.data.data;
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed fetch winning');
+      }
+    },
+
+    async updateData() {
+      try {
+        const a = await this.$axios.post(`entry/log_match/update/${this.logMatchDetail.id}`, {
+          division_id: this.logMatchDetail.division_id,
+          time: this.form.time,
+          winner: this.form.winner,
+          winning_id: this.form.winning_id,
+          match_status: this.form.match_status,
+          pd1_yellowcard: this.form.pd1_yellowcard,
+          pd1_redcard: this.form.pd1_redcard,
+          pd1_greencard: this.form.pd1_greencard,
+          pd2_yellowcard: this.form.pd2_yellowcard,
+          pd2_redcard: this.form.pd2_redcard,
+          pd2_greencard: this.form.pd2_greencard
+        });
+
+        console.log(a.data);
+
+        this.getDetailLogMatch();
+
+        this.$noty.success('Success Update Data');
+        this.$bvModal.hide('modal-update-log-match');
+
+      } catch (error) {
+        console.log(error.response);
+        this.errorValidation = error.response.data.message;
+        this.$noty.error('Failed Update Data');
+      }
+    },
+
+    loadData() {
+      this.$bvModal.show('modal-update-log-match');
+      // populate form
+      let { match_status, time, winning_id, winner, pd1_redcard, pd1_yellowcard, pd1_greencard, pd2_redcard, pd2_yellowcard, pd2_greencard } = this.logMatchDetail;
+      this.form.match_status = match_status;
+      this.form.time = time;
+      this.form.winning_id = winning_id;
+      this.form.winner = winner;
+      this.form.pd1_yellowcard = pd1_yellowcard;
+      this.form.pd1_redcard = pd1_redcard;
+      this.form.pd1_greencard = pd1_greencard;
+      this.form.pd2_yellowcard = pd2_yellowcard;
+      this.form.pd2_redcard = pd2_redcard;
+      this.form.pd2_greencard = pd2_greencard;
+    },
+
+    async resetData() {
+      try {
+        await this.$axios.post(`entry/log_match/update/${this.logMatchDetail.id}`, {
+          division_id: this.logMatchDetail.division_id,
+          time: null,
+          winner: null,
+          winning_id: null,
+          match_status: 0,
+          pd1_point: 0,
+          pd1_yellowcard: 0,
+          pd1_redcard: 0,
+          pd1_greencard: 0,
+          pd2_point: 0,
+          pd2_yellowcard: 0,
+          pd2_redcard: 0,
+          pd2_greencard: 0
+        });
+
+        this.getDetailLogMatch();
+        this.$noty.success('Success Reset Data');
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Reset Data');
+      }
     }
   },
 
   created() {
     this.getDetailLogMatch();
+    this.getWinning();
   }
 };
 </script>

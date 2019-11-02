@@ -96,6 +96,7 @@
               responsive
               :items="logMatchs"
               :fields="fieldLogMatch"
+              :tbody-tr-class="rowClass"
             >
               <template v-slot:cell(division)="data">
                 <div class="min-width-7">
@@ -103,13 +104,19 @@
                 </div>
               </template>
               <template v-slot:cell(player1_name)="data">
-                <div class="min-width-10">
+                <div
+                  class="min-width-10"
+                  :class="winnerMark(data.item,1)"
+                >
                   <span class="font-weight-bold">{{data.item.player1_name}}</span><br>
                   <span class="small text-muted">{{data.item.player1_club}}</span>
                 </div>
               </template>
               <template v-slot:cell(player2_name)="data">
-                <div class="min-width-10">
+                <div
+                  class="min-width-10"
+                  :class="winnerMark(data.item,2)"
+                >
                   <span class="font-weight-bold">{{data.item.player2_name}}</span><br>
                   <span class="small text-muted">{{data.item.player2_club}}</span>
                 </div>
@@ -124,6 +131,7 @@
                     @click.prevent="goToDetail(data.item)"
                   ><i class="fa fa-eye fa-fw"></i></button>
                   <button
+                    :disabled="data.item.match_status == 2"
                     class="btn btn-sm btn-warning"
                     @click.prevent="loadData(data.item)"
                   ><i class="fa fa-edit fa-fw"></i></button>
@@ -275,8 +283,7 @@ export default {
       form: {
         division_id: null,
         pd1_id: null,
-        pd2_id: null,
-        match_system: null
+        pd2_id: null
       },
       modalState: null,
       errorValidation: null,
@@ -346,8 +353,7 @@ export default {
         await this.$axios.post(`entry/log_match/update/${this.form.id}`, {
           division_id: this.form.division_id,
           pd1_id: this.form.pd1_id,
-          pd2_id: this.form.pd2_id,
-          match_system: this.form.match_system
+          pd2_id: this.form.pd2_id
         });
 
         // tampilkan data setelah aksi
@@ -513,7 +519,6 @@ export default {
       this.form.division_id = division_id;
       this.form.pd1_id = pd1_id;
       this.form.pd2_id = pd2_id;
-      this.form.match_system = match_system;
     },
 
     resetData() {
@@ -521,7 +526,20 @@ export default {
       this.form.division_id = null;
       this.form.pd1_id = null;
       this.form.pd2_id = null;
-      this.form.match_system = null;
+    },
+
+    rowClass(item, type) {
+      if (!item) return;
+      if (item.winner === 4) return 'table-secondary';
+    },
+
+    winnerMark(item, playerDivision) {
+      if (item.match_status == 0) return '';
+      if (item.match_status == 2 && item.winner == playerDivision) {
+        return 'text-success';
+      } else {
+        return 'text-danger';
+      }
     }
   },
 
