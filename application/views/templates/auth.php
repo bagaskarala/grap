@@ -8,9 +8,20 @@
       http-equiv="X-UA-Compatible"
       content="IE=edge"
    >
+
+   <link
+      rel="stylesheet"
+      href="assets/css/main.css"
+   />
+   <noscript>
+      <link
+         rel="stylesheet"
+         href="assets/css/noscript.css"
+      /></noscript>
+
    <meta
       name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no"
    >
    <meta
       name="description"
@@ -35,14 +46,14 @@
    >
 
    <!-- Custom styles for this template-->
-   <link
+   <!-- <link
       href="<?=base_url('assets/css/sb-admin-2.min.css')?>"
       rel="stylesheet"
-   >
+   > -->
 
 </head>
 
-<body class="bg-gradient-primary">
+<body class="is-preload">
    <div id="app">
       <!-- Menampilkan halaman tertentu -->
       <?php $this->load->view($page)?>
@@ -60,6 +71,16 @@
 
    <!-- Custom scripts for all pages-->
    <script src="<?=base_url('assets/js/sb-admin-2.min.js')?>"></script>
+
+   <!-- BG -->
+   <div id="bg"></div>
+
+   <!-- Scripts -->
+   <script src="<?=base_url('assets/js/jquery.min.js')?>"></script>
+   <script src="<?=base_url('assets/js/browser.min.js')?>"></script>
+   <script src="<?=base_url('assets/js/breakpoints.min.js')?>"></script>
+   <script src="<?=base_url('assets/js/util.js')?>"></script>
+   <script src="<?=base_url('assets/js/main.js')?>"></script>
 
 
 </body>

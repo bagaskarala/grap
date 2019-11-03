@@ -35,7 +35,7 @@ class Auth extends MY_Controller
             redirect('user');
         } else {
             $this->session->set_flashdata('message', $result['message']);
-            redirect('auth');
+            redirect('auth#login');
         }
     }
 
@@ -58,7 +58,7 @@ class Auth extends MY_Controller
             if ($result) {
                 $this->session->set_flashdata('message', 'Register Sucessfully, Now you can login to your account');
                 // redirect ke login
-                redirect('auth');
+                redirect('auth#login');
             }
 
         }

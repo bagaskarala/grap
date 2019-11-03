@@ -44,10 +44,44 @@
                   <?=form_error('name', '<small class="text-danger">', '</small>')?>
                </div>
             </div>
-            <button
-               type="submit"
-               class="btn btn-primary"
-            >Submit</button>
+            <div class="form-group row">
+               <div class="col-sm-2">Foto</div>
+               <div class="col-sm-10">
+                  <div class="row">
+                     <div class="col-sm-2">
+                        <img
+                           src=" <?=base_url('assets/img/profile/') . $user['image']?> "
+                           class="img-thumbnail"
+                        >
+                     </div>
+                     <div col-sm-9>
+                        <div class="custom-file">
+                           <input
+                              type="file"
+                              class="custom-file-input"
+                              id="image"
+                              name="image"
+                              for="image"
+                           >
+                           <label
+                              class="custom-file-label"
+                              for="customFile"
+                           >Choose file</label>
+                        </div>
+                     </div>
+                  </div>
+
+               </div>
+
+            </div>
+            <div class="form-group row justify-content-end">
+               <div class="col-sm-10">
+                  <button
+                     type="submit"
+                     class="btn btn-primary"
+                  >Edit</button>
+               </div>
+            </div>
          </form>
       </div>
    </div>
