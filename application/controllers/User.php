@@ -33,11 +33,11 @@ class User extends CI_Controller
             $name  = $this->input->post('name');
             $email = $this->input->post('email');
 
-            //cek ada gambar atau tidak
+            // cek ada gambar atau tidak
             $upload_image = $_FILES['image']['name'];
 
             if ($upload_image) {
-                $config['allowed types'] = 'gif|jpg|png';
+                $config['allowed_types'] = 'gif|jpg|png';
                 $config['max_size']      = '2048';
                 $config['upload_path']   = './assets/img/profile';
 
@@ -47,9 +47,8 @@ class User extends CI_Controller
 
                     $old_image = $data['user']['image'];
                     if ($old_image != 'default.jpg') {
-                        unlink(FCPATH . 'assets/img/profile' . $old_image);
+                        unlink(FCPATH . 'assets/img/profile/' . $old_image);
                     }
-                    //aneh, harusnya ni ngeupload data ke db, tp g masuk
                     $new_image = $this->upload->data('file_name');
                     $this->db->set('image', $new_image);
                 } else {
@@ -61,6 +60,9 @@ class User extends CI_Controller
             $this->db->where('email', $email);
             $this->db->update('user');
             $this->session->set_flashdata('message', 'Profile updated');
+
+            // update foto di session untuk topbar
+            $this->session->set_userdata(['image' => $new_image]);
             redirect('user/edit');
         }
     }

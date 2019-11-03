@@ -1,5 +1,6 @@
 <?php
-$name = $this->session->userdata('name');
+$name  = $this->session->userdata('name');
+$image = $this->session->userdata('image');
 ?>
 <!-- Topbar -->
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -31,7 +32,7 @@ $name = $this->session->userdata('name');
             <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?=$name?></span>
             <img
                class="img-profile rounded-circle"
-               src="<?=base_url('assets/img/user_default.png')?>"
+               src="<?=base_url('assets/img/profile/' . $image)?>"
             >
          </a>
          <!-- Dropdown - User Information -->

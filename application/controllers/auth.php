@@ -8,7 +8,7 @@ class Auth extends MY_Controller
         parent::__construct();
     }
 
-    public function index()
+    public function index($action = null)
     {
         // jika sudah punya sesi, arahkan ke user
         if ($this->_login) {
@@ -20,7 +20,11 @@ class Auth extends MY_Controller
             $data['page']  = "auth/login";
             $this->load->view('templates/auth', $data);
         } else {
-            $this->_login();
+            if ($action == 'login') {
+                $this->_login();
+            } elseif ($action == 'registration') {
+                $this->registration();
+            }
         }
     }
 
@@ -47,9 +51,8 @@ class Auth extends MY_Controller
 
         // jalankan validasi
         if ($this->auth->validate() == false) {
-            $data['title'] = "Registration";
-            $data['page']  = 'auth/registration';
-            $this->load->view('templates/auth', $data);
+            $this->session->set_flashdata('message', validation_errors());
+            redirect('auth#register');
         } else {
             // kumpulkan data dari form
             $register_data = $this->input->post(null, true);

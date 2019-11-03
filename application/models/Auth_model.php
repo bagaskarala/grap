@@ -56,6 +56,7 @@ class Auth_model extends MY_Model
                         'email'   => $user['email'],
                         'role_id' => $user['role_id'],
                         'name'    => $user['name'],
+                        'image'   => $user['image'],
                         'login'   => true,
                     ];
                     // set session, masuk ke app
@@ -115,6 +116,7 @@ class Auth_model extends MY_Model
         $data = [
             'name'    => null,
             'email'   => null,
+            'image'   => null,
             'role_id' => null,
             'login'   => false,
         ];
