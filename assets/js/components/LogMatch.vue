@@ -305,7 +305,7 @@ export default {
 
     async getPlayerDivisions() {
       try {
-        const playerDivisions = await this.$axios.get('entry/player_division/get_all');
+        const playerDivisions = await this.$axios.get(`entry/player_division/filter_division/${this.form.division_id}`);
         this.playerDivisions = playerDivisions.data.data;
       } catch (error) {
         console.log(error.response);
@@ -542,11 +542,16 @@ export default {
       }
     }
   },
+  watch: {
+    'form.division_id'() {
+      this.getPlayerDivisions();
+    }
+  },
 
   created() {
     this.getDivisions();
     this.getAllLogMatchs();
-    this.getPlayerDivisions();
+
   }
 };
 </script>
