@@ -4661,15 +4661,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     rowClass: function rowClass(item) {
       if (!item) return;
-      if (item.winner === 4) return 'table-secondary';
+      if (item.winner === -1) return 'table-secondary';
     },
     winnerMark: function winnerMark(item, playerDivision) {
-      if (item.match_status == 0) return '';
+      if (item.match_status == 0) return ''; // draw
 
-      if (item.match_status == 2 && item.winner == playerDivision) {
-        return 'text-success';
+      if (item.match_status == 2 && item.winner == 0) {
+        return 'text-primary';
+      } // win or lose
+
+
+      if (playerDivision == 1 && item.match_status == 2) {
+        if (item.winner == item.pd1_id) {
+          return 'text-success';
+        } else {
+          return 'text-danger';
+        }
       } else {
-        return 'text-danger';
+        if (item.winner == item.pd2_id) {
+          return 'text-success';
+        } else {
+          return 'text-danger';
+        }
       }
     }
   },
@@ -4702,6 +4715,9 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
 //
 //
 //
@@ -5139,10 +5155,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         value: 0,
         text: 'Draw'
       }, {
-        value: 1,
+        value: this.logMatchDetail.pd1_id,
         text: "Player 1 - ".concat(this.logMatchDetail.player1_name)
       }, {
-        value: 2,
+        value: this.logMatchDetail.pd2_id,
         text: "Player 2 - ".concat(this.logMatchDetail.player2_name)
       }];
     }
@@ -42690,6 +42706,10 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "col-md-6 order-1 order-md-2" }, [
           _c("div", { staticClass: "card card-default mb-md-3" }, [
+            _c("div", { staticClass: "card-header font-weight-bold" }, [
+              _vm._v("\n          Match Detail\n        ")
+            ]),
+            _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
               _c(
                 "div",
@@ -42830,7 +42850,7 @@ var render = function() {
                 {
                   staticClass: "list-group-item",
                   class: [
-                    _vm.logMatchDetail.winner == 1
+                    _vm.logMatchDetail.winner == _vm.logMatchDetail.pd1_id
                       ? "list-group-item-success"
                       : ""
                   ]
@@ -42849,7 +42869,7 @@ var render = function() {
                         )
                       ]),
                       _vm._v(" "),
-                      _vm.logMatchDetail.winner == 1
+                      _vm.logMatchDetail.winner == _vm.logMatchDetail.pd1_id
                         ? _c("span", { staticClass: "badge badge-success" }, [
                             _vm._v("Winner")
                           ])
@@ -42941,7 +42961,7 @@ var render = function() {
                 {
                   staticClass: "list-group-item",
                   class: [
-                    _vm.logMatchDetail.winner == 2
+                    _vm.logMatchDetail.winner == _vm.logMatchDetail.pd2_id
                       ? "list-group-item-success"
                       : ""
                   ]
@@ -42960,7 +42980,7 @@ var render = function() {
                         )
                       ]),
                       _vm._v(" "),
-                      _vm.logMatchDetail.winner == 2
+                      _vm.logMatchDetail.winner == _vm.logMatchDetail.pd2_id
                         ? _c("span", { staticClass: "badge badge-success" }, [
                             _vm._v("Winner")
                           ])
@@ -43270,7 +43290,7 @@ var render = function() {
                       "span",
                       {
                         class: [
-                          _vm.form.winner == 1
+                          _vm.form.winner == _vm.logMatchDetail.pd1_id
                             ? "d-inline-block badge badge-success"
                             : "d-none"
                         ]
@@ -43446,7 +43466,7 @@ var render = function() {
                       "span",
                       {
                         class: [
-                          _vm.form.winner == 2
+                          _vm.form.winner == _vm.logMatchDetail.pd2_id
                             ? "d-inline-block badge badge-success"
                             : "d-none"
                         ]

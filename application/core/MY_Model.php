@@ -102,7 +102,7 @@ class MY_Model extends CI_Model
     {
         // validasi form
         $this->load->library('form_validation');
-        $this->form_validation->set_error_delimiters('<p class="small m-0">', '</p>');
+        $this->form_validation->set_error_delimiters('<p class="m-0">', '</p>');
 
         // jika diberikan array, maka memvalidasi array tersebut
         // jika tidak maka validasi langsung dari $_POST

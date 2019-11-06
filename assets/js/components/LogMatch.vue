@@ -551,16 +551,32 @@ export default {
 
     rowClass(item) {
       if (!item) return;
-      if (item.winner === 4) return 'table-secondary';
+      if (item.winner === -1) return 'table-secondary';
     },
 
     winnerMark(item, playerDivision) {
       if (item.match_status == 0) return '';
-      if (item.match_status == 2 && item.winner == playerDivision) {
-        return 'text-success';
-      } else {
-        return 'text-danger';
+
+      // draw
+      if (item.match_status == 2 && item.winner == 0) {
+        return 'text-primary';
       }
+
+      // win or lose
+      if (playerDivision == 1 && item.match_status == 2) {
+        if (item.winner == item.pd1_id) {
+          return 'text-success';
+        } else {
+          return 'text-danger';
+        }
+      } else {
+        if (item.winner == item.pd2_id) {
+          return 'text-success';
+        } else {
+          return 'text-danger';
+        }
+      }
+
     }
   },
 

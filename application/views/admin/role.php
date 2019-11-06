@@ -12,7 +12,7 @@
       data-toggle="modal"
       data-target="#roleModal"
    >
-      Add menu
+      Add role
    </button>
    <table class="table table-striped">
       <thead>

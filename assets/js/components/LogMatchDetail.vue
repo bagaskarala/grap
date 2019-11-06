@@ -24,6 +24,9 @@
       </div>
       <div class="col-md-6 order-1 order-md-2">
         <div class="card card-default mb-md-3">
+          <div class="card-header font-weight-bold">
+            Match Detail
+          </div>
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-2">
               <span>Division <i class="fa fa-angle-double-right"></i></span>
@@ -73,12 +76,12 @@
           <ul class="list-group list-group-flush">
             <li
               class="list-group-item"
-              :class="[logMatchDetail.winner==1? 'list-group-item-success' : '']"
+              :class="[logMatchDetail.winner==logMatchDetail.pd1_id? 'list-group-item-success' : '']"
             >
               <div class="d-flex justify-content-between align-items-center font-weight-bold text-uppercase">
                 <h3 class="mb-0">{{this.logMatchDetail.player1_name || '...'}}</h3>
                 <span
-                  v-if="logMatchDetail.winner==1"
+                  v-if="logMatchDetail.winner==logMatchDetail.pd1_id"
                   class="badge badge-success"
                 >Winner</span>
                 <span
@@ -113,12 +116,12 @@
           <ul class="list-group list-group-flush">
             <li
               class="list-group-item"
-              :class="[logMatchDetail.winner==2? 'list-group-item-success' : '']"
+              :class="[logMatchDetail.winner==logMatchDetail.pd2_id? 'list-group-item-success' : '']"
             >
               <div class="d-flex justify-content-between align-items-center font-weight-bold text-uppercase">
                 <h3 class="mb-0">{{this.logMatchDetail.player2_name || '...'}}</h3>
                 <span
-                  v-if="logMatchDetail.winner==2"
+                  v-if="logMatchDetail.winner==logMatchDetail.pd2_id"
                   class="badge badge-success"
                 >Winner</span>
                 <span
@@ -228,7 +231,7 @@
             :class="[form.winner==1? 'border-success' : '']"
           >
             <p class="font-weight-bold mb-3">PLAYER 1
-              <span :class="[form.winner==1? 'd-inline-block badge badge-success' : 'd-none']">Winner</span>
+              <span :class="[form.winner==logMatchDetail.pd1_id? 'd-inline-block badge badge-success' : 'd-none']">Winner</span>
             </p>
             <div class="form-group">
               <label for="name">Name</label>
@@ -303,7 +306,7 @@
             :class="[form.winner==2? 'border-success' : '']"
           >
             <p class="font-weight-bold mb-3">PLAYER 2
-              <span :class="[form.winner==2? 'd-inline-block badge badge-success' : 'd-none']">Winner</span>
+              <span :class="[form.winner==logMatchDetail.pd2_id? 'd-inline-block badge badge-success' : 'd-none']">Winner</span>
             </p>
             <div class="form-group">
               <label for="name">Name</label>
@@ -445,11 +448,11 @@ export default {
           text: 'Draw'
         },
         {
-          value: 1,
+          value: this.logMatchDetail.pd1_id,
           text: `Player 1 - ${this.logMatchDetail.player1_name}`
         },
         {
-          value: 2,
+          value: this.logMatchDetail.pd2_id,
           text: `Player 2 - ${this.logMatchDetail.player2_name}`
         }
       ];

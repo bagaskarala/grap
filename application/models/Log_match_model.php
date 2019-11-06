@@ -391,7 +391,7 @@ class Log_match_model extends MY_Model
 
                 // update logmatch asal
                 $data = [
-                    'winner'       => 4, // bye
+                    'winner'       => -1, // bye
                     'match_status' => 2, // finish
                     'pd1_id'       => null,
                     'pd2_id'       => null,
@@ -406,7 +406,15 @@ class Log_match_model extends MY_Model
         // ambil log match asal
         $log_match = $this->get_where(['id' => $log_match_id]);
 
-        // update winner pada match final ke playerdivision
+        // round robin tidak pakai fungsi ini
+        if ($log_match['match_system'] == 'roundrobin') {
+            return [
+                'status' => true,
+                'data'   => 'no next play in round robin',
+            ];
+        }
+
+        // update division_winner setelah match terakhir/final ke tabel playerdivision
         $this->db->select('MAX(match_index) as max_match_index');
         $idx = $this->get_single_array();
         if ($idx['max_match_index'] == $log_match['match_index']) {
@@ -417,14 +425,6 @@ class Log_match_model extends MY_Model
         // baca index dan number untuk next-match
         $index  = explode('.', $log_match['next_match'])[0];
         $number = explode('.', $log_match['next_match'])[1];
-
-        // pilih playerdivision yang menang
-        $pd_selected = null;
-        if ($log_match['winner'] == 1) {
-            $pd_selected = 'pd1_id';
-        } elseif ($log_match['winner'] == 2) {
-            $pd_selected = 'pd2_id';
-        }
 
         // logmatch tujuan
         $where = [
@@ -441,17 +441,29 @@ class Log_match_model extends MY_Model
             // cek apakah pd1 tujuan mempunyai id yang sama dengan sumber
             if (in_array($destination['pd1_id'], $arr_source)) {
                 // jika sama, maka update pd1
-                $data = ['pd1_id' => $log_match[$pd_selected]];
-                $this->update($data, $where);
+                $data     = ['pd1_id' => $log_match['winner']];
+                $response = $this->update($data, $where);
             } else {
                 // jika beda, maka update pd2 / mengisi kolom yang kosong
-                $data = ['pd2_id' => $log_match[$pd_selected]];
-                $this->update($data, $where);
+                $data     = ['pd2_id' => $log_match['winner']];
+                $response = $this->update($data, $where);
             }
         } elseif ($destination['pd1_id'] == null) {
             // jika pd1 tujuan kosong
-            $data = ['pd1_id' => $log_match[$pd_selected]];
-            $this->update($data, $where);
+            $data     = ['pd1_id' => $log_match['winner']];
+            $response = $this->update($data, $where);
+        }
+
+        if ($response) {
+            return [
+                'status' => true,
+                'data'   => $response,
+            ];
+        } else {
+            return [
+                'status'  => false,
+                'message' => 'Failed generate next play',
+            ];
         }
     }
 
