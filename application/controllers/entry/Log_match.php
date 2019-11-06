@@ -122,6 +122,11 @@ class Log_match extends MY_Controller
     {
         $request = parse_post_data();
 
+        // demo
+        // $request               = new stdClass();
+        // $request->division_id  = 11;
+        // $request->match_system = 'roundrobin';
+
         $result = $this->log_match->generate_schedule($request->division_id, $request->match_system);
 
         if ($result['status']) {
@@ -148,7 +153,7 @@ class Log_match extends MY_Controller
     {
         $request = parse_post_data();
 
-        $result = $this->log_match->generate_player($request->division_id);
+        $result = $this->log_match->generate_player($request->division_id, $request->match_system);
 
         if ($result['status']) {
             // start play, pemain yang ga punya musuh langsung next ke match berikutnya

@@ -5,7 +5,7 @@ import VueNoty from 'vuejs-noty';
 import 'vuejs-noty/dist/vuejs-noty.css';
 Vue.use(VueNoty, {
    layout: 'topRight',
-   timeout: 2000,
+   timeout: 3000,
    theme: 'bootstrap-v4',
    progressBar: false,
    closeWith: ['click', 'button']

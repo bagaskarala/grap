@@ -16,25 +16,20 @@
                 name="filter_division"
                 id="filter_division"
                 class="form-control"
+                autofocus
                 v-model.number="filterDivisionId"
                 @change="filterData(filterDivisionId)"
               >
-                <option :value="null">All Division</option>
+                <option
+                  :value="null"
+                  disabled
+                >--- Select Division ---</option>
                 <option
                   v-for="item in divisions"
                   :key="item.id"
                   :value="item.id"
                 >{{item.division}}</option>
               </select>
-              <div class="input-group-append">
-                <button
-                  class="btn btn-secondary btn-sm"
-                  type="button"
-                  title="Clear Schedule"
-                  :disabled="logMatchs.length == 0 || filterDivisionId==null"
-                  @click.prevent="resetSchedule()"
-                >Clear Schedule</button>
-              </div>
             </div>
 
             <div class="mt-3">
@@ -61,21 +56,29 @@
                     type="button"
                     :disabled="logMatchs.length > 0"
                     @click.prevent="generateSchedule()"
-                  >Generate Schedule</button>
+                  >Generate</button>
+                  <button
+                    class="btn btn-secondary btn-sm"
+                    type="button"
+                    title="Clear Schedule"
+                    :disabled="logMatchs.length == 0 || filterDivisionId==null"
+                    @click.prevent="resetSchedule()"
+                  >Clear</button>
                 </div>
               </div>
             </div>
 
-            <div v-if="filterDivisionId != null">
+            <div v-if="filterDivisionId != null && selectedMatchSystem == 'elimination'">
+              <p class="my-2 small text-muted"><i class="fa fa-info-circle"></i> Generate Player only on elimination match</p>
               <button
-                class="btn btn-sm btn-primary mt-3"
+                class="btn btn-sm btn-primary"
                 type="button"
                 title="Generate Player after generate schedule"
                 :disabled="logMatchs.length == 0"
                 @click.prevent="generatePlayer()"
               >Generate Player</button>
               <button
-                class="btn btn-sm btn-secondary mt-3"
+                class="btn btn-sm btn-secondary"
                 type="button"
                 :disabled="logMatchs.length == 0"
                 @click.prevent="resetPlayer()"
@@ -87,7 +90,7 @@
             <div
               v-show="logMatchs.length == 0"
               class="my-3 text-center"
-            >Empty Data</div>
+            >{{filterDivisionId == null? 'Select division to view log match' : 'Empty Data'}}</div>
 
             <b-table
               v-if="logMatchs.length != 0"
@@ -125,7 +128,14 @@
                 <span class="h5 font-weight-bold">VS</span>
               </template>
               <template v-slot:cell(action)="data">
-                <div class="min-width-10">
+                <span
+                  v-if="data.item.pd1_id == null && data.item.pd2_id == null && data.item.match_status == 2"
+                  class="text-danger font-italic"
+                >Skipped Match</span>
+                <div
+                  v-else
+                  class="min-width-10"
+                >
                   <button
                     class="btn btn-sm btn-primary"
                     @click.prevent="goToDetail(data.item)"
@@ -237,41 +247,12 @@
 
 <script>
 export default {
-  name: 'PlayerDivision',
+  name: 'LogMatch',
   props: {
     baseUrl: String
   },
   data() {
     return {
-      fieldLogMatch: [
-        {
-          'key': 'division'
-        },
-        {
-          'key': 'match_system'
-        },
-        {
-          'key': 'match_index'
-        },
-        {
-          'key': 'match_number'
-        },
-        {
-          'key': 'player1_name',
-          'label': 'Player 1'
-        },
-        {
-          'key': 'vs',
-          'label': ''
-        },
-        {
-          'key': 'player2_name',
-          'label': 'Player 2'
-        },
-        {
-          'key': 'action'
-        }
-      ],
       matchSystemOptions: [
         { text: 'Round Robin', value: 'roundrobin' },
         { text: 'Elimination', value: 'elimination' }
@@ -290,6 +271,40 @@ export default {
       filterDivisionId: null,
       selectedMatchSystem: 'elimination'
     };
+  },
+
+  computed: {
+    fieldLogMatch() {
+      return [
+        {
+          'key': 'division'
+        },
+        {
+          'key': 'match_system'
+        },
+        {
+          'key': 'match_index'
+        },
+        {
+          'key': this.selectedMatchSystem == 'elimination' ? 'match_number' : 'pool_number'
+        },
+        {
+          'key': 'player1_name',
+          'label': 'Player 1'
+        },
+        {
+          'key': 'vs',
+          'label': ''
+        },
+        {
+          'key': 'player2_name',
+          'label': 'Player 2'
+        },
+        {
+          'key': 'action'
+        }
+      ];
+    }
   },
 
   methods: {
@@ -313,16 +328,16 @@ export default {
       }
     },
 
-    async getAllLogMatchs() {
-      try {
-        const logMatchs = await this.$axios.get('entry/log_match/get_all');
-        this.logMatchs = logMatchs.data.data;
-        this.filterDivisionId = null;
-      } catch (error) {
-        console.log(error.response);
-        this.$noty.error('Failed Get Data');
-      }
-    },
+    // async getAllLogMatchs() {
+    //   try {
+    //     const logMatchs = await this.$axios.get('entry/log_match/get_all');
+    //     this.logMatchs = logMatchs.data.data;
+    //     this.filterDivisionId = null;
+    //   } catch (error) {
+    //     console.log(error.response);
+    //     this.$noty.error('Failed Get Data');
+    //   }
+    // },
 
     // async insertData() {
     //   try {
@@ -416,6 +431,11 @@ export default {
       try {
         const logMatchs = await this.$axios.get(`entry/log_match/filter_division/${divisionId}`);
         this.logMatchs = logMatchs.data.data;
+
+        // set match system from db
+        if (logMatchs.data.data.length != 0) {
+          this.selectedMatchSystem = logMatchs.data.data[0].match_system;
+        }
       } catch (error) {
         console.log(error.response);
         this.$noty.error('Failed Filter Data');
@@ -467,7 +487,8 @@ export default {
 
       try {
         await this.$axios.post('entry/log_match/generate_player', {
-          division_id: this.filterDivisionId
+          division_id: this.filterDivisionId,
+          match_system: this.selectedMatchSystem
         });
         this.filterData(this.filterDivisionId);
         this.$noty.success('Success Generate Player');
@@ -514,7 +535,7 @@ export default {
       this.$bvModal.show('modal-log-match');
       this.modalState = 'update';
       // populate form
-      let { id, division_id, pd1_id, pd2_id, match_system } = item;
+      let { id, division_id, pd1_id, pd2_id } = item;
       this.form.id = id;
       this.form.division_id = division_id;
       this.form.pd1_id = pd1_id;
@@ -528,7 +549,7 @@ export default {
       this.form.pd2_id = null;
     },
 
-    rowClass(item, type) {
+    rowClass(item) {
       if (!item) return;
       if (item.winner === 4) return 'table-secondary';
     },
@@ -542,6 +563,7 @@ export default {
       }
     }
   },
+
   watch: {
     'form.division_id'() {
       this.getPlayerDivisions();
@@ -550,7 +572,7 @@ export default {
 
   created() {
     this.getDivisions();
-    this.getAllLogMatchs();
+    // this.getAllLogMatchs();
 
   }
 };

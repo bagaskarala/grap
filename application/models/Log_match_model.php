@@ -69,11 +69,15 @@ class Log_match_model extends MY_Model
     {
         $this->query_log_match();
         $this->db->where('lm.division_id', $division_id);
+        $this->order_by('pool_number');
+        $this->order_by('match_index');
+        $this->order_by('match_number');
         return $this->db->get()->result_array();
     }
 
     public function generate_schedule($division_id, $match_system)
     {
+        // error jika parameter tidak lengkap
         if (!$division_id or !$match_system) {
             return [
                 'status'  => false,
@@ -81,8 +85,8 @@ class Log_match_model extends MY_Model
             ];
         }
 
-        // check if log match has been created
-        // avoid create multiple logmatch per division
+        // error ketika logmatch sudah dibuat
+        // hindari generate multiple logmatch per division
         $this->where('division_id', $division_id);
         $log_match_count = $this->count();
         if ($log_match_count > 0) {
@@ -92,12 +96,13 @@ class Log_match_model extends MY_Model
             ];
         }
 
+        // error ketika division tidak mempunyai cukup player
         $this->where('division_id', $division_id);
         $player_count = $this->count('player_division');
         if ($player_count == 0) {
             return [
                 'status'  => false,
-                'message' => 'This division has no player',
+                'message' => 'This division has no players',
             ];
         } else if ($player_count < 4) {
             return [
@@ -106,34 +111,124 @@ class Log_match_model extends MY_Model
             ];
         }
 
-        $max_match_index = pow(2, ceil(log($player_count, 2)));
-        $arr_log_match   = [];
+        if ($match_system == 'elimination') {
+            /**
+             *
+             * ELIMINATION MATCHING
+             *
+             */
 
-        $divider = $max_match_index / 2;
-        for ($idx = 1; $idx <= $max_match_index; $idx++) {
-            $next_num = 1;
-            for ($num = 1; $num <= $divider; $num++) {
-                $next_idx = $idx + 1;
-                array_push($arr_log_match, ['idx' => $idx, 'num' => $num, 'next' => "$next_idx.$next_num"]);
-                $this->insert([
-                    'division_id'  => $division_id,
-                    'match_index'  => $idx,
-                    'match_system' => $match_system,
-                    'match_number' => $num,
-                    'next_match'   => "$next_idx.$next_num",
-                ]);
-                // increment next_num setiap dua loop
-                if ($num % 2 == 0) {
-                    $next_num++;
+            // cari jumlah bracket
+            $max_match_index = pow(2, ceil(log($player_count, 2)));
+            $result          = [];
+
+            // loop buat schedule elimination kosongan
+            $divider = $max_match_index / 2;
+            for ($idx = 1; $idx <= $max_match_index; $idx++) {
+                $next_num = 1;
+                for ($num = 1; $num <= $divider; $num++) {
+                    $next_idx = $idx + 1;
+                    // cetak array debugging
+                    array_push($result, ['idx' => $idx, 'num' => $num, 'next' => "$next_idx.$next_num"]);
+                    $this->insert([
+                        'division_id'  => $division_id,
+                        'match_index'  => $idx,
+                        'match_system' => $match_system,
+                        'match_number' => $num,
+                        'next_match'   => "$next_idx.$next_num",
+                    ]);
+                    // increment next_num setiap dua loop
+                    if ($num % 2 == 0) {
+                        $next_num++;
+                    }
+                }
+                // setiap next index, jumlah pemain separo index sebelumnya
+                $divider /= 2;
+            }
+        } else {
+            /**
+             *
+             * ROUND ROBIN MATCHING
+             *
+             */
+            // ambil semua pool yang ada
+            $this->db->distinct();
+            $this->db->select('pool_number');
+            $this->where('division_id', $division_id);
+            $this->where('pool_number !=', null);
+            $pd_pools = $this->get_all_array('player_division');
+            // error jika pool belum diset
+            if (count($pd_pools) == 0) {
+                return [
+                    'status'  => false,
+                    'message' => 'No player in pool',
+                ];
+            }
+
+            $this->where('division_id', $division_id);
+            $this->where('pool_number =', null);
+            $count_null_pool = $this->get_all_array('player_division');
+            // error jika pool belum diset
+            if (count($count_null_pool) > 0) {
+                return [
+                    'status'  => false,
+                    'message' => 'Some player doesn\'t have pool',
+                ];
+            }
+
+            // ambil playerdivision di tiap pool
+            $pool_bucket = [];
+            foreach ($pd_pools as $pd_item) {
+                $this->where('division_id', $division_id);
+                $this->where('pool_number', $pd_item['pool_number']);
+                $pd_pools = $this->get_all_array('player_division');
+                array_push($pool_bucket, [$pd_item['pool_number'] => $pd_pools]);
+            }
+
+            // matching roundrobin
+            $result = [];
+            foreach ($pool_bucket as $pool) {
+                foreach ($pool as $pool_number => $arr_pd) {
+                    $pool_player_count = count($arr_pd);
+                    for ($i = 0; $i < $pool_player_count - 1; $i++) {
+                        for ($j = $i + 1; $j < $pool_player_count; $j++) {
+                            if ($j % 2 == 0) {
+                                // cetak array debugging
+                                array_push($result, ['pool_number' => $pool_number, 'pd1_id' => $arr_pd[$i]['id'], 'pd2_id' => $arr_pd[$j]['id']]);
+                            } else {
+                                // cetak array debugging
+                                array_push($result, ['pool_number' => $pool_number, 'pd1_id' => $arr_pd[$j]['id'], 'pd2_id' => $arr_pd[$i]['id']]);
+                            }
+                        }
+                    }
                 }
             }
-            // setiap next index, jumlah pemain separo index sebelumnya
-            $divider /= 2;
+            // acak array
+            shuffle($result);
+
+            // masukkan index
+            $index            = 1;
+            $pool_match_count = count($result) / count($pool_bucket);
+            foreach ($result as $rr) {
+                // reset index setiap ganti pool
+                if ($index > $pool_match_count) {
+                    $index = 1;
+                }
+                $this->insert([
+                    'division_id'  => $division_id,
+                    'match_index'  => $index,
+                    'match_system' => $match_system,
+                    'pd1_id'       => $rr['pd1_id'],
+                    'pd2_id'       => $rr['pd2_id'],
+                    'pool_number'  => $rr['pool_number'],
+                ]);
+                $index++;
+            }
         }
 
         return [
             'status' => true,
-            'data'   => $arr_log_match,
+            'data'   => $result,
         ];
     }
 
@@ -143,8 +238,15 @@ class Log_match_model extends MY_Model
         return $this->delete(['division_id' => $division_id]);
     }
 
-    public function generate_player($division_id)
+    public function generate_player($division_id, $match_system)
     {
+        if ($match_system == 'roundrobin') {
+            return [
+                'status'  => false,
+                'message' => 'Generate player only on elimination',
+            ];
+        }
+
         // handling, generate player hanya sekali
         $this->where('division_id', $division_id);
         $this->where('pd1_id !=', null);
@@ -155,7 +257,6 @@ class Log_match_model extends MY_Model
                 'status'  => false,
                 'message' => 'Player has been generated',
             ];
-            exit();
         }
 
         // get player division, urutkan club_id untuk minimalisir club sama bertemu

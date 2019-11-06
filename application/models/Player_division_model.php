@@ -52,6 +52,42 @@ class Player_division_model extends MY_Model
         return $this->get_all_array();
     }
 
+    public function calculate_classement($division_id)
+    {
+        // get log match
+        $this->where('division_id', $division_id);
+        $this->where('match_system', 'roundrobin');
+        $division_match = $this->get_all_array('log_match');
+        if (count($division_match) == 0) {
+            return [
+                'status'  => false,
+                'message' => 'No roundrobin match in this division',
+            ];
+        }
+
+        // get player division
+        // $this->where('division_id', $division_id);
+        // $this->where('match_system', 'roundrobin');
+        // $player_division = $this->get_all_array();
+
+        // $result = [];
+        // foreach ($player_division as $item) {
+        //     if($item['winner'] == null){
+        //         continue;
+        //     }
+
+        //     if($item['winner'] == 1){
+
+        //     }
+        // }
+
+        return [
+            'status' => true,
+            'data'   => $division_match,
+        ];
+
+    }
+
     public function generate_pool($division_id)
     {
         // MENIRU FUNGSI DI EXCEL, TAPI STUCK

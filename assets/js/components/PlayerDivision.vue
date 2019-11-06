@@ -19,7 +19,10 @@
                 v-model.number="filterDivisionId"
                 @change="filterData(filterDivisionId)"
               >
-                <option :value="null">All Division</option>
+                <option
+                  :value="null"
+                  disabled
+                >--- Select Division ---</option>
                 <option
                   v-for="item in divisions"
                   :key="item.id"
@@ -60,7 +63,7 @@
             <div
               v-show="playerDivisions.length == 0"
               class="my-3 text-center"
-            >Empty Data</div>
+            >{{filterDivisionId == null? 'Select division to view player' : 'Empty Data'}}</div>
 
             <b-table
               v-if="playerDivisions.length != 0"
@@ -318,8 +321,6 @@ export default {
         // tampilkan data setelah aksi
         if (this.filterDivisionId) {
           this.filterData(this.filterDivisionId);
-        } else {
-          this.getAllPlayerDivisions();
         }
 
         this.$noty.success('Success Update Data');
@@ -341,8 +342,6 @@ export default {
         // tampilkan data setelah aksi
         if (this.filterDivisionId) {
           this.filterData(this.filterDivisionId);
-        } else {
-          this.getAllPlayerDivisions();
         }
 
         this.$noty.success('Success Delete Data');
@@ -448,7 +447,7 @@ export default {
   },
 
   created() {
-    this.getAllPlayerDivisions();
+    // this.getAllPlayerDivisions();
     this.getDivisions();
     this.getPlayers();
   },
