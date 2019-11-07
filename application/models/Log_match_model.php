@@ -416,10 +416,14 @@ class Log_match_model extends MY_Model
 
         // update division_winner setelah match terakhir/final ke tabel playerdivision
         $this->db->select('MAX(match_index) as max_match_index');
+        $this->where('division_id', $log_match['division_id']);
         $idx = $this->get_single_array();
         if ($idx['max_match_index'] == $log_match['match_index']) {
-            $this->update(['division_winner' => 1], ['id' => $log_match['division_id']], 'player_division');
-            exit();
+            $this->update(['division_winner' => 1], ['id' => $log_match['winner']]);
+            return [
+                'status' => true,
+                'data'   => 'Final finished, Division winner generated',
+            ];
         }
 
         // baca index dan number untuk next-match

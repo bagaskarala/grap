@@ -215,7 +215,7 @@ export default {
   name: 'PlayerDivision',
   data() {
     return {
-      fieldPlayerDivision: ['division', 'club', 'name', 'pool_number', 'win', 'draw', 'lose', 'action'],
+      fieldPlayerDivision: ['division', 'club', 'name', 'pool_number', 'win', 'draw', 'lose', 'pool_winner', 'division_winner', 'action'],
       poolOptions: [
         { text: 'Pool A', value: 'A' },
         { text: 'Pool B', value: 'B' }

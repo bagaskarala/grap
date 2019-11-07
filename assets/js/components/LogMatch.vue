@@ -92,6 +92,15 @@
               class="my-3 text-center"
             >{{filterDivisionId == null? 'Select division to view log match' : 'Empty Data'}}</div>
 
+            <div v-if="selectedMatchSystem=='elimination'">
+              <hr>
+              <bracket :rounds="matchRounds">
+                <template v-slot:player="player">
+                  {{ player.player.name }}
+                </template>
+              </bracket>
+            </div>
+
             <b-table
               v-if="logMatchs.length != 0"
               striped
@@ -246,11 +255,16 @@
 </template>
 
 <script>
+import Bracket from 'vue-tournament-bracket';
 export default {
   name: 'LogMatch',
   props: {
     baseUrl: String
   },
+  components: {
+    Bracket
+  },
+
   data() {
     return {
       matchSystemOptions: [
@@ -274,6 +288,58 @@ export default {
   },
 
   computed: {
+    matchRounds() {
+      function checkWinner(m, playerNumber) {
+        // jika belum ada pemenang atau skipped match, set winner ke null
+        // lalu set true dan false tergantung pemenang
+        if (m.winner == null || m.winner == -1) return null;
+        else if (m.winner == 0) return true;
+
+        if (playerNumber == 1) {
+          return m.winner == m.pd1_id ? true : false;
+        } else {
+          return m.winner == m.pd2_id ? true : false;
+        }
+      }
+
+      function checkPlayer(m, playerNumber) {
+        if (m.match_status == 2 && m.winner == -1) return 'Skipped Match';
+        return playerNumber == 1 ? m.player1_name : m.player2_name;
+      }
+
+      const container = [];
+
+      for (let index = this.matchIndex.min; index <= this.matchIndex.max; index++) {
+        const round1 = this.logMatchs.filter(f => f.match_index == index)
+          .map(m => {
+            return {
+              player1: {
+                id: m.pd1_id,
+                name: checkPlayer(m, 1),
+                winner: checkWinner(m, 1)
+              },
+              player2: {
+                id: m.pd2_id,
+                name: checkPlayer(m, 2),
+                winner: checkWinner(m, 2)
+              }
+            };
+          });
+        container.push({ games: round1 });
+      }
+      return container;
+    },
+
+    matchIndex() {
+      let arr = Object.values(this.logMatchs.map(item => item.match_index));
+      let min = Math.min(...arr);
+      let max = Math.max(...arr);
+
+      return {
+        max, min
+      };
+    },
+
     fieldLogMatch() {
       return [
         {
