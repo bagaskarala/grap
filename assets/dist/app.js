@@ -4128,7 +4128,6 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'LogMatch',
@@ -4518,6 +4517,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       var _generateSchedule = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        var a;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
@@ -4539,23 +4539,25 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 });
 
               case 6:
+                a = _context6.sent;
+                console.log(a.data.data);
                 this.filterData(this.filterDivisionId);
                 this.$noty.success('Success Generate Schedule');
-                _context6.next = 14;
+                _context6.next = 16;
                 break;
 
-              case 10:
-                _context6.prev = 10;
+              case 12:
+                _context6.prev = 12;
                 _context6.t0 = _context6["catch"](3);
                 console.log(_context6.t0.response);
                 this.$noty.error('Failed Generate Schedule. ' + _context6.t0.response.data.message);
 
-              case 14:
+              case 16:
               case "end":
                 return _context6.stop();
             }
           }
-        }, _callee6, this, [[3, 10]]);
+        }, _callee6, this, [[3, 12]]);
       }));
 
       function generateSchedule() {
@@ -5485,6 +5487,14 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -42248,8 +42258,6 @@ var render = function() {
                   ? _c(
                       "div",
                       [
-                        _c("hr"),
-                        _vm._v(" "),
                         _c("bracket", {
                           attrs: { rounds: _vm.matchRounds },
                           scopedSlots: _vm._u(
@@ -44066,6 +44074,20 @@ var render = function() {
                             }
                           },
                           {
+                            key: "cell(division_winner)",
+                            fn: function(data) {
+                              return [
+                                data.item.division_winner
+                                  ? _c(
+                                      "span",
+                                      { staticClass: "badge badge-success" },
+                                      [_vm._v("Winner")]
+                                    )
+                                  : _vm._e()
+                              ]
+                            }
+                          },
+                          {
                             key: "cell(action)",
                             fn: function(data) {
                               return [
@@ -44112,7 +44134,7 @@ var render = function() {
                         ],
                         null,
                         false,
-                        858711422
+                        385844113
                       )
                     })
                   : _vm._e()

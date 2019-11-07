@@ -93,7 +93,6 @@
             >{{filterDivisionId == null? 'Select division to view log match' : 'Empty Data'}}</div>
 
             <div v-if="selectedMatchSystem=='elimination'">
-              <hr>
               <bracket :rounds="matchRounds">
                 <template v-slot:player="player">
                   {{ player.player.name }}
@@ -515,10 +514,11 @@ export default {
       }
 
       try {
-        await this.$axios.post('entry/log_match/generate_schedule', {
+        const a = await this.$axios.post('entry/log_match/generate_schedule', {
           division_id: this.filterDivisionId,
           match_system: this.selectedMatchSystem
         });
+        console.log(a.data.data);
         this.filterData(this.filterDivisionId);
         this.$noty.success('Success Generate Schedule');
       } catch (error) {

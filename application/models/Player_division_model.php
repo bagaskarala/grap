@@ -28,8 +28,8 @@ class Player_division_model extends MY_Model
 
     public function query_player_division()
     {
-        //  get all player division
-        // join with division and player
+        // get all player division
+        // join division dan player
         $this->db->select("$this->table.*, player.name, player.club_id, division.division, club.club");
         $this->join('division');
         $this->join('player');
@@ -38,15 +38,17 @@ class Player_division_model extends MY_Model
 
     public function get_all_player_division()
     {
+        // get semua player division
         $this->query_player_division();
         return $this->get_all_array();
     }
 
     public function filter_division($division_id)
     {
-        // hitung win-lose-draw
+        // hitung win-lose-draw pada divisi terpilih
         $this->calculate_classement($division_id);
 
+        // tampilkan player per divisi
         $this->query_player_division();
         $this->db->where('division_id', $division_id);
         $this->order_by('pool_number');
@@ -56,6 +58,7 @@ class Player_division_model extends MY_Model
 
     public function calculate_classement($division_id)
     {
+        // reset perhitungan classement
         $this->reset_clasement($division_id);
 
         // get log match
@@ -69,7 +72,7 @@ class Player_division_model extends MY_Model
             ];
         }
 
-        // cari pemenang
+        // cari logmatch yang sudah ada pemenang
         $this->select('winner, pd1_id, pd2_id');
         $this->where('division_id', $division_id);
         $this->where('winner !=', null);
@@ -158,6 +161,7 @@ class Player_division_model extends MY_Model
 
         // return ['m' => $mod_count, 'd' => $div_count, '4' => $pool4_count, '3' => $pool3_count, 'arr' => $arr_data];
 
+        // get player di divisi
         $this->query_player_division();
         $this->where('division_id', $division_id);
         $this->order_by('club_id');
@@ -169,7 +173,9 @@ class Player_division_model extends MY_Model
                 'message' => 'No player in this division',
             ];
         }
+        shuffle($players);
 
+        // acak pool_number ke A dan B
         $counter = 1;
         foreach ($players as $player) {
             // odd use pool A, even use pool B
@@ -194,6 +200,7 @@ class Player_division_model extends MY_Model
 
     public function reset_pool($division_id)
     {
+        // kosongkan pool_number
         $data  = ['pool_number' => null];
         $where = ['division_id' => $division_id];
         return $this->update($data, $where);

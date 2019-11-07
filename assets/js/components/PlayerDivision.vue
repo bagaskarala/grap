@@ -81,6 +81,14 @@
                   {{data.item.pool_number != null? data.item.pool_number : ''}}
                 </span>
               </template>
+
+              <template v-slot:cell(division_winner)="data">
+                <span
+                  v-if="data.item.division_winner"
+                  class="badge badge-success"
+                >Winner</span>
+              </template>
+
               <template v-slot:cell(action)="data">
                 <div class="min-width-7">
                   <button

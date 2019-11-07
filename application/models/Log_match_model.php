@@ -28,9 +28,9 @@ class Log_match_model extends MY_Model
 
     public function query_log_match()
     {
-        //  get all log match
-        // join with player_division two times, using alias for player1 and player2
-        // join to player to get player name
+        // get all log match
+        // join player_division dua kali, menggunakan alias untuk player1 and player2
+        // setiap join dua kali karena ada dua player per row
         $this->db->select(
             'lm.*,
             d.division,
@@ -61,12 +61,14 @@ class Log_match_model extends MY_Model
 
     public function get_all_log_match()
     {
+        // ambil semua log match
         $this->query_log_match();
         return $this->db->get()->result_array();
     }
 
     public function filter_division($division_id)
     {
+        // ambil list logmatch per divisi
         $this->query_log_match();
         $this->db->where('lm.division_id', $division_id);
         $this->order_by('pool_number');
@@ -75,6 +77,10 @@ class Log_match_model extends MY_Model
         return $this->db->get()->result_array();
     }
 
+    /**
+     * Generate schedule untuk mengacak pemain dari player_division ke log_match
+     * Terdapat dua schedule => elimination dan roundrobin
+     */
     public function generate_schedule($division_id, $match_system)
     {
         // error jika parameter tidak lengkap
@@ -113,24 +119,22 @@ class Log_match_model extends MY_Model
 
         if ($match_system == 'elimination') {
             /**
-             *
              * ELIMINATION MATCHING
-             *
              */
-
-            // cari jumlah bracket
+            // cari jumlah kolom bracket
+            // misal player=15, maka 2^n terdekat diatasnya yaitu 16, jadi n=4
             $max_match_index = pow(2, ceil(log($player_count, 2)));
-            $result          = [];
 
-            // loop buat schedule elimination kosongan
+            // loop untuk membuat schedule elimination kosongan
             $divider = $max_match_index / 2;
             for ($idx = 1; $idx <= $max_match_index; $idx++) {
                 $next_num = 1;
                 for ($num = 1; $num <= $divider; $num++) {
                     $next_idx = $idx + 1;
                     // cetak array debugging
-                    array_push($result, ['idx' => $idx, 'num' => $num, 'next' => "$next_idx.$next_num"]);
-                    $this->insert([
+                    // array_push($result, ['idx' => $idx, 'num' => $num, 'next' => "$next_idx.$next_num"]);
+                    // insert schedule elimination
+                    $result = $this->insert([
                         'division_id'  => $division_id,
                         'match_index'  => $idx,
                         'match_system' => $match_system,
@@ -138,20 +142,19 @@ class Log_match_model extends MY_Model
                         'next_match'   => "$next_idx.$next_num",
                     ]);
                     // increment next_num setiap dua loop
+                    // agar tiap dua pemain berada di pertandingan yang sama, x vs y
                     if ($num % 2 == 0) {
                         $next_num++;
                     }
                 }
-                // setiap next index, jumlah pemain separo index sebelumnya
+                // setiap next index (kolom), jumlah pemain separo index sebelumnya
                 $divider /= 2;
             }
         } else {
             /**
-             *
              * ROUND ROBIN MATCHING
-             *
              */
-            // ambil semua pool yang ada
+            // ambil semua pool unik yang ada
             $this->db->distinct();
             $this->db->select('pool_number');
             $this->where('division_id', $division_id);
@@ -165,6 +168,7 @@ class Log_match_model extends MY_Model
                 ];
             }
 
+            // error jika ada player yang poolnya kosong
             $this->where('division_id', $division_id);
             $this->where('pool_number =', null);
             $count_null_pool = $this->get_all_array('player_division');
@@ -185,61 +189,72 @@ class Log_match_model extends MY_Model
                 array_push($pool_bucket, [$pd_item['pool_number'] => $pd_pools]);
             }
 
-            // matching roundrobin
-            $result = [];
+            // generate player, matching roundrobin
+            $roundrobin = [];
+            // ambil tiap pool
             foreach ($pool_bucket as $pool) {
+                // misal A => pd{...}
                 foreach ($pool as $pool_number => $arr_pd) {
+                    // hitung jumlah player per pool
                     $pool_player_count = count($arr_pd);
                     for ($i = 0; $i < $pool_player_count - 1; $i++) {
                         for ($j = $i + 1; $j < $pool_player_count; $j++) {
+                            // acak kiri kanan
                             if ($j % 2 == 0) {
-                                // cetak array debugging
-                                array_push($result, ['pool_number' => $pool_number, 'pd1_id' => $arr_pd[$i]['id'], 'pd2_id' => $arr_pd[$j]['id']]);
+                                array_push($roundrobin, ['pool_number' => $pool_number, 'pd1_id' => $arr_pd[$i]['id'], 'pd2_id' => $arr_pd[$j]['id']]);
                             } else {
-                                // cetak array debugging
-                                array_push($result, ['pool_number' => $pool_number, 'pd1_id' => $arr_pd[$j]['id'], 'pd2_id' => $arr_pd[$i]['id']]);
+                                array_push($roundrobin, ['pool_number' => $pool_number, 'pd1_id' => $arr_pd[$j]['id'], 'pd2_id' => $arr_pd[$i]['id']]);
                             }
                         }
                     }
-                }
-            }
-            // acak array
-            shuffle($result);
 
-            // masukkan index
-            $index            = 1;
-            $pool_match_count = count($result) / count($pool_bucket);
-            foreach ($result as $rr) {
-                // reset index setiap ganti pool
-                if ($index > $pool_match_count) {
+                    // acak urutan matching
+                    shuffle($roundrobin);
+
+                    // masukkan index urutan matching ke db
                     $index = 1;
+                    foreach ($roundrobin as $rr) {
+                        $result = $this->insert([
+                            'division_id'  => $division_id,
+                            'match_index'  => $index,
+                            'match_system' => $match_system,
+                            'pd1_id'       => $rr['pd1_id'],
+                            'pd2_id'       => $rr['pd2_id'],
+                            'pool_number'  => $rr['pool_number'],
+                        ]);
+                        $index++;
+                    }
+                    // setelah sukses insert pool A, kosongi dulu container
+                    // agar dapat menampung yang pool B
+                    $roundrobin = [];
                 }
-                $this->insert([
-                    'division_id'  => $division_id,
-                    'match_index'  => $index,
-                    'match_system' => $match_system,
-                    'pd1_id'       => $rr['pd1_id'],
-                    'pd2_id'       => $rr['pd2_id'],
-                    'pool_number'  => $rr['pool_number'],
-                ]);
-                $index++;
             }
         }
 
-        return [
-            'status' => true,
-            'data'   => $result,
-        ];
+        if ($result) {
+            return [
+                'status' => true,
+                'data'   => 'Success generate schedule',
+            ];
+        } else {
+            return [
+                'status'  => false,
+                'message' => 'Failed generate schedule',
+            ];
+        }
     }
 
     public function reset_schedule($division_id)
     {
+        // delete logmatch pada divisi terpilih
         $this->where('division_id', $division_id);
         return $this->delete(['division_id' => $division_id]);
     }
 
     public function generate_player($division_id, $match_system)
     {
+        // generate player hanya untuk elimination
+        // jika roundrobin maka exit
         if ($match_system == 'roundrobin') {
             return [
                 'status'  => false,
@@ -272,7 +287,7 @@ class Log_match_model extends MY_Model
             ];
         }
 
-        // hitung max log_match index 1
+        // hitung max match index 1
         $this->where('division_id', $division_id);
         $this->where('match_index', 1);
         $log_match_count = $this->count();
@@ -283,13 +298,11 @@ class Log_match_model extends MY_Model
             ];
         }
 
-        $arr_generate_player = [];
-
-        // loop player_division,
+        // loop player_division, masukkan urut dari atas player1 semua, lalu player2
         $index_counter = 1;
         $flag          = true;
         foreach ($player_divisions as $player_division) {
-            // flag true menandakan player1 sudah penuh,
+            // flag true menandakan player1 masih ada yang kosong,
             // setelah itu set flag false untuk mengisi player2
             if ($index_counter == $log_match_count + 1) {
                 $flag          = false;
@@ -303,7 +316,7 @@ class Log_match_model extends MY_Model
                     'match_number' => $index_counter,
                     'division_id'  => $division_id,
                 ];
-                $this->update(['pd1_id' => $player_division['id']], $where);
+                $result = $this->update(['pd1_id' => $player_division['id']], $where);
                 array_push($arr_generate_player, ['pd1' => $player_division['id'], 'idx' => $index_counter]);
             } else {
                 // isi player2
@@ -312,20 +325,28 @@ class Log_match_model extends MY_Model
                     'match_number' => $index_counter,
                     'division_id'  => $division_id,
                 ];
-                $this->update(['pd2_id' => $player_division['id']], $where);
+                $result = $this->update(['pd2_id' => $player_division['id']], $where);
                 array_push($arr_generate_player, ['pd2' => $player_division['id'], 'idx' => $index_counter]);
             }
             $index_counter++;
         }
 
-        return [
-            'status' => true,
-            'data'   => $arr_generate_player,
-        ];
+        if ($result) {
+            return [
+                'status' => true,
+                'data'   => 'Success generate player',
+            ];
+        } else {
+            return [
+                'status'  => false,
+                'message' => 'Failed generate player',
+            ];
+        }
     }
 
     public function reset_player($division_id)
     {
+        // kosongkan player pada elimination match
         $data = [
             'pd1_id'         => null,
             'pd1_redcard'    => 0,
@@ -354,6 +375,11 @@ class Log_match_model extends MY_Model
 
     public function start_play($division_id)
     {
+        /**
+         * Memulai pertandingan dengan melakukan skip match
+         * pada player yang tidak punya lawan
+         */
+        // cari match index 1
         $this->where('division_id', $division_id);
         $this->where('match_index', 1);
         $log_matchs_first = $this->get_all_array();
@@ -403,6 +429,10 @@ class Log_match_model extends MY_Model
 
     public function next_play($log_match_id)
     {
+        /**
+         * Ketika berhasil update detail logmatch,
+         * maka akan memasukkan player yang menang ke match selanjutnya
+         */
         // ambil log match asal
         $log_match = $this->get_where(['id' => $log_match_id]);
 
@@ -419,11 +449,23 @@ class Log_match_model extends MY_Model
         $this->where('division_id', $log_match['division_id']);
         $idx = $this->get_single_array();
         if ($idx['max_match_index'] == $log_match['match_index']) {
-            $this->update(['division_winner' => 1], ['id' => $log_match['winner']]);
-            return [
-                'status' => true,
-                'data'   => 'Final finished, Division winner generated',
-            ];
+            // reset division_winner pada divisi terpilih
+            $this->db->where('division_id', $log_match['division_id']);
+            $this->db->update('player_division', ['division_winner' => 0]);
+
+            // update division_winner sesuai pemenang
+            $result = $this->update(['division_winner' => 1], ['id' => $log_match['winner']], 'player_division');
+            if ($result) {
+                return [
+                    'status' => true,
+                    'data'   => 'Final finished, Division winner generated',
+                ];
+            } else {
+                return [
+                    'status' => false,
+                    'data'   => 'Failed set winner in elimination match',
+                ];
+            }
         }
 
         // baca index dan number untuk next-match
@@ -445,23 +487,23 @@ class Log_match_model extends MY_Model
             // cek apakah pd1 tujuan mempunyai id yang sama dengan sumber
             if (in_array($destination['pd1_id'], $arr_source)) {
                 // jika sama, maka update pd1
-                $data     = ['pd1_id' => $log_match['winner']];
-                $response = $this->update($data, $where);
+                $data   = ['pd1_id' => $log_match['winner']];
+                $result = $this->update($data, $where);
             } else {
                 // jika beda, maka update pd2 / mengisi kolom yang kosong
-                $data     = ['pd2_id' => $log_match['winner']];
-                $response = $this->update($data, $where);
+                $data   = ['pd2_id' => $log_match['winner']];
+                $result = $this->update($data, $where);
             }
         } elseif ($destination['pd1_id'] == null) {
             // jika pd1 tujuan kosong
-            $data     = ['pd1_id' => $log_match['winner']];
-            $response = $this->update($data, $where);
+            $data   = ['pd1_id' => $log_match['winner']];
+            $result = $this->update($data, $where);
         }
 
-        if ($response) {
+        if ($result) {
             return [
                 'status' => true,
-                'data'   => $response,
+                'data'   => 'Success generate next play',
             ];
         } else {
             return [
