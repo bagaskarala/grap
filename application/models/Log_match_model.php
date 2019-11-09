@@ -444,28 +444,15 @@ class Log_match_model extends MY_Model
             ];
         }
 
-        // update division_winner setelah match terakhir/final ke tabel playerdivision
+        // jangan next play untuk match terakhir / match final
         $this->db->select('MAX(match_index) as max_match_index');
         $this->where('division_id', $log_match['division_id']);
         $idx = $this->get_single_array();
         if ($idx['max_match_index'] == $log_match['match_index']) {
-            // reset division_winner pada divisi terpilih
-            $this->db->where('division_id', $log_match['division_id']);
-            $this->db->update('player_division', ['division_winner' => 0]);
-
-            // update division_winner sesuai pemenang
-            $result = $this->update(['division_winner' => 1], ['id' => $log_match['winner']], 'player_division');
-            if ($result) {
-                return [
-                    'status' => true,
-                    'data'   => 'Final finished, Division winner generated',
-                ];
-            } else {
-                return [
-                    'status' => false,
-                    'data'   => 'Failed set winner in elimination match',
-                ];
-            }
+            return [
+                'status' => true,
+                'data'   => 'Final finished',
+            ];
         }
 
         // baca index dan number untuk next-match

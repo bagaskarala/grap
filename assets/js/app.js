@@ -41,6 +41,7 @@ Vue.component('WinningList', require('./components/WinningList.vue').default);
 Vue.component('PlayerDivision', require('./components/PlayerDivision.vue').default);
 Vue.component('LogMatch', require('./components/LogMatch.vue').default);
 Vue.component('LogMatchDetail', require('./components/LogMatchDetail.vue').default);
+Vue.component('StopWatch', require('./components/StopWatch.vue').default);
 
 new Vue({
    el: '#app'

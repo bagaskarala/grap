@@ -30,7 +30,7 @@ class Player_division_model extends MY_Model
     {
         // get all player division
         // join division dan player
-        $this->db->select("$this->table.*, player.name, player.club_id, division.division, club.club");
+        $this->db->select("$this->table.*, player.name, player.weight, player.club_id, division.division, club.club");
         $this->join('division');
         $this->join('player');
         $this->join_table('club', 'player');
@@ -46,7 +46,8 @@ class Player_division_model extends MY_Model
     public function filter_division($division_id)
     {
         // hitung win-lose-draw pada divisi terpilih
-        $this->calculate_classement($division_id);
+        // generate winner
+        // $this->calculate_classement($division_id);
 
         // tampilkan player per divisi
         $this->query_player_division();
@@ -58,19 +59,67 @@ class Player_division_model extends MY_Model
 
     public function calculate_classement($division_id)
     {
-        // reset perhitungan classement
-        $this->reset_clasement($division_id);
-
-        // get log match
+        // cek log match
         $this->where('division_id', $division_id);
-        $this->where('match_system', 'roundrobin');
         $division_match = $this->get_all_array('log_match');
         if (count($division_match) == 0) {
             return [
                 'status'  => false,
-                'message' => 'No roundrobin match in this division',
+                'message' => 'No match in this division',
+            ];
+        } else {
+            // cek match_system pada log match
+            if ($division_match[0]['match_system'] == 'roundrobin') {
+                return $this->calculate_classement_roundrobin($division_id);
+            } else {
+                return $this->calculate_classement_elimination($division_id);
+            }
+        }
+    }
+
+    public function calculate_classement_elimination($division_id)
+    {
+        // reset perhitungan division_winner
+        $this->reset_classement($division_id);
+
+        // cek apakah match suatu divisi sudah selesai semua
+        $this->where('division_id', $division_id);
+        $this->where('winner', null);
+        $count_match_unfinished = $this->count('log_match');
+        if ($count_match_unfinished > 0) {
+            return [
+                'status'  => false,
+                'message' => 'Elimination match not finished yet',
             ];
         }
+
+        // cari match index terakhir untuk mengtahui partai final
+        $this->db->select('MAX(match_index) as max_match_index');
+        $this->where('division_id', $division_id);
+        $idx = $this->get_single_array('log_match');
+
+        // get pertandingan final
+        $final_match = $this->get_where(['match_index' => $idx['max_match_index']], 'log_match');
+
+        // update division_winner sesuai pemenang
+        $result = $this->update(['division_winner' => 1], ['id' => $final_match['winner']]);
+        if ($result) {
+            return [
+                'status' => true,
+                'data'   => 'Division winner generated',
+            ];
+        } else {
+            return [
+                'status'  => false,
+                'message' => 'Failed set winner in elimination match',
+            ];
+        }
+    }
+
+    public function calculate_classement_roundrobin($division_id)
+    {
+        // reset perhitungan classement
+        $this->reset_classement($division_id);
 
         // cari logmatch yang sudah ada pemenang
         $this->select('winner, pd1_id, pd2_id');
@@ -98,32 +147,80 @@ class Player_division_model extends MY_Model
             }
         }
 
+        $fail_flag = 0;
+
         // insert win ke db
         foreach ($count_win as $pd_id => $win) {
-            $this->update(['win' => $win], ['id' => $pd_id]);
+            if ($this->update(['win' => $win], ['id' => $pd_id]) == false) {
+                $fail_flag++;
+            }
         }
 
         // insert lose ke db
         foreach ($count_lose as $pd_id => $lose) {
-            $this->update(['lose' => $lose], ['id' => $pd_id]);
+            if ($this->update(['lose' => $lose], ['id' => $pd_id]) == false) {
+                $fail_flag++;
+            }
         }
 
         // insert draw ke db
         foreach ($count_draw as $pd_id => $draw) {
-            $this->update(['draw' => $draw], ['id' => $pd_id]);
+            if ($this->update(['draw' => $draw], ['id' => $pd_id]) == false) {
+                $fail_flag++;
+            }
         }
 
-        return [
-            'status' => true,
-            'data'   => ['win' => $count_win, 'lose' => $count_lose, 'draw' => $count_draw],
-        ];
+        // set pemenang pool
+        $this->get_pool_winner($division_id);
 
+        if ($fail_flag == 0) {
+            return [
+                'status' => true,
+                'data'   => 'Classement generated',
+            ];
+        } else {
+            return [
+                'status'  => false,
+                'message' => 'Failed set classement in roundrobin match',
+            ];
+        }
     }
 
-    public function reset_clasement($division_id)
+    public function get_pool_winner($division_id)
     {
-        // reset klasemen ke 0
-        $this->update(['win' => 0, 'lose' => 0, 'draw' => 0], ['division_id' => $division_id]);
+        // ambil semua pool unik yang ada
+        $this->db->distinct();
+        $this->db->select('pool_number');
+        $this->where('division_id', $division_id);
+        $this->where('pool_number !=', null);
+        $pd_pools = $this->get_all_array();
+
+        foreach ($pd_pools as $item) {
+            // cek apakah match suatu divisi sudah selesai semua
+            $this->where('division_id', $division_id);
+            $this->where('pool_number', $item['pool_number']);
+            $this->where('winner', null);
+            $count_match_unfinished = $this->count('log_match');
+            if ($count_match_unfinished > 0) {
+                continue;
+            }
+
+            // cari player yang win paling banyak
+            $this->where('pool_number', $item['pool_number']);
+            $this->where('division_id', $division_id);
+            $this->order_by('win', 'desc');
+            $pd = $this->get_single_array();
+            // set pool_winner
+            $this->update(['pool_winner' => 1], ['id' => $pd['id']]);
+        }
+    }
+
+    public function reset_classement($division_id)
+    {
+        // reset klasemen win-lose-draw ke 0
+        // reset pool_winnerdivision_winner pada divisi terpilih
+        $this->db->where('division_id', $division_id);
+        $this->db->update('player_division', ['division_winner' => 0, 'win' => 0, 'lose' => 0, 'draw' => 0, 'pool_winner' => 0]);
     }
 
     public function generate_pool($division_id)

@@ -130,7 +130,17 @@ class Player_division extends MY_Controller
     {
         $request = parse_post_data();
 
-        $result = $this->player_division->reset_pool($request->division_id);
+        $this->load->model('Log_Match_model', 'log_match');
+        if (count($this->log_match->filter_division($request->division_id)) != 0) {
+            $reset_schedule_result = $this->log_match->reset_schedule($request->division_id);
+        } else {
+            $reset_schedule_result = true;
+        }
+
+        if ($reset_schedule_result) {
+            $this->player_division->reset_classement($request->division_id);
+            $result = $this->player_division->reset_pool($request->division_id);
+        }
 
         if ($result) {
             return $this->send_json_output($result, true, 200);
@@ -142,6 +152,17 @@ class Player_division extends MY_Controller
     public function calculate_classement($division_id)
     {
         $result = $this->player_division->calculate_classement($division_id);
+
+        if ($result['status']) {
+            return $this->send_json_output($result['data'], true, 200);
+        } else {
+            return $this->send_json_output($result['message'], false, 400);
+        }
+    }
+
+    public function get_pool_winner($division_id)
+    {
+        $result = $this->player_division->get_pool_winner($division_id);
 
         if ($result['status']) {
             return $this->send_json_output($result['data'], true, 200);

@@ -36,9 +36,10 @@ class MY_Model extends CI_Model
         return $this->db->get($table)->result_array();
     }
 
-    public function get_single_array()
+    public function get_single_array($table = null)
     {
-        return $this->db->get($this->table)->row_array();
+        $table = $this->checkTable($table);
+        return $this->db->get($table)->row_array();
     }
 
     public function get_all()

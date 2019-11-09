@@ -145,6 +145,7 @@
                   class="min-width-10"
                 >
                   <button
+                    :disabled="data.item.pd1_id == null && data.item.pd2_id == null"
                     class="btn btn-sm btn-primary"
                     @click.prevent="goToDetail(data.item)"
                   ><i class="fa fa-eye fa-fw"></i></button>
@@ -153,10 +154,10 @@
                     class="btn btn-sm btn-warning"
                     @click.prevent="loadData(data.item)"
                   ><i class="fa fa-edit fa-fw"></i></button>
-                  <button
+                  <!-- <button
                     class="btn btn-sm btn-danger"
                     @click.prevent="confirmDelete(data.item)"
-                  ><i class="fa fa-trash fa-fw"></i></button>
+                  ><i class="fa fa-trash fa-fw"></i></button> -->
                 </div>
               </template>
             </b-table>
@@ -185,6 +186,7 @@
             id="division_id"
             class="form-control"
             v-model.number="form.division_id"
+            disabled
           >
             <option :value="null">Select Division</option>
             <option
@@ -195,7 +197,7 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="pd1_id">Player Division 1</label>
+          <label for="pd1_id">Player 1</label>
           <select
             name="pd1_id"
             id="pd1_id"
@@ -207,11 +209,11 @@
               v-for="item in playerDivisions"
               :key="item.id"
               :value="item.id"
-            >{{item.name}}</option>
+            >{{item.name}} ({{item.club}}) {{item.weight}}kg</option>
           </select>
         </div>
         <div class="form-group">
-          <label for="pd2_id">Player Division 2</label>
+          <label for="pd2_id">Player 2</label>
           <select
             name="pd2_id"
             id="pd2_id"
@@ -223,7 +225,7 @@
               v-for="item in playerDivisions"
               :key="item.id"
               :value="item.id"
-            >{{item.name}}</option>
+            >{{item.name}} ({{item.club}}) {{item.weight}}kg</option>
           </select>
         </div>
         <div class="d-flex justify-content-end">
@@ -429,6 +431,21 @@ export default {
     // },
 
     async updateData() {
+      // jika p1 dan p2 sama maka error
+      if (this.form.pd1_id && this.form.pd2_id && this.form.pd1_id == this.form.pd2_id) {
+        this.$noty.error('Cannot matching same player');
+        return;
+      }
+
+      const checkGeneratedPlayer = this.logMatchs.find(lm => {
+        return lm.pd1_id == this.form.pd1_id && lm.pd2_id == this.form.pd2_id || lm.pd1_id == this.form.pd2_id && lm.pd2_id == this.form.pd1_id;
+      });
+
+      if (checkGeneratedPlayer) {
+        this.$noty.error('This player matching has been generated');
+        return;
+      }
+
       try {
         await this.$axios.post(`entry/log_match/update/${this.form.id}`, {
           division_id: this.form.division_id,

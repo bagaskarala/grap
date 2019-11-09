@@ -51,11 +51,17 @@
                 @click.prevent="generatePool()"
               >Generate Pool</button>
               <button
-                class="btn btn-sm btn-secondary"
+                class="btn btn-sm btn-secondary mr-1"
                 type="button"
                 :disabled="playerDivisions.length==0"
                 @click.prevent="resetPool()"
               >Reset Pool</button>
+              <button
+                class="btn btn-sm btn-primary mr-1"
+                type="button"
+                :disabled="playerDivisions.length==0"
+                @click.prevent="calculateClassement()"
+              >Calculate Classement</button>
             </div>
           </div>
 
@@ -87,6 +93,13 @@
                   v-if="data.item.division_winner"
                   class="badge badge-success"
                 >Winner</span>
+              </template>
+
+              <template v-slot:cell(pool_winner)="data">
+                <span
+                  v-if="data.item.pool_winner"
+                  class="badge badge-success"
+                >{{data.item.pool_number}} Winner</span>
               </template>
 
               <template v-slot:cell(action)="data">
@@ -421,6 +434,18 @@ export default {
       } catch (error) {
         console.log(error.response);
         this.$noty.error('Failed Reset Pool');
+      }
+    },
+
+    async calculateClassement() {
+      try {
+        const a = await this.$axios.post(`entry/player_division/calculate_classement/${this.filterDivisionId}`);
+        this.filterData(this.filterDivisionId);
+        console.log(a.data.data);
+        this.$noty.success('Success Calculate Classement');
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Calculate Classement. ' + error.response.data.message);
       }
     },
 
