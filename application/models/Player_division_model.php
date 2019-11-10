@@ -54,6 +54,7 @@ class Player_division_model extends MY_Model
         $this->db->where('division_id', $division_id);
         $this->order_by('pool_number');
         $this->order_by('win', 'desc');
+        $this->order_by('lose');
         return $this->get_all_array();
     }
 
@@ -99,7 +100,7 @@ class Player_division_model extends MY_Model
         $idx = $this->get_single_array('log_match');
 
         // get pertandingan final
-        $final_match = $this->get_where(['match_index' => $idx['max_match_index']], 'log_match');
+        $final_match = $this->get_where(['match_index' => $idx['max_match_index'], 'division_id' => $division_id], 'log_match');
 
         // update division_winner sesuai pemenang
         $result = $this->update(['division_winner' => 1], ['id' => $final_match['winner']]);
@@ -209,6 +210,7 @@ class Player_division_model extends MY_Model
             $this->where('pool_number', $item['pool_number']);
             $this->where('division_id', $division_id);
             $this->order_by('win', 'desc');
+            $this->order_by('lose');
             $pd = $this->get_single_array();
             // set pool_winner
             $this->update(['pool_winner' => 1], ['id' => $pd['id']]);
