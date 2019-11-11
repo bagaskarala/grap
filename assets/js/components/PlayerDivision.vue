@@ -61,7 +61,14 @@
                 type="button"
                 :disabled="playerDivisions.length==0"
                 @click.prevent="calculateClassement()"
-              >Calculate Classement</button>
+              >Calculate Match Result</button>
+            </div>
+
+            <div
+              v-if="playerDivisions.length!=0"
+              class="mt-3 mb-0 alert alert-info"
+            >
+              This division using match system: <span class="font-weight-bold">{{matchSystem || 'No match found in this division'}}</span>
             </div>
           </div>
 
@@ -236,7 +243,6 @@ export default {
   name: 'PlayerDivision',
   data() {
     return {
-      fieldPlayerDivision: ['division', 'club', 'name', 'pool_number', 'win', 'draw', 'lose', 'pool_winner', 'division_winner', 'action'],
       poolOptions: [
         { text: 'Pool A', value: 'A' },
         { text: 'Pool B', value: 'B' }
@@ -259,8 +265,21 @@ export default {
       },
       modalState: null,
       errorValidation: null,
-      filterDivisionId: null
+      filterDivisionId: null,
+      matchSystem: null
     };
+  },
+
+  computed: {
+    fieldPlayerDivision() {
+      if (this.matchSystem == 'elimination') {
+        return ['division', 'club', 'name', 'division_winner', 'action'];
+      } else if (this.matchSystem == 'roundrobin') {
+        return ['division', 'club', 'name', 'pool_number', 'win', 'draw', 'lose', 'pool_winner', 'action'];
+      } else {
+        return ['division', 'club', 'name', 'pool_number', 'win', 'draw', 'lose', 'pool_winner', 'division_winner', 'action'];
+      }
+    }
   },
 
   methods: {
@@ -392,12 +411,28 @@ export default {
     },
 
     async filterData(divisionId) {
+      this.matchSystem = null;
       try {
         const playerDivisions = await this.$axios.get(`entry/player_division/filter_division/${divisionId}`);
         this.playerDivisions = playerDivisions.data.data;
+
+        // panggil check match
+        if (this.playerDivisions.length != 0) {
+          this.checkMatchSystem(divisionId);
+        }
       } catch (error) {
         console.log(error.response);
         this.$noty.error('Failed Filter Data');
+      }
+    },
+
+    async checkMatchSystem(divisionId) {
+      try {
+        const result = await this.$axios.get(`entry/player_division/check_match_system/${divisionId}`);
+        this.matchSystem = result.data.data.match_system;
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed. ' + error.response.data.message);
       }
     },
 
@@ -440,13 +475,13 @@ export default {
     async calculateClassement() {
       try {
         const a = await this.$axios.post(`entry/player_division/calculate_classement/${this.filterDivisionId}`);
-        this.filterData(this.filterDivisionId);
         console.log(a.data.data);
         this.$noty.success('Success Calculate Classement');
       } catch (error) {
         console.log(error.response);
         this.$noty.error('Failed Calculate Classement. ' + error.response.data.message);
       }
+      this.filterData(this.filterDivisionId);
     },
 
     addData() {

@@ -5297,6 +5297,39 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'LogMatchDetail',
@@ -5321,7 +5354,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         text: 'Finished'
       }],
       form: {
-        time: null,
+        time: {
+          hours: 0,
+          minutes: 0,
+          seconds: 0,
+          milliseconds: 0
+        },
+        elapsedTime: 0,
         match_status: 0,
         winner: null,
         winning_id: null,
@@ -5352,6 +5391,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         value: this.logMatchDetail.pd2_id,
         text: "Player 2 - ".concat(this.logMatchDetail.player2_name)
       }];
+    },
+    showTime: function showTime() {
+      return this.convertMillisecondToTime(this.logMatchDetail.time, 'hours') + ' h : ' + this.convertMillisecondToTime(this.logMatchDetail.time, 'minutes') + ' m : ' + this.convertMillisecondToTime(this.logMatchDetail.time, 'seconds') + ' s : ' + this.convertMillisecondToTime(this.logMatchDetail.time, 'milliseconds') + ' ms';
     }
   },
   methods: {
@@ -5446,7 +5488,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context3.next = 3;
                 return this.$axios.post("entry/log_match/update/".concat(this.logMatchDetail.id), {
                   division_id: this.logMatchDetail.division_id,
-                  time: this.form.time,
+                  time: this.form.elapsedTime ? this.form.elapsedTime : this.convertTimeToMillisecond(this.form.time),
                   winner: this.form.winner,
                   winning_id: this.form.winning_id,
                   match_status: this.form.match_status,
@@ -5503,7 +5545,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           pd2_yellowcard = _this$logMatchDetail.pd2_yellowcard,
           pd2_greencard = _this$logMatchDetail.pd2_greencard;
       this.form.match_status = match_status;
-      this.form.time = time;
+      this.form.time.hours = this.convertMillisecondToTime(time, 'hours');
+      this.form.time.minutes = this.convertMillisecondToTime(time, 'minutes');
+      this.form.time.seconds = this.convertMillisecondToTime(time, 'seconds');
+      this.form.time.milliseconds = this.convertMillisecondToTime(time, 'milliseconds');
       this.form.winning_id = winning_id;
       this.form.winner = winner;
       this.form.pd1_yellowcard = pd1_yellowcard;
@@ -5564,7 +5609,40 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return resetData;
-    }()
+    }(),
+    startTimer: function startTimer() {
+      this.form.match_status = 1;
+      this.updateData();
+    },
+    stopTimer: function stopTimer(time) {
+      this.form.elapsedTime = time.elapsedTime;
+      this.form.match_status = 2;
+      this.updateData();
+      this.form.elapsedTime = 0;
+    },
+    convertMillisecondToTime: function convertMillisecondToTime(ms, select) {
+      if (select == 'hours') return Math.floor(ms / 1000 / 60 / 60);else if (select == 'minutes') return Math.floor(ms / 1000 / 60) % 60;else if (select == 'seconds') return Math.floor(ms / 1000) % 60;else if (select == 'milliseconds') return Math.floor(ms % 1000);else return null;
+    },
+    convertTimeToMillisecond: function convertTimeToMillisecond(_ref) {
+      var hours = _ref.hours,
+          minutes = _ref.minutes,
+          seconds = _ref.seconds,
+          milliseconds = _ref.milliseconds;
+
+      if (hours) {
+        hours = hours * 1000 * 60 * 60;
+      }
+
+      if (minutes) {
+        minutes = minutes * 1000 * 60;
+      }
+
+      if (seconds) {
+        seconds = seconds * 1000;
+      }
+
+      return hours + minutes + seconds + milliseconds;
+    }
   },
   created: function created() {
     this.getDetailLogMatch();
@@ -5824,11 +5902,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PlayerDivision',
   data: function data() {
     return {
-      fieldPlayerDivision: ['division', 'club', 'name', 'pool_number', 'win', 'draw', 'lose', 'pool_winner', 'division_winner', 'action'],
       poolOptions: [{
         text: 'Pool A',
         value: 'A'
@@ -5854,8 +5938,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       },
       modalState: null,
       errorValidation: null,
-      filterDivisionId: null
+      filterDivisionId: null,
+      matchSystem: null
     };
+  },
+  computed: {
+    fieldPlayerDivision: function fieldPlayerDivision() {
+      if (this.matchSystem == 'elimination') {
+        return ['division', 'club', 'name', 'division_winner', 'action'];
+      } else if (this.matchSystem == 'roundrobin') {
+        return ['division', 'club', 'name', 'pool_number', 'win', 'draw', 'lose', 'pool_winner', 'action'];
+      } else {
+        return ['division', 'club', 'name', 'pool_number', 'win', 'draw', 'lose', 'pool_winner', 'division_winner', 'action'];
+      }
+    }
   },
   methods: {
     getDivisions: function () {
@@ -6183,28 +6279,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context8.prev = _context8.next) {
               case 0:
-                _context8.prev = 0;
-                _context8.next = 3;
+                this.matchSystem = null;
+                _context8.prev = 1;
+                _context8.next = 4;
                 return this.$axios.get("entry/player_division/filter_division/".concat(divisionId));
 
-              case 3:
+              case 4:
                 playerDivisions = _context8.sent;
-                this.playerDivisions = playerDivisions.data.data;
-                _context8.next = 11;
+                this.playerDivisions = playerDivisions.data.data; // panggil check match
+
+                if (this.playerDivisions.length != 0) {
+                  this.checkMatchSystem(divisionId);
+                }
+
+                _context8.next = 13;
                 break;
 
-              case 7:
-                _context8.prev = 7;
-                _context8.t0 = _context8["catch"](0);
+              case 9:
+                _context8.prev = 9;
+                _context8.t0 = _context8["catch"](1);
                 console.log(_context8.t0.response);
                 this.$noty.error('Failed Filter Data');
 
-              case 11:
+              case 13:
               case "end":
                 return _context8.stop();
             }
           }
-        }, _callee8, this, [[0, 7]]);
+        }, _callee8, this, [[1, 9]]);
       }));
 
       function filterData(_x2) {
@@ -6213,57 +6315,47 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return filterData;
     }(),
-    generatePool: function () {
-      var _generatePool = _asyncToGenerator(
+    checkMatchSystem: function () {
+      var _checkMatchSystem = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(divisionId) {
+        var result;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
           while (1) {
             switch (_context9.prev = _context9.next) {
               case 0:
-                if (!(this.filterDivisionId == null)) {
-                  _context9.next = 3;
-                  break;
-                }
-
-                this.$noty.warning('Select division first before generate pool');
-                return _context9.abrupt("return");
+                _context9.prev = 0;
+                _context9.next = 3;
+                return this.$axios.get("entry/player_division/check_match_system/".concat(divisionId));
 
               case 3:
-                _context9.prev = 3;
-                _context9.next = 6;
-                return this.$axios.post('entry/player_division/generate_pool', {
-                  division_id: this.filterDivisionId
-                });
-
-              case 6:
-                this.filterData(this.filterDivisionId);
-                this.$noty.success('Success Generate Pool');
-                _context9.next = 14;
+                result = _context9.sent;
+                this.matchSystem = result.data.data.match_system;
+                _context9.next = 11;
                 break;
 
-              case 10:
-                _context9.prev = 10;
-                _context9.t0 = _context9["catch"](3);
+              case 7:
+                _context9.prev = 7;
+                _context9.t0 = _context9["catch"](0);
                 console.log(_context9.t0.response);
-                this.$noty.error('Failed Generate Pool. ' + _context9.t0.response.data.message);
+                this.$noty.error('Failed. ' + _context9.t0.response.data.message);
 
-              case 14:
+              case 11:
               case "end":
                 return _context9.stop();
             }
           }
-        }, _callee9, this, [[3, 10]]);
+        }, _callee9, this, [[0, 7]]);
       }));
 
-      function generatePool() {
-        return _generatePool.apply(this, arguments);
+      function checkMatchSystem(_x3) {
+        return _checkMatchSystem.apply(this, arguments);
       }
 
-      return generatePool;
+      return checkMatchSystem;
     }(),
-    resetPool: function () {
-      var _resetPool = _asyncToGenerator(
+    generatePool: function () {
+      var _generatePool = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
@@ -6275,19 +6367,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   break;
                 }
 
-                this.$noty.warning('Select division first before reset pool');
+                this.$noty.warning('Select division first before generate pool');
                 return _context10.abrupt("return");
 
               case 3:
                 _context10.prev = 3;
                 _context10.next = 6;
-                return this.$axios.post('entry/player_division/reset_pool', {
+                return this.$axios.post('entry/player_division/generate_pool', {
                   division_id: this.filterDivisionId
                 });
 
               case 6:
                 this.filterData(this.filterDivisionId);
-                this.$noty.success('Success Reset Pool');
+                this.$noty.success('Success Generate Pool');
                 _context10.next = 14;
                 break;
 
@@ -6295,7 +6387,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context10.prev = 10;
                 _context10.t0 = _context10["catch"](3);
                 console.log(_context10.t0.response);
-                this.$noty.error('Failed Reset Pool');
+                this.$noty.error('Failed Generate Pool. ' + _context10.t0.response.data.message);
 
               case 14:
               case "end":
@@ -6303,6 +6395,55 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee10, this, [[3, 10]]);
+      }));
+
+      function generatePool() {
+        return _generatePool.apply(this, arguments);
+      }
+
+      return generatePool;
+    }(),
+    resetPool: function () {
+      var _resetPool = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
+          while (1) {
+            switch (_context11.prev = _context11.next) {
+              case 0:
+                if (!(this.filterDivisionId == null)) {
+                  _context11.next = 3;
+                  break;
+                }
+
+                this.$noty.warning('Select division first before reset pool');
+                return _context11.abrupt("return");
+
+              case 3:
+                _context11.prev = 3;
+                _context11.next = 6;
+                return this.$axios.post('entry/player_division/reset_pool', {
+                  division_id: this.filterDivisionId
+                });
+
+              case 6:
+                this.filterData(this.filterDivisionId);
+                this.$noty.success('Success Reset Pool');
+                _context11.next = 14;
+                break;
+
+              case 10:
+                _context11.prev = 10;
+                _context11.t0 = _context11["catch"](3);
+                console.log(_context11.t0.response);
+                this.$noty.error('Failed Reset Pool');
+
+              case 14:
+              case "end":
+                return _context11.stop();
+            }
+          }
+        }, _callee11, this, [[3, 10]]);
       }));
 
       function resetPool() {
@@ -6314,36 +6455,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     calculateClassement: function () {
       var _calculateClassement = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
         var a;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
           while (1) {
-            switch (_context11.prev = _context11.next) {
+            switch (_context12.prev = _context12.next) {
               case 0:
-                _context11.prev = 0;
-                _context11.next = 3;
+                _context12.prev = 0;
+                _context12.next = 3;
                 return this.$axios.post("entry/player_division/calculate_classement/".concat(this.filterDivisionId));
 
               case 3:
-                a = _context11.sent;
-                this.filterData(this.filterDivisionId);
+                a = _context12.sent;
                 console.log(a.data.data);
                 this.$noty.success('Success Calculate Classement');
-                _context11.next = 13;
+                _context12.next = 12;
                 break;
 
-              case 9:
-                _context11.prev = 9;
-                _context11.t0 = _context11["catch"](0);
-                console.log(_context11.t0.response);
-                this.$noty.error('Failed Calculate Classement. ' + _context11.t0.response.data.message);
+              case 8:
+                _context12.prev = 8;
+                _context12.t0 = _context12["catch"](0);
+                console.log(_context12.t0.response);
+                this.$noty.error('Failed Calculate Classement. ' + _context12.t0.response.data.message);
+
+              case 12:
+                this.filterData(this.filterDivisionId);
 
               case 13:
               case "end":
-                return _context11.stop();
+                return _context12.stop();
             }
           }
-        }, _callee11, this, [[0, 9]]);
+        }, _callee12, this, [[0, 8]]);
       }));
 
       function calculateClassement() {
@@ -7063,8 +7206,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -7077,16 +7218,16 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    // 現在時刻から引数に渡した数値を startTime に代入
+    // set start time
     setSubtractStartTime: function setSubtractStartTime(time) {
-      var time = typeof time !== 'undefined' ? time : 0;
+      time = typeof time !== 'undefined' ? time : 0;
       this.startTime = Math.floor(performance.now() - time);
     },
-    // タイマーをスタートさせる
+    // mulai timer
     startTimer: function startTimer() {
       // loop()内で this の値が変更されるので退避
       var vm = this;
-      vm.setSubtractStartTime(vm.diffTime); // ループ処理
+      vm.setSubtractStartTime(vm.diffTime); // infinity loop
 
       (function loop() {
         vm.nowTime = Math.floor(performance.now());
@@ -7095,54 +7236,65 @@ __webpack_require__.r(__webpack_exports__);
       })();
 
       vm.isRunning = true;
+      this.$emit('start-timer');
     },
-    // タイマーを停止させる
+    // stop timer
     stopTimer: function stopTimer() {
+      var clear = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
       this.isRunning = false;
       cancelAnimationFrame(this.animateFrame);
+
+      if (clear) {
+        this.$emit('stop-timer', {
+          hours: this.hours,
+          minutes: this.minutes,
+          seconds: this.seconds,
+          milliSeconds: this.milliSeconds,
+          elapsedTime: this.diffTime
+        });
+      }
     },
     // 計測中の時間を配列に追加
-    pushTime: function pushTime() {
-      this.times.push({
-        hours: this.hours,
-        minutes: this.minutes,
-        seconds: this.seconds,
-        milliSeconds: this.milliSeconds
-      });
-    },
-    // 初期化
+    // pushTime: function () {
+    //   this.times.push({
+    //     hours: this.hours,
+    //     minutes: this.minutes,
+    //     seconds: this.seconds,
+    //     milliSeconds: this.milliSeconds
+    //   });
+    // },
+    // inisialisasi
     clearAll: function clearAll() {
       this.startTime = 0;
       this.nowTime = 0;
       this.diffTime = 0;
       this.times = [];
-      this.stopTimer();
+      this.stopTimer(false);
       this.animateFrame = 0;
     }
   },
   computed: {
-    // 時間を計算
+    // hitung jam
     hours: function hours() {
       return Math.floor(this.diffTime / 1000 / 60 / 60);
     },
-    // 分数を計算 (60分になったら0分に戻る)
+    // Hitung jumlah menit (ketika mencapai 60 menit, kembali ke 0 menit)
     minutes: function minutes() {
       return Math.floor(this.diffTime / 1000 / 60) % 60;
     },
-    // 秒数を計算 (60秒になったら0秒に戻る)
+    // Hitung detik (kembali ke 0 ketika 60 detik tercapai)
     seconds: function seconds() {
       return Math.floor(this.diffTime / 1000) % 60;
     },
-    // ミリ数を計算 (1000ミリ秒になったら0ミリ秒に戻る)
+    // Hitung milidetik (kembali ke 0 milidetik ketika 1000 milidetik tercapai)
     milliSeconds: function milliSeconds() {
       return Math.floor(this.diffTime % 1000);
     }
   },
   filters: {
-    // ゼロ埋めフィルタ 引数に桁数を入力する
-    // ※ String.prototype.padStart() は IEじゃ使えない
+    // cetak 0 depan angka
     zeroPad: function zeroPad(value, num) {
-      var num = typeof num !== 'undefined' ? num : 2;
+      num = typeof num !== 'undefined' ? num : 2;
       return value.toString().padStart(num, '0');
     }
   }
@@ -43202,7 +43354,7 @@ var render = function() {
                 [
                   _vm._m(3),
                   _vm._v(" "),
-                  _c("span", [_vm._v(_vm._s(this.logMatchDetail.time))])
+                  _c("span", [_vm._v(_vm._s(_vm.showTime))])
                 ]
               ),
               _vm._v(" "),
@@ -43254,7 +43406,29 @@ var render = function() {
               _vm._v(" "),
               _c("hr"),
               _vm._v(" "),
-              _vm._m(6)
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "d-flex justify-content-between align-items-center"
+                },
+                [
+                  _c(
+                    "div",
+                    [
+                      _c("StopWatch", {
+                        on: {
+                          "start-timer": _vm.startTimer,
+                          "stop-timer": _vm.stopTimer
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm._m(6)
+                ]
+              )
             ])
           ])
         ]),
@@ -43494,8 +43668,6 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("StopWatch"),
-      _vm._v(" "),
       _c(
         "b-modal",
         {
@@ -43516,33 +43688,132 @@ var render = function() {
           _vm._v(" "),
           _c("form", { attrs: { method: "post" } }, [
             _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "time" } }, [_vm._v("Time")]),
+              _c("label", { attrs: { for: "time" } }, [
+                _vm._v("Time "),
+                _c("em", [_vm._v("(hour : minute : second : millisecond)")])
+              ]),
               _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model.number",
-                    value: _vm.form.time,
-                    expression: "form.time",
-                    modifiers: { number: true }
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { id: "time", type: "text", placeholder: "Enter time" },
-                domProps: { value: _vm.form.time },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+              _c("div", { staticClass: "input-group" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model.number",
+                      value: _vm.form.time.hours,
+                      expression: "form.time.hours",
+                      modifiers: { number: true }
                     }
-                    _vm.$set(_vm.form, "time", _vm._n($event.target.value))
-                  },
-                  blur: function($event) {
-                    return _vm.$forceUpdate()
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "number", placeholder: "hours" },
+                  domProps: { value: _vm.form.time.hours },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.form.time,
+                        "hours",
+                        _vm._n($event.target.value)
+                      )
+                    },
+                    blur: function($event) {
+                      return _vm.$forceUpdate()
+                    }
                   }
-                }
-              })
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model.number",
+                      value: _vm.form.time.minutes,
+                      expression: "form.time.minutes",
+                      modifiers: { number: true }
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "number", placeholder: "minutes" },
+                  domProps: { value: _vm.form.time.minutes },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.form.time,
+                        "minutes",
+                        _vm._n($event.target.value)
+                      )
+                    },
+                    blur: function($event) {
+                      return _vm.$forceUpdate()
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model.number",
+                      value: _vm.form.time.seconds,
+                      expression: "form.time.seconds",
+                      modifiers: { number: true }
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "number", placeholder: "seconds" },
+                  domProps: { value: _vm.form.time.seconds },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.form.time,
+                        "seconds",
+                        _vm._n($event.target.value)
+                      )
+                    },
+                    blur: function($event) {
+                      return _vm.$forceUpdate()
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model.number",
+                      value: _vm.form.time.milliseconds,
+                      expression: "form.time.milliseconds",
+                      modifiers: { number: true }
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "number", placeholder: "milliseconds" },
+                  domProps: { value: _vm.form.time.milliseconds },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.form.time,
+                        "milliseconds",
+                        _vm._n($event.target.value)
+                      )
+                    },
+                    blur: function($event) {
+                      return _vm.$forceUpdate()
+                    }
+                  }
+                })
+              ])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
@@ -44148,8 +44419,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "text-center" }, [
-      _vm._v("Referee"),
+    return _c("div", [
+      _vm._v("\n              Referee"),
       _c("br"),
       _vm._v(" "),
       _c("span", { staticClass: "font-weight-bold text-primary" }, [
@@ -44319,10 +44590,23 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("Calculate Classement")]
+                        [_vm._v("Calculate Match Result")]
                       )
                     ]
                   )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.playerDivisions.length != 0
+                ? _c("div", { staticClass: "mt-3 mb-0 alert alert-info" }, [
+                    _vm._v("\n            This division using match system: "),
+                    _c("span", { staticClass: "font-weight-bold" }, [
+                      _vm._v(
+                        _vm._s(
+                          _vm.matchSystem || "No match found in this division"
+                        )
+                      )
+                    ])
+                  ])
                 : _vm._e()
             ]),
             _vm._v(" "),
@@ -45448,80 +45732,46 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "center aligned row" }, [
-    _c("div", { staticClass: "column" }, [
-      _c("p", [
-        _vm._v(
-          "Elapsed Time:\n      " +
-            _vm._s(_vm.hours) +
-            " :\n      " +
-            _vm._s(_vm._f("zeroPad")(_vm.minutes)) +
-            " :\n      " +
-            _vm._s(_vm._f("zeroPad")(_vm.seconds)) +
-            " :\n      " +
-            _vm._s(_vm._f("zeroPad")(_vm.milliSeconds, 3))
-        )
-      ]),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "ui secondary button",
-          attrs: { disabled: _vm.isRunning },
-          on: { click: _vm.startTimer }
-        },
-        [_vm._v("START")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "ui button",
-          attrs: { disabled: !_vm.isRunning },
-          on: { click: _vm.pushTime }
-        },
-        [_vm._v("LAP")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "ui button",
-          attrs: { disabled: !_vm.isRunning },
-          on: { click: _vm.stopTimer }
-        },
-        [_vm._v("STOP")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "ui basic button", on: { click: _vm.clearAll } },
-        [_vm._v("CLEAR")]
-      ),
-      _vm._v(" "),
-      _vm.times.length
-        ? _c(
-            "ul",
-            { staticClass: "ui bulleted list" },
-            _vm._l(_vm.times, function(item) {
-              return _c("span", { key: item, staticClass: "item" }, [
-                _vm._v(
-                  "\n        " +
-                    _vm._s(item.hours) +
-                    " :\n        " +
-                    _vm._s(_vm._f("zeroPad")(item.minutes)) +
-                    " :\n        " +
-                    _vm._s(_vm._f("zeroPad")(item.seconds)) +
-                    " :\n        " +
-                    _vm._s(_vm._f("zeroPad")(item.milliSeconds, 3)) +
-                    "\n      "
-                )
-              ])
-            }),
-            0
-          )
-        : _vm._e()
-    ])
+  return _c("div", [
+    _c("p", { staticClass: "h4 font-weight-bold" }, [
+      _vm._v(
+        "\n    " +
+          _vm._s(_vm.hours) +
+          " :\n    " +
+          _vm._s(_vm._f("zeroPad")(_vm.minutes)) +
+          " :\n    " +
+          _vm._s(_vm._f("zeroPad")(_vm.seconds)) +
+          " :\n    " +
+          _vm._s(_vm._f("zeroPad")(_vm.milliSeconds, 3)) +
+          "\n  "
+      )
+    ]),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-success btn-sm",
+        attrs: { disabled: _vm.isRunning },
+        on: { click: _vm.startTimer }
+      },
+      [_c("i", { staticClass: "fa fa-play" }), _vm._v("  START")]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-danger btn-sm",
+        attrs: { disabled: !_vm.isRunning },
+        on: { click: _vm.stopTimer }
+      },
+      [_c("i", { staticClass: "fa fa-stop" }), _vm._v("  STOP")]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      { staticClass: "btn btn-secondary btn-sm", on: { click: _vm.clearAll } },
+      [_vm._v("CLEAR")]
+    )
   ])
 }
 var staticRenderFns = []

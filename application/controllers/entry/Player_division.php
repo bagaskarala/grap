@@ -113,6 +113,13 @@ class Player_division extends MY_Controller
         }
     }
 
+    public function check_match_system($division_id)
+    {
+        $result = $this->player_division->check_match_system($division_id);
+
+        return $this->send_json_output($result, true, 200);
+    }
+
     public function generate_pool()
     {
         $request = parse_post_data();

@@ -58,8 +58,16 @@ class Player_division_model extends MY_Model
         return $this->get_all_array();
     }
 
+    public function check_match_system($division_id)
+    {
+        return $this->get_where(['division_id' => $division_id], 'log_match');
+    }
+
     public function calculate_classement($division_id)
     {
+        // reset perhitungan classement
+        $this->reset_classement($division_id);
+
         // cek log match
         $this->where('division_id', $division_id);
         $division_match = $this->get_all_array('log_match');
@@ -80,9 +88,6 @@ class Player_division_model extends MY_Model
 
     public function calculate_classement_elimination($division_id)
     {
-        // reset perhitungan division_winner
-        $this->reset_classement($division_id);
-
         // cek apakah match suatu divisi sudah selesai semua
         $this->where('division_id', $division_id);
         $this->where('winner', null);
@@ -119,9 +124,6 @@ class Player_division_model extends MY_Model
 
     public function calculate_classement_roundrobin($division_id)
     {
-        // reset perhitungan classement
-        $this->reset_classement($division_id);
-
         // cari logmatch yang sudah ada pemenang
         $this->select('winner, pd1_id, pd2_id');
         $this->where('division_id', $division_id);

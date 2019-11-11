@@ -42,7 +42,7 @@
             </div>
             <div class="d-flex justify-content-between align-items-center mb-2">
               <span>Time <i class="fa fa-angle-double-right"></i></span>
-              <span>{{this.logMatchDetail.time}}</span>
+              <span>{{showTime}}</span>
             </div>
             <div class="d-flex justify-content-between align-items-center mb-2">
               <span>Status <i class="fa fa-angle-double-right"></i></span>
@@ -56,8 +56,17 @@
               <span>{{this.logMatchDetail.winning}}</span>
             </div>
             <hr>
-            <div class="text-center">Referee<br>
-              <span class="font-weight-bold text-primary">FOO BAR</span>
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <StopWatch
+                  @start-timer="startTimer"
+                  @stop-timer="stopTimer"
+                />
+              </div>
+              <div>
+                Referee<br>
+                <span class="font-weight-bold text-primary">FOO BAR</span>
+              </div>
             </div>
           </div>
         </div>
@@ -168,14 +177,40 @@
 
       <form method="post">
         <div class="form-group">
-          <label for="time">Time</label>
-          <input
+          <label for="time">Time <em>(hour : minute : second : millisecond)</em></label>
+          <div class="input-group">
+            <input
+              type="number"
+              v-model.number="form.time.hours"
+              placeholder="hours"
+              class="form-control"
+            >
+            <input
+              type="number"
+              v-model.number="form.time.minutes"
+              placeholder="minutes"
+              class="form-control"
+            >
+            <input
+              type="number"
+              v-model.number="form.time.seconds"
+              placeholder="seconds"
+              class="form-control"
+            >
+            <input
+              type="number"
+              v-model.number="form.time.milliseconds"
+              placeholder="milliseconds"
+              class="form-control"
+            >
+          </div>
+          <!-- <input
             id="time"
             v-model.number="form.time"
             type="text"
             class="form-control"
             placeholder="Enter time"
-          >
+          > -->
         </div>
         <div class="form-group">
           <label for="match_status">Match Status</label>
@@ -394,8 +429,12 @@
 </template>
 
 <script>
+import StopWatch from './StopWatch';
 export default {
   name: 'LogMatchDetail',
+  components: {
+    StopWatch
+  },
   props: {
     baseUrl: String
   },
@@ -419,7 +458,13 @@ export default {
         }
       ],
       form: {
-        time: null,
+        time: {
+          hours: 0,
+          minutes: 0,
+          seconds: 0,
+          milliseconds: 0
+        },
+        elapsedTime: 0,
         match_status: 0,
         winner: null,
         winning_id: null,
@@ -456,6 +501,13 @@ export default {
           text: `Player 2 - ${this.logMatchDetail.player2_name}`
         }
       ];
+    },
+
+    showTime() {
+      return this.convertMillisecondToTime(this.logMatchDetail.time, 'hours') + ' h : ' +
+        this.convertMillisecondToTime(this.logMatchDetail.time, 'minutes') + ' m : ' +
+        this.convertMillisecondToTime(this.logMatchDetail.time, 'seconds') + ' s : ' +
+        this.convertMillisecondToTime(this.logMatchDetail.time, 'milliseconds') + ' ms';
     }
   },
 
@@ -484,7 +536,7 @@ export default {
       try {
         const a = await this.$axios.post(`entry/log_match/update/${this.logMatchDetail.id}`, {
           division_id: this.logMatchDetail.division_id,
-          time: this.form.time,
+          time: this.form.elapsedTime ? this.form.elapsedTime : this.convertTimeToMillisecond(this.form.time),
           winner: this.form.winner,
           winning_id: this.form.winning_id,
           match_status: this.form.match_status,
@@ -515,7 +567,12 @@ export default {
       // populate form
       let { match_status, time, winning_id, winner, pd1_redcard, pd1_yellowcard, pd1_greencard, pd2_redcard, pd2_yellowcard, pd2_greencard } = this.logMatchDetail;
       this.form.match_status = match_status;
-      this.form.time = time;
+
+      this.form.time.hours = this.convertMillisecondToTime(time, 'hours');
+      this.form.time.minutes = this.convertMillisecondToTime(time, 'minutes');
+      this.form.time.seconds = this.convertMillisecondToTime(time, 'seconds');
+      this.form.time.milliseconds = this.convertMillisecondToTime(time, 'milliseconds');
+
       this.form.winning_id = winning_id;
       this.form.winner = winner;
       this.form.pd1_yellowcard = pd1_yellowcard;
@@ -550,6 +607,39 @@ export default {
         console.log(error.response);
         this.$noty.error('Failed Reset Data');
       }
+    },
+
+    startTimer() {
+      this.form.match_status = 1;
+      this.updateData();
+    },
+
+    stopTimer(time) {
+      this.form.elapsedTime = time.elapsedTime;
+      this.form.match_status = 2;
+      this.updateData();
+      this.form.elapsedTime = 0;
+    },
+
+    convertMillisecondToTime(ms, select) {
+      if (select == 'hours') return Math.floor(ms / 1000 / 60 / 60);
+      else if (select == 'minutes') return Math.floor(ms / 1000 / 60) % 60;
+      else if (select == 'seconds') return Math.floor(ms / 1000) % 60;
+      else if (select == 'milliseconds') return Math.floor(ms % 1000);
+      else return null;
+    },
+
+    convertTimeToMillisecond({ hours, minutes, seconds, milliseconds }) {
+      if (hours) {
+        hours = hours * 1000 * 60 * 60;
+      }
+      if (minutes) {
+        minutes = minutes * 1000 * 60;
+      }
+      if (seconds) {
+        seconds = seconds * 1000;
+      }
+      return hours + minutes + seconds + milliseconds;
     }
   },
 
