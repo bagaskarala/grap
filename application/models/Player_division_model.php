@@ -47,7 +47,7 @@ class Player_division_model extends MY_Model
     {
         // hitung win-lose-draw pada divisi terpilih
         // generate winner
-        // $this->calculate_classement($division_id);
+        $this->calculate_classement($division_id);
 
         // tampilkan player per divisi
         $this->query_player_division();
@@ -61,6 +61,18 @@ class Player_division_model extends MY_Model
     public function check_match_system($division_id)
     {
         return $this->get_where(['division_id' => $division_id], 'log_match');
+    }
+
+    public function check_player($data)
+    {
+        // isi $data = division_id,player_id,pool_number
+        // cek apakah player sudah masuk ke player_division
+        $check_player = $this->get_where(['player_id' => $data['player_id'], 'division_id' => $data['division_id']]);
+        if ($check_player) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public function calculate_classement($division_id)

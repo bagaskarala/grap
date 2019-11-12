@@ -36,6 +36,7 @@ class Winning extends MY_Controller
 
         $data = [
             'winning'     => $request->winning,
+            'point'       => $request->point,
             'description' => $request->description,
         ];
 
@@ -59,6 +60,7 @@ class Winning extends MY_Controller
 
         $data = [
             'winning'     => $request->winning,
+            'point'       => $request->point,
             'description' => $request->description,
         ];
 

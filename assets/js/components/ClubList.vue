@@ -15,6 +15,37 @@
             </button>
           </div>
 
+          <div class="mx-3 mt-3">
+            <div class="input-group input-group-sm">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Search Club</span>
+              </div>
+              <input
+                v-model="searchKeyword"
+                type="text"
+                class="form-control"
+                placeholder="Enter Keyword"
+                @keyup.enter="searchData"
+              >
+              <div class="input-group-append">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-secondary"
+                  @click="searchKeyword=''; searchData()"
+                >
+                  <i class="fa fa-times"></i>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-primary"
+                  @click.prevent="searchData"
+                >
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
           <div class="card-body">
             <div
               v-show="clubs.length == 0"
@@ -135,7 +166,8 @@ export default {
         description: null
       },
       modalState: null,
-      errorValidation: null
+      errorValidation: null,
+      searchKeyword: ''
     };
   },
   methods: {
@@ -146,6 +178,16 @@ export default {
       } catch (error) {
         console.log(error.response);
         this.$noty.error('Failed Get Data');
+      }
+    },
+
+    async searchData() {
+      try {
+        const result = await this.$axios.post(`master/club/search/${this.searchKeyword}`);
+        this.clubs = result.data.data;
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Search Data');
       }
     },
 

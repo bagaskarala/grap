@@ -25,6 +25,13 @@ class Club_model extends MY_Model
 
         return $validationRules;
     }
+
+    public function search($keyword)
+    {
+        $this->like('club', $keyword);
+        $this->or_like('alias', $keyword);
+        return $this->get_all_array();
+    }
 }
 
 /* End of file Club_model.php */

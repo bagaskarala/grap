@@ -142,6 +142,18 @@ class MY_Model extends CI_Model
         $this->db->select($columns);
         return $this;
     }
+
+    public function like($column, $condition)
+    {
+        $this->db->like($column, $condition);
+        return $this;
+    }
+
+    public function or_like($column, $condition)
+    {
+        $this->db->or_like($column, $condition);
+        return $this;
+    }
 }
 
 /* End of file MY_Model.php */

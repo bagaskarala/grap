@@ -12,6 +12,11 @@ class Winning_model extends MY_Model
                 'rules' => 'required|trim',
             ],
             [
+                'field' => 'point',
+                'label' => 'point',
+                'rules' => 'trim',
+            ],
+            [
                 'field' => 'description',
                 'label' => 'description',
                 'rules' => 'trim',

@@ -2791,6 +2791,37 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ClubList',
   data: function data() {
@@ -2802,7 +2833,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         description: null
       },
       modalState: null,
-      errorValidation: null
+      errorValidation: null,
+      searchKeyword: ''
     };
   },
   methods: {
@@ -2845,16 +2877,55 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return getAllClubs;
     }(),
-    insertData: function () {
-      var _insertData = _asyncToGenerator(
+    searchData: function () {
+      var _searchData = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var result;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.prev = 0;
                 _context2.next = 3;
+                return this.$axios.post("master/club/search/".concat(this.searchKeyword));
+
+              case 3:
+                result = _context2.sent;
+                this.clubs = result.data.data;
+                _context2.next = 11;
+                break;
+
+              case 7:
+                _context2.prev = 7;
+                _context2.t0 = _context2["catch"](0);
+                console.log(_context2.t0.response);
+                this.$noty.error('Failed Search Data');
+
+              case 11:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[0, 7]]);
+      }));
+
+      function searchData() {
+        return _searchData.apply(this, arguments);
+      }
+
+      return searchData;
+    }(),
+    insertData: function () {
+      var _insertData = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.prev = 0;
+                _context3.next = 3;
                 return this.$axios.post('master/club/insert', {
                   club: this.form.club,
                   alias: this.form.alias,
@@ -2865,22 +2936,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.$noty.success('Success Insert Data');
                 this.getAllClubs();
                 this.$bvModal.hide('modal-club');
-                _context2.next = 13;
+                _context3.next = 13;
                 break;
 
               case 8:
-                _context2.prev = 8;
-                _context2.t0 = _context2["catch"](0);
-                console.log(_context2.t0.response);
-                this.errorValidation = _context2.t0.response.data.message;
+                _context3.prev = 8;
+                _context3.t0 = _context3["catch"](0);
+                console.log(_context3.t0.response);
+                this.errorValidation = _context3.t0.response.data.message;
                 this.$noty.error('Failed Insert Data');
 
               case 13:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this, [[0, 8]]);
+        }, _callee3, this, [[0, 8]]);
       }));
 
       function insertData() {
@@ -2892,13 +2963,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     updateData: function () {
       var _updateData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                _context3.prev = 0;
-                _context3.next = 3;
+                _context4.prev = 0;
+                _context4.next = 3;
                 return this.$axios.post("master/club/update/".concat(this.form.id), {
                   club: this.form.club,
                   alias: this.form.alias,
@@ -2909,22 +2980,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.$noty.success('Success Update Data');
                 this.getAllClubs();
                 this.$bvModal.hide('modal-club');
-                _context3.next = 13;
+                _context4.next = 13;
                 break;
 
               case 8:
-                _context3.prev = 8;
-                _context3.t0 = _context3["catch"](0);
-                console.log(_context3.t0.response);
-                this.errorValidation = _context3.t0.response.data.message;
+                _context4.prev = 8;
+                _context4.t0 = _context4["catch"](0);
+                console.log(_context4.t0.response);
+                this.errorValidation = _context4.t0.response.data.message;
                 this.$noty.error('Failed Update Data');
 
               case 13:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, this, [[0, 8]]);
+        }, _callee4, this, [[0, 8]]);
       }));
 
       function updateData() {
@@ -2936,13 +3007,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     deleteData: function () {
       var _deleteData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(item) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(item) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
-                _context4.prev = 0;
-                _context4.next = 3;
+                _context5.prev = 0;
+                _context5.next = 3;
                 return this.$axios.post('master/club/delete', {
                   id: item.id
                 });
@@ -2951,21 +3022,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.$noty.success('Success Delete Data');
                 this.getAllClubs();
                 this.$bvModal.hide('modal-club');
-                _context4.next = 12;
+                _context5.next = 12;
                 break;
 
               case 8:
-                _context4.prev = 8;
-                _context4.t0 = _context4["catch"](0);
-                console.log(_context4.t0.response);
+                _context5.prev = 8;
+                _context5.t0 = _context5["catch"](0);
+                console.log(_context5.t0.response);
                 this.$noty.error('Failed Delete Data');
 
               case 12:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4, this, [[0, 8]]);
+        }, _callee5, this, [[0, 8]]);
       }));
 
       function deleteData(_x) {
@@ -3644,6 +3715,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }, {
         text: 'Female',
         value: 'female'
+      }, {
+        text: 'Male and Female',
+        value: 'all'
       }],
       form: {
         id: null,
@@ -3868,6 +3942,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       })["catch"](function (err) {
         console.log('Error ', err);
       });
+    },
+    generateGenderIcon: function generateGenderIcon(gender) {
+      if (gender == 'male') {
+        return 'fa fa-male text-primary';
+      } else if (gender == 'female') {
+        return 'fa fa-female text-danger';
+      } else {
+        return 'fa fa-genderless text-dark';
+      }
     },
     addData: function addData() {
       this.resetData();
@@ -5909,6 +5992,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+var timeoutDebounce = null;
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PlayerDivision',
   data: function data() {
@@ -5934,7 +6020,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       },
       playerFilter: {
         minWeight: 0,
-        maxWeight: 200
+        maxWeight: 100
       },
       modalState: null,
       errorValidation: null,
@@ -6044,6 +6130,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context3.prev = 0;
                 _context3.next = 3;
                 return this.$axios.post('master/player/filter', {
+                  division_id: this.form.division_id,
                   min_weight: this.playerFilter.minWeight,
                   max_weight: this.playerFilter.maxWeight
                 });
@@ -6145,7 +6232,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context5.t0 = _context5["catch"](0);
                 console.log(_context5.t0.response);
                 this.errorValidation = _context5.t0.response.data.message;
-                this.$noty.error('Failed Insert Data');
+                this.$noty.error('Failed Insert Data.');
 
               case 14:
               case "end":
@@ -6330,7 +6417,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 3:
                 result = _context9.sent;
-                this.matchSystem = result.data.data.match_system;
+
+                // cetak match system jika terdapat match pada divisi tsb
+                if (result.data.data != null) {
+                  this.matchSystem = result.data.data.match_system;
+                }
+
                 _context9.next = 11;
                 break;
 
@@ -6452,49 +6544,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return resetPool;
     }(),
-    calculateClassement: function () {
-      var _calculateClassement = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
-        var a;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
-          while (1) {
-            switch (_context12.prev = _context12.next) {
-              case 0:
-                _context12.prev = 0;
-                _context12.next = 3;
-                return this.$axios.post("entry/player_division/calculate_classement/".concat(this.filterDivisionId));
-
-              case 3:
-                a = _context12.sent;
-                console.log(a.data.data);
-                this.$noty.success('Success Calculate Classement');
-                _context12.next = 12;
-                break;
-
-              case 8:
-                _context12.prev = 8;
-                _context12.t0 = _context12["catch"](0);
-                console.log(_context12.t0.response);
-                this.$noty.error('Failed Calculate Classement. ' + _context12.t0.response.data.message);
-
-              case 12:
-                this.filterData(this.filterDivisionId);
-
-              case 13:
-              case "end":
-                return _context12.stop();
-            }
-          }
-        }, _callee12, this, [[0, 8]]);
-      }));
-
-      function calculateClassement() {
-        return _calculateClassement.apply(this, arguments);
-      }
-
-      return calculateClassement;
-    }(),
+    // async calculateClassement() {
+    //   try {
+    //     const a = await this.$axios.post(`entry/player_division/calculate_classement/${this.filterDivisionId}`);
+    //     console.log(a.data.data);
+    //     this.$noty.success('Success Calculate Classement');
+    //   } catch (error) {
+    //     console.log(error.response);
+    //     this.$noty.error('Failed Calculate Classement. ' + error.response.data.message);
+    //   }
+    //   this.filterData(this.filterDivisionId);
+    // },
     addData: function addData() {
       this.resetData();
       this.$bvModal.show('modal-player-division');
@@ -6545,14 +6605,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
       this.playerFilter.minWeight = findDivision.min_weight;
-      this.playerFilter.maxWeight = findDivision.max_weight;
+      this.playerFilter.maxWeight = findDivision.max_weight; // reset player
+
+      this.form.player_id = null; // Debounce 1s
+
+      clearTimeout(timeoutDebounce);
+      var self = this;
+      timeoutDebounce = setTimeout(function () {
+        self.getFilteredPlayers();
+      }, 500);
     },
     playerFilter: {
       handler: function handler(newValue) {
+        // jika negatif maka jadikan positif
+        if (this.playerFilter.minWeight < 0) this.playerFilter.minWeight = Math.abs(this.playerFilter.minWeight);
+        if (this.playerFilter.maxWeight < 0) this.playerFilter.maxWeight = Math.abs(this.playerFilter.maxWeight);
+        if (this.playerFilter.maxWeight > 200) this.playerFilter.maxWeight = 200;
+        if (this.playerFilter.minWeight > 200) this.playerFilter.minWeight = 200;
         this.playerFilter.minWeight = newValue.minWeight;
-        this.playerFilter.maxWeight = newValue.maxWeight; // NEED DEBOUNCE, HEMAT RESOURCE
+        this.playerFilter.maxWeight = newValue.maxWeight; // Debounce 1s
 
-        this.getFilteredPlayers();
+        clearTimeout(timeoutDebounce);
+        var self = this;
+        timeoutDebounce = setTimeout(function () {
+          self.getFilteredPlayers();
+        }, 500);
       },
       deep: true,
       immediate: true
@@ -6794,6 +6871,37 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PlayerList',
   data: function data() {
@@ -6812,7 +6920,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         country_id: null,
         club_id: null,
         name: null,
-        alias: null,
+        nickname: null,
         gender: null,
         img: null,
         height: null,
@@ -6820,7 +6928,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         achievement: null
       },
       modalState: null,
-      errorValidation: null
+      errorValidation: null,
+      searchKeyword: ''
     };
   },
   methods: {
@@ -6941,21 +7050,60 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return getAllPlayers;
     }(),
-    insertData: function () {
-      var _insertData = _asyncToGenerator(
+    searchData: function () {
+      var _searchData = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var result;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
                 _context4.prev = 0;
                 _context4.next = 3;
+                return this.$axios.post("master/player/search/".concat(this.searchKeyword));
+
+              case 3:
+                result = _context4.sent;
+                this.players = result.data.data;
+                _context4.next = 11;
+                break;
+
+              case 7:
+                _context4.prev = 7;
+                _context4.t0 = _context4["catch"](0);
+                console.log(_context4.t0.response);
+                this.$noty.error('Failed Search Data');
+
+              case 11:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this, [[0, 7]]);
+      }));
+
+      function searchData() {
+        return _searchData.apply(this, arguments);
+      }
+
+      return searchData;
+    }(),
+    insertData: function () {
+      var _insertData = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.prev = 0;
+                _context5.next = 3;
                 return this.$axios.post('master/player/insert', {
                   country_id: this.form.country_id,
                   club_id: this.form.club_id,
                   name: this.form.name,
-                  alias: this.form.alias,
+                  nickname: this.form.nickname,
                   gender: this.form.gender,
                   img: this.form.img,
                   height: this.form.height,
@@ -6967,22 +7115,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.$noty.success('Success Insert Data');
                 this.getAllPlayers();
                 this.$bvModal.hide('modal-player');
-                _context4.next = 13;
+                _context5.next = 13;
                 break;
 
               case 8:
-                _context4.prev = 8;
-                _context4.t0 = _context4["catch"](0);
-                console.log(_context4.t0.response);
-                this.errorValidation = _context4.t0.response.data.message;
+                _context5.prev = 8;
+                _context5.t0 = _context5["catch"](0);
+                console.log(_context5.t0.response);
+                this.errorValidation = _context5.t0.response.data.message;
                 this.$noty.error('Failed Insert Data');
 
               case 13:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4, this, [[0, 8]]);
+        }, _callee5, this, [[0, 8]]);
       }));
 
       function insertData() {
@@ -6994,18 +7142,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     updateData: function () {
       var _updateData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
-                _context5.prev = 0;
-                _context5.next = 3;
+                _context6.prev = 0;
+                _context6.next = 3;
                 return this.$axios.post("master/player/update/".concat(this.form.id), {
                   country_id: this.form.country_id,
                   club_id: this.form.club_id,
                   name: this.form.name,
-                  alias: this.form.alias,
+                  nickname: this.form.nickname,
                   gender: this.form.gender,
                   img: this.form.img,
                   height: this.form.height,
@@ -7017,22 +7165,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.$noty.success('Success Update Data');
                 this.getAllPlayers();
                 this.$bvModal.hide('modal-player');
-                _context5.next = 13;
+                _context6.next = 13;
                 break;
 
               case 8:
-                _context5.prev = 8;
-                _context5.t0 = _context5["catch"](0);
-                console.log(_context5.t0.response);
-                this.errorValidation = _context5.t0.response.data.message;
+                _context6.prev = 8;
+                _context6.t0 = _context6["catch"](0);
+                console.log(_context6.t0.response);
+                this.errorValidation = _context6.t0.response.data.message;
                 this.$noty.error('Failed Update Data');
 
               case 13:
               case "end":
-                return _context5.stop();
+                return _context6.stop();
             }
           }
-        }, _callee5, this, [[0, 8]]);
+        }, _callee6, this, [[0, 8]]);
       }));
 
       function updateData() {
@@ -7044,13 +7192,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     deleteData: function () {
       var _deleteData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(item) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(item) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context6.prev = _context6.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
-                _context6.prev = 0;
-                _context6.next = 3;
+                _context7.prev = 0;
+                _context7.next = 3;
                 return this.$axios.post('master/player/delete', {
                   id: item.id
                 });
@@ -7059,21 +7207,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.$noty.success('Success Delete Data');
                 this.getAllPlayers();
                 this.$bvModal.hide('modal-player');
-                _context6.next = 12;
+                _context7.next = 12;
                 break;
 
               case 8:
-                _context6.prev = 8;
-                _context6.t0 = _context6["catch"](0);
-                console.log(_context6.t0.response);
+                _context7.prev = 8;
+                _context7.t0 = _context7["catch"](0);
+                console.log(_context7.t0.response);
                 this.$noty.error('Failed Delete Data');
 
               case 12:
               case "end":
-                return _context6.stop();
+                return _context7.stop();
             }
           }
-        }, _callee6, this, [[0, 8]]);
+        }, _callee7, this, [[0, 8]]);
       }));
 
       function deleteData(_x) {
@@ -7112,7 +7260,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           country_id = item.country_id,
           club_id = item.club_id,
           name = item.name,
-          alias = item.alias,
+          nickname = item.nickname,
           gender = item.gender,
           img = item.img,
           height = item.height,
@@ -7122,7 +7270,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.form.country_id = country_id;
       this.form.club_id = club_id;
       this.form.name = name;
-      this.form.alias = alias;
+      this.form.nickname = nickname;
       this.form.gender = gender;
       this.form.img = img;
       this.form.height = height;
@@ -7134,7 +7282,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.form.country_id = null;
       this.form.club_id = null;
       this.form.name = null;
-      this.form.alias = null;
+      this.form.nickname = null;
       this.form.gender = null;
       this.form.img = null;
       this.form.height = null;
@@ -7524,6 +7672,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'WinningList',
   data: function data() {
@@ -7531,6 +7692,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       winnings: [],
       form: {
         winning: null,
+        point: null,
         description: null
       },
       modalState: null,
@@ -7589,6 +7751,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context2.next = 3;
                 return this.$axios.post('master/winning/insert', {
                   winning: this.form.winning,
+                  point: this.form.point,
                   description: this.form.description
                 });
 
@@ -7632,6 +7795,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context3.next = 3;
                 return this.$axios.post("master/winning/update/".concat(this.form.id), {
                   winning: this.form.winning,
+                  point: this.form.point,
                   description: this.form.description
                 });
 
@@ -7732,14 +7896,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       var id = item.id,
           winning = item.winning,
+          point = item.point,
           description = item.description;
       this.form.id = id;
       this.form.winning = winning;
+      this.form.point = point;
       this.form.description = description;
     },
     resetData: function resetData() {
       this.errorValidation = null;
       this.form.winning = null;
+      this.form.point = null;
       this.form.description = null;
     }
   },
@@ -41307,6 +41474,75 @@ var render = function() {
               ]
             ),
             _vm._v(" "),
+            _c("div", { staticClass: "mx-3 mt-3" }, [
+              _c("div", { staticClass: "input-group input-group-sm" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.searchKeyword,
+                      expression: "searchKeyword"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", placeholder: "Enter Keyword" },
+                  domProps: { value: _vm.searchKeyword },
+                  on: {
+                    keyup: function($event) {
+                      if (
+                        !$event.type.indexOf("key") &&
+                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                      ) {
+                        return null
+                      }
+                      return _vm.searchData($event)
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.searchKeyword = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "input-group-append" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-sm btn-secondary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.searchKeyword = ""
+                          _vm.searchData()
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fa fa-times" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-sm btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.searchData($event)
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fa fa-search" })]
+                  )
+                ])
+              ])
+            ]),
+            _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
               _c(
                 "div",
@@ -41556,7 +41792,16 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("span", { staticClass: "input-group-text" }, [_vm._v("Search Club")])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -41973,12 +42218,7 @@ var render = function() {
                           _c("span", [_vm._v(_vm._s(item.division))]),
                           _vm._v(" "),
                           _c("i", {
-                            class: [
-                              item.gender == "male"
-                                ? "fa-male text-primary"
-                                : "fa-female text-danger",
-                              "fa"
-                            ],
+                            class: _vm.generateGenderIcon(item.gender),
                             attrs: { title: item.gender }
                           })
                         ]),
@@ -44573,24 +44813,6 @@ var render = function() {
                           }
                         },
                         [_vm._v("Reset Pool")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-sm btn-primary mr-1",
-                          attrs: {
-                            type: "button",
-                            disabled: _vm.playerDivisions.length == 0
-                          },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.calculateClassement()
-                            }
-                          }
-                        },
-                        [_vm._v("Calculate Match Result")]
                       )
                     ]
                   )
@@ -44837,7 +45059,14 @@ var render = function() {
                     return _c(
                       "option",
                       { key: item.id, domProps: { value: item.id } },
-                      [_vm._v(_vm._s(item.division))]
+                      [
+                        _vm._v(
+                          _vm._s(item.division) +
+                            " (" +
+                            _vm._s(item.gender) +
+                            ")"
+                        )
+                      ]
                     )
                   })
                 ],
@@ -44861,18 +45090,20 @@ var render = function() {
                   directives: [
                     {
                       name: "model",
-                      rawName: "v-model",
+                      rawName: "v-model.number",
                       value: _vm.playerFilter.minWeight,
-                      expression: "playerFilter.minWeight"
+                      expression: "playerFilter.minWeight",
+                      modifiers: { number: true }
                     }
                   ],
                   staticClass: "form-control",
                   attrs: {
                     id: "min_weight",
-                    type: "text",
+                    type: "number",
                     placeholder: "Enter Min Weight",
                     title: "Min Weight",
-                    maxlength: "3"
+                    max: "200",
+                    min: "0"
                   },
                   domProps: { value: _vm.playerFilter.minWeight },
                   on: {
@@ -44883,8 +45114,11 @@ var render = function() {
                       _vm.$set(
                         _vm.playerFilter,
                         "minWeight",
-                        $event.target.value
+                        _vm._n($event.target.value)
                       )
+                    },
+                    blur: function($event) {
+                      return _vm.$forceUpdate()
                     }
                   }
                 }),
@@ -44893,18 +45127,20 @@ var render = function() {
                   directives: [
                     {
                       name: "model",
-                      rawName: "v-model",
+                      rawName: "v-model.number",
                       value: _vm.playerFilter.maxWeight,
-                      expression: "playerFilter.maxWeight"
+                      expression: "playerFilter.maxWeight",
+                      modifiers: { number: true }
                     }
                   ],
                   staticClass: "form-control",
                   attrs: {
                     id: "max_weight",
-                    type: "text",
+                    type: "number",
                     placeholder: "Enter Max Weight",
                     title: "Max Weight",
-                    maxlength: "3"
+                    max: "200",
+                    min: "0"
                   },
                   domProps: { value: _vm.playerFilter.maxWeight },
                   on: {
@@ -44915,8 +45151,11 @@ var render = function() {
                       _vm.$set(
                         _vm.playerFilter,
                         "maxWeight",
-                        $event.target.value
+                        _vm._n($event.target.value)
                       )
+                    },
+                    blur: function($event) {
+                      return _vm.$forceUpdate()
                     }
                   }
                 })
@@ -45170,6 +45409,75 @@ var render = function() {
               ]
             ),
             _vm._v(" "),
+            _c("div", { staticClass: "mx-3 mt-3" }, [
+              _c("div", { staticClass: "input-group input-group-sm" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.searchKeyword,
+                      expression: "searchKeyword"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", placeholder: "Enter Keyword" },
+                  domProps: { value: _vm.searchKeyword },
+                  on: {
+                    keyup: function($event) {
+                      if (
+                        !$event.type.indexOf("key") &&
+                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                      ) {
+                        return null
+                      }
+                      return _vm.searchData($event)
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.searchKeyword = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "input-group-append" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-sm btn-secondary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.searchKeyword = ""
+                          _vm.searchData()
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fa fa-times" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-sm btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.searchData($event)
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fa fa-search" })]
+                  )
+                ])
+              ])
+            ]),
+            _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
               _c(
                 "div",
@@ -45201,7 +45509,12 @@ var render = function() {
                     [
                       _c("div", [
                         _c("p", { staticClass: "font-weight-bold m-0" }, [
-                          _c("span", [_vm._v(_vm._s(item.name))]),
+                          _c("span", [
+                            _vm._v(_vm._s(item.name) + " "),
+                            _c("span", { staticClass: "font-weight-normal" }, [
+                              _vm._v("(" + _vm._s(item.nickname) + ")")
+                            ])
+                          ]),
                           _vm._v(" "),
                           _c("i", {
                             class: [
@@ -45421,31 +45734,31 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "alias" } }, [_vm._v("Alias")]),
+              _c("label", { attrs: { for: "nickname" } }, [_vm._v("Nickname")]),
               _vm._v(" "),
               _c("input", {
                 directives: [
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.form.alias,
-                    expression: "form.alias"
+                    value: _vm.form.nickname,
+                    expression: "form.nickname"
                   }
                 ],
                 staticClass: "form-control",
                 attrs: {
-                  id: "alias",
+                  id: "nickname",
                   type: "text",
-                  placeholder: "Enter Alias",
-                  maxlength: "3"
+                  placeholder: "Enter Nickname",
+                  maxlength: "10"
                 },
-                domProps: { value: _vm.form.alias },
+                domProps: { value: _vm.form.nickname },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(_vm.form, "alias", $event.target.value)
+                    _vm.$set(_vm.form, "nickname", $event.target.value)
                   }
                 }
               })
@@ -45710,7 +46023,16 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("span", { staticClass: "input-group-text" }, [_vm._v("Search Player")])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -45936,7 +46258,15 @@ var render = function() {
                           )
                         ]),
                         _vm._v(" "),
-                        _c("span", [_vm._v(_vm._s(item.description))])
+                        _c("p", { staticClass: "mb-1" }, [
+                          _vm._v(
+                            _vm._s(item.point ? item.point : "null") + " points"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "mb-0 small text-muted" }, [
+                          _vm._v(_vm._s(item.description))
+                        ])
                       ]),
                       _vm._v(" "),
                       _c("div", [
@@ -46023,6 +46353,40 @@ var render = function() {
                       return
                     }
                     _vm.$set(_vm.form, "winning", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "point" } }, [_vm._v("Point")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model.number",
+                    value: _vm.form.point,
+                    expression: "form.point",
+                    modifiers: { number: true }
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  id: "point",
+                  type: "number",
+                  placeholder: "Enter point"
+                },
+                domProps: { value: _vm.form.point },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "point", _vm._n($event.target.value))
+                  },
+                  blur: function($event) {
+                    return _vm.$forceUpdate()
                   }
                 }
               })

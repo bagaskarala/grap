@@ -15,6 +15,37 @@
             </button>
           </div>
 
+          <div class="mx-3 mt-3">
+            <div class="input-group input-group-sm">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Search Player</span>
+              </div>
+              <input
+                v-model="searchKeyword"
+                type="text"
+                class="form-control"
+                placeholder="Enter Keyword"
+                @keyup.enter="searchData"
+              >
+              <div class="input-group-append">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-secondary"
+                  @click="searchKeyword=''; searchData()"
+                >
+                  <i class="fa fa-times"></i>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-primary"
+                  @click.prevent="searchData"
+                >
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
           <div class="card-body">
             <div
               v-show="players.length == 0"
@@ -28,7 +59,7 @@
               >
                 <div>
                   <p class="font-weight-bold m-0">
-                    <span>{{item.name}}</span>
+                    <span>{{item.name}} <span class="font-weight-normal">({{item.nickname}})</span></span>
                     <i
                       :class="[item.gender == 'male'? 'fa-male text-primary':'fa-female text-danger', 'fa']"
                       :title="item.gender"
@@ -110,14 +141,14 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="alias">Alias</label>
+          <label for="nickname">Nickname</label>
           <input
-            id="alias"
-            v-model="form.alias"
+            id="nickname"
+            v-model="form.nickname"
             type="text"
             class="form-control"
-            placeholder="Enter Alias"
-            maxlength="3"
+            placeholder="Enter Nickname"
+            maxlength="10"
           >
         </div>
         <div class="form-group">
@@ -229,7 +260,7 @@ export default {
         country_id: null,
         club_id: null,
         name: null,
-        alias: null,
+        nickname: null,
         gender: null,
         img: null,
         height: null,
@@ -237,7 +268,8 @@ export default {
         achievement: null
       },
       modalState: null,
-      errorValidation: null
+      errorValidation: null,
+      searchKeyword: ''
     };
   },
   methods: {
@@ -269,7 +301,16 @@ export default {
         console.log(error.response);
         this.$noty.error('Failed Get Data');
       }
+    },
 
+    async searchData() {
+      try {
+        const result = await this.$axios.post(`master/player/search/${this.searchKeyword}`);
+        this.players = result.data.data;
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Search Data');
+      }
     },
 
     async insertData() {
@@ -278,7 +319,7 @@ export default {
           country_id: this.form.country_id,
           club_id: this.form.club_id,
           name: this.form.name,
-          alias: this.form.alias,
+          nickname: this.form.nickname,
           gender: this.form.gender,
           img: this.form.img,
           height: this.form.height,
@@ -304,7 +345,7 @@ export default {
           country_id: this.form.country_id,
           club_id: this.form.club_id,
           name: this.form.name,
-          alias: this.form.alias,
+          nickname: this.form.nickname,
           gender: this.form.gender,
           img: this.form.img,
           height: this.form.height,
@@ -367,12 +408,12 @@ export default {
       this.$bvModal.show('modal-player');
       this.modalState = 'update';
       // populate form
-      let { id, country_id, club_id, name, alias, gender, img, height, weight, achievement } = item;
+      let { id, country_id, club_id, name, nickname, gender, img, height, weight, achievement } = item;
       this.form.id = id;
       this.form.country_id = country_id;
       this.form.club_id = club_id;
       this.form.name = name;
-      this.form.alias = alias;
+      this.form.nickname = nickname;
       this.form.gender = gender;
       this.form.img = img;
       this.form.height = height;
@@ -385,7 +426,7 @@ export default {
       this.form.country_id = null;
       this.form.club_id = null;
       this.form.name = null;
-      this.form.alias = null;
+      this.form.nickname = null;
       this.form.gender = null;
       this.form.img = null;
       this.form.height = null;

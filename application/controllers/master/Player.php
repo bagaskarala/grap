@@ -37,7 +37,7 @@ class Player extends MY_Controller
             'country_id'  => $request->country_id,
             'club_id'     => $request->club_id,
             'name'        => $request->name,
-            'alias'       => $request->alias,
+            'nickname'    => $request->nickname,
             'gender'      => $request->gender,
             'img'         => $request->img,
             'height'      => $request->height,
@@ -67,7 +67,7 @@ class Player extends MY_Controller
             'country_id'  => $request->country_id,
             'club_id'     => $request->club_id,
             'name'        => $request->name,
-            'alias'       => $request->alias,
+            'nickname'    => $request->nickname,
             'gender'      => $request->gender,
             'img'         => $request->img,
             'height'      => $request->height,
@@ -110,7 +110,7 @@ class Player extends MY_Controller
     {
         $request = parse_post_data();
 
-        $result = $this->player->filter($request->min_weight, $request->max_weight);
+        $result = $this->player->filter($request->division_id, $request->min_weight, $request->max_weight);
 
         if (count($result) == 0) {
             return $this->send_json_output([], true, 200);
@@ -118,6 +118,23 @@ class Player extends MY_Controller
             return $this->send_json_output($result, true, 200);
         } else {
             return $this->send_json_output("Failed get data", false, 400);
+        }
+    }
+
+    public function search($keyword = null)
+    {
+        if ($keyword === null) {
+            $result = $this->player->get_all_player();
+        } else {
+            $result = $this->player->search($keyword);
+        }
+
+        if (count($result) == 0) {
+            return $this->send_json_output([], true, 200);
+        } else if ($result) {
+            return $this->send_json_output($result, true, 200);
+        } else {
+            return $this->send_json_output("Failed search data", false, 400);
         }
     }
 };

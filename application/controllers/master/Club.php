@@ -95,4 +95,22 @@ class Club extends MY_Controller
             return $this->send_json_output("Failed Delete Data", false, 400);
         }
     }
+
+    public function search($keyword = null)
+    {
+        if ($keyword === null) {
+            $this->club->order_by('club');
+            $result = $this->club->get_all_array();
+        } else {
+            $result = $this->club->search($keyword);
+        }
+
+        if (count($result) == 0) {
+            return $this->send_json_output([], true, 200);
+        } else if ($result) {
+            return $this->send_json_output($result, true, 200);
+        } else {
+            return $this->send_json_output("Failed search data", false, 400);
+        }
+    }
 };

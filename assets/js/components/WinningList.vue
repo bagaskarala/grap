@@ -30,7 +30,8 @@
                   <p class="font-weight-bold m-0">
                     {{item.winning}}
                   </p>
-                  <span>{{item.description}}</span>
+                  <p class="mb-1">{{item.point? item.point:'null'}} points</p>
+                  <p class="mb-0 small text-muted">{{item.description}}</p>
                 </div>
                 <div>
                   <button
@@ -72,6 +73,18 @@
             placeholder="Enter winning"
           >
         </div>
+
+        <div class="form-group">
+          <label for="point">Point</label>
+          <input
+            id="point"
+            v-model.number="form.point"
+            type="number"
+            class="form-control"
+            placeholder="Enter point"
+          >
+        </div>
+
         <div class="form-group">
           <label for="description">Description</label>
           <textarea
@@ -118,6 +131,7 @@ export default {
       winnings: [],
       form: {
         winning: null,
+        point: null,
         description: null
       },
       modalState: null,
@@ -140,6 +154,7 @@ export default {
       try {
         await this.$axios.post('master/winning/insert', {
           winning: this.form.winning,
+          point: this.form.point,
           description: this.form.description
         });
 
@@ -158,6 +173,7 @@ export default {
       try {
         await this.$axios.post(`master/winning/update/${this.form.id}`, {
           winning: this.form.winning,
+          point: this.form.point,
           description: this.form.description
         });
 
@@ -216,15 +232,17 @@ export default {
       this.$bvModal.show('modal-winning');
       this.modalState = 'update';
       // populate form
-      let { id, winning, description } = item;
+      let { id, winning, point, description } = item;
       this.form.id = id;
       this.form.winning = winning;
+      this.form.point = point;
       this.form.description = description;
     },
 
     resetData() {
       this.errorValidation = null;
       this.form.winning = null;
+      this.form.point = null;
       this.form.description = null;
     }
   },

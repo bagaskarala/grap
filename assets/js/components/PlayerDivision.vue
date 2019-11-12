@@ -56,12 +56,12 @@
                 :disabled="playerDivisions.length==0"
                 @click.prevent="resetPool()"
               >Reset Pool</button>
-              <button
+              <!-- <button
                 class="btn btn-sm btn-primary mr-1"
                 type="button"
                 :disabled="playerDivisions.length==0"
                 @click.prevent="calculateClassement()"
-              >Calculate Match Result</button>
+              >Calculate Match Result</button> -->
             </div>
 
             <div
@@ -153,7 +153,7 @@
               v-for="item in divisions"
               :key="item.id"
               :value="item.id"
-            >{{item.division}}</option>
+            >{{item.division}} ({{item.gender}})</option>
           </select>
         </div>
         <div class="form-group">
@@ -164,21 +164,23 @@
             </div>
             <input
               id="min_weight"
-              v-model="playerFilter.minWeight"
-              type="text"
+              v-model.number="playerFilter.minWeight"
+              type="number"
               class="form-control"
               placeholder="Enter Min Weight"
               title="Min Weight"
-              maxlength="3"
+              max="200"
+              min="0"
             >
             <input
               id="max_weight"
-              v-model="playerFilter.maxWeight"
-              type="text"
+              v-model.number="playerFilter.maxWeight"
+              type="number"
               class="form-control"
               placeholder="Enter Max Weight"
               title="Max Weight"
-              maxlength="3"
+              max="200"
+              min="0"
             >
           </div>
           <select
@@ -239,6 +241,7 @@
 </template>
 
 <script>
+var timeoutDebounce = null;
 export default {
   name: 'PlayerDivision',
   data() {
@@ -261,7 +264,7 @@ export default {
       },
       playerFilter: {
         minWeight: 0,
-        maxWeight: 200
+        maxWeight: 100
       },
       modalState: null,
       errorValidation: null,
@@ -306,6 +309,7 @@ export default {
     async getFilteredPlayers() {
       try {
         const players = await this.$axios.post('master/player/filter', {
+          division_id: this.form.division_id,
           min_weight: this.playerFilter.minWeight,
           max_weight: this.playerFilter.maxWeight
         });
@@ -346,7 +350,7 @@ export default {
       } catch (error) {
         console.log(error.response);
         this.errorValidation = error.response.data.message;
-        this.$noty.error('Failed Insert Data');
+        this.$noty.error('Failed Insert Data.');
       }
     },
 
@@ -429,7 +433,11 @@ export default {
     async checkMatchSystem(divisionId) {
       try {
         const result = await this.$axios.get(`entry/player_division/check_match_system/${divisionId}`);
-        this.matchSystem = result.data.data.match_system;
+
+        // cetak match system jika terdapat match pada divisi tsb
+        if (result.data.data != null) {
+          this.matchSystem = result.data.data.match_system;
+        }
       } catch (error) {
         console.log(error.response);
         this.$noty.error('Failed. ' + error.response.data.message);
@@ -472,17 +480,17 @@ export default {
       }
     },
 
-    async calculateClassement() {
-      try {
-        const a = await this.$axios.post(`entry/player_division/calculate_classement/${this.filterDivisionId}`);
-        console.log(a.data.data);
-        this.$noty.success('Success Calculate Classement');
-      } catch (error) {
-        console.log(error.response);
-        this.$noty.error('Failed Calculate Classement. ' + error.response.data.message);
-      }
-      this.filterData(this.filterDivisionId);
-    },
+    // async calculateClassement() {
+    //   try {
+    //     const a = await this.$axios.post(`entry/player_division/calculate_classement/${this.filterDivisionId}`);
+    //     console.log(a.data.data);
+    //     this.$noty.success('Success Calculate Classement');
+    //   } catch (error) {
+    //     console.log(error.response);
+    //     this.$noty.error('Failed Calculate Classement. ' + error.response.data.message);
+    //   }
+    //   this.filterData(this.filterDivisionId);
+    // },
 
     addData() {
       this.resetData();
@@ -534,14 +542,36 @@ export default {
       // set max min weight
       this.playerFilter.minWeight = findDivision.min_weight;
       this.playerFilter.maxWeight = findDivision.max_weight;
+
+      // reset player
+      this.form.player_id = null;
+
+      // Debounce 1s
+      clearTimeout(timeoutDebounce);
+      var self = this;
+      timeoutDebounce = setTimeout(function () {
+        self.getFilteredPlayers();
+      }, 500);
     },
 
     playerFilter: {
       handler: function (newValue) {
+        // jika negatif maka jadikan positif
+        if (this.playerFilter.minWeight < 0) this.playerFilter.minWeight = Math.abs(this.playerFilter.minWeight);
+        if (this.playerFilter.maxWeight < 0) this.playerFilter.maxWeight = Math.abs(this.playerFilter.maxWeight);
+
+        if (this.playerFilter.maxWeight > 200) this.playerFilter.maxWeight = 200;
+        if (this.playerFilter.minWeight > 200) this.playerFilter.minWeight = 200;
+
         this.playerFilter.minWeight = newValue.minWeight;
         this.playerFilter.maxWeight = newValue.maxWeight;
-        // NEED DEBOUNCE, HEMAT RESOURCE
-        this.getFilteredPlayers();
+
+        // Debounce 1s
+        clearTimeout(timeoutDebounce);
+        var self = this;
+        timeoutDebounce = setTimeout(function () {
+          self.getFilteredPlayers();
+        }, 500);
       },
       deep: true,
       immediate: true

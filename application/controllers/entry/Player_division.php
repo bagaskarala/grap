@@ -43,13 +43,24 @@ class Player_division extends MY_Controller
         if ($this->player_division->validate($data) == false) {
             return $this->send_json_output(validation_errors(), false, 422);
         } else {
-            $result = $this->player_division->insert($data);
+            if ($this->player_division->check_player($data)) {
+                $this->player_division->insert($data);
+                $result = [
+                    'status' => true,
+                    'data'   => 'Success Insert Player to Division',
+                ];
+            } else {
+                $result = [
+                    'status'  => false,
+                    'message' => 'Selected player has been added to division',
+                ];
+            }
         }
 
-        if ($result) {
-            return $this->send_json_output($result, true, 200);
+        if ($result['status']) {
+            return $this->send_json_output($result['data'], true, 200);
         } else {
-            return $this->send_json_output("Failed Insert Data", false, 400);
+            return $this->send_json_output($result['message'], false, 400);
         }
     }
 
@@ -156,16 +167,16 @@ class Player_division extends MY_Controller
         }
     }
 
-    public function calculate_classement($division_id)
-    {
-        $result = $this->player_division->calculate_classement($division_id);
+    // public function calculate_classement($division_id)
+    // {
+    //     $result = $this->player_division->calculate_classement($division_id);
 
-        if ($result['status']) {
-            return $this->send_json_output($result['data'], true, 200);
-        } else {
-            return $this->send_json_output($result['message'], false, 400);
-        }
-    }
+    //     if ($result['status']) {
+    //         return $this->send_json_output($result['data'], true, 200);
+    //     } else {
+    //         return $this->send_json_output($result['message'], false, 400);
+    //     }
+    // }
 
     public function get_pool_winner($division_id)
     {

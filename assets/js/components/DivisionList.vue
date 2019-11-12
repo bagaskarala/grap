@@ -30,7 +30,7 @@
                   <p class="font-weight-bold m-0">
                     <span>{{item.division}}</span>
                     <i
-                      :class="[item.gender == 'male'? 'fa-male text-primary':'fa-female text-danger', 'fa']"
+                      :class="generateGenderIcon(item.gender)"
                       :title="item.gender"
                     ></i>
                   </p>
@@ -209,7 +209,8 @@ export default {
       divisions: [],
       genderOptions: [
         { text: 'Male', value: 'male' },
-        { text: 'Female', value: 'female' }
+        { text: 'Female', value: 'female' },
+        { text: 'Male and Female', value: 'all' }
       ],
       form: {
         id: null,
@@ -333,6 +334,16 @@ export default {
         .catch(err => {
           console.log('Error ', err);
         });
+    },
+
+    generateGenderIcon(gender) {
+      if (gender == 'male') {
+        return 'fa fa-male text-primary';
+      } else if (gender == 'female') {
+        return 'fa fa-female text-danger';
+      } else {
+        return 'fa fa-genderless text-dark';
+      }
     },
 
     addData() {
