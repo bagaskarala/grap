@@ -4372,6 +4372,13 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'LogMatch',
@@ -4409,45 +4416,28 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     matchRounds: function matchRounds() {
       var _this = this;
 
-      function checkWinner(m, playerNumber) {
-        // jika belum ada pemenang atau skipped match, set winner ke null
-        // lalu set true dan false tergantung pemenang
-        if (m.winner == null || m.winner == -1) return null;else if (m.winner == 0) return true;
-
-        if (playerNumber == 1) {
-          return m.winner == m.pd1_id ? true : false;
-        } else {
-          return m.winner == m.pd2_id ? true : false;
-        }
-      }
-
-      function checkPlayer(m, playerNumber) {
-        if (m.match_status == 2 && m.winner == -1) return 'Skipped Match';
-        return playerNumber == 1 ? m.player1_name : m.player2_name;
-      }
-
-      var container = [];
+      var container = []; // looping pada match index
 
       var _loop = function _loop(index) {
-        var round1 = _this.logMatchs.filter(function (f) {
-          return f.match_index == index;
+        var roundGames = _this.logMatchs.filter(function (f) {
+          return f.match_index == index && f.match_number != 0;
         }).map(function (m) {
           return {
             player1: {
               id: m.pd1_id,
-              name: checkPlayer(m, 1),
-              winner: checkWinner(m, 1)
+              name: _this.checkPlayer(m, 1),
+              winner: _this.checkWinner(m, 1)
             },
             player2: {
               id: m.pd2_id,
-              name: checkPlayer(m, 2),
-              winner: checkWinner(m, 2)
+              name: _this.checkPlayer(m, 2),
+              winner: _this.checkWinner(m, 2)
             }
           };
         });
 
         container.push({
-          games: round1
+          games: roundGames
         });
       };
 
@@ -4456,6 +4446,27 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       }
 
       return container;
+    },
+    thirdPlaceRound: function thirdPlaceRound() {
+      if (!this.filterDivisionId) return [];
+      var thirdPlaceMatch = this.logMatchs.find(function (item) {
+        return item.match_number == 0;
+      });
+      if (!thirdPlaceMatch) return [];
+      return [{
+        games: [{
+          player1: {
+            id: thirdPlaceMatch.pd1_id,
+            name: this.checkPlayer(thirdPlaceMatch, 1),
+            winner: this.checkWinner(thirdPlaceMatch, 1)
+          },
+          player2: {
+            id: thirdPlaceMatch.pd2_id,
+            name: this.checkPlayer(thirdPlaceMatch, 2),
+            winner: this.checkWinner(thirdPlaceMatch, 2)
+          }
+        }]
+      }];
     },
     matchIndex: function matchIndex() {
       var arr = Object.values(this.logMatchs.map(function (item) {
@@ -4502,6 +4513,22 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     }
   },
   methods: {
+    checkPlayer: function checkPlayer(m, playerNumber) {
+      // ambil player
+      if (m.match_status == 2 && m.winner == -1) return 'Skipped Match';
+      return playerNumber == 1 ? "".concat(m.player1_name || '...', " (").concat(m.player1_club_alias || '...', ")") : "".concat(m.player2_name || '...', " (").concat(m.player2_club_alias || '...', ")");
+    },
+    checkWinner: function checkWinner(m, playerNumber) {
+      // jika belum ada pemenang atau skipped match, set winner ke null
+      // lalu set true dan false tergantung pemenang
+      if (m.winner == null || m.winner == -1) return null;else if (m.winner == 0) return true;
+
+      if (playerNumber == 1) {
+        return m.winner == m.pd1_id ? true : false;
+      } else {
+        return m.winner == m.pd2_id ? true : false;
+      }
+    },
     getDivisions: function () {
       var _getDivisions = _asyncToGenerator(
       /*#__PURE__*/
@@ -43626,8 +43653,35 @@ var render = function() {
                   ? _c(
                       "div",
                       [
-                        _c("bracket", {
+                        _c("Bracket", {
                           attrs: { rounds: _vm.matchRounds },
+                          scopedSlots: _vm._u(
+                            [
+                              {
+                                key: "player",
+                                fn: function(player) {
+                                  return [
+                                    _vm._v(
+                                      "\n                " +
+                                        _vm._s(player.player.name) +
+                                        "\n              "
+                                    )
+                                  ]
+                                }
+                              }
+                            ],
+                            null,
+                            false,
+                            487926107
+                          )
+                        }),
+                        _vm._v(" "),
+                        _vm.thirdPlaceRound.length != 0
+                          ? _c("span", [_vm._v("3rd place")])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c("Bracket", {
+                          attrs: { rounds: _vm.thirdPlaceRound },
                           scopedSlots: _vm._u(
                             [
                               {

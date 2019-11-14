@@ -30,11 +30,13 @@ class Log_match_model extends MY_Model
             p1.name as player1_name,
             p1.weight as player1_weight,
             c1.club as player1_club,
+            c1.alias as player1_club_alias,
             ct1.country as player1_country,
             pd2.player_id as player2_id,
             p2.name as player2_name,
             p2.weight as player2_weight,
             c2.club as player2_club,
+            c2.alias as player2_club_alias,
             ct2.country as player2_country'
         );
         $this->db->from("$this->table as lm");
@@ -114,11 +116,12 @@ class Log_match_model extends MY_Model
              * ELIMINATION MATCHING
              */
             // cari jumlah kolom bracket
-            // misal player=15, maka 2^n terdekat diatasnya yaitu 16, jadi n=4
-            $max_match_index = pow(2, ceil(log($player_count, 2)));
+            // misal player=15, maka 2^n terdekat diatasnya yaitu 16, jadi max match index=4
+            $max_match_index = ceil(log($player_count, 2));
+            $max_match       = pow(2, $max_match_index);
 
             // loop untuk membuat schedule elimination kosongan
-            $divider = $max_match_index / 2;
+            $divider = $max_match / 2;
             for ($idx = 1; $idx <= $max_match_index; $idx++) {
                 $next_num = 1;
                 for ($num = 1; $num <= $divider; $num++) {
@@ -141,6 +144,17 @@ class Log_match_model extends MY_Model
                 }
                 // setiap next index (kolom), jumlah pemain separo index sebelumnya
                 $divider /= 2;
+
+                // generate third place round
+                if ($idx == $max_match_index) {
+                    $this->insert([
+                        'division_id'  => $division_id,
+                        'match_index'  => $idx,
+                        'match_system' => $match_system,
+                        'match_number' => 0,
+                        'next_match'   => null,
+                    ]);
+                }
             }
         } else {
             /**
@@ -443,7 +457,7 @@ class Log_match_model extends MY_Model
         if ($idx['max_match_index'] == $log_match['match_index']) {
             return [
                 'status' => true,
-                'data'   => 'Final finished',
+                'data'   => 'Final match / Third place',
             ];
         }
 
@@ -479,6 +493,64 @@ class Log_match_model extends MY_Model
             $result = $this->update($data, $where);
         }
 
+        // masukkan ke third place round
+        if ($index == $idx['max_match_index']) {
+            // logmatch third place
+            $where_third_place = [
+                'match_index'  => $index,
+                'match_number' => 0,
+                'division_id'  => $log_match['division_id'],
+            ];
+            $destination_third_place = $this->get_where($where_third_place);
+
+            //
+            $arr_source_third_place = [$log_match['pd1_id'], $log_match['pd2_id']];
+            if ($destination_third_place['pd1_id'] != null) {
+                // cek destination p1, apakah ada player dari sumber
+                if (in_array($destination_third_place['pd1_id'], $arr_source_third_place)) {
+                    // jika sama, maka update pd1
+
+                    // pilih yang kalah
+                    if ($log_match['winner'] == $log_match['pd1_id']) {
+                        // jika p1 menang
+                        // masukkan p2 yang kalah ke third place
+                        $this->update(['pd1_id' => $log_match['pd2_id']], $where_third_place);
+                    } else {
+
+                        // jika p2 menang
+                        // masukkan p1 yang kalah ke third place
+                        $this->update(['pd1_id' => $log_match['pd1_id']], $where_third_place);
+                    }
+                } else {
+                    // jika beda, maka update pd2 / mengisi kolom yang kosong
+
+                    // pilih yang kalah
+                    if ($log_match['winner'] == $log_match['pd1_id']) {
+                        // jika p1 menang
+                        // masukkan p2 yang kalah ke third place
+                        $this->update(['pd2_id' => $log_match['pd2_id']], $where_third_place);
+                    } else {
+                        // jika p2 menang
+                        // masukkan p1 yang kalah ke third place
+                        $this->update(['pd2_id' => $log_match['pd1_id']], $where_third_place);
+                    }
+                }
+
+            } else {
+                // pilih yang kalah
+                if ($log_match['winner'] == $log_match['pd1_id']) {
+                    // jika p1 menang
+                    // masukkan p2 yang kalah ke third place
+                    $this->update(['pd1_id' => $log_match['pd2_id']], $where_third_place);
+                } else {
+
+                    // jika p2 menang
+                    // masukkan p1 yang kalah ke third place
+                    $this->update(['pd1_id' => $log_match['pd1_id']], $where_third_place);
+                }
+            }
+        }
+
         if ($result) {
             return [
                 'status' => true,
@@ -491,7 +563,6 @@ class Log_match_model extends MY_Model
             ];
         }
     }
-
 }
 
 /* End of file Log_match_model.php */

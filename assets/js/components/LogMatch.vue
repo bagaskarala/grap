@@ -98,11 +98,18 @@
             >Match Finished : {{countMatchFinished}}</div>
 
             <div v-if="selectedMatchSystem=='elimination'">
-              <bracket :rounds="matchRounds">
+              <Bracket :rounds="matchRounds">
                 <template v-slot:player="player">
                   {{ player.player.name }}
                 </template>
-              </bracket>
+              </Bracket>
+
+              <span v-if="thirdPlaceRound.length!=0">3rd place</span>
+              <Bracket :rounds="thirdPlaceRound">
+                <template v-slot:player="player">
+                  {{ player.player.name }}
+                </template>
+              </Bracket>
             </div>
 
             <b-table
@@ -309,45 +316,52 @@ export default {
 
   computed: {
     matchRounds() {
-      function checkWinner(m, playerNumber) {
-        // jika belum ada pemenang atau skipped match, set winner ke null
-        // lalu set true dan false tergantung pemenang
-        if (m.winner == null || m.winner == -1) return null;
-        else if (m.winner == 0) return true;
-
-        if (playerNumber == 1) {
-          return m.winner == m.pd1_id ? true : false;
-        } else {
-          return m.winner == m.pd2_id ? true : false;
-        }
-      }
-
-      function checkPlayer(m, playerNumber) {
-        if (m.match_status == 2 && m.winner == -1) return 'Skipped Match';
-        return playerNumber == 1 ? m.player1_name : m.player2_name;
-      }
-
       const container = [];
-
+      // looping pada match index
       for (let index = this.matchIndex.min; index <= this.matchIndex.max; index++) {
-        const round1 = this.logMatchs.filter(f => f.match_index == index)
+        const roundGames = this.logMatchs.filter(f => f.match_index == index && f.match_number != 0)
           .map(m => {
             return {
               player1: {
                 id: m.pd1_id,
-                name: checkPlayer(m, 1),
-                winner: checkWinner(m, 1)
+                name: this.checkPlayer(m, 1),
+                winner: this.checkWinner(m, 1)
               },
               player2: {
                 id: m.pd2_id,
-                name: checkPlayer(m, 2),
-                winner: checkWinner(m, 2)
+                name: this.checkPlayer(m, 2),
+                winner: this.checkWinner(m, 2)
               }
             };
           });
-        container.push({ games: round1 });
+        container.push({ games: roundGames });
       }
       return container;
+    },
+
+    thirdPlaceRound() {
+      if (!this.filterDivisionId) return [];
+      const thirdPlaceMatch = this.logMatchs.find(item => item.match_number == 0);
+      if (!thirdPlaceMatch) return [];
+
+      return [
+        {
+          games: [
+            {
+              player1: {
+                id: thirdPlaceMatch.pd1_id,
+                name: this.checkPlayer(thirdPlaceMatch, 1),
+                winner: this.checkWinner(thirdPlaceMatch, 1)
+              },
+              player2: {
+                id: thirdPlaceMatch.pd2_id,
+                name: this.checkPlayer(thirdPlaceMatch, 2),
+                winner: this.checkWinner(thirdPlaceMatch, 2)
+              }
+            }
+          ]
+        }
+      ];
     },
 
     matchIndex() {
@@ -404,6 +418,25 @@ export default {
   },
 
   methods: {
+    checkPlayer(m, playerNumber) {
+      // ambil player
+      if (m.match_status == 2 && m.winner == -1) return 'Skipped Match';
+      return playerNumber == 1 ? `${m.player1_name || '...'} (${m.player1_club_alias || '...'})` : `${m.player2_name || '...'} (${m.player2_club_alias || '...'})`;
+    },
+
+    checkWinner(m, playerNumber) {
+      // jika belum ada pemenang atau skipped match, set winner ke null
+      // lalu set true dan false tergantung pemenang
+      if (m.winner == null || m.winner == -1) return null;
+      else if (m.winner == 0) return true;
+
+      if (playerNumber == 1) {
+        return m.winner == m.pd1_id ? true : false;
+      } else {
+        return m.winner == m.pd2_id ? true : false;
+      }
+    },
+
     async getDivisions() {
       try {
         const divisions = await this.$axios.get('master/division/get_all');
