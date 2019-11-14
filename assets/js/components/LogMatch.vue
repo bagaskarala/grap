@@ -62,7 +62,7 @@
                     type="button"
                     title="Clear Schedule"
                     :disabled="logMatchs.length == 0 || filterDivisionId==null"
-                    @click.prevent="resetSchedule()"
+                    @click.prevent="confirmResetSchedule()"
                   >Clear</button>
                 </div>
               </div>
@@ -81,7 +81,7 @@
                 class="btn btn-sm btn-secondary"
                 type="button"
                 :disabled="logMatchs.length == 0"
-                @click.prevent="resetPlayer()"
+                @click.prevent="confirmResetPlayer()"
               >Reset Player</button>
             </div>
           </div>
@@ -91,6 +91,11 @@
               v-show="logMatchs.length == 0"
               class="my-3 text-center"
             >{{filterDivisionId == null? 'Select division to view log match' : 'Empty Data'}}</div>
+
+            <div
+              v-if="filterDivisionId && logMatchs.length != 0"
+              class="alert alert-info"
+            >Match Finished : {{countMatchFinished}}</div>
 
             <div v-if="selectedMatchSystem=='elimination'">
               <bracket :rounds="matchRounds">
@@ -114,6 +119,16 @@
                   <span>{{data.item.division}}</span><br>
                 </div>
               </template>
+
+              <template v-slot:cell(pool_number)="data">
+                <span
+                  class="badge"
+                  :class="[data.item.pool_number ? data.item.pool_number == 'A'? 'badge-dark':'badge-danger' : null]"
+                >
+                  {{data.item.pool_number != null? data.item.pool_number : ''}}
+                </span>
+              </template>
+
               <template v-slot:cell(player1_name)="data">
                 <div
                   class="min-width-10"
@@ -123,6 +138,7 @@
                   <span class="small text-muted">{{data.item.player1_club}}</span>
                 </div>
               </template>
+
               <template v-slot:cell(player2_name)="data">
                 <div
                   class="min-width-10"
@@ -132,9 +148,11 @@
                   <span class="small text-muted">{{data.item.player2_club}}</span>
                 </div>
               </template>
+
               <template v-slot:cell(vs)="data">
                 <span class="h5 font-weight-bold">VS</span>
               </template>
+
               <template v-slot:cell(action)="data">
                 <span
                   v-if="data.item.pd1_id == null && data.item.pd2_id == null && data.item.match_status == 2"
@@ -150,7 +168,8 @@
                     @click.prevent="goToDetail(data.item)"
                   ><i class="fa fa-eye fa-fw"></i></button>
                   <button
-                    :disabled="data.item.match_status == 2"
+                    :title="lockMatch? 'Disabled when match has been started' : 'Edit player matching'"
+                    :disabled="lockMatch"
                     class="btn btn-sm btn-warning"
                     @click.prevent="loadData(data.item)"
                   ><i class="fa fa-edit fa-fw"></i></button>
@@ -371,6 +390,16 @@ export default {
           'key': 'action'
         }
       ];
+    },
+
+    countMatchFinished() {
+      return this.logMatchs.filter(item => item.winner != null && item.winner != -1).length
+        + ' / ' +
+        this.logMatchs.length;
+    },
+
+    lockMatch() {
+      return this.logMatchs.find(item => item.winner != null && item.winner >= 0) ? true : false;
     }
   },
 
@@ -492,16 +521,33 @@ export default {
       }
     },
 
-    confirmDelete(item) {
-      this.$bvModal.msgBoxConfirm('Please confirm that you want to delete this match', {
-        title: 'Delete Data',
+    confirmResetSchedule() {
+      this.$bvModal.msgBoxConfirm('Please confirm that you want to clear this match schedule', {
+        title: 'Clear Schedule',
         size: 'md',
         okVariant: 'danger',
         centered: true
       })
         .then(value => {
           if (value) {
-            this.deleteData(item);
+            this.resetSchedule();
+          }
+        })
+        .catch(err => {
+          console.log('Error ', err);
+        });
+    },
+
+    confirmResetPlayer() {
+      this.$bvModal.msgBoxConfirm('Please confirm that you want to reset player schedule', {
+        title: 'Reset Player',
+        size: 'md',
+        okVariant: 'danger',
+        centered: true
+      })
+        .then(value => {
+          if (value) {
+            this.resetPlayer();
           }
         })
         .catch(err => {

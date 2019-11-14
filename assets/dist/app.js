@@ -140,6 +140,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('CountryList', __webpack_re
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('ClubList', __webpack_require__(/*! ./components/ClubList.vue */ "./assets/js/components/ClubList.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('PlayerList', __webpack_require__(/*! ./components/PlayerList.vue */ "./assets/js/components/PlayerList.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('WinningList', __webpack_require__(/*! ./components/WinningList.vue */ "./assets/js/components/WinningList.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('RefereeList', __webpack_require__(/*! ./components/RefereeList.vue */ "./assets/js/components/RefereeList.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('PlayerDivision', __webpack_require__(/*! ./components/PlayerDivision.vue */ "./assets/js/components/PlayerDivision.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('LogMatch', __webpack_require__(/*! ./components/LogMatch.vue */ "./assets/js/components/LogMatch.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('LogMatchDetail', __webpack_require__(/*! ./components/LogMatchDetail.vue */ "./assets/js/components/LogMatchDetail.vue")["default"]);
@@ -682,6 +683,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlayerList_vue_vue_type_template_id_444e8f00___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlayerList_vue_vue_type_template_id_444e8f00___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./assets/js/components/RefereeList.vue":
+/*!**********************************************!*\
+  !*** ./assets/js/components/RefereeList.vue ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _RefereeList_vue_vue_type_template_id_41a8844d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RefereeList.vue?vue&type=template&id=41a8844d& */ "./assets/js/components/RefereeList.vue?vue&type=template&id=41a8844d&");
+/* harmony import */ var _RefereeList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RefereeList.vue?vue&type=script&lang=js& */ "./assets/js/components/RefereeList.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _RefereeList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _RefereeList_vue_vue_type_template_id_41a8844d___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _RefereeList_vue_vue_type_template_id_41a8844d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "assets/js/components/RefereeList.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./assets/js/components/RefereeList.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./assets/js/components/RefereeList.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RefereeList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./RefereeList.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./assets/js/components/RefereeList.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RefereeList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./assets/js/components/RefereeList.vue?vue&type=template&id=41a8844d&":
+/*!*****************************************************************************!*\
+  !*** ./assets/js/components/RefereeList.vue?vue&type=template&id=41a8844d& ***!
+  \*****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RefereeList_vue_vue_type_template_id_41a8844d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./RefereeList.vue?vue&type=template&id=41a8844d& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./assets/js/components/RefereeList.vue?vue&type=template&id=41a8844d&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RefereeList_vue_vue_type_template_id_41a8844d___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RefereeList_vue_vue_type_template_id_41a8844d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -4283,6 +4353,25 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'LogMatch',
@@ -4400,6 +4489,16 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       }, {
         'key': 'action'
       }];
+    },
+    countMatchFinished: function countMatchFinished() {
+      return this.logMatchs.filter(function (item) {
+        return item.winner != null && item.winner != -1;
+      }).length + ' / ' + this.logMatchs.length;
+    },
+    lockMatch: function lockMatch() {
+      return this.logMatchs.find(function (item) {
+        return item.winner != null && item.winner >= 0;
+      }) ? true : false;
     }
   },
   methods: {
@@ -4633,17 +4732,33 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
       return deleteData;
     }(),
-    confirmDelete: function confirmDelete(item) {
+    confirmResetSchedule: function confirmResetSchedule() {
       var _this3 = this;
 
-      this.$bvModal.msgBoxConfirm('Please confirm that you want to delete this match', {
-        title: 'Delete Data',
+      this.$bvModal.msgBoxConfirm('Please confirm that you want to clear this match schedule', {
+        title: 'Clear Schedule',
         size: 'md',
         okVariant: 'danger',
         centered: true
       }).then(function (value) {
         if (value) {
-          _this3.deleteData(item);
+          _this3.resetSchedule();
+        }
+      })["catch"](function (err) {
+        console.log('Error ', err);
+      });
+    },
+    confirmResetPlayer: function confirmResetPlayer() {
+      var _this4 = this;
+
+      this.$bvModal.msgBoxConfirm('Please confirm that you want to reset player schedule', {
+        title: 'Reset Player',
+        size: 'md',
+        okVariant: 'danger',
+        centered: true
+      }).then(function (value) {
+        if (value) {
+          _this4.resetPlayer();
         }
       })["catch"](function (err) {
         console.log('Error ', err);
@@ -5413,6 +5528,43 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'LogMatchDetail',
@@ -5447,6 +5599,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         match_status: 0,
         winner: null,
         winning_id: null,
+        referee_id: null,
         pd1_yellowcard: 0,
         pd1_redcard: 0,
         pd1_greencard: 0,
@@ -5454,7 +5607,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         pd2_redcard: 0,
         pd2_greencard: 0
       },
-      winningOptions: null
+      winningOptions: [],
+      refereeOptions: []
     };
   },
   computed: {
@@ -5519,11 +5673,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return getDetailLogMatch;
     }(),
-    getWinning: function () {
-      var _getWinning = _asyncToGenerator(
+    getWinnings: function () {
+      var _getWinnings = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var winning;
+        var winnings;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -5533,8 +5687,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return this.$axios.get('master/winning/get_all');
 
               case 3:
-                winning = _context2.sent;
-                this.winningOptions = winning.data.data;
+                winnings = _context2.sent;
+                this.winningOptions = winnings.data.data;
                 _context2.next = 11;
                 break;
 
@@ -5552,28 +5706,68 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2, this, [[0, 7]]);
       }));
 
-      function getWinning() {
-        return _getWinning.apply(this, arguments);
+      function getWinnings() {
+        return _getWinnings.apply(this, arguments);
       }
 
-      return getWinning;
+      return getWinnings;
     }(),
-    updateData: function () {
-      var _updateData = _asyncToGenerator(
+    getReferees: function () {
+      var _getReferees = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var a;
+        var referees;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.prev = 0;
                 _context3.next = 3;
+                return this.$axios.get('master/referee/get_all');
+
+              case 3:
+                referees = _context3.sent;
+                this.refereeOptions = referees.data.data;
+                _context3.next = 11;
+                break;
+
+              case 7:
+                _context3.prev = 7;
+                _context3.t0 = _context3["catch"](0);
+                console.log(_context3.t0.response);
+                this.$noty.error('Failed fetch referee');
+
+              case 11:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this, [[0, 7]]);
+      }));
+
+      function getReferees() {
+        return _getReferees.apply(this, arguments);
+      }
+
+      return getReferees;
+    }(),
+    updateData: function () {
+      var _updateData = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var a;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.prev = 0;
+                _context4.next = 3;
                 return this.$axios.post("entry/log_match/update/".concat(this.logMatchDetail.id), {
                   division_id: this.logMatchDetail.division_id,
                   time: this.form.elapsedTime ? this.form.elapsedTime : this.convertTimeToMillisecond(this.form.time),
                   winner: this.form.winner,
                   winning_id: this.form.winning_id,
+                  referee_id: this.form.referee_id,
                   match_status: this.form.match_status,
                   pd1_yellowcard: this.form.pd1_yellowcard,
                   pd1_redcard: this.form.pd1_redcard,
@@ -5584,27 +5778,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 3:
-                a = _context3.sent;
+                a = _context4.sent;
                 console.log(a.data);
                 this.getDetailLogMatch();
                 this.$noty.success('Success Update Data');
                 this.$bvModal.hide('modal-update-log-match');
-                _context3.next = 15;
+                _context4.next = 15;
                 break;
 
               case 10:
-                _context3.prev = 10;
-                _context3.t0 = _context3["catch"](0);
-                console.log(_context3.t0.response);
-                this.errorValidation = _context3.t0.response.data.message;
+                _context4.prev = 10;
+                _context4.t0 = _context4["catch"](0);
+                console.log(_context4.t0.response);
+                this.errorValidation = _context4.t0.response.data.message;
                 this.$noty.error('Failed Update Data');
 
               case 15:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, this, [[0, 10]]);
+        }, _callee4, this, [[0, 10]]);
       }));
 
       function updateData() {
@@ -5620,6 +5814,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           match_status = _this$logMatchDetail.match_status,
           time = _this$logMatchDetail.time,
           winning_id = _this$logMatchDetail.winning_id,
+          referee_id = _this$logMatchDetail.referee_id,
           winner = _this$logMatchDetail.winner,
           pd1_redcard = _this$logMatchDetail.pd1_redcard,
           pd1_yellowcard = _this$logMatchDetail.pd1_yellowcard,
@@ -5633,6 +5828,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.form.time.seconds = this.convertMillisecondToTime(time, 'seconds');
       this.form.time.milliseconds = this.convertMillisecondToTime(time, 'milliseconds');
       this.form.winning_id = winning_id;
+      this.form.referee_id = referee_id;
       this.form.winner = winner;
       this.form.pd1_yellowcard = pd1_yellowcard;
       this.form.pd1_redcard = pd1_redcard;
@@ -5644,18 +5840,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     resetData: function () {
       var _resetData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
-                _context4.prev = 0;
-                _context4.next = 3;
+                _context5.prev = 0;
+                _context5.next = 3;
                 return this.$axios.post("entry/log_match/update/".concat(this.logMatchDetail.id), {
                   division_id: this.logMatchDetail.division_id,
                   time: null,
                   winner: null,
                   winning_id: null,
+                  referee_id: null,
                   match_status: 0,
                   pd1_point: 0,
                   pd1_yellowcard: 0,
@@ -5670,21 +5867,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 3:
                 this.getDetailLogMatch();
                 this.$noty.success('Success Reset Data');
-                _context4.next = 11;
+                _context5.next = 11;
                 break;
 
               case 7:
-                _context4.prev = 7;
-                _context4.t0 = _context4["catch"](0);
-                console.log(_context4.t0.response);
+                _context5.prev = 7;
+                _context5.t0 = _context5["catch"](0);
+                console.log(_context5.t0.response);
                 this.$noty.error('Failed Reset Data');
 
               case 11:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4, this, [[0, 7]]);
+        }, _callee5, this, [[0, 7]]);
       }));
 
       function resetData() {
@@ -5702,6 +5899,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.form.match_status = 2;
       this.updateData();
       this.form.elapsedTime = 0;
+    },
+    clearTimer: function clearTimer() {
+      this.form.match_status = 0;
+      this.updateData();
     },
     convertMillisecondToTime: function convertMillisecondToTime(ms, select) {
       if (select == 'hours') return Math.floor(ms / 1000 / 60 / 60);else if (select == 'minutes') return Math.floor(ms / 1000 / 60) % 60;else if (select == 'seconds') return Math.floor(ms / 1000) % 60;else if (select == 'milliseconds') return Math.floor(ms % 1000);else return null;
@@ -5729,7 +5930,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   created: function created() {
     this.getDetailLogMatch();
-    this.getWinning();
+    this.getWinnings();
+    this.getReferees();
   }
 });
 
@@ -5752,6 +5954,38 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -6025,7 +6259,8 @@ var timeoutDebounce = null;
       modalState: null,
       errorValidation: null,
       filterDivisionId: null,
-      matchSystem: null
+      matchSystem: null,
+      logMatchs: []
     };
   },
   computed: {
@@ -6037,6 +6272,19 @@ var timeoutDebounce = null;
       } else {
         return ['division', 'club', 'name', 'pool_number', 'win', 'draw', 'lose', 'pool_winner', 'division_winner', 'action'];
       }
+    },
+    lockMatch: function lockMatch() {
+      // cari match yang tidak null, dan tidak skip
+      // jika ada maka lock match
+      return this.logMatchs.find(function (item) {
+        return item.winner != null && item.winner >= 0;
+      }) ? true : false;
+    },
+    getUniquePool: function getUniquePool() {
+      var poolNumberArr = this.playerDivisions.map(function (item) {
+        return item.pool_number;
+      });
+      return _toConsumableArray(new Set(poolNumberArr));
     }
   },
   methods: {
@@ -6201,16 +6449,55 @@ var timeoutDebounce = null;
 
       return getAllPlayerDivisions;
     }(),
-    insertData: function () {
-      var _insertData = _asyncToGenerator(
+    getLogMatch: function () {
+      var _getLogMatch = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(divisionId) {
+        var logMatchs;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
                 _context5.prev = 0;
                 _context5.next = 3;
+                return this.$axios.get("entry/log_match/filter_division/".concat(divisionId));
+
+              case 3:
+                logMatchs = _context5.sent;
+                this.logMatchs = logMatchs.data.data;
+                _context5.next = 11;
+                break;
+
+              case 7:
+                _context5.prev = 7;
+                _context5.t0 = _context5["catch"](0);
+                console.log(_context5.t0.response);
+                this.$noty.error('Failed Get Log Match');
+
+              case 11:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, this, [[0, 7]]);
+      }));
+
+      function getLogMatch(_x) {
+        return _getLogMatch.apply(this, arguments);
+      }
+
+      return getLogMatch;
+    }(),
+    insertData: function () {
+      var _insertData = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                _context6.prev = 0;
+                _context6.next = 3;
                 return this.$axios.post('entry/player_division/insert', {
                   division_id: this.form.division_id,
                   player_id: this.form.player_id,
@@ -6224,22 +6511,22 @@ var timeoutDebounce = null;
                 this.filterDivisionId = this.form.division_id;
                 this.$noty.success('Success Insert Data');
                 this.$bvModal.hide('modal-player-division');
-                _context5.next = 14;
+                _context6.next = 14;
                 break;
 
               case 9:
-                _context5.prev = 9;
-                _context5.t0 = _context5["catch"](0);
-                console.log(_context5.t0.response);
-                this.errorValidation = _context5.t0.response.data.message;
+                _context6.prev = 9;
+                _context6.t0 = _context6["catch"](0);
+                console.log(_context6.t0.response);
+                this.errorValidation = _context6.t0.response.data.message;
                 this.$noty.error('Failed Insert Data.');
 
               case 14:
               case "end":
-                return _context5.stop();
+                return _context6.stop();
             }
           }
-        }, _callee5, this, [[0, 9]]);
+        }, _callee6, this, [[0, 9]]);
       }));
 
       function insertData() {
@@ -6251,13 +6538,13 @@ var timeoutDebounce = null;
     updateData: function () {
       var _updateData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context6.prev = _context6.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
-                _context6.prev = 0;
-                _context6.next = 3;
+                _context7.prev = 0;
+                _context7.next = 3;
                 return this.$axios.post("entry/player_division/update/".concat(this.form.id), {
                   division_id: this.form.division_id,
                   player_id: this.form.player_id,
@@ -6272,22 +6559,22 @@ var timeoutDebounce = null;
 
                 this.$noty.success('Success Update Data');
                 this.$bvModal.hide('modal-player-division');
-                _context6.next = 13;
+                _context7.next = 13;
                 break;
 
               case 8:
-                _context6.prev = 8;
-                _context6.t0 = _context6["catch"](0);
-                console.log(_context6.t0.response);
-                this.errorValidation = _context6.t0.response.data.message;
+                _context7.prev = 8;
+                _context7.t0 = _context7["catch"](0);
+                console.log(_context7.t0.response);
+                this.errorValidation = _context7.t0.response.data.message;
                 this.$noty.error('Failed Update Data');
 
               case 13:
               case "end":
-                return _context6.stop();
+                return _context7.stop();
             }
           }
-        }, _callee6, this, [[0, 8]]);
+        }, _callee7, this, [[0, 8]]);
       }));
 
       function updateData() {
@@ -6299,13 +6586,13 @@ var timeoutDebounce = null;
     deleteData: function () {
       var _deleteData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(item) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(item) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
           while (1) {
-            switch (_context7.prev = _context7.next) {
+            switch (_context8.prev = _context8.next) {
               case 0:
-                _context7.prev = 0;
-                _context7.next = 3;
+                _context8.prev = 0;
+                _context8.next = 3;
                 return this.$axios.post('entry/player_division/delete', {
                   id: item.id
                 });
@@ -6318,24 +6605,24 @@ var timeoutDebounce = null;
 
                 this.$noty.success('Success Delete Data');
                 this.$bvModal.hide('modal-player-division');
-                _context7.next = 12;
+                _context8.next = 12;
                 break;
 
               case 8:
-                _context7.prev = 8;
-                _context7.t0 = _context7["catch"](0);
-                console.log(_context7.t0.response);
+                _context8.prev = 8;
+                _context8.t0 = _context8["catch"](0);
+                console.log(_context8.t0.response);
                 this.$noty.error('Failed Delete Data');
 
               case 12:
               case "end":
-                return _context7.stop();
+                return _context8.stop();
             }
           }
-        }, _callee7, this, [[0, 8]]);
+        }, _callee8, this, [[0, 8]]);
       }));
 
-      function deleteData(_x) {
+      function deleteData(_x2) {
         return _deleteData.apply(this, arguments);
       }
 
@@ -6360,143 +6647,97 @@ var timeoutDebounce = null;
     filterData: function () {
       var _filterData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(divisionId) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(divisionId) {
         var playerDivisions;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
           while (1) {
-            switch (_context8.prev = _context8.next) {
+            switch (_context9.prev = _context9.next) {
               case 0:
                 this.matchSystem = null;
-                _context8.prev = 1;
-                _context8.next = 4;
+                _context9.prev = 1;
+                _context9.next = 4;
                 return this.$axios.get("entry/player_division/filter_division/".concat(divisionId));
 
               case 4:
-                playerDivisions = _context8.sent;
+                playerDivisions = _context9.sent;
                 this.playerDivisions = playerDivisions.data.data; // panggil check match
 
                 if (this.playerDivisions.length != 0) {
-                  this.checkMatchSystem(divisionId);
+                  this.checkDivisionLogMatch(divisionId);
                 }
 
-                _context8.next = 13;
+                _context9.next = 13;
                 break;
 
               case 9:
-                _context8.prev = 9;
-                _context8.t0 = _context8["catch"](1);
-                console.log(_context8.t0.response);
+                _context9.prev = 9;
+                _context9.t0 = _context9["catch"](1);
+                console.log(_context9.t0.response);
                 this.$noty.error('Failed Filter Data');
 
               case 13:
               case "end":
-                return _context8.stop();
+                return _context9.stop();
             }
           }
-        }, _callee8, this, [[1, 9]]);
+        }, _callee9, this, [[1, 9]]);
       }));
 
-      function filterData(_x2) {
+      function filterData(_x3) {
         return _filterData.apply(this, arguments);
       }
 
       return filterData;
     }(),
-    checkMatchSystem: function () {
-      var _checkMatchSystem = _asyncToGenerator(
+    checkDivisionLogMatch: function () {
+      var _checkDivisionLogMatch = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(divisionId) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10(divisionId) {
         var result;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
-          while (1) {
-            switch (_context9.prev = _context9.next) {
-              case 0:
-                _context9.prev = 0;
-                _context9.next = 3;
-                return this.$axios.get("entry/player_division/check_match_system/".concat(divisionId));
-
-              case 3:
-                result = _context9.sent;
-
-                // cetak match system jika terdapat match pada divisi tsb
-                if (result.data.data != null) {
-                  this.matchSystem = result.data.data.match_system;
-                }
-
-                _context9.next = 11;
-                break;
-
-              case 7:
-                _context9.prev = 7;
-                _context9.t0 = _context9["catch"](0);
-                console.log(_context9.t0.response);
-                this.$noty.error('Failed. ' + _context9.t0.response.data.message);
-
-              case 11:
-              case "end":
-                return _context9.stop();
-            }
-          }
-        }, _callee9, this, [[0, 7]]);
-      }));
-
-      function checkMatchSystem(_x3) {
-        return _checkMatchSystem.apply(this, arguments);
-      }
-
-      return checkMatchSystem;
-    }(),
-    generatePool: function () {
-      var _generatePool = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
           while (1) {
             switch (_context10.prev = _context10.next) {
               case 0:
-                if (!(this.filterDivisionId == null)) {
-                  _context10.next = 3;
-                  break;
-                }
-
-                this.$noty.warning('Select division first before generate pool');
-                return _context10.abrupt("return");
+                _context10.prev = 0;
+                _context10.next = 3;
+                return this.$axios.get("entry/log_match/filter_division/".concat(divisionId));
 
               case 3:
-                _context10.prev = 3;
-                _context10.next = 6;
-                return this.$axios.post('entry/player_division/generate_pool', {
-                  division_id: this.filterDivisionId
-                });
+                result = _context10.sent;
 
-              case 6:
-                this.filterData(this.filterDivisionId);
-                this.$noty.success('Success Generate Pool');
-                _context10.next = 14;
+                if (result.data.data.length != 0) {
+                  // cetak match system jika terdapat match pada divisi tsb
+                  // ambil player pertama dan liat match systemnya
+                  this.matchSystem = result.data.data[0].match_system; // simpan logmatch
+
+                  this.logMatchs = result.data.data;
+                }
+
+                _context10.next = 11;
                 break;
 
-              case 10:
-                _context10.prev = 10;
-                _context10.t0 = _context10["catch"](3);
+              case 7:
+                _context10.prev = 7;
+                _context10.t0 = _context10["catch"](0);
                 console.log(_context10.t0.response);
-                this.$noty.error('Failed Generate Pool. ' + _context10.t0.response.data.message);
+                this.$noty.error('Failed. ' + _context10.t0.response.data.message);
 
-              case 14:
+              case 11:
               case "end":
                 return _context10.stop();
             }
           }
-        }, _callee10, this, [[3, 10]]);
+        }, _callee10, this, [[0, 7]]);
       }));
 
-      function generatePool() {
-        return _generatePool.apply(this, arguments);
+      function checkDivisionLogMatch(_x4) {
+        return _checkDivisionLogMatch.apply(this, arguments);
       }
 
-      return generatePool;
+      return checkDivisionLogMatch;
     }(),
-    resetPool: function () {
-      var _resetPool = _asyncToGenerator(
+    generatePool: function () {
+      var _generatePool = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
@@ -6508,19 +6749,19 @@ var timeoutDebounce = null;
                   break;
                 }
 
-                this.$noty.warning('Select division first before reset pool');
+                this.$noty.warning('Select division first before generate pool');
                 return _context11.abrupt("return");
 
               case 3:
                 _context11.prev = 3;
                 _context11.next = 6;
-                return this.$axios.post('entry/player_division/reset_pool', {
+                return this.$axios.post('entry/player_division/generate_pool', {
                   division_id: this.filterDivisionId
                 });
 
               case 6:
                 this.filterData(this.filterDivisionId);
-                this.$noty.success('Success Reset Pool');
+                this.$noty.success('Success Generate Pool');
                 _context11.next = 14;
                 break;
 
@@ -6528,7 +6769,7 @@ var timeoutDebounce = null;
                 _context11.prev = 10;
                 _context11.t0 = _context11["catch"](3);
                 console.log(_context11.t0.response);
-                this.$noty.error('Failed Reset Pool');
+                this.$noty.error('Failed Generate Pool. ' + _context11.t0.response.data.message);
 
               case 14:
               case "end":
@@ -6538,12 +6779,77 @@ var timeoutDebounce = null;
         }, _callee11, this, [[3, 10]]);
       }));
 
+      function generatePool() {
+        return _generatePool.apply(this, arguments);
+      }
+
+      return generatePool;
+    }(),
+    resetPool: function () {
+      var _resetPool = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
+          while (1) {
+            switch (_context12.prev = _context12.next) {
+              case 0:
+                if (!(this.filterDivisionId == null)) {
+                  _context12.next = 3;
+                  break;
+                }
+
+                this.$noty.warning('Select division first before reset pool');
+                return _context12.abrupt("return");
+
+              case 3:
+                _context12.prev = 3;
+                _context12.next = 6;
+                return this.$axios.post('entry/player_division/reset_pool', {
+                  division_id: this.filterDivisionId
+                });
+
+              case 6:
+                this.filterData(this.filterDivisionId);
+                this.$noty.success('Success Reset Pool');
+                _context12.next = 14;
+                break;
+
+              case 10:
+                _context12.prev = 10;
+                _context12.t0 = _context12["catch"](3);
+                console.log(_context12.t0.response);
+                this.$noty.error('Failed Reset Pool');
+
+              case 14:
+              case "end":
+                return _context12.stop();
+            }
+          }
+        }, _callee12, this, [[3, 10]]);
+      }));
+
       function resetPool() {
         return _resetPool.apply(this, arguments);
       }
 
       return resetPool;
     }(),
+    confirmResetPool: function confirmResetPool() {
+      var _this2 = this;
+
+      this.$bvModal.msgBoxConfirm('Please confirm that you want to reset pool and also will clear schedule of this division match', {
+        title: 'Reset Pool',
+        size: 'md',
+        okVariant: 'danger',
+        centered: true
+      }).then(function (value) {
+        if (value) {
+          _this2.resetPool();
+        }
+      })["catch"](function (err) {
+        console.log('Error ', err);
+      });
+    },
     // async calculateClassement() {
     //   try {
     //     const a = await this.$axios.post(`entry/player_division/calculate_classement/${this.filterDivisionId}`);
@@ -6583,6 +6889,11 @@ var timeoutDebounce = null;
       this.form.division_id = null;
       this.form.player_id = null;
       this.form.pool_number = null;
+    },
+    countPlayerPerPool: function countPlayerPerPool(pool) {
+      return this.playerDivisions.filter(function (item) {
+        return item.pool_number == pool;
+      }).length;
     }
   },
   created: function created() {
@@ -7299,6 +7610,362 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./assets/js/components/RefereeList.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./assets/js/components/RefereeList.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'RefereeList',
+  data: function data() {
+    return {
+      referees: [],
+      form: {
+        name: null,
+        description: null
+      },
+      modalState: null,
+      errorValidation: null
+    };
+  },
+  methods: {
+    getAllReferees: function () {
+      var _getAllReferees = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var referees;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return this.$axios.get('master/referee/get_all');
+
+              case 3:
+                referees = _context.sent;
+                this.referees = referees.data.data;
+                _context.next = 11;
+                break;
+
+              case 7:
+                _context.prev = 7;
+                _context.t0 = _context["catch"](0);
+                console.log(_context.t0.response);
+                this.$noty.error('Failed Get Data');
+
+              case 11:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[0, 7]]);
+      }));
+
+      function getAllReferees() {
+        return _getAllReferees.apply(this, arguments);
+      }
+
+      return getAllReferees;
+    }(),
+    insertData: function () {
+      var _insertData = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return this.$axios.post('master/referee/insert', {
+                  name: this.form.name,
+                  description: this.form.description
+                });
+
+              case 3:
+                this.$noty.success('Success Insert Data');
+                this.getAllReferees();
+                this.$bvModal.hide('modal-referee');
+                _context2.next = 13;
+                break;
+
+              case 8:
+                _context2.prev = 8;
+                _context2.t0 = _context2["catch"](0);
+                console.log(_context2.t0.response);
+                this.errorValidation = _context2.t0.response.data.message;
+                this.$noty.error('Failed Insert Data');
+
+              case 13:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[0, 8]]);
+      }));
+
+      function insertData() {
+        return _insertData.apply(this, arguments);
+      }
+
+      return insertData;
+    }(),
+    updateData: function () {
+      var _updateData = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.prev = 0;
+                _context3.next = 3;
+                return this.$axios.post("master/referee/update/".concat(this.form.id), {
+                  name: this.form.name,
+                  description: this.form.description
+                });
+
+              case 3:
+                this.$noty.success('Success Update Data');
+                this.getAllReferees();
+                this.$bvModal.hide('modal-referee');
+                _context3.next = 13;
+                break;
+
+              case 8:
+                _context3.prev = 8;
+                _context3.t0 = _context3["catch"](0);
+                console.log(_context3.t0.response);
+                this.errorValidation = _context3.t0.response.data.message;
+                this.$noty.error('Failed Update Data');
+
+              case 13:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this, [[0, 8]]);
+      }));
+
+      function updateData() {
+        return _updateData.apply(this, arguments);
+      }
+
+      return updateData;
+    }(),
+    deleteData: function () {
+      var _deleteData = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(item) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.prev = 0;
+                _context4.next = 3;
+                return this.$axios.post('master/referee/delete', {
+                  id: item.id
+                });
+
+              case 3:
+                this.$noty.success('Success Delete Data');
+                this.getAllReferees();
+                this.$bvModal.hide('modal-referee');
+                _context4.next = 12;
+                break;
+
+              case 8:
+                _context4.prev = 8;
+                _context4.t0 = _context4["catch"](0);
+                console.log(_context4.t0.response);
+                this.$noty.error('Failed Delete Data');
+
+              case 12:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this, [[0, 8]]);
+      }));
+
+      function deleteData(_x) {
+        return _deleteData.apply(this, arguments);
+      }
+
+      return deleteData;
+    }(),
+    confirmDelete: function confirmDelete(item) {
+      var _this = this;
+
+      this.$bvModal.msgBoxConfirm("Please confirm that you want to delete ".concat(item.name), {
+        title: 'Delete Data',
+        size: 'md',
+        okVariant: 'danger',
+        centered: true
+      }).then(function (value) {
+        if (value) {
+          _this.deleteData(item);
+        }
+      })["catch"](function (err) {
+        console.log('Error ', err);
+      });
+    },
+    addData: function addData() {
+      this.resetData();
+      this.$bvModal.show('modal-referee');
+      this.modalState = 'add';
+    },
+    loadData: function loadData(item) {
+      this.resetData();
+      this.$bvModal.show('modal-referee');
+      this.modalState = 'update'; // populate form
+
+      var id = item.id,
+          name = item.name,
+          description = item.description;
+      this.form.id = id;
+      this.form.name = name;
+      this.form.description = description;
+    },
+    resetData: function resetData() {
+      this.errorValidation = null;
+      this.form.name = null;
+      this.form.description = null;
+    }
+  },
+  created: function created() {
+    this.getAllReferees();
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./assets/js/components/StopWatch.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./assets/js/components/StopWatch.vue?vue&type=script&lang=js& ***!
@@ -7419,6 +8086,7 @@ __webpack_require__.r(__webpack_exports__);
       this.times = [];
       this.stopTimer(false);
       this.animateFrame = 0;
+      this.$emit('clear-timer');
     }
   },
   computed: {
@@ -42863,7 +43531,7 @@ var render = function() {
                         on: {
                           click: function($event) {
                             $event.preventDefault()
-                            return _vm.resetSchedule()
+                            return _vm.confirmResetSchedule()
                           }
                         }
                       },
@@ -42908,7 +43576,7 @@ var render = function() {
                         on: {
                           click: function($event) {
                             $event.preventDefault()
-                            return _vm.resetPlayer()
+                            return _vm.confirmResetPlayer()
                           }
                         }
                       },
@@ -42945,6 +43613,14 @@ var render = function() {
                     )
                   ]
                 ),
+                _vm._v(" "),
+                _vm.filterDivisionId && _vm.logMatchs.length != 0
+                  ? _c("div", { staticClass: "alert alert-info" }, [
+                      _vm._v(
+                        "Match Finished : " + _vm._s(_vm.countMatchFinished)
+                      )
+                    ])
+                  : _vm._e(),
                 _vm._v(" "),
                 _vm.selectedMatchSystem == "elimination"
                   ? _c(
@@ -42999,6 +43675,37 @@ var render = function() {
                                   ]),
                                   _c("br")
                                 ])
+                              ]
+                            }
+                          },
+                          {
+                            key: "cell(pool_number)",
+                            fn: function(data) {
+                              return [
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass: "badge",
+                                    class: [
+                                      data.item.pool_number
+                                        ? data.item.pool_number == "A"
+                                          ? "badge-dark"
+                                          : "badge-danger"
+                                        : null
+                                    ]
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                " +
+                                        _vm._s(
+                                          data.item.pool_number != null
+                                            ? data.item.pool_number
+                                            : ""
+                                        ) +
+                                        "\n              "
+                                    )
+                                  ]
+                                )
                               ]
                             }
                           },
@@ -43113,8 +43820,10 @@ var render = function() {
                                         {
                                           staticClass: "btn btn-sm btn-warning",
                                           attrs: {
-                                            disabled:
-                                              data.item.match_status == 2
+                                            title: _vm.lockMatch
+                                              ? "Disabled when match has been started"
+                                              : "Edit player matching",
+                                            disabled: _vm.lockMatch
                                           },
                                           on: {
                                             click: function($event) {
@@ -43136,7 +43845,7 @@ var render = function() {
                         ],
                         null,
                         false,
-                        4287911616
+                        85807547
                       )
                     })
                   : _vm._e()
@@ -43646,11 +44355,22 @@ var render = function() {
               _vm._v(" "),
               _c("hr"),
               _vm._v(" "),
+              _c("div", { staticClass: "text-center" }, [
+                _vm._v("\n            Referee"),
+                _c("br"),
+                _vm._v(" "),
+                _c("span", { staticClass: "font-weight-bold text-primary" }, [
+                  _vm._v(_vm._s(_vm.logMatchDetail.referee_name || "-"))
+                ])
+              ]),
+              _vm._v(" "),
+              _c("hr"),
+              _vm._v(" "),
               _c(
                 "div",
                 {
                   staticClass:
-                    "d-flex justify-content-between align-items-center"
+                    "d-flex justify-content-center align-items-center"
                 },
                 [
                   _c(
@@ -43659,14 +44379,13 @@ var render = function() {
                       _c("StopWatch", {
                         on: {
                           "start-timer": _vm.startTimer,
-                          "stop-timer": _vm.stopTimer
+                          "stop-timer": _vm.stopTimer,
+                          "clear-timer": _vm.clearTimer
                         }
                       })
                     ],
                     1
-                  ),
-                  _vm._v(" "),
-                  _vm._m(6)
+                  )
                 ]
               )
             ])
@@ -44054,6 +44773,60 @@ var render = function() {
                   }
                 })
               ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "referee" } }, [_vm._v("Referee")]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model.number",
+                      value: _vm.form.referee_id,
+                      expression: "form.referee_id",
+                      modifiers: { number: true }
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "referee", id: "referee" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return _vm._n(val)
+                        })
+                      _vm.$set(
+                        _vm.form,
+                        "referee_id",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                [
+                  _c("option", { domProps: { value: null } }, [
+                    _vm._v("Select Referee")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.refereeOptions, function(item) {
+                    return _c(
+                      "option",
+                      { key: item.id, domProps: { value: item.id } },
+                      [_vm._v(_vm._s(item.name))]
+                    )
+                  })
+                ],
+                2
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
@@ -44654,19 +45427,6 @@ var staticRenderFns = [
       _vm._v("Winning by "),
       _c("i", { staticClass: "fa fa-angle-double-right" })
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _vm._v("\n              Referee"),
-      _c("br"),
-      _vm._v(" "),
-      _c("span", { staticClass: "font-weight-bold text-primary" }, [
-        _vm._v("FOO BAR")
-      ])
-    ])
   }
 ]
 render._withStripped = true
@@ -44761,7 +45521,13 @@ var render = function() {
                     "button",
                     {
                       staticClass: "btn btn-sm btn-primary",
-                      attrs: { type: "button" },
+                      attrs: {
+                        title: _vm.lockMatch
+                          ? "Disabled when match has been started"
+                          : "Add player to division",
+                        disabled: _vm.lockMatch,
+                        type: "button"
+                      },
                       on: {
                         click: function($event) {
                           $event.preventDefault()
@@ -44774,60 +45540,102 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm.filterDivisionId
+              _vm.filterDivisionId && _vm.matchSystem != "elimination"
                 ? _c(
                     "div",
-                    { staticClass: "d-flex justify-content-start mt-3" },
+                    { staticClass: "d-flex justify-content-between mt-3" },
                     [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-sm btn-success mr-1",
-                          attrs: {
-                            type: "button",
-                            disabled: _vm.playerDivisions.length == 0
-                          },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.generatePool()
+                      _c("div", [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-sm btn-success mr-1",
+                            attrs: {
+                              title: _vm.lockMatch
+                                ? "Disabled when match has been started"
+                                : "Generate pool to players",
+                              type: "button",
+                              disabled:
+                                _vm.playerDivisions.length == 0 ||
+                                _vm.lockMatch ||
+                                _vm.matchSystem
+                            },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.generatePool()
+                              }
                             }
-                          }
-                        },
-                        [_vm._v("Generate Pool")]
-                      ),
+                          },
+                          [_vm._v("Generate Pool")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-sm btn-secondary mr-1",
+                            attrs: {
+                              type: "button",
+                              disabled: _vm.playerDivisions.length == 0
+                            },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.confirmResetPool()
+                              }
+                            }
+                          },
+                          [_vm._v("Reset Pool")]
+                        )
+                      ]),
                       _vm._v(" "),
                       _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-sm btn-secondary mr-1",
-                          attrs: {
-                            type: "button",
-                            disabled: _vm.playerDivisions.length == 0
-                          },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.resetPool()
-                            }
-                          }
-                        },
-                        [_vm._v("Reset Pool")]
+                        "div",
+                        _vm._l(_vm.getUniquePool, function(item) {
+                          return _c(
+                            "span",
+                            {
+                              key: item,
+                              attrs: { title: "Count players in pool " + item }
+                            },
+                            [
+                              _c(
+                                "span",
+                                {
+                                  staticClass: "badge",
+                                  class: [
+                                    item == "A" ? "badge-dark" : "badge-danger"
+                                  ]
+                                },
+                                [_vm._v(_vm._s(item))]
+                              ),
+                              _vm._v(" : "),
+                              _c("span", { staticClass: "mr-3" }, [
+                                _vm._v(_vm._s(_vm.countPlayerPerPool(item)))
+                              ])
+                            ]
+                          )
+                        }),
+                        0
                       )
                     ]
                   )
                 : _vm._e(),
               _vm._v(" "),
-              _vm.playerDivisions.length != 0
+              _vm.playerDivisions.length != 0 && _vm.matchSystem
                 ? _c("div", { staticClass: "mt-3 mb-0 alert alert-info" }, [
-                    _vm._v("\n            This division using match system: "),
+                    _vm._v("\n            Match has been generated using "),
                     _c("span", { staticClass: "font-weight-bold" }, [
                       _vm._v(
                         _vm._s(
                           _vm.matchSystem || "No match found in this division"
                         )
                       )
-                    ])
+                    ]),
+                    _vm._v(" system"),
+                    _c("br"),
+                    _vm._v(" "),
+                    _vm._m(2)
                   ])
                 : _vm._e()
             ]),
@@ -44944,6 +45752,12 @@ var render = function() {
                                     "button",
                                     {
                                       staticClass: "btn btn-sm btn-warning",
+                                      attrs: {
+                                        title: _vm.lockMatch
+                                          ? "Disabled when match has been started"
+                                          : "Edit player",
+                                        disabled: _vm.lockMatch
+                                      },
                                       on: {
                                         click: function($event) {
                                           $event.preventDefault()
@@ -44962,6 +45776,12 @@ var render = function() {
                                     "button",
                                     {
                                       staticClass: "btn btn-sm btn-danger",
+                                      attrs: {
+                                        title: _vm.lockMatch
+                                          ? "Disabled when match has been started"
+                                          : "Delete player from division",
+                                        disabled: _vm.lockMatch
+                                      },
                                       on: {
                                         click: function($event) {
                                           $event.preventDefault()
@@ -44982,7 +45802,7 @@ var render = function() {
                         ],
                         null,
                         false,
-                        2769488637
+                        2884250439
                       )
                     })
                   : _vm._e()
@@ -45352,6 +46172,15 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "input-group-prepend" }, [
       _c("span", { staticClass: "input-group-text" }, [_vm._v("Division")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "small text-muted" }, [
+      _c("i", { staticClass: "fa fa-info-circle" }),
+      _vm._v(" Clear this division match to edit player or generate pool.")
     ])
   }
 ]
@@ -46039,6 +46868,280 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./assets/js/components/RefereeList.vue?vue&type=template&id=41a8844d&":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./assets/js/components/RefereeList.vue?vue&type=template&id=41a8844d& ***!
+  \***********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "container-fluid" },
+    [
+      _c("div", { staticClass: "row justify-content-center" }, [
+        _c("div", { staticClass: "col" }, [
+          _c("div", { staticClass: "card card-default" }, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "card-header d-flex justify-content-between align-items-center"
+              },
+              [
+                _c("span", [_vm._v("Referee List")]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-sm btn-primary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.addData()
+                      }
+                    }
+                  },
+                  [_vm._v("\n            Add referee\n          ")]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.referees.length == 0,
+                      expression: "referees.length == 0"
+                    }
+                  ],
+                  staticClass: "my-3 text-center"
+                },
+                [_vm._v("Empty Data")]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "list-group" },
+                _vm._l(_vm.referees, function(item) {
+                  return _c(
+                    "div",
+                    {
+                      key: item.id,
+                      staticClass:
+                        "list-group-item d-flex justify-content-between align-items-center"
+                    },
+                    [
+                      _c("div", [
+                        _c("p", { staticClass: "font-weight-bold m-0" }, [
+                          _vm._v(
+                            "\n                  " +
+                              _vm._s(item.name) +
+                              "\n                "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "mb-0 small text-muted" }, [
+                          _vm._v(_vm._s(item.description))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-sm btn-warning",
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.loadData(item)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-edit fa-fw" })]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-sm btn-danger",
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.confirmDelete(item)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-trash fa-fw" })]
+                        )
+                      ])
+                    ]
+                  )
+                }),
+                0
+              )
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "b-modal",
+        {
+          attrs: {
+            id: "modal-referee",
+            "hide-footer": "",
+            title: _vm.modalState == "add" ? "Add Item" : "Update Item"
+          }
+        },
+        [
+          _vm.errorValidation
+            ? _c("div", {
+                staticClass: "alert alert-danger",
+                domProps: { innerHTML: _vm._s(_vm.errorValidation) }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _c("form", { attrs: { method: "post" } }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "name" } }, [_vm._v("Name")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.name,
+                    expression: "form.name"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  id: "name",
+                  type: "text",
+                  placeholder: "Enter referee name"
+                },
+                domProps: { value: _vm.form.name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "name", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "description" } }, [
+                _vm._v("Description")
+              ]),
+              _vm._v(" "),
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.description,
+                    expression: "form.description"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  id: "description",
+                  cols: "30",
+                  rows: "4",
+                  placeholder: "Enter description"
+                },
+                domProps: { value: _vm.form.description },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "description", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "d-flex justify-content-end" }, [
+              _c(
+                "div",
+                { staticClass: "btn-group", attrs: { role: "group" } },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.resetData()
+                        }
+                      }
+                    },
+                    [_vm._v("Reset")]
+                  ),
+                  _vm._v(" "),
+                  _vm.modalState == "add"
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.insertData()
+                            }
+                          }
+                        },
+                        [_vm._v("Add")]
+                      )
+                    : _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.updateData()
+                            }
+                          }
+                        },
+                        [_vm._v("Update")]
+                      )
+                ]
+              )
+            ])
+          ])
+        ]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./assets/js/components/StopWatch.vue?vue&type=template&id=027482c8&":
 /*!*********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./assets/js/components/StopWatch.vue?vue&type=template&id=027482c8& ***!
@@ -46055,7 +47158,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("p", { staticClass: "h4 font-weight-bold" }, [
+    _c("p", { staticClass: "h4 font-weight-bold text-center" }, [
       _vm._v(
         "\n    " +
           _vm._s(_vm.hours) +

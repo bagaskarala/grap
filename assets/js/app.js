@@ -38,6 +38,7 @@ Vue.component('CountryList', require('./components/CountryList.vue').default);
 Vue.component('ClubList', require('./components/ClubList.vue').default);
 Vue.component('PlayerList', require('./components/PlayerList.vue').default);
 Vue.component('WinningList', require('./components/WinningList.vue').default);
+Vue.component('RefereeList', require('./components/RefereeList.vue').default);
 Vue.component('PlayerDivision', require('./components/PlayerDivision.vue').default);
 Vue.component('LogMatch', require('./components/LogMatch.vue').default);
 Vue.component('LogMatchDetail', require('./components/LogMatchDetail.vue').default);

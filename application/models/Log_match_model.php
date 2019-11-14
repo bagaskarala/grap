@@ -11,16 +11,6 @@ class Log_match_model extends MY_Model
                 'label' => 'division',
                 'rules' => 'required|trim',
             ],
-            [
-                'field' => 'pd1_id',
-                'label' => 'player 1',
-                'rules' => 'trim',
-            ],
-            [
-                'field' => 'pd2_id',
-                'label' => 'player 2',
-                'rules' => 'trim',
-            ],
         ];
 
         return $validationRules;
@@ -35,6 +25,7 @@ class Log_match_model extends MY_Model
             'lm.*,
             d.division,
             w.winning,
+            r.name as referee_name,
             pd1.player_id as player1_id,
             p1.name as player1_name,
             p1.weight as player1_weight,
@@ -57,6 +48,7 @@ class Log_match_model extends MY_Model
         $this->db->join('country as ct2', 'ct2.id = p2.country_id', 'left');
         $this->db->join('division as d', 'd.id = lm.division_id', 'left');
         $this->db->join('winning as w', 'w.id = lm.winning_id', 'left');
+        $this->db->join('referee as r', 'r.id = lm.referee_id', 'left');
     }
 
     public function get_all_log_match()

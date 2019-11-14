@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="h4 font-weight-bold">
+    <p class="h4 font-weight-bold text-center">
       {{ hours }} :
       {{ minutes | zeroPad }} :
       {{ seconds | zeroPad }} :
@@ -107,6 +107,7 @@ export default {
       this.times = [];
       this.stopTimer(false);
       this.animateFrame = 0;
+      this.$emit('clear-timer');
     }
   },
   computed: {

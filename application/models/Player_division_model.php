@@ -58,11 +58,6 @@ class Player_division_model extends MY_Model
         return $this->get_all_array();
     }
 
-    public function check_match_system($division_id)
-    {
-        return $this->get_where(['division_id' => $division_id], 'log_match');
-    }
-
     public function check_player($data)
     {
         // isi $data = division_id,player_id,pool_number

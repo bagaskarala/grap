@@ -56,16 +56,18 @@
               <span>{{this.logMatchDetail.winning}}</span>
             </div>
             <hr>
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="text-center">
+              Referee<br>
+              <span class="font-weight-bold text-primary">{{logMatchDetail.referee_name || '-'}}</span>
+            </div>
+            <hr>
+            <div class="d-flex justify-content-center align-items-center">
               <div>
                 <StopWatch
                   @start-timer="startTimer"
                   @stop-timer="stopTimer"
+                  @clear-timer="clearTimer"
                 />
-              </div>
-              <div>
-                Referee<br>
-                <span class="font-weight-bold text-primary">FOO BAR</span>
               </div>
             </div>
           </div>
@@ -212,6 +214,24 @@
             placeholder="Enter time"
           > -->
         </div>
+
+        <div class="form-group">
+          <label for="referee">Referee</label>
+          <select
+            name="referee"
+            id="referee"
+            class="form-control"
+            v-model.number="form.referee_id"
+          >
+            <option :value="null">Select Referee</option>
+            <option
+              v-for="item in refereeOptions"
+              :key="item.id"
+              :value="item.id"
+            >{{item.name}}</option>
+          </select>
+        </div>
+
         <div class="form-group">
           <label for="match_status">Match Status</label>
           <select
@@ -227,6 +247,7 @@
             >{{item.text}}</option>
           </select>
         </div>
+
         <div class="form-group">
           <label for="winner">Winner</label>
           <select
@@ -243,6 +264,7 @@
             >{{item.text}}</option>
           </select>
         </div>
+
         <div class="form-group">
           <label for="winning">Winning by</label>
           <select
@@ -260,6 +282,7 @@
           </select>
         </div>
         <hr>
+
         <div class="row">
           <div
             class="col border rounded m-2 p-3"
@@ -278,6 +301,7 @@
                 class="form-control"
               >
             </div>
+
             <div class="form-group">
               <label for="club">Club</label>
               <input
@@ -288,6 +312,7 @@
                 class="form-control"
               >
             </div>
+
             <div class="form-group">
               <label for="country">Country</label>
               <input
@@ -298,6 +323,7 @@
                 class="form-control"
               >
             </div>
+
             <div class="form-group">
               <label for="weight">Weight</label>
               <input
@@ -308,6 +334,7 @@
                 class="form-control"
               >
             </div>
+
             <div class="form-group">
               <label for="yellow_card">Yellow card</label>
               <input
@@ -317,6 +344,7 @@
                 class="form-control"
               >
             </div>
+
             <div class="form-group">
               <label for="red_card">Red card</label>
               <input
@@ -326,6 +354,7 @@
                 class="form-control"
               >
             </div>
+
             <div class="form-group">
               <label for="green_card">Green card</label>
               <input
@@ -336,6 +365,7 @@
               >
             </div>
           </div>
+
           <div
             class="col border rounded m-2 p-3"
             :class="[form.winner==2? 'border-success' : '']"
@@ -353,6 +383,7 @@
                 class="form-control"
               >
             </div>
+
             <div class="form-group">
               <label for="club">Club</label>
               <input
@@ -363,6 +394,7 @@
                 class="form-control"
               >
             </div>
+
             <div class="form-group">
               <label for="country">Country</label>
               <input
@@ -373,6 +405,7 @@
                 class="form-control"
               >
             </div>
+
             <div class="form-group">
               <label for="weight">Weight</label>
               <input
@@ -383,6 +416,7 @@
                 class="form-control"
               >
             </div>
+
             <div class="form-group">
               <label for="yellow_card">Yellow card</label>
               <input
@@ -392,6 +426,7 @@
                 class="form-control"
               >
             </div>
+
             <div class="form-group">
               <label for="red_card">Red card</label>
               <input
@@ -401,6 +436,7 @@
                 class="form-control"
               >
             </div>
+
             <div class="form-group">
               <label for="green_card">Green card</label>
               <input
@@ -412,6 +448,7 @@
             </div>
           </div>
         </div>
+
         <div class="d-flex justify-content-end">
           <div
             class="btn-group"
@@ -468,6 +505,7 @@ export default {
         match_status: 0,
         winner: null,
         winning_id: null,
+        referee_id: null,
         pd1_yellowcard: 0,
         pd1_redcard: 0,
         pd1_greencard: 0,
@@ -475,7 +513,8 @@ export default {
         pd2_redcard: 0,
         pd2_greencard: 0
       },
-      winningOptions: null
+      winningOptions: [],
+      refereeOptions: []
     };
   },
 
@@ -522,13 +561,23 @@ export default {
       }
     },
 
-    async getWinning() {
+    async getWinnings() {
       try {
-        const winning = await this.$axios.get('master/winning/get_all');
-        this.winningOptions = winning.data.data;
+        const winnings = await this.$axios.get('master/winning/get_all');
+        this.winningOptions = winnings.data.data;
       } catch (error) {
         console.log(error.response);
         this.$noty.error('Failed fetch winning');
+      }
+    },
+
+    async getReferees() {
+      try {
+        const referees = await this.$axios.get('master/referee/get_all');
+        this.refereeOptions = referees.data.data;
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed fetch referee');
       }
     },
 
@@ -539,6 +588,7 @@ export default {
           time: this.form.elapsedTime ? this.form.elapsedTime : this.convertTimeToMillisecond(this.form.time),
           winner: this.form.winner,
           winning_id: this.form.winning_id,
+          referee_id: this.form.referee_id,
           match_status: this.form.match_status,
           pd1_yellowcard: this.form.pd1_yellowcard,
           pd1_redcard: this.form.pd1_redcard,
@@ -565,7 +615,7 @@ export default {
     loadData() {
       this.$bvModal.show('modal-update-log-match');
       // populate form
-      let { match_status, time, winning_id, winner, pd1_redcard, pd1_yellowcard, pd1_greencard, pd2_redcard, pd2_yellowcard, pd2_greencard } = this.logMatchDetail;
+      let { match_status, time, winning_id, referee_id, winner, pd1_redcard, pd1_yellowcard, pd1_greencard, pd2_redcard, pd2_yellowcard, pd2_greencard } = this.logMatchDetail;
       this.form.match_status = match_status;
 
       this.form.time.hours = this.convertMillisecondToTime(time, 'hours');
@@ -574,6 +624,7 @@ export default {
       this.form.time.milliseconds = this.convertMillisecondToTime(time, 'milliseconds');
 
       this.form.winning_id = winning_id;
+      this.form.referee_id = referee_id;
       this.form.winner = winner;
       this.form.pd1_yellowcard = pd1_yellowcard;
       this.form.pd1_redcard = pd1_redcard;
@@ -590,6 +641,7 @@ export default {
           time: null,
           winner: null,
           winning_id: null,
+          referee_id: null,
           match_status: 0,
           pd1_point: 0,
           pd1_yellowcard: 0,
@@ -621,6 +673,11 @@ export default {
       this.form.elapsedTime = 0;
     },
 
+    clearTimer() {
+      this.form.match_status = 0;
+      this.updateData();
+    },
+
     convertMillisecondToTime(ms, select) {
       if (select == 'hours') return Math.floor(ms / 1000 / 60 / 60);
       else if (select == 'minutes') return Math.floor(ms / 1000 / 60) % 60;
@@ -645,7 +702,8 @@ export default {
 
   created() {
     this.getDetailLogMatch();
-    this.getWinning();
+    this.getWinnings();
+    this.getReferees();
   }
 };
 </script>

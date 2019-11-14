@@ -31,6 +31,8 @@
               </select>
               <div class="input-group-append">
                 <button
+                  :title="lockMatch? 'Disabled when match has been started' : 'Add player to division'"
+                  :disabled="lockMatch"
                   type="button"
                   class="btn btn-sm btn-primary"
                   @click.prevent="addData()"
@@ -41,21 +43,38 @@
             </div>
 
             <div
-              v-if="filterDivisionId"
-              class="d-flex justify-content-start mt-3"
+              v-if="filterDivisionId && matchSystem!='elimination'"
+              class="d-flex justify-content-between mt-3"
             >
-              <button
-                class="btn btn-sm btn-success mr-1"
-                type="button"
-                :disabled="playerDivisions.length==0"
-                @click.prevent="generatePool()"
-              >Generate Pool</button>
-              <button
-                class="btn btn-sm btn-secondary mr-1"
-                type="button"
-                :disabled="playerDivisions.length==0"
-                @click.prevent="resetPool()"
-              >Reset Pool</button>
+              <div>
+
+                <button
+                  :title="lockMatch? 'Disabled when match has been started' : 'Generate pool to players'"
+                  class="btn btn-sm btn-success mr-1"
+                  type="button"
+                  :disabled="playerDivisions.length==0 || lockMatch || matchSystem"
+                  @click.prevent="generatePool()"
+                >Generate Pool</button>
+                <button
+                  class="btn btn-sm btn-secondary mr-1"
+                  type="button"
+                  :disabled="playerDivisions.length==0"
+                  @click.prevent="confirmResetPool()"
+                >Reset Pool</button>
+              </div>
+
+              <div>
+                <span
+                  v-for="item in getUniquePool"
+                  :key="item"
+                  :title="'Count players in pool ' + item"
+                >
+                  <span
+                    class="badge"
+                    :class="[item == 'A'? 'badge-dark' : 'badge-danger']"
+                  >{{item}}</span> : <span class="mr-3">{{countPlayerPerPool(item)}}</span>
+                </span>
+              </div>
               <!-- <button
                 class="btn btn-sm btn-primary mr-1"
                 type="button"
@@ -65,10 +84,11 @@
             </div>
 
             <div
-              v-if="playerDivisions.length!=0"
+              v-if="playerDivisions.length!=0 && matchSystem"
               class="mt-3 mb-0 alert alert-info"
             >
-              This division using match system: <span class="font-weight-bold">{{matchSystem || 'No match found in this division'}}</span>
+              Match has been generated using <span class="font-weight-bold">{{matchSystem || 'No match found in this division'}}</span> system<br>
+              <span class="small text-muted"><i class="fa fa-info-circle"></i> Clear this division match to edit player or generate pool.</span>
             </div>
           </div>
 
@@ -112,10 +132,14 @@
               <template v-slot:cell(action)="data">
                 <div class="min-width-7">
                   <button
+                    :title="lockMatch? 'Disabled when match has been started' : 'Edit player'"
+                    :disabled="lockMatch"
                     class="btn btn-sm btn-warning"
                     @click.prevent="loadData(data.item)"
                   ><i class="fa fa-edit fa-fw"></i></button>
                   <button
+                    :title="lockMatch? 'Disabled when match has been started' : 'Delete player from division'"
+                    :disabled="lockMatch"
                     class="btn btn-sm btn-danger"
                     @click.prevent="confirmDelete(data.item)"
                   ><i class="fa fa-trash fa-fw"></i></button>
@@ -269,7 +293,8 @@ export default {
       modalState: null,
       errorValidation: null,
       filterDivisionId: null,
-      matchSystem: null
+      matchSystem: null,
+      logMatchs: []
     };
   },
 
@@ -282,6 +307,17 @@ export default {
       } else {
         return ['division', 'club', 'name', 'pool_number', 'win', 'draw', 'lose', 'pool_winner', 'division_winner', 'action'];
       }
+    },
+
+    lockMatch() {
+      // cari match yang tidak null, dan tidak skip
+      // jika ada maka lock match
+      return this.logMatchs.find(item => item.winner != null && item.winner >= 0) ? true : false;
+    },
+
+    getUniquePool() {
+      let poolNumberArr = this.playerDivisions.map(item => item.pool_number);
+      return [... new Set(poolNumberArr)];
     }
   },
 
@@ -328,6 +364,17 @@ export default {
       } catch (error) {
         console.log(error.response);
         this.$noty.error('Failed Get Data');
+      }
+    },
+
+    async getLogMatch(divisionId) {
+      try {
+        const logMatchs = await this.$axios.get(`entry/log_match/filter_division/${divisionId}`);
+        this.logMatchs = logMatchs.data.data;
+
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Get Log Match');
       }
     },
 
@@ -422,7 +469,7 @@ export default {
 
         // panggil check match
         if (this.playerDivisions.length != 0) {
-          this.checkMatchSystem(divisionId);
+          this.checkDivisionLogMatch(divisionId);
         }
       } catch (error) {
         console.log(error.response);
@@ -430,13 +477,17 @@ export default {
       }
     },
 
-    async checkMatchSystem(divisionId) {
+    async checkDivisionLogMatch(divisionId) {
       try {
-        const result = await this.$axios.get(`entry/player_division/check_match_system/${divisionId}`);
+        const result = await this.$axios.get(`entry/log_match/filter_division/${divisionId}`);
 
-        // cetak match system jika terdapat match pada divisi tsb
-        if (result.data.data != null) {
-          this.matchSystem = result.data.data.match_system;
+        if (result.data.data.length != 0) {
+          // cetak match system jika terdapat match pada divisi tsb
+          // ambil player pertama dan liat match systemnya
+          this.matchSystem = result.data.data[0].match_system;
+
+          // simpan logmatch
+          this.logMatchs = result.data.data;
         }
       } catch (error) {
         console.log(error.response);
@@ -480,6 +531,23 @@ export default {
       }
     },
 
+    confirmResetPool() {
+      this.$bvModal.msgBoxConfirm('Please confirm that you want to reset pool and also will clear schedule of this division match', {
+        title: 'Reset Pool',
+        size: 'md',
+        okVariant: 'danger',
+        centered: true
+      })
+        .then(value => {
+          if (value) {
+            this.resetPool();
+          }
+        })
+        .catch(err => {
+          console.log('Error ', err);
+        });
+    },
+
     // async calculateClassement() {
     //   try {
     //     const a = await this.$axios.post(`entry/player_division/calculate_classement/${this.filterDivisionId}`);
@@ -519,6 +587,10 @@ export default {
       this.form.division_id = null;
       this.form.player_id = null;
       this.form.pool_number = null;
+    },
+
+    countPlayerPerPool(pool) {
+      return this.playerDivisions.filter(item => item.pool_number == pool).length;
     }
   },
 
