@@ -1,2 +1,2 @@
 <!-- load vue component -->
-<player-list></player-list>
+<player-list base-url="<?=base_url('')?>"></player-list>

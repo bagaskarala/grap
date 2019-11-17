@@ -104,6 +104,51 @@ class Player_model extends MY_Model
         $this->order_by('name');
         return $this->get_all_array();
     }
+
+    public function upload_photo($id, $photo_type)
+    {
+        $data_player = $this->db->get_where('player', ['id' => $id])->row_array();
+
+        $config['allowed_types'] = 'gif|jpg|png';
+        $config['max_size']      = '10000';
+        $config['upload_path']   = './assets/img/player';
+
+        $this->load->library('upload', $config);
+
+        if ($this->upload->do_upload($photo_type)) {
+
+            $old_image = $data_player[$photo_type];
+            if ($old_image != 'default.jpg' && $old_image != null) {
+                if (file_exists(FCPATH . 'assets/img/player/' . $old_image)) {
+                    unlink(FCPATH . 'assets/img/player/' . $old_image);
+                }
+            }
+            $new_image = $this->upload->data('file_name');
+            $this->db->set($photo_type, $new_image);
+            $this->db->where('id', $id);
+            $response = $this->db->update('player');
+
+            if ($response) {
+                $result = [
+                    'status' => true,
+                    'data'   => 'success update photo',
+                ];
+            } else {
+                $result = [
+                    'status'  => false,
+                    'message' => 'failed update photo',
+                ];
+            }
+
+        } else {
+            $result = [
+                'status'  => false,
+                'message' => $this->upload->display_errors(),
+            ];
+        }
+
+        return $result;
+    }
 }
 
 /* End of file Player_model.php */

@@ -217,6 +217,102 @@
             placeholder="Enter achievement"
           >
         </div>
+        <div class="form-group">
+          <img
+            v-if="form.left_photo && typeof form.left_photo == 'string'"
+            :src="baseUrl+ 'assets/img/player/' + form.left_photo"
+            class="img-thumbnail mb-2"
+            style="max-width:30%"
+          >
+          <label>Left Photo</label>
+          <div class="input-group">
+            <div class="custom-file">
+              <input
+                id="left-photo"
+                ref="left_photo"
+                type="file"
+                class="custom-file-input"
+                @change="handleFileChange('left_photo')"
+              >
+              <label
+                class="custom-file-label"
+                ref="left_photo_label"
+                for="left-photo"
+              >{{customFileLabelLeft}}</label>
+            </div>
+            <div class="input-group-append">
+              <button
+                class="btn btn-success"
+                type="button"
+                @click="uploadPhoto('left_photo')"
+              >Upload</button>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <img
+            v-if="form.right_photo && typeof form.right_photo == 'string'"
+            :src="baseUrl+ 'assets/img/player/' + form.right_photo"
+            class="img-thumbnail mb-2"
+            style="max-width:30%"
+          >
+          <label>Right Photo</label>
+          <div class="input-group">
+            <div class="custom-file">
+              <input
+                id="right-photo"
+                ref="right_photo"
+                type="file"
+                class="custom-file-input"
+                @change="handleFileChange('right_photo')"
+              >
+              <label
+                class="custom-file-label"
+                ref="left_photo_label"
+                for="right-photo"
+              >{{customFileLabelRight}}</label>
+            </div>
+            <div class="input-group-append">
+              <button
+                class="btn btn-success"
+                type="button"
+                @click="uploadPhoto('right_photo')"
+              >Upload</button>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <img
+            v-if="form.front_photo && typeof form.front_photo == 'string'"
+            :src="baseUrl+ 'assets/img/player/' + form.front_photo"
+            class="img-thumbnail mb-2"
+            style="max-width:30%"
+          >
+          <label>Front Photo</label>
+          <div class="input-group">
+            <div class="custom-file">
+              <input
+                id="front-photo"
+                ref="front_photo"
+                type="file"
+                class="custom-file-input"
+                @change="handleFileChange('front_photo')"
+              >
+              <label
+                class="custom-file-label"
+                ref="left_photo_label"
+                for="front-photo"
+              >{{customFileLabelFront}}</label>
+            </div>
+            <div class="input-group-append">
+              <button
+                class="btn btn-success"
+                type="button"
+                @click="uploadPhoto('front_photo')"
+              >Upload</button>
+            </div>
+          </div>
+        </div>
         <div class="d-flex justify-content-end">
           <div
             class="btn-group"
@@ -247,6 +343,10 @@
 <script>
 export default {
   name: 'PlayerList',
+  props: {
+    baseUrl: String
+  },
+
   data() {
     return {
       players: [],
@@ -257,6 +357,7 @@ export default {
         { text: 'Female', value: 'female' }
       ],
       form: {
+        id: null,
         country_id: null,
         club_id: null,
         name: null,
@@ -265,13 +366,20 @@ export default {
         img: null,
         height: null,
         weight: null,
-        achievement: null
+        achievement: null,
+        left_photo: null,
+        right_photo: null,
+        front_photo: null
       },
       modalState: null,
       errorValidation: null,
-      searchKeyword: ''
+      searchKeyword: '',
+      customFileLabelLeft: null,
+      customFileLabelRight: null,
+      customFileLabelFront: null
     };
   },
+
   methods: {
     async getCountries() {
       try {
@@ -397,6 +505,49 @@ export default {
         });
     },
 
+    handleFileChange(photoType) {
+      this.form[photoType] = this.$refs[photoType].files[0];
+
+      // ganti label
+      let filename = this.$refs[photoType].files[0].name;
+      if (filename) {
+        if (photoType == 'left_photo') {
+          this.customFileLabelLeft = filename;
+        } else if (photoType == 'right_photo') {
+          this.customFileLabelRight = filename;
+        } else if (photoType == 'front_photo') {
+          this.customFileLabelFront = filename;
+        }
+      }
+    },
+
+    async uploadPhoto(photoType) {
+      let formData = new FormData();
+      formData.append(photoType, this.form[photoType]);
+
+      // error jika tidak pilih file
+      if (!this.form[photoType].name) {
+        this.$noty.error('No file selected');
+        return;
+      }
+
+      try {
+        const a = await this.$axios.post(`master/player/upload_photo/${this.form.id}/${photoType}`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+        console.log(a.data);
+        this.getAllPlayers();
+        this.$noty.success('Success Upload Photo');
+        this.$bvModal.hide('modal-player');
+      } catch (error) {
+        console.log(error.response);
+        this.errorValidation = error.response.data.message;
+        this.$noty.error('Failed Upload Photo');
+      }
+    },
+
     addData() {
       this.resetData();
       this.$bvModal.show('modal-player');
@@ -408,30 +559,21 @@ export default {
       this.$bvModal.show('modal-player');
       this.modalState = 'update';
       // populate form
-      let { id, country_id, club_id, name, nickname, gender, img, height, weight, achievement } = item;
-      this.form.id = id;
-      this.form.country_id = country_id;
-      this.form.club_id = club_id;
-      this.form.name = name;
-      this.form.nickname = nickname;
-      this.form.gender = gender;
-      this.form.img = img;
-      this.form.height = height;
-      this.form.weight = weight;
-      this.form.achievement = achievement;
+      Object.keys(this.form).forEach(key => {
+        return this.form[key] = item[key];
+      });
     },
 
     resetData() {
       this.errorValidation = null;
-      this.form.country_id = null;
-      this.form.club_id = null;
-      this.form.name = null;
-      this.form.nickname = null;
-      this.form.gender = null;
-      this.form.img = null;
-      this.form.height = null;
-      this.form.weight = null;
-      this.form.achievement = null;
+
+      Object.keys(this.form).forEach(key => {
+        return this.form[key] = null;
+      });
+
+      this.customFileLabelLeft = 'Select File';
+      this.customFileLabelRight = 'Select File';
+      this.customFileLabelFront = 'Select File';
     }
   },
 

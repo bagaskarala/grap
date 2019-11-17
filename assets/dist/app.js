@@ -145,6 +145,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('PlayerDivision', __webpack
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('LogMatch', __webpack_require__(/*! ./components/LogMatch.vue */ "./assets/js/components/LogMatch.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('LogMatchDetail', __webpack_require__(/*! ./components/LogMatchDetail.vue */ "./assets/js/components/LogMatchDetail.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('StopWatch', __webpack_require__(/*! ./components/StopWatch.vue */ "./assets/js/components/StopWatch.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('Setting', __webpack_require__(/*! ./components/Setting.vue */ "./assets/js/components/Setting.vue")["default"]);
 new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app'
 });
@@ -752,6 +753,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RefereeList_vue_vue_type_template_id_41a8844d___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RefereeList_vue_vue_type_template_id_41a8844d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./assets/js/components/Setting.vue":
+/*!******************************************!*\
+  !*** ./assets/js/components/Setting.vue ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Setting_vue_vue_type_template_id_2b30c182___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Setting.vue?vue&type=template&id=2b30c182& */ "./assets/js/components/Setting.vue?vue&type=template&id=2b30c182&");
+/* harmony import */ var _Setting_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Setting.vue?vue&type=script&lang=js& */ "./assets/js/components/Setting.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Setting_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Setting_vue_vue_type_template_id_2b30c182___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Setting_vue_vue_type_template_id_2b30c182___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "assets/js/components/Setting.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./assets/js/components/Setting.vue?vue&type=script&lang=js&":
+/*!*******************************************************************!*\
+  !*** ./assets/js/components/Setting.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Setting_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Setting.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./assets/js/components/Setting.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Setting_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./assets/js/components/Setting.vue?vue&type=template&id=2b30c182&":
+/*!*************************************************************************!*\
+  !*** ./assets/js/components/Setting.vue?vue&type=template&id=2b30c182& ***!
+  \*************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Setting_vue_vue_type_template_id_2b30c182___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Setting.vue?vue&type=template&id=2b30c182& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./assets/js/components/Setting.vue?vue&type=template&id=2b30c182&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Setting_vue_vue_type_template_id_2b30c182___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Setting_vue_vue_type_template_id_2b30c182___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -7240,8 +7310,107 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PlayerList',
+  props: {
+    baseUrl: String
+  },
   data: function data() {
     return {
       players: [],
@@ -7255,6 +7424,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         value: 'female'
       }],
       form: {
+        id: null,
         country_id: null,
         club_id: null,
         name: null,
@@ -7263,11 +7433,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         img: null,
         height: null,
         weight: null,
-        achievement: null
+        achievement: null,
+        left_photo: null,
+        right_photo: null,
+        front_photo: null
       },
       modalState: null,
       errorValidation: null,
-      searchKeyword: ''
+      searchKeyword: '',
+      customFileLabelLeft: null,
+      customFileLabelRight: null,
+      customFileLabelFront: null
     };
   },
   methods: {
@@ -7584,48 +7760,106 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         console.log('Error ', err);
       });
     },
+    handleFileChange: function handleFileChange(photoType) {
+      this.form[photoType] = this.$refs[photoType].files[0]; // ganti label
+
+      var filename = this.$refs[photoType].files[0].name;
+
+      if (filename) {
+        if (photoType == 'left_photo') {
+          this.customFileLabelLeft = filename;
+        } else if (photoType == 'right_photo') {
+          this.customFileLabelRight = filename;
+        } else if (photoType == 'front_photo') {
+          this.customFileLabelFront = filename;
+        }
+      }
+    },
+    uploadPhoto: function () {
+      var _uploadPhoto = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(photoType) {
+        var formData, a;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                formData = new FormData();
+                formData.append(photoType, this.form[photoType]); // error jika tidak pilih file
+
+                if (this.form[photoType].name) {
+                  _context8.next = 5;
+                  break;
+                }
+
+                this.$noty.error('No file selected');
+                return _context8.abrupt("return");
+
+              case 5:
+                _context8.prev = 5;
+                _context8.next = 8;
+                return this.$axios.post("master/player/upload_photo/".concat(this.form.id, "/").concat(photoType), formData, {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                });
+
+              case 8:
+                a = _context8.sent;
+                console.log(a.data);
+                this.getAllPlayers();
+                this.$noty.success('Success Upload Photo');
+                this.$bvModal.hide('modal-player');
+                _context8.next = 20;
+                break;
+
+              case 15:
+                _context8.prev = 15;
+                _context8.t0 = _context8["catch"](5);
+                console.log(_context8.t0.response);
+                this.errorValidation = _context8.t0.response.data.message;
+                this.$noty.error('Failed Upload Photo');
+
+              case 20:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8, this, [[5, 15]]);
+      }));
+
+      function uploadPhoto(_x2) {
+        return _uploadPhoto.apply(this, arguments);
+      }
+
+      return uploadPhoto;
+    }(),
     addData: function addData() {
       this.resetData();
       this.$bvModal.show('modal-player');
       this.modalState = 'add';
     },
     loadData: function loadData(item) {
+      var _this2 = this;
+
       this.resetData();
       this.$bvModal.show('modal-player');
       this.modalState = 'update'; // populate form
 
-      var id = item.id,
-          country_id = item.country_id,
-          club_id = item.club_id,
-          name = item.name,
-          nickname = item.nickname,
-          gender = item.gender,
-          img = item.img,
-          height = item.height,
-          weight = item.weight,
-          achievement = item.achievement;
-      this.form.id = id;
-      this.form.country_id = country_id;
-      this.form.club_id = club_id;
-      this.form.name = name;
-      this.form.nickname = nickname;
-      this.form.gender = gender;
-      this.form.img = img;
-      this.form.height = height;
-      this.form.weight = weight;
-      this.form.achievement = achievement;
+      Object.keys(this.form).forEach(function (key) {
+        return _this2.form[key] = item[key];
+      });
     },
     resetData: function resetData() {
+      var _this3 = this;
+
       this.errorValidation = null;
-      this.form.country_id = null;
-      this.form.club_id = null;
-      this.form.name = null;
-      this.form.nickname = null;
-      this.form.gender = null;
-      this.form.img = null;
-      this.form.height = null;
-      this.form.weight = null;
-      this.form.achievement = null;
+      Object.keys(this.form).forEach(function (key) {
+        return _this3.form[key] = null;
+      });
+      this.customFileLabelLeft = 'Select File';
+      this.customFileLabelRight = 'Select File';
+      this.customFileLabelFront = 'Select File';
     }
   },
   created: function created() {
@@ -7988,6 +8222,211 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   created: function created() {
     this.getAllReferees();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./assets/js/components/Setting.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./assets/js/components/Setting.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'Setting',
+  data: function data() {
+    return {
+      form: {
+        winning: null,
+        point: null,
+        description: null
+      },
+      modalState: null,
+      errorValidation: null
+    };
+  },
+  methods: {
+    getSetting: function () {
+      var _getSetting = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var setting;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return this.$axios.get('setting/get');
+
+              case 3:
+                setting = _context.sent;
+                this.form = setting.data.data;
+                _context.next = 11;
+                break;
+
+              case 7:
+                _context.prev = 7;
+                _context.t0 = _context["catch"](0);
+                console.log(_context.t0.response);
+                this.$noty.error('Failed Get Data');
+
+              case 11:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[0, 7]]);
+      }));
+
+      function getSetting() {
+        return _getSetting.apply(this, arguments);
+      }
+
+      return getSetting;
+    }(),
+    updateData: function () {
+      var _updateData = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                if (!(this.form.year < 1900 || this.form.year > 2100)) {
+                  _context2.next = 3;
+                  break;
+                }
+
+                this.$noty.error('Invalid year');
+                return _context2.abrupt("return");
+
+              case 3:
+                if (!(this.form.montgh < 1 || this.form.month > 12)) {
+                  _context2.next = 6;
+                  break;
+                }
+
+                this.$noty.error('Invalid month');
+                return _context2.abrupt("return");
+
+              case 6:
+                _context2.prev = 6;
+                _context2.next = 9;
+                return this.$axios.post('setting/update', {
+                  year: this.form.year,
+                  month: this.form.month,
+                  city: this.form.city
+                });
+
+              case 9:
+                this.$noty.success('Success Update Data');
+                this.getSetting();
+                _context2.next = 18;
+                break;
+
+              case 13:
+                _context2.prev = 13;
+                _context2.t0 = _context2["catch"](6);
+                console.log(_context2.t0.response);
+                this.errorValidation = _context2.t0.response.data.message;
+                this.$noty.error('Failed Update Data');
+
+              case 18:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[6, 13]]);
+      }));
+
+      function updateData() {
+        return _updateData.apply(this, arguments);
+      }
+
+      return updateData;
+    }()
+  },
+  created: function created() {
+    this.getSetting();
   }
 });
 
@@ -44280,10 +44719,14 @@ var render = function() {
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col p-3 order-2 order-md-1" }, [
           _c("img", {
-            staticClass: "rounded mx-auto d-block",
+            staticClass: "rounded-circle mx-auto d-block",
             attrs: {
-              src: _vm.baseUrl + "/assets/img/user_avatar.png",
-              alt: "..."
+              src: _vm.logMatchDetail.player1_photo
+                ? _vm.baseUrl +
+                  "/assets/img/player/" +
+                  _vm.logMatchDetail.player1_photo
+                : _vm.baseUrl + "/assets/img/user_avatar.png",
+              alt: _vm.logMatchDetail.player1_photo
             }
           })
         ]),
@@ -44304,7 +44747,7 @@ var render = function() {
                 [
                   _vm._m(0),
                   _vm._v(" "),
-                  _c("span", [_vm._v(_vm._s(this.logMatchDetail.division))])
+                  _c("span", [_vm._v(_vm._s(_vm.logMatchDetail.division))])
                 ]
               ),
               _vm._v(" "),
@@ -44320,8 +44763,8 @@ var render = function() {
                   _c("span", [
                     _vm._v(
                       _vm._s(
-                        this.logMatchDetail.match_system != null
-                          ? this.logMatchDetail.match_system.toUpperCase()
+                        _vm.logMatchDetail.match_system != null
+                          ? _vm.logMatchDetail.match_system.toUpperCase()
                           : ""
                       )
                     )
@@ -44340,9 +44783,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("span", [
                     _vm._v(
-                      _vm._s(this.logMatchDetail.match_index) +
+                      _vm._s(_vm.logMatchDetail.match_index) +
                         "." +
-                        _vm._s(this.logMatchDetail.match_number)
+                        _vm._s(_vm.logMatchDetail.match_number)
                     )
                   ])
                 ]
@@ -44375,16 +44818,16 @@ var render = function() {
                     {
                       staticClass: "badge",
                       class:
-                        this.logMatchDetail.match_status == 1
+                        _vm.logMatchDetail.match_status == 1
                           ? "badge-success"
                           : "badge-dark"
                     },
                     [
                       _vm._v(
                         _vm._s(
-                          this.logMatchDetail.match_status == 0
+                          _vm.logMatchDetail.match_status == 0
                             ? "Idle"
-                            : this.logMatchDetail.match_status == 1
+                            : _vm.logMatchDetail.match_status == 1
                             ? "Playing"
                             : "Finished"
                         )
@@ -44403,7 +44846,7 @@ var render = function() {
                 [
                   _vm._m(5),
                   _vm._v(" "),
-                  _c("span", [_vm._v(_vm._s(this.logMatchDetail.winning))])
+                  _c("span", [_vm._v(_vm._s(_vm.logMatchDetail.winning))])
                 ]
               ),
               _vm._v(" "),
@@ -44448,10 +44891,14 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "col p-3 order-3 order-md-3" }, [
           _c("img", {
-            staticClass: "rounded mx-auto d-block",
+            staticClass: "rounded-circle mx-auto d-block",
             attrs: {
-              src: _vm.baseUrl + "/assets/img/user_avatar.png",
-              alt: "..."
+              src: _vm.logMatchDetail.player2_photo
+                ? _vm.baseUrl +
+                  "/assets/img/player/" +
+                  _vm.logMatchDetail.player2_photo
+                : _vm.baseUrl + "/assets/img/user_avatar.png",
+              alt: _vm.logMatchDetail.player2_photo
             }
           })
         ])
@@ -44480,9 +44927,7 @@ var render = function() {
                     },
                     [
                       _c("h3", { staticClass: "mb-0" }, [
-                        _vm._v(
-                          _vm._s(this.logMatchDetail.player1_name || "...")
-                        )
+                        _vm._v(_vm._s(_vm.logMatchDetail.player1_name || "..."))
                       ]),
                       _vm._v(" "),
                       _vm.logMatchDetail.winner == _vm.logMatchDetail.pd1_id
@@ -44508,7 +44953,7 @@ var render = function() {
                 _c("br"),
                 _vm._v(
                   "\n            " +
-                    _vm._s(this.logMatchDetail.player1_club || "...") +
+                    _vm._s(_vm.logMatchDetail.player1_club || "...") +
                     "\n          "
                 )
               ]),
@@ -44520,7 +44965,7 @@ var render = function() {
                 _c("br"),
                 _vm._v(
                   "\n            " +
-                    _vm._s(this.logMatchDetail.player1_country || "...") +
+                    _vm._s(_vm.logMatchDetail.player1_country || "...") +
                     "\n          "
                 )
               ]),
@@ -44532,7 +44977,7 @@ var render = function() {
                 _c("br"),
                 _vm._v(
                   "\n            " +
-                    _vm._s(this.logMatchDetail.player1_weight || "...") +
+                    _vm._s(_vm.logMatchDetail.player1_weight || "...") +
                     " kg\n          "
                 )
               ]),
@@ -44545,14 +44990,14 @@ var render = function() {
                 _vm._v(" "),
                 _c("span", [
                   _c("i", { staticClass: "fa fa-square text-danger" }),
-                  _vm._v(" " + _vm._s(this.logMatchDetail.pd1_redcard || "..."))
+                  _vm._v(" " + _vm._s(_vm.logMatchDetail.pd1_redcard || "..."))
                 ]),
                 _c("br"),
                 _vm._v(" "),
                 _c("span", [
                   _c("i", { staticClass: "fa fa-square text-warning" }),
                   _vm._v(
-                    " " + _vm._s(this.logMatchDetail.pd1_yellowcard || "...")
+                    " " + _vm._s(_vm.logMatchDetail.pd1_yellowcard || "...")
                   )
                 ]),
                 _c("br"),
@@ -44560,7 +45005,7 @@ var render = function() {
                 _c("span", [
                   _c("i", { staticClass: "fa fa-square text-success" }),
                   _vm._v(
-                    " " + _vm._s(this.logMatchDetail.pd1_greencard || "...")
+                    " " + _vm._s(_vm.logMatchDetail.pd1_greencard || "...")
                   )
                 ]),
                 _c("br")
@@ -44591,9 +45036,7 @@ var render = function() {
                     },
                     [
                       _c("h3", { staticClass: "mb-0" }, [
-                        _vm._v(
-                          _vm._s(this.logMatchDetail.player2_name || "...")
-                        )
+                        _vm._v(_vm._s(_vm.logMatchDetail.player2_name || "..."))
                       ]),
                       _vm._v(" "),
                       _vm.logMatchDetail.winner == _vm.logMatchDetail.pd2_id
@@ -44619,7 +45062,7 @@ var render = function() {
                 _c("br"),
                 _vm._v(
                   "\n            " +
-                    _vm._s(this.logMatchDetail.player2_club || "...") +
+                    _vm._s(_vm.logMatchDetail.player2_club || "...") +
                     "\n          "
                 )
               ]),
@@ -44631,7 +45074,7 @@ var render = function() {
                 _c("br"),
                 _vm._v(
                   "\n            " +
-                    _vm._s(this.logMatchDetail.player2_country || "...") +
+                    _vm._s(_vm.logMatchDetail.player2_country || "...") +
                     "\n          "
                 )
               ]),
@@ -44643,7 +45086,7 @@ var render = function() {
                 _c("br"),
                 _vm._v(
                   "\n            " +
-                    _vm._s(this.logMatchDetail.player2_weight || "...") +
+                    _vm._s(_vm.logMatchDetail.player2_weight || "...") +
                     " kg\n          "
                 )
               ]),
@@ -44656,14 +45099,14 @@ var render = function() {
                 _vm._v(" "),
                 _c("span", [
                   _c("i", { staticClass: "fa fa-square text-danger" }),
-                  _vm._v(" " + _vm._s(this.logMatchDetail.pd2_redcard || "..."))
+                  _vm._v(" " + _vm._s(_vm.logMatchDetail.pd2_redcard || "..."))
                 ]),
                 _c("br"),
                 _vm._v(" "),
                 _c("span", [
                   _c("i", { staticClass: "fa fa-square text-warning" }),
                   _vm._v(
-                    " " + _vm._s(this.logMatchDetail.pd2_yellowcard || "...")
+                    " " + _vm._s(_vm.logMatchDetail.pd2_yellowcard || "...")
                   )
                 ]),
                 _c("br"),
@@ -44671,7 +45114,7 @@ var render = function() {
                 _c("span", [
                   _c("i", { staticClass: "fa fa-square text-success" }),
                   _vm._v(
-                    " " + _vm._s(this.logMatchDetail.pd2_greencard || "...")
+                    " " + _vm._s(_vm.logMatchDetail.pd2_greencard || "...")
                   )
                 ]),
                 _c("br")
@@ -46850,6 +47293,178 @@ var render = function() {
               })
             ]),
             _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _vm.form.left_photo && typeof _vm.form.left_photo == "string"
+                ? _c("img", {
+                    staticClass: "img-thumbnail mb-2",
+                    staticStyle: { "max-width": "30%" },
+                    attrs: {
+                      src:
+                        _vm.baseUrl + "assets/img/player/" + _vm.form.left_photo
+                    }
+                  })
+                : _vm._e(),
+              _vm._v(" "),
+              _c("label", [_vm._v("Left Photo")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "input-group" }, [
+                _c("div", { staticClass: "custom-file" }, [
+                  _c("input", {
+                    ref: "left_photo",
+                    staticClass: "custom-file-input",
+                    attrs: { id: "left-photo", type: "file" },
+                    on: {
+                      change: function($event) {
+                        return _vm.handleFileChange("left_photo")
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      ref: "left_photo_label",
+                      staticClass: "custom-file-label",
+                      attrs: { for: "left-photo" }
+                    },
+                    [_vm._v(_vm._s(_vm.customFileLabelLeft))]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "input-group-append" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.uploadPhoto("left_photo")
+                        }
+                      }
+                    },
+                    [_vm._v("Upload")]
+                  )
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _vm.form.right_photo && typeof _vm.form.right_photo == "string"
+                ? _c("img", {
+                    staticClass: "img-thumbnail mb-2",
+                    staticStyle: { "max-width": "30%" },
+                    attrs: {
+                      src:
+                        _vm.baseUrl +
+                        "assets/img/player/" +
+                        _vm.form.right_photo
+                    }
+                  })
+                : _vm._e(),
+              _vm._v(" "),
+              _c("label", [_vm._v("Right Photo")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "input-group" }, [
+                _c("div", { staticClass: "custom-file" }, [
+                  _c("input", {
+                    ref: "right_photo",
+                    staticClass: "custom-file-input",
+                    attrs: { id: "right-photo", type: "file" },
+                    on: {
+                      change: function($event) {
+                        return _vm.handleFileChange("right_photo")
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      ref: "left_photo_label",
+                      staticClass: "custom-file-label",
+                      attrs: { for: "right-photo" }
+                    },
+                    [_vm._v(_vm._s(_vm.customFileLabelRight))]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "input-group-append" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.uploadPhoto("right_photo")
+                        }
+                      }
+                    },
+                    [_vm._v("Upload")]
+                  )
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _vm.form.front_photo && typeof _vm.form.front_photo == "string"
+                ? _c("img", {
+                    staticClass: "img-thumbnail mb-2",
+                    staticStyle: { "max-width": "30%" },
+                    attrs: {
+                      src:
+                        _vm.baseUrl +
+                        "assets/img/player/" +
+                        _vm.form.front_photo
+                    }
+                  })
+                : _vm._e(),
+              _vm._v(" "),
+              _c("label", [_vm._v("Front Photo")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "input-group" }, [
+                _c("div", { staticClass: "custom-file" }, [
+                  _c("input", {
+                    ref: "front_photo",
+                    staticClass: "custom-file-input",
+                    attrs: { id: "front-photo", type: "file" },
+                    on: {
+                      change: function($event) {
+                        return _vm.handleFileChange("front_photo")
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      ref: "left_photo_label",
+                      staticClass: "custom-file-label",
+                      attrs: { for: "front-photo" }
+                    },
+                    [_vm._v(_vm._s(_vm.customFileLabelFront))]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "input-group-append" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.uploadPhoto("front_photo")
+                        }
+                      }
+                    },
+                    [_vm._v("Upload")]
+                  )
+                ])
+              ])
+            ]),
+            _vm._v(" "),
             _c("div", { staticClass: "d-flex justify-content-end" }, [
               _c(
                 "div",
@@ -47190,6 +47805,180 @@ var render = function() {
   )
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./assets/js/components/Setting.vue?vue&type=template&id=2b30c182&":
+/*!*******************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./assets/js/components/Setting.vue?vue&type=template&id=2b30c182& ***!
+  \*******************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container-fluid" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col" }, [
+        _c("div", { staticClass: "card card-default" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("form", { attrs: { method: "post" } }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "year" } }, [_vm._v("Year")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model.number",
+                      value: _vm.form.year,
+                      expression: "form.year",
+                      modifiers: { number: true }
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    id: "year",
+                    type: "number",
+                    placeholder: "Enter year",
+                    min: "1900",
+                    max: "2100"
+                  },
+                  domProps: { value: _vm.form.year },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "year", _vm._n($event.target.value))
+                    },
+                    blur: function($event) {
+                      return _vm.$forceUpdate()
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "month" } }, [_vm._v("Month")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model.number",
+                      value: _vm.form.month,
+                      expression: "form.month",
+                      modifiers: { number: true }
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    id: "month",
+                    type: "number",
+                    placeholder: "Enter month",
+                    max: "12",
+                    min: "1"
+                  },
+                  domProps: { value: _vm.form.month },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "month", _vm._n($event.target.value))
+                    },
+                    blur: function($event) {
+                      return _vm.$forceUpdate()
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "city" } }, [_vm._v("City")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.city,
+                      expression: "form.city"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    id: "city",
+                    type: "text",
+                    placeholder: "Enter city"
+                  },
+                  domProps: { value: _vm.form.city },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "city", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "d-flex justify-content-end" }, [
+                _c(
+                  "div",
+                  { staticClass: "btn-group", attrs: { role: "group" } },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.updateData()
+                          }
+                        }
+                      },
+                      [_vm._v("Update")]
+                    )
+                  ]
+                )
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "card-header d-flex justify-content-between align-items-center"
+      },
+      [_c("span", [_vm._v("Setting")])]
+    )
+  }
+]
 render._withStripped = true
 
 

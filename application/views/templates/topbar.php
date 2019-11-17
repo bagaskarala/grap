@@ -1,6 +1,9 @@
 <?php
-$name  = $this->session->userdata('name');
-$image = $this->session->userdata('image');
+$name          = $this->session->userdata('name');
+$image         = $this->session->userdata('image');
+$setting_city  = $this->session->userdata('setting_city');
+$setting_month = $this->session->userdata('setting_month');
+$setting_year  = $this->session->userdata('setting_year');
 ?>
 <!-- Topbar -->
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -12,6 +15,14 @@ $image = $this->session->userdata('image');
    >
       <i class="fa fa-bars"></i>
    </button>
+
+   <!-- Topbar Search -->
+   <div class="d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100">
+      <span class="text-uppercase font-weight-bold">
+         <?=$setting_city?>
+      </span>
+      <span><?=$setting_month?>/<?=$setting_year?></span>
+   </div>
 
    <!-- Topbar Navbar -->
    <ul class="navbar-nav ml-auto">
@@ -57,7 +68,7 @@ $image = $this->session->userdata('image');
                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                Logout
             </a>
-         </div>
+            </form>
       </li>
 
    </ul>

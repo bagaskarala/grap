@@ -17,9 +17,9 @@
     <div class="row">
       <div class="col p-3 order-2 order-md-1">
         <img
-          :src="baseUrl + '/assets/img/user_avatar.png'"
-          class="rounded mx-auto d-block"
-          alt="..."
+          :src="logMatchDetail.player1_photo? baseUrl+ '/assets/img/player/' + logMatchDetail.player1_photo : baseUrl + '/assets/img/user_avatar.png'"
+          class="rounded-circle mx-auto d-block"
+          :alt="logMatchDetail.player1_photo"
         >
       </div>
       <div class="col-md-6 order-1 order-md-2">
@@ -30,15 +30,15 @@
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-2">
               <span>Division <i class="fa fa-angle-double-right"></i></span>
-              <span>{{this.logMatchDetail.division}}</span>
+              <span>{{logMatchDetail.division}}</span>
             </div>
             <div class="d-flex justify-content-between align-items-center mb-2">
               <span>Match System <i class="fa fa-angle-double-right"></i></span>
-              <span>{{this.logMatchDetail.match_system != null ?this.logMatchDetail.match_system.toUpperCase():''}}</span>
+              <span>{{logMatchDetail.match_system != null ?logMatchDetail.match_system.toUpperCase():''}}</span>
             </div>
             <div class="d-flex justify-content-between align-items-center mb-2">
               <span>Match No <i class="fa fa-angle-double-right"></i></span>
-              <span>{{this.logMatchDetail.match_index}}.{{this.logMatchDetail.match_number}}</span>
+              <span>{{logMatchDetail.match_index}}.{{logMatchDetail.match_number}}</span>
             </div>
             <div class="d-flex justify-content-between align-items-center mb-2">
               <span>Time <i class="fa fa-angle-double-right"></i></span>
@@ -48,12 +48,12 @@
               <span>Status <i class="fa fa-angle-double-right"></i></span>
               <span
                 class="badge"
-                :class="this.logMatchDetail.match_status == 1? 'badge-success': 'badge-dark'"
-              >{{this.logMatchDetail.match_status == 0? 'Idle' : this.logMatchDetail.match_status == 1? 'Playing' : 'Finished' }}</span>
+                :class="logMatchDetail.match_status == 1? 'badge-success': 'badge-dark'"
+              >{{logMatchDetail.match_status == 0? 'Idle' : logMatchDetail.match_status == 1? 'Playing' : 'Finished' }}</span>
             </div>
             <div class="d-flex justify-content-between align-items-center mb-2">
               <span>Winning by <i class="fa fa-angle-double-right"></i></span>
-              <span>{{this.logMatchDetail.winning}}</span>
+              <span>{{logMatchDetail.winning}}</span>
             </div>
             <hr>
             <div class="text-center">
@@ -75,9 +75,9 @@
       </div>
       <div class="col p-3 order-3 order-md-3">
         <img
-          :src="baseUrl + '/assets/img/user_avatar.png'"
-          class="rounded mx-auto d-block"
-          alt="..."
+          :src="logMatchDetail.player2_photo? baseUrl+ '/assets/img/player/' + logMatchDetail.player2_photo : baseUrl + '/assets/img/user_avatar.png'"
+          class="rounded-circle mx-auto d-block"
+          :alt="logMatchDetail.player2_photo"
         >
       </div>
     </div>
@@ -90,7 +90,7 @@
               :class="[logMatchDetail.winner==logMatchDetail.pd1_id? 'list-group-item-success' : '']"
             >
               <div class="d-flex justify-content-between align-items-center font-weight-bold text-uppercase">
-                <h3 class="mb-0">{{this.logMatchDetail.player1_name || '...'}}</h3>
+                <h3 class="mb-0">{{logMatchDetail.player1_name || '...'}}</h3>
                 <span
                   v-if="logMatchDetail.winner==logMatchDetail.pd1_id"
                   class="badge badge-success"
@@ -103,21 +103,21 @@
             </li>
             <li class="list-group-item">
               <span class="small text-muted">Club</span><br>
-              {{this.logMatchDetail.player1_club || '...'}}
+              {{logMatchDetail.player1_club || '...'}}
             </li>
             <li class="list-group-item">
               <span class="small text-muted">Country</span><br>
-              {{this.logMatchDetail.player1_country || '...'}}
+              {{logMatchDetail.player1_country || '...'}}
             </li>
             <li class="list-group-item">
               <span class="small text-muted">Weight</span><br>
-              {{this.logMatchDetail.player1_weight || '...'}} kg
+              {{logMatchDetail.player1_weight || '...'}} kg
             </li>
             <li class="list-group-item">
               <span class="small text-muted">Card</span><br>
-              <span><i class="fa fa-square text-danger"></i> {{this.logMatchDetail.pd1_redcard || '...'}}</span><br>
-              <span><i class="fa fa-square text-warning"></i> {{this.logMatchDetail.pd1_yellowcard || '...'}}</span><br>
-              <span><i class="fa fa-square text-success"></i> {{this.logMatchDetail.pd1_greencard || '...'}}</span><br>
+              <span><i class="fa fa-square text-danger"></i> {{logMatchDetail.pd1_redcard || '...'}}</span><br>
+              <span><i class="fa fa-square text-warning"></i> {{logMatchDetail.pd1_yellowcard || '...'}}</span><br>
+              <span><i class="fa fa-square text-success"></i> {{logMatchDetail.pd1_greencard || '...'}}</span><br>
             </li>
           </ul>
         </div>
@@ -130,7 +130,7 @@
               :class="[logMatchDetail.winner==logMatchDetail.pd2_id? 'list-group-item-success' : '']"
             >
               <div class="d-flex justify-content-between align-items-center font-weight-bold text-uppercase">
-                <h3 class="mb-0">{{this.logMatchDetail.player2_name || '...'}}</h3>
+                <h3 class="mb-0">{{logMatchDetail.player2_name || '...'}}</h3>
                 <span
                   v-if="logMatchDetail.winner==logMatchDetail.pd2_id"
                   class="badge badge-success"
@@ -143,21 +143,21 @@
             </li>
             <li class="list-group-item">
               <span class="small text-muted">Club</span><br>
-              {{this.logMatchDetail.player2_club || '...'}}
+              {{logMatchDetail.player2_club || '...'}}
             </li>
             <li class="list-group-item">
               <span class="small text-muted">Country</span><br>
-              {{this.logMatchDetail.player2_country || '...'}}
+              {{logMatchDetail.player2_country || '...'}}
             </li>
             <li class="list-group-item">
               <span class="small text-muted">Weight</span><br>
-              {{this.logMatchDetail.player2_weight || '...'}} kg
+              {{logMatchDetail.player2_weight || '...'}} kg
             </li>
             <li class="list-group-item">
               <span class="small text-muted">Card</span><br>
-              <span><i class="fa fa-square text-danger"></i> {{this.logMatchDetail.pd2_redcard || '...'}}</span><br>
-              <span><i class="fa fa-square text-warning"></i> {{this.logMatchDetail.pd2_yellowcard || '...'}}</span><br>
-              <span><i class="fa fa-square text-success"></i> {{this.logMatchDetail.pd2_greencard || '...'}}</span><br>
+              <span><i class="fa fa-square text-danger"></i> {{logMatchDetail.pd2_redcard || '...'}}</span><br>
+              <span><i class="fa fa-square text-warning"></i> {{logMatchDetail.pd2_yellowcard || '...'}}</span><br>
+              <span><i class="fa fa-square text-success"></i> {{logMatchDetail.pd2_greencard || '...'}}</span><br>
             </li>
           </ul>
         </div>

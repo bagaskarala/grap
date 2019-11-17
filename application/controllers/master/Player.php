@@ -89,6 +89,23 @@ class Player extends MY_Controller
         }
     }
 
+    public function upload_photo($id, $photo_type)
+    {
+        $upload_image = $_FILES[$photo_type]['name'];
+
+        if ($upload_image) {
+            $result = $this->player->upload_photo($id, $photo_type);
+        } else {
+            $result = 'no photo uploaded';
+        }
+
+        if ($result['status']) {
+            return $this->send_json_output($result['data'], true, 200);
+        } else {
+            return $this->send_json_output($result['message'], false, 400);
+        }
+    }
+
     public function delete()
     {
         $request = parse_post_data();

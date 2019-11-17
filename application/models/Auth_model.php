@@ -52,12 +52,18 @@ class Auth_model extends MY_Model
             // jika user active
             if ($user['is_active'] == 1) {
                 if (password_verify($login_data['login_password'], $user['password'])) {
+
+                    $setting = $this->get_single_array('setting');
+
                     $data = [
-                        'email'   => $user['email'],
-                        'role_id' => $user['role_id'],
-                        'name'    => $user['name'],
-                        'image'   => $user['image'],
-                        'login'   => true,
+                        'email'         => $user['email'],
+                        'role_id'       => $user['role_id'],
+                        'name'          => $user['name'],
+                        'image'         => $user['image'],
+                        'setting_city'  => $setting ? $setting['city'] : null,
+                        'setting_year'  => $setting ? $setting['year'] : null,
+                        'setting_month' => $setting ? $setting['month'] : null,
+                        'login'         => true,
                     ];
                     // set session, masuk ke app
                     $this->session->set_userdata($data);
