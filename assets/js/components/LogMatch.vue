@@ -97,7 +97,10 @@
               class="alert alert-info"
             >Match Finished : {{countMatchFinished}}</div>
 
-            <div v-if="selectedMatchSystem=='elimination'">
+            <div
+              v-if="selectedMatchSystem=='elimination'"
+              class="mb-4"
+            >
               <Bracket :rounds="matchRounds">
                 <template v-slot:player="player">
                   {{ player.player.name }}
@@ -117,7 +120,7 @@
               striped
               hover
               responsive
-              :items="logMatchs"
+              :items="logMatchsFiltered"
               :fields="fieldLogMatch"
               :tbody-tr-class="rowClass"
             >
@@ -407,28 +410,39 @@ export default {
     },
 
     countMatchFinished() {
-      return this.logMatchs.filter(item => item.winner != null && item.winner != -1).length
+      return this.logMatchsFiltered.filter(item => item.winner != null && item.winner != -1).length
         + ' / ' +
-        this.logMatchs.length;
+        this.logMatchsFiltered.length;
     },
 
     lockMatch() {
       return this.logMatchs.find(item => item.winner != null && item.winner >= 0) ? true : false;
+    },
+
+    logMatchsFiltered() {
+      return this.logMatchs.filter(item => item.winner != -1);
     }
   },
 
   methods: {
     checkPlayer(m, playerNumber) {
       // ambil player
-      if (m.match_status == 2 && m.winner == -1) return 'Skipped Match';
-      return playerNumber == 1 ? `${m.player1_name || '...'} (${m.player1_club_alias || '...'})` : `${m.player2_name || '...'} (${m.player2_club_alias || '...'})`;
+      if (m.match_status == 2) {
+        return playerNumber == 1 ? `${m.player1_name || 'Bye'} (${m.player1_club_alias || '-'})` : `${m.player2_name || 'Bye'} (${m.player2_club_alias || '-'})`;
+      } else {
+        return playerNumber == 1 ? `${m.player1_name || '...'} (${m.player1_club_alias || '...'})` : `${m.player2_name || '...'} (${m.player2_club_alias || '...'})`;
+      }
     },
 
     checkWinner(m, playerNumber) {
-      // jika belum ada pemenang atau skipped match, set winner ke null
+      // jika belum ada pemenang, set winner ke null
+      // jika skipped match maka set ke win
       // lalu set true dan false tergantung pemenang
-      if (m.winner == null || m.winner == -1) return null;
-      else if (m.winner == 0) return true;
+      if (m.winner == null) return null;
+      else if (m.winner == -1 && playerNumber == 1 && m.pd1_id == null) return null;
+      else if (m.winner == -1 && playerNumber == 2 && m.pd2_id == null) return null;
+      else if (m.winner == -1) return true;
+      else if (m.winner == 0) return null;
 
       if (playerNumber == 1) {
         return m.winner == m.pd1_id ? true : false;

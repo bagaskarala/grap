@@ -4449,6 +4449,9 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'LogMatch',
@@ -4572,26 +4575,35 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       }];
     },
     countMatchFinished: function countMatchFinished() {
-      return this.logMatchs.filter(function (item) {
+      return this.logMatchsFiltered.filter(function (item) {
         return item.winner != null && item.winner != -1;
-      }).length + ' / ' + this.logMatchs.length;
+      }).length + ' / ' + this.logMatchsFiltered.length;
     },
     lockMatch: function lockMatch() {
       return this.logMatchs.find(function (item) {
         return item.winner != null && item.winner >= 0;
       }) ? true : false;
+    },
+    logMatchsFiltered: function logMatchsFiltered() {
+      return this.logMatchs.filter(function (item) {
+        return item.winner != -1;
+      });
     }
   },
   methods: {
     checkPlayer: function checkPlayer(m, playerNumber) {
       // ambil player
-      if (m.match_status == 2 && m.winner == -1) return 'Skipped Match';
-      return playerNumber == 1 ? "".concat(m.player1_name || '...', " (").concat(m.player1_club_alias || '...', ")") : "".concat(m.player2_name || '...', " (").concat(m.player2_club_alias || '...', ")");
+      if (m.match_status == 2) {
+        return playerNumber == 1 ? "".concat(m.player1_name || 'Bye', " (").concat(m.player1_club_alias || '-', ")") : "".concat(m.player2_name || 'Bye', " (").concat(m.player2_club_alias || '-', ")");
+      } else {
+        return playerNumber == 1 ? "".concat(m.player1_name || '...', " (").concat(m.player1_club_alias || '...', ")") : "".concat(m.player2_name || '...', " (").concat(m.player2_club_alias || '...', ")");
+      }
     },
     checkWinner: function checkWinner(m, playerNumber) {
-      // jika belum ada pemenang atau skipped match, set winner ke null
+      // jika belum ada pemenang, set winner ke null
+      // jika skipped match maka set ke win
       // lalu set true dan false tergantung pemenang
-      if (m.winner == null || m.winner == -1) return null;else if (m.winner == 0) return true;
+      if (m.winner == null) return null;else if (m.winner == -1 && playerNumber == 1 && m.pd1_id == null) return null;else if (m.winner == -1 && playerNumber == 2 && m.pd2_id == null) return null;else if (m.winner == -1) return true;else if (m.winner == 0) return null;
 
       if (playerNumber == 1) {
         return m.winner == m.pd1_id ? true : false;
@@ -6325,6 +6337,15 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var timeoutDebounce = null;
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PlayerDivision',
@@ -6991,6 +7012,30 @@ var timeoutDebounce = null;
       return this.playerDivisions.filter(function (item) {
         return item.pool_number == pool;
       }).length;
+    },
+    medalStyle: function medalStyle(position) {
+      if (position == 1) {
+        return {
+          color: '#d4af37'
+        };
+      } else if (position == 2) {
+        return {
+          color: '#A9A9A9'
+        };
+      } else {
+        return {
+          color: '#cd7f32'
+        };
+      }
+    },
+    winnerPosition: function winnerPosition(position) {
+      if (position == 1) {
+        return '1st Winner';
+      } else if (position == 2) {
+        return '2nd Winner';
+      } else {
+        return '3rd Winner';
+      }
     }
   },
   created: function created() {
@@ -44091,6 +44136,7 @@ var render = function() {
                 _vm.selectedMatchSystem == "elimination"
                   ? _c(
                       "div",
+                      { staticClass: "mb-4" },
                       [
                         _c("Bracket", {
                           attrs: { rounds: _vm.matchRounds },
@@ -44152,7 +44198,7 @@ var render = function() {
                         striped: "",
                         hover: "",
                         responsive: "",
-                        items: _vm.logMatchs,
+                        items: _vm.logMatchsFiltered,
                         fields: _vm.fieldLogMatch,
                         "tbody-tr-class": _vm.rowClass
                       },
@@ -46212,11 +46258,24 @@ var render = function() {
                             fn: function(data) {
                               return [
                                 data.item.division_winner
-                                  ? _c(
-                                      "span",
-                                      { staticClass: "badge badge-success" },
-                                      [_vm._v("Winner")]
-                                    )
+                                  ? _c("span", [
+                                      _c("i", {
+                                        staticClass: "fa fa-medal",
+                                        style: _vm.medalStyle(
+                                          data.item.division_winner
+                                        )
+                                      }),
+                                      _vm._v(" "),
+                                      _c("span", [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm.winnerPosition(
+                                              data.item.division_winner
+                                            )
+                                          )
+                                        )
+                                      ])
+                                    ])
                                   : _vm._e()
                               ]
                             }
@@ -46226,16 +46285,26 @@ var render = function() {
                             fn: function(data) {
                               return [
                                 data.item.pool_winner
-                                  ? _c(
-                                      "span",
-                                      { staticClass: "badge badge-success" },
-                                      [
-                                        _vm._v(
-                                          _vm._s(data.item.pool_number) +
-                                            " Winner"
-                                        )
-                                      ]
-                                    )
+                                  ? _c("span", [
+                                      _c("i", {
+                                        staticClass: "fa fa-medal",
+                                        style: _vm.medalStyle(1)
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass: "badge",
+                                          class: [
+                                            data.item.pool_number == "A"
+                                              ? "badge-dark"
+                                              : "badge-danger"
+                                          ]
+                                        },
+                                        [_vm._v(_vm._s(data.item.pool_number))]
+                                      ),
+                                      _vm._v("\n                Winner")
+                                    ])
                                   : _vm._e()
                               ]
                             }
@@ -46299,7 +46368,7 @@ var render = function() {
                         ],
                         null,
                         false,
-                        2884250439
+                        327012581
                       )
                     })
                   : _vm._e()

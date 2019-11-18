@@ -112,10 +112,26 @@ class Player_division_model extends MY_Model
         $idx = $this->get_single_array('log_match');
 
         // get pertandingan final
+        // untuk ambil juara 1 dan 2
         $final_match = $this->get_where(['match_index' => $idx['max_match_index'], 'division_id' => $division_id], 'log_match');
 
-        // update division_winner sesuai pemenang
-        $result = $this->update(['division_winner' => 1], ['id' => $final_match['winner']]);
+        // update juara 1
+        $this->update(['division_winner' => 1], ['id' => $final_match['winner']]);
+
+        // update juara 2
+        if ($final_match['winner'] == $final_match['pd1_id']) {
+            $second_winner = $final_match['pd2_id'];
+        } else {
+            $second_winner = $final_match['pd1_id'];
+        }
+        $this->update(['division_winner' => 2], ['id' => $second_winner]);
+
+        // get pertandingan third place
+        // untuk ambil juara 3
+        $third_match = $this->get_where(['match_number' => 0, 'division_id' => $division_id], 'log_match', );
+        $this->update(['division_winner' => 3], ['id' => $third_match['winner']]);
+
+        $result = true;
         if ($result) {
             return [
                 'status' => true,

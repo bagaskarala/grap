@@ -427,8 +427,8 @@ class Log_match_model extends MY_Model
                 $data = [
                     'winner'       => -1, // bye
                     'match_status' => 2, // finish
-                    'pd1_id'       => null,
-                    'pd2_id'       => null,
+                    // 'pd1_id'       => null,
+                    // 'pd2_id'       => null,
                 ];
                 $this->update($data, ['id' => $lm['id']]);
             }

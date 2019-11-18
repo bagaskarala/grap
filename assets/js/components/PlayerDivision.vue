@@ -116,17 +116,26 @@
               </template>
 
               <template v-slot:cell(division_winner)="data">
-                <span
-                  v-if="data.item.division_winner"
-                  class="badge badge-success"
-                >Winner</span>
+                <span v-if="data.item.division_winner">
+                  <i
+                    class="fa fa-medal"
+                    :style="medalStyle(data.item.division_winner)"
+                  ></i>
+                  <span>{{winnerPosition(data.item.division_winner)}}</span>
+                </span>
               </template>
 
               <template v-slot:cell(pool_winner)="data">
-                <span
-                  v-if="data.item.pool_winner"
-                  class="badge badge-success"
-                >{{data.item.pool_number}} Winner</span>
+                <span v-if="data.item.pool_winner">
+                  <i
+                    class="fa fa-medal"
+                    :style="medalStyle(1)"
+                  ></i>
+                  <span
+                    :class="[data.item.pool_number == 'A'? 'badge-dark':'badge-danger']"
+                    class="badge"
+                  >{{data.item.pool_number}}</span>
+                  Winner</span>
               </template>
 
               <template v-slot:cell(action)="data">
@@ -591,6 +600,32 @@ export default {
 
     countPlayerPerPool(pool) {
       return this.playerDivisions.filter(item => item.pool_number == pool).length;
+    },
+
+    medalStyle(position) {
+      if (position == 1) {
+        return {
+          color: '#d4af37'
+        };
+      } else if (position == 2) {
+        return {
+          color: '#A9A9A9'
+        };
+      } else {
+        return {
+          color: '#cd7f32'
+        };
+      }
+    },
+
+    winnerPosition(position) {
+      if (position == 1) {
+        return '1st Winner';
+      } else if (position == 2) {
+        return '2nd Winner';
+      } else {
+        return '3rd Winner';
+      }
     }
   },
 
