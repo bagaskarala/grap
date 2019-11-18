@@ -40,7 +40,7 @@ class Admin extends CI_Controller
 
         $data['user'] = $this->db->get_where('user', ['email' => $this->session_email])->row_array();
 
-        $data['role'] = $this->db->get('user_role')->result_array();
+        $data['role'] = $this->db->get('role')->result_array();
 
         $this->load->view('templates/app', $data);
     }
@@ -52,10 +52,10 @@ class Admin extends CI_Controller
 
         $data['user'] = $this->db->get_where('user', ['email' => $this->session_email])->row_array();
 
-        $data['role'] = $this->db->get_where('user_role', ['id' => $role_id])->row_array();
+        $data['role'] = $this->db->get_where('role', ['id' => $role_id])->row_array();
 
         $this->db->where('id !=', 1);
-        $data['menu'] = $this->db->get('user_menu')->result_array();
+        $data['menu'] = $this->db->get('menu')->result_array();
 
         $this->load->view('templates/app', $data);
     }
@@ -69,12 +69,12 @@ class Admin extends CI_Controller
             'role_id' => $role_id,
             'menu_id' => $menu_id,
         ];
-        $result = $this->db->get_where('user_access_menu', $data);
+        $result = $this->db->get_where('access_menu', $data);
 
         if ($result->num_rows() < 1) {
-            $this->db->insert('user_access_menu', $data);
+            $this->db->insert('access_menu', $data);
         } else {
-            $this->db->delete('user_access_menu', $data);
+            $this->db->delete('access_menu', $data);
         }
 
         $this->session->set_flashdata('message', 'Access changed');

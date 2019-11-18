@@ -1,11 +1,11 @@
 <!-- Query  -->
 <?php
 $role_id    = $this->session->userdata('role_id');
-$query_menu = "SELECT `user_menu`.`id`, `menu`
-               FROM `user_menu` JOIN `user_access_menu`
-               ON `user_menu`.`id` = `user_access_menu`.`menu_id`
-               WHERE `user_access_menu`.`role_id` = $role_id
-               ORDER BY `user_access_menu`.`menu_id` ASC";
+$query_menu = "SELECT `menu`.`id`, `menu`
+               FROM `menu` JOIN `access_menu`
+               ON `menu`.`id` = `access_menu`.`menu_id`
+               WHERE `access_menu`.`role_id` = $role_id
+               ORDER BY `access_menu`.`menu_id` ASC";
 
 $menu = $this->db->query($query_menu)->result_array();
 ?>
@@ -38,7 +38,7 @@ $menu = $this->db->query($query_menu)->result_array();
 
    <?php
 $menu_id       = $m['id'];
-$query_submenu = "SELECT * FROM `user_sub_menu`WHERE `menu_id` = $menu_id AND `is_active` = 1";
+$query_submenu = "SELECT * FROM `sub_menu`WHERE `menu_id` = $menu_id AND `is_active` = 1";
 
 $sub_menu = $this->db->query($query_submenu)->result_array();
 ?>

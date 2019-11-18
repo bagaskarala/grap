@@ -1,17 +1,20 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Menu_model extends CI_Model
+class Menu_model extends MY_Model
 {
-
-    public function get_sub_menu()
+    public function getValidationRules()
     {
-        $query = "SELECT `user_sub_menu`.*, `user_menu`.`menu`
-                  FROM `user_sub_menu` JOIN `user_menu`
-                  ON `user_sub_menu`.`menu_id` = `user_menu`.`id`";
-        return $this->db->query($query)->result_array();
-    }
+        $validationRules = [
+            [
+                'field' => 'menu',
+                'label' => 'menu',
+                'rules' => 'required|trim',
+            ],
+        ];
 
+        return $validationRules;
+    }
 }
 
-/* End of file ModelName.php */
+/* End of file Menu_model.php */

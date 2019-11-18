@@ -52,3 +52,5 @@ defined('BASEPATH') or exit('No direct script access allowed');
 $route['default_controller']   = 'auth';
 $route['404_override']         = '';
 $route['translate_uri_dashes'] = false;
+// $route['menu/submenu']         = 'sub_menu';
+// $route['menu/submenu/(:any)']  = 'sub_menu/$1';

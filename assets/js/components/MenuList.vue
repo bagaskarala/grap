@@ -4,33 +4,32 @@
       <div class="col">
         <div class="card card-default">
           <div class="card-header d-flex justify-content-between align-items-center">
-            <span>Country List</span>
+            <span>Menu List</span>
             <!-- Button trigger modal -->
             <button
               type="button"
               class="btn btn-sm btn-primary"
               @click="addData()"
             >
-              Add country
+              Add menu
             </button>
           </div>
 
           <div class="card-body">
             <div
-              v-show="countries.length == 0"
+              v-show="menus.length == 0"
               class="my-3 text-center"
             >Empty Data</div>
             <div class="list-group">
               <div
-                v-for="item in countries"
+                v-for="item in menus"
                 :key="item.id"
                 class="list-group-item d-flex justify-content-between align-items-center"
               >
                 <div>
                   <p class="font-weight-bold m-0">
-                    {{item.country}}
+                    {{item.menu}}
                   </p>
-                  <span>{{item.alias}}</span>
                 </div>
                 <div>
                   <button
@@ -49,9 +48,9 @@
       </div>
     </div>
 
-    <!-- modal add country -->
+    <!-- modal add menu -->
     <b-modal
-      id="modal-country"
+      id="modal-menu"
       hide-footer
       :title="modalState == 'add'? 'Add Item' : 'Update Item'"
     >
@@ -63,46 +62,14 @@
 
       <form method="post">
         <div class="form-group">
-          <label for="country">Country</label>
+          <label for="menu">Menu Category</label>
           <input
-            id="country"
-            v-model="form.country"
+            id="menu"
+            v-model="form.menu"
             type="text"
             class="form-control"
-            placeholder="Enter country"
+            placeholder="Enter menu category name"
           >
-        </div>
-        <div class="form-group">
-          <label for="alias">Alias</label>
-          <input
-            id="alias"
-            v-model="form.alias"
-            type="text"
-            class="form-control"
-            placeholder="Enter Alias"
-            maxlength="3"
-          >
-        </div>
-        <div class="form-group">
-          <label for="img">Img</label>
-          <input
-            id="img"
-            v-model="form.img"
-            type="text"
-            class="form-control"
-            placeholder="Enter img"
-          >
-        </div>
-        <div class="form-group">
-          <label for="description">Description</label>
-          <textarea
-            id="description"
-            v-model="form.description"
-            class="form-control"
-            cols="30"
-            rows="4"
-            placeholder="Enter description"
-          ></textarea>
         </div>
         <div class="d-flex justify-content-end">
           <div
@@ -133,42 +100,35 @@
 
 <script>
 export default {
-  name: 'CountryList',
+  name: 'MenuList',
   data() {
     return {
-      countries: [],
+      menus: [],
       form: {
-        country: null,
-        alias: null,
-        img: null,
-        description: null
+        menu: null
       },
       modalState: null,
       errorValidation: null
     };
   },
   methods: {
-    async getAllCountries() {
+    async getAllMenus() {
       try {
-        const countries = await this.$axios.get('master/country/get_all');
-        this.countries = countries.data.data;
+        const menus = await this.$axios.get('sidebar/menu/get_all');
+        this.menus = menus.data.data;
       } catch (error) {
         this.$noty.error('Failed Get Data');
-        console.log(error.response);
       }
     },
 
     async insertData() {
       try {
-        await this.$axios.post('master/country/insert', {
-          country: this.form.country,
-          alias: this.form.alias,
-          img: this.form.img,
-          description: this.form.description
+        await this.$axios.post('sidebar/menu/insert', {
+          menu: this.form.menu
         });
         this.$noty.success('Success Insert Data');
-        this.getAllCountries();
-        this.$bvModal.hide('modal-country');
+        this.getAllMenus();
+        this.$bvModal.hide('modal-menu');
       } catch (error) {
         this.$noty.error('Failed Insert Data');
         this.errorValidation = error.response.data.message;
@@ -178,16 +138,13 @@ export default {
 
     async updateData() {
       try {
-        await this.$axios.post(`master/country/update/${this.form.id}`, {
-          country: this.form.country,
-          alias: this.form.alias,
-          img: this.form.img,
-          description: this.form.description
+        await this.$axios.post(`sidebar/menu/update/${this.form.id}`, {
+          menu: this.form.menu
         });
 
         this.$noty.success('Success Update Data');
-        this.getAllCountries();
-        this.$bvModal.hide('modal-country');
+        this.getAllMenus();
+        this.$bvModal.hide('modal-menu');
       } catch (error) {
         this.$noty.error('Failed Update Data');
         this.errorValidation = error.response.data.message;
@@ -197,13 +154,13 @@ export default {
 
     async deleteData(item) {
       try {
-        await this.$axios.post('master/country/delete', {
+        await this.$axios.post('sidebar/menu/delete', {
           id: item.id
         });
 
         this.$noty.success('Success Delete Data');
-        this.getAllCountries();
-        this.$bvModal.hide('modal-country');
+        this.getAllMenus();
+        this.$bvModal.hide('modal-menu');
       } catch (error) {
         this.$noty.error('Failed Delete Data');
         console.log(error.response);
@@ -211,7 +168,7 @@ export default {
     },
 
     confirmDelete(item) {
-      this.$bvModal.msgBoxConfirm(`Please confirm that you want to delete ${item.country}`, {
+      this.$bvModal.msgBoxConfirm(`Please confirm that you want to delete ${item.menu}`, {
         title: 'Delete Data',
         size: 'md',
         okVariant: 'danger',
@@ -229,33 +186,27 @@ export default {
 
     addData() {
       this.resetData();
-      this.$bvModal.show('modal-country');
+      this.$bvModal.show('modal-menu');
       this.modalState = 'add';
     },
 
     loadData(item) {
       this.resetData();
-      this.$bvModal.show('modal-country');
+      this.$bvModal.show('modal-menu');
       this.modalState = 'update';
-      let { id, country, alias, img, description } = item;
+      let { id, menu } = item;
       this.form.id = id;
-      this.form.country = country;
-      this.form.alias = alias;
-      this.form.img = img;
-      this.form.description = description;
+      this.form.menu = menu;
     },
 
     resetData() {
       this.errorValidation = null;
-      this.form.country = null;
-      this.form.alias = null;
-      this.form.img = null;
-      this.form.description = null;
+      this.form.menu = null;
     }
   },
 
   created() {
-    this.getAllCountries();
+    this.getAllMenus();
   }
 };
 </script>

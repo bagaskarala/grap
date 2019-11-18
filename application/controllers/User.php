@@ -62,7 +62,9 @@ class User extends CI_Controller
             $this->session->set_flashdata('message', 'Profile updated');
 
             // update foto di session untuk topbar
-            $this->session->set_userdata(['image' => $new_image]);
+            if ($new_image) {
+                $this->session->set_userdata(['image' => $new_image]);
+            }
             redirect('user/edit');
         }
     }

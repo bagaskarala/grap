@@ -44,6 +44,8 @@ Vue.component('LogMatch', require('./components/LogMatch.vue').default);
 Vue.component('LogMatchDetail', require('./components/LogMatchDetail.vue').default);
 Vue.component('StopWatch', require('./components/StopWatch.vue').default);
 Vue.component('Setting', require('./components/Setting.vue').default);
+Vue.component('MenuList', require('./components/MenuList.vue').default);
+Vue.component('SubMenuList', require('./components/SubMenuList.vue').default);
 
 new Vue({
    el: '#app'
