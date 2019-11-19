@@ -107,6 +107,9 @@ class Player_division extends MY_Controller
 
     public function filter_division($division_id)
     {
+        // menyimpan pilihan divisi di session
+        $this->session->set_userdata(['division_id' => $division_id]);
+
         if ($division_id === 'null') {
             $this->player_division->order_by('pool_number');
             $result = $this->player_division->get_all_player_division();

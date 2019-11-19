@@ -289,7 +289,8 @@ import Bracket from 'vue-tournament-bracket';
 export default {
   name: 'LogMatch',
   props: {
-    baseUrl: String
+    baseUrl: String,
+    divisionId: String
   },
   components: {
     Bracket
@@ -763,9 +764,15 @@ export default {
   },
 
   created() {
-    this.getDivisions();
     // this.getAllLogMatchs();
 
+    // auto pilih division yang tersimpan di session
+    if (this.divisionId) {
+      this.filterDivisionId = parseInt(this.divisionId);
+      this.filterData(parseInt(this.divisionId));
+    }
+
+    this.getDivisions();
   }
 };
 </script>

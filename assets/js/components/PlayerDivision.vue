@@ -277,6 +277,7 @@
 var timeoutDebounce = null;
 export default {
   name: 'PlayerDivision',
+  props: ['divisionId'],
   data() {
     return {
       poolOptions: [
@@ -631,6 +632,13 @@ export default {
 
   created() {
     // this.getAllPlayerDivisions();
+
+    // auto pilih division yang tersimpan di session
+    if (this.divisionId) {
+      this.filterDivisionId = parseInt(this.divisionId);
+      this.filterData(parseInt(this.divisionId));
+    }
+
     this.getDivisions();
     this.getPlayers();
   },

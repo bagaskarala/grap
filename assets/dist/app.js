@@ -4663,7 +4663,8 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'LogMatch',
   props: {
-    baseUrl: String
+    baseUrl: String,
+    divisionId: String
   },
   components: {
     Bracket: vue_tournament_bracket__WEBPACK_IMPORTED_MODULE_1___default.a
@@ -5390,7 +5391,14 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     }
   },
   created: function created() {
-    this.getDivisions(); // this.getAllLogMatchs();
+    // this.getAllLogMatchs();
+    // auto pilih division yang tersimpan di session
+    if (this.divisionId) {
+      this.filterDivisionId = parseInt(this.divisionId);
+      this.filterData(parseInt(this.divisionId));
+    }
+
+    this.getDivisions();
   }
 });
 
@@ -6891,6 +6899,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 var timeoutDebounce = null;
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PlayerDivision',
+  props: ['divisionId'],
   data: function data() {
     return {
       poolOptions: [{
@@ -7582,6 +7591,12 @@ var timeoutDebounce = null;
   },
   created: function created() {
     // this.getAllPlayerDivisions();
+    // auto pilih division yang tersimpan di session
+    if (this.divisionId) {
+      this.filterDivisionId = parseInt(this.divisionId);
+      this.filterData(parseInt(this.divisionId));
+    }
+
     this.getDivisions();
     this.getPlayers();
   },

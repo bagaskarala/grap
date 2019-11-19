@@ -1,2 +1,2 @@
 <!-- load vue component -->
-<player-division></player-division>
+<player-division division-id="<?=$this->session->userdata('division_id');?>"></player-division>

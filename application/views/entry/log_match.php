@@ -1,2 +1,2 @@
 <!-- load vue component -->
-<log-match></log-match>
+<log-match division-id="<?=$this->session->userdata('division_id');?>"></log-match>

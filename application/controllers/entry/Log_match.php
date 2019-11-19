@@ -122,6 +122,9 @@ class Log_match extends MY_Controller
 
     public function filter_division($division_id)
     {
+        // menyimpan pilihan divisi di session
+        $this->session->set_userdata(['division_id' => $division_id]);
+
         if ($division_id === 'null') {
             $result = $this->log_match->get_all_log_match();
         } else {
