@@ -273,7 +273,6 @@ export default {
 
         this.$noty.success('Success Delete Data');
         this.getAllSubMenus();
-        this.$bvModal.hide('modal-sub-menu');
       } catch (error) {
         this.$noty.error('Failed Delete Data');
         console.log(error.response);

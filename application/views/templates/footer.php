@@ -77,16 +77,15 @@ $('.access-checkbox').on('click', function() {
    const roleId = $(this).data('role')
 
    $.ajax({
-      url: "<?=base_url('admin/change_access')?>",
+      url: "<?=base_url('admin/role/change_access')?>",
       type: 'post',
       data: {
          menu_id: menuId,
          role_id: roleId
       },
       success: function() {
-         document.location.href = "<?=base_url('admin/role_access/')?>" + roleId
+         document.location.href = "<?=base_url('admin/role/role_access/')?>" + roleId
       }
-
    })
 })
 </script>

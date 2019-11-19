@@ -1,9 +1,14 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
-   <?=form_error('menu', ' <div class="alert alert-danger">', '</div>')?>
-   <?=$this->session->flashdata('message');?>
-   <!-- Page Heading -->
-   <h1 class="h3 mb-4 text-gray-800"><?=$title?></h1>
+   <!-- <?=form_error('menu', ' <div class="alert alert-danger">', '</div>')?>
+   <div class="alert alert-info">
+      <?=$this->session->flashdata('message');?>
+   </div> -->
+
+   <div class="d-flex justify-content-between align-items-center mb-3">
+      <a href="<?=base_url('admin/role')?>"><i class="fa fa-angle-double-left"></i> Back to Role</a>
+   </div>
+
    <h4>Role : <?=$role['role']?></h4>
 
    <table class="table table-striped">

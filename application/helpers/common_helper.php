@@ -21,14 +21,14 @@ function is_logged_in()
             'menu_id' => $menu_id,
         ]);
 
-        // if ($user_access->num_rows() < 1) {
-        //     redirect('auth/blocked');
-        // }
+        if ($user_access->num_rows() < 1) {
+            redirect('auth/blocked');
+        }
     }
 
 }
 
-// checklist pada akses menu
+// cek akses role pada menu role_access
 function check_access($role_id, $menu_id)
 {
     $ci = get_instance();
@@ -40,7 +40,6 @@ function check_access($role_id, $menu_id)
     if ($result->num_rows() > 0) {
         return "checked='checked'";
     }
-
 }
 
 // mengambil post data dari client

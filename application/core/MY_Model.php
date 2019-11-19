@@ -87,9 +87,10 @@ class MY_Model extends CI_Model
         }
     }
 
-    public function delete($where)
+    public function delete($where, $table = null)
     {
-        $this->db->delete($this->table, $where);
+        $table = $this->checkTable($table);
+        $this->db->delete($table, $where);
         return $this->db->affected_rows();
     }
 

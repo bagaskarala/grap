@@ -32,7 +32,7 @@ Vue.prototype.$axios = Axios.create({
 });
 
 // deklarasi komponen
-Vue.component('UsersList', require('./components/UsersList.vue').default);
+Vue.component('UserList', require('./components/UserList.vue').default);
 Vue.component('DivisionList', require('./components/DivisionList.vue').default);
 Vue.component('CountryList', require('./components/CountryList.vue').default);
 Vue.component('ClubList', require('./components/ClubList.vue').default);
@@ -46,6 +46,7 @@ Vue.component('StopWatch', require('./components/StopWatch.vue').default);
 Vue.component('Setting', require('./components/Setting.vue').default);
 Vue.component('MenuList', require('./components/MenuList.vue').default);
 Vue.component('SubMenuList', require('./components/SubMenuList.vue').default);
+Vue.component('RoleList', require('./components/RoleList.vue').default);
 
 new Vue({
    el: '#app'
