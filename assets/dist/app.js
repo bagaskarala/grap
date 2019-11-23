@@ -124,7 +124,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuejs_noty__WEBPACK_IMPORTED_MODU
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_4__["ModalPlugin"]); // table bootstrap-vue
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_4__["TablePlugin"]); // membuat instance axios
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_4__["TablePlugin"]); // table bootstrap-vue
+
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_4__["TabsPlugin"]); // membuat instance axios
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.$axios = axios__WEBPACK_IMPORTED_MODULE_5___default.a.create({
@@ -7708,10 +7711,170 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -8063,6 +8226,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       players: [],
       countries: [],
+      achievements: [],
       clubs: [],
       genderOptions: [{
         text: 'Male',
@@ -8086,31 +8250,50 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         right_photo: null,
         front_photo: null
       },
+      formAchievement: [],
       modalState: null,
       errorValidation: null,
       searchKeyword: '',
       customFileLabelLeft: null,
       customFileLabelRight: null,
-      customFileLabelFront: null
+      customFileLabelFront: null,
+      tabIndex: 0,
+      winnerPositionOptions: [{
+        text: '1st winner',
+        value: 1
+      }, {
+        text: '2nd winner',
+        value: 2
+      }, {
+        text: '3rd winner',
+        value: 3
+      }],
+      categoryOptions: [{
+        text: 'General',
+        value: 'general'
+      }, {
+        text: 'Grappling',
+        value: 'grappling'
+      }]
     };
   },
   methods: {
-    getCountries: function () {
-      var _getCountries = _asyncToGenerator(
+    getPlayerAchivements: function () {
+      var _getPlayerAchivements = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var countries;
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(playerId) {
+        var achievements;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return this.$axios.get('master/country/get_all');
+                return this.$axios.get("master/achievement/filter/".concat(playerId));
 
               case 3:
-                countries = _context.sent;
-                this.countries = countries.data.data;
+                achievements = _context.sent;
+                this.achievements = achievements.data.data;
                 _context.next = 11;
                 break;
 
@@ -8118,7 +8301,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.prev = 7;
                 _context.t0 = _context["catch"](0);
                 console.log(_context.t0.response);
-                this.$noty.error('Failed Fetch Countries');
+                this.$noty.error('Failed Fetch Achievements');
 
               case 11:
               case "end":
@@ -8126,6 +8309,45 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee, this, [[0, 7]]);
+      }));
+
+      function getPlayerAchivements(_x) {
+        return _getPlayerAchivements.apply(this, arguments);
+      }
+
+      return getPlayerAchivements;
+    }(),
+    getCountries: function () {
+      var _getCountries = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var countries;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return this.$axios.get('master/country/get_all');
+
+              case 3:
+                countries = _context2.sent;
+                this.countries = countries.data.data;
+                _context2.next = 11;
+                break;
+
+              case 7:
+                _context2.prev = 7;
+                _context2.t0 = _context2["catch"](0);
+                console.log(_context2.t0.response);
+                this.$noty.error('Failed Fetch Countries');
+
+              case 11:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[0, 7]]);
       }));
 
       function getCountries() {
@@ -8137,34 +8359,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getClubs: function () {
       var _getClubs = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var clubs;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
-                _context2.prev = 0;
-                _context2.next = 3;
+                _context3.prev = 0;
+                _context3.next = 3;
                 return this.$axios.get('master/club/get_all');
 
               case 3:
-                clubs = _context2.sent;
+                clubs = _context3.sent;
                 this.clubs = clubs.data.data;
-                _context2.next = 11;
+                _context3.next = 11;
                 break;
 
               case 7:
-                _context2.prev = 7;
-                _context2.t0 = _context2["catch"](0);
-                console.log(_context2.t0.response);
+                _context3.prev = 7;
+                _context3.t0 = _context3["catch"](0);
+                console.log(_context3.t0.response);
                 this.$noty.error('Failed Fetch Clubs');
 
               case 11:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this, [[0, 7]]);
+        }, _callee3, this, [[0, 7]]);
       }));
 
       function getClubs() {
@@ -8176,34 +8398,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getAllPlayers: function () {
       var _getAllPlayers = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var players;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                _context3.prev = 0;
-                _context3.next = 3;
+                _context4.prev = 0;
+                _context4.next = 3;
                 return this.$axios.get('master/player/get_all');
 
               case 3:
-                players = _context3.sent;
+                players = _context4.sent;
                 this.players = players.data.data;
-                _context3.next = 11;
+                _context4.next = 11;
                 break;
 
               case 7:
-                _context3.prev = 7;
-                _context3.t0 = _context3["catch"](0);
-                console.log(_context3.t0.response);
+                _context4.prev = 7;
+                _context4.t0 = _context4["catch"](0);
+                console.log(_context4.t0.response);
                 this.$noty.error('Failed Get Data');
 
               case 11:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, this, [[0, 7]]);
+        }, _callee4, this, [[0, 7]]);
       }));
 
       function getAllPlayers() {
@@ -8215,34 +8437,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     searchData: function () {
       var _searchData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
         var result;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
-                _context4.prev = 0;
-                _context4.next = 3;
+                _context5.prev = 0;
+                _context5.next = 3;
                 return this.$axios.post("master/player/search/".concat(this.searchKeyword));
 
               case 3:
-                result = _context4.sent;
+                result = _context5.sent;
                 this.players = result.data.data;
-                _context4.next = 11;
+                _context5.next = 11;
                 break;
 
               case 7:
-                _context4.prev = 7;
-                _context4.t0 = _context4["catch"](0);
-                console.log(_context4.t0.response);
+                _context5.prev = 7;
+                _context5.t0 = _context5["catch"](0);
+                console.log(_context5.t0.response);
                 this.$noty.error('Failed Search Data');
 
               case 11:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4, this, [[0, 7]]);
+        }, _callee5, this, [[0, 7]]);
       }));
 
       function searchData() {
@@ -8254,13 +8476,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     insertData: function () {
       var _insertData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
-                _context5.prev = 0;
-                _context5.next = 3;
+                _context6.prev = 0;
+                _context6.next = 3;
                 return this.$axios.post('master/player/insert', {
                   country_id: this.form.country_id,
                   club_id: this.form.club_id,
@@ -8277,22 +8499,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.$noty.success('Success Insert Data');
                 this.getAllPlayers();
                 this.$bvModal.hide('modal-player');
-                _context5.next = 13;
+                _context6.next = 13;
                 break;
 
               case 8:
-                _context5.prev = 8;
-                _context5.t0 = _context5["catch"](0);
-                console.log(_context5.t0.response);
-                this.errorValidation = _context5.t0.response.data.message;
+                _context6.prev = 8;
+                _context6.t0 = _context6["catch"](0);
+                console.log(_context6.t0.response);
+                this.errorValidation = _context6.t0.response.data.message;
                 this.$noty.error('Failed Insert Data');
 
               case 13:
               case "end":
-                return _context5.stop();
+                return _context6.stop();
             }
           }
-        }, _callee5, this, [[0, 8]]);
+        }, _callee6, this, [[0, 8]]);
       }));
 
       function insertData() {
@@ -8304,13 +8526,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     updateData: function () {
       var _updateData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context6.prev = _context6.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
-                _context6.prev = 0;
-                _context6.next = 3;
+                _context7.prev = 0;
+                _context7.next = 3;
                 return this.$axios.post("master/player/update/".concat(this.form.id), {
                   country_id: this.form.country_id,
                   club_id: this.form.club_id,
@@ -8327,22 +8549,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.$noty.success('Success Update Data');
                 this.getAllPlayers();
                 this.$bvModal.hide('modal-player');
-                _context6.next = 13;
+                _context7.next = 13;
                 break;
 
               case 8:
-                _context6.prev = 8;
-                _context6.t0 = _context6["catch"](0);
-                console.log(_context6.t0.response);
-                this.errorValidation = _context6.t0.response.data.message;
+                _context7.prev = 8;
+                _context7.t0 = _context7["catch"](0);
+                console.log(_context7.t0.response);
+                this.errorValidation = _context7.t0.response.data.message;
                 this.$noty.error('Failed Update Data');
 
               case 13:
               case "end":
-                return _context6.stop();
+                return _context7.stop();
             }
           }
-        }, _callee6, this, [[0, 8]]);
+        }, _callee7, this, [[0, 8]]);
       }));
 
       function updateData() {
@@ -8354,13 +8576,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     deleteData: function () {
       var _deleteData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(item) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(item) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
           while (1) {
-            switch (_context7.prev = _context7.next) {
+            switch (_context8.prev = _context8.next) {
               case 0:
-                _context7.prev = 0;
-                _context7.next = 3;
+                _context8.prev = 0;
+                _context8.next = 3;
                 return this.$axios.post('master/player/delete', {
                   id: item.id
                 });
@@ -8369,24 +8591,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.$noty.success('Success Delete Data');
                 this.getAllPlayers();
                 this.$bvModal.hide('modal-player');
-                _context7.next = 12;
+                _context8.next = 12;
                 break;
 
               case 8:
-                _context7.prev = 8;
-                _context7.t0 = _context7["catch"](0);
-                console.log(_context7.t0.response);
+                _context8.prev = 8;
+                _context8.t0 = _context8["catch"](0);
+                console.log(_context8.t0.response);
                 this.$noty.error('Failed Delete Data');
 
               case 12:
               case "end":
-                return _context7.stop();
+                return _context8.stop();
             }
           }
-        }, _callee7, this, [[0, 8]]);
+        }, _callee8, this, [[0, 8]]);
       }));
 
-      function deleteData(_x) {
+      function deleteData(_x2) {
         return _deleteData.apply(this, arguments);
       }
 
@@ -8426,26 +8648,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     uploadPhoto: function () {
       var _uploadPhoto = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(photoType) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(photoType) {
         var formData, a;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
           while (1) {
-            switch (_context8.prev = _context8.next) {
+            switch (_context9.prev = _context9.next) {
               case 0:
                 formData = new FormData();
                 formData.append(photoType, this.form[photoType]); // error jika tidak pilih file
 
                 if (this.form[photoType].name) {
-                  _context8.next = 5;
+                  _context9.next = 5;
                   break;
                 }
 
                 this.$noty.error('No file selected');
-                return _context8.abrupt("return");
+                return _context9.abrupt("return");
 
               case 5:
-                _context8.prev = 5;
-                _context8.next = 8;
+                _context9.prev = 5;
+                _context9.next = 8;
                 return this.$axios.post("master/player/upload_photo/".concat(this.form.id, "/").concat(photoType), formData, {
                   headers: {
                     'Content-Type': 'multipart/form-data'
@@ -8453,30 +8675,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 8:
-                a = _context8.sent;
+                a = _context9.sent;
                 console.log(a.data);
                 this.getAllPlayers();
                 this.$noty.success('Success Upload Photo');
                 this.$bvModal.hide('modal-player');
-                _context8.next = 20;
+                _context9.next = 20;
                 break;
 
               case 15:
-                _context8.prev = 15;
-                _context8.t0 = _context8["catch"](5);
-                console.log(_context8.t0.response);
-                this.errorValidation = _context8.t0.response.data.message;
+                _context9.prev = 15;
+                _context9.t0 = _context9["catch"](5);
+                console.log(_context9.t0.response);
+                this.errorValidation = _context9.t0.response.data.message;
                 this.$noty.error('Failed Upload Photo');
 
               case 20:
               case "end":
-                return _context8.stop();
+                return _context9.stop();
             }
           }
-        }, _callee8, this, [[5, 15]]);
+        }, _callee9, this, [[5, 15]]);
       }));
 
-      function uploadPhoto(_x2) {
+      function uploadPhoto(_x3) {
         return _uploadPhoto.apply(this, arguments);
       }
 
@@ -8498,12 +8720,246 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return _this2.form[key] = item[key];
       });
     },
-    resetData: function resetData() {
+    loadAchievement: function () {
+      var _loadAchievement = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10(item) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
+          while (1) {
+            switch (_context10.prev = _context10.next) {
+              case 0:
+                this.tabIndex = 0;
+                this.form.id = item.id;
+                this.$bvModal.show('modal-achievement');
+                _context10.next = 5;
+                return this.getPlayerAchivements(item.id);
+
+              case 5:
+                this.formAchievement = JSON.parse(JSON.stringify(this.achievements));
+
+              case 6:
+              case "end":
+                return _context10.stop();
+            }
+          }
+        }, _callee10, this);
+      }));
+
+      function loadAchievement(_x4) {
+        return _loadAchievement.apply(this, arguments);
+      }
+
+      return loadAchievement;
+    }(),
+    addNewAchievement: function addNewAchievement() {
       var _this3 = this;
+
+      this.formAchievement.push({
+        achievement_city: null,
+        achievement_year: null,
+        category: 'general',
+        division: null,
+        tournament_name: null,
+        winner_position: null
+      });
+      setTimeout(function () {
+        _this3.tabIndex = _this3.formAchievement.length - 1;
+      }, 0);
+    },
+    checkAchievementCategory: function checkAchievementCategory(category) {
+      var popArray = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+      this.errorValidation = null;
+      var achievementCategory = this.formAchievement.filter(function (item) {
+        return item.category === category;
+      });
+
+      if (achievementCategory.length > 3) {
+        this.$noty.warning('Only 3 achivement can be registered');
+        this.errorValidation = 'Change your oldest achievement to the new one'; // find year that not falsy
+
+        var arrYear = achievementCategory.map(function (item) {
+          return item.achievement_year;
+        }).filter(function (item) {
+          return !!item;
+        });
+        var oldestYear = Math.min.apply(Math, _toConsumableArray(arrYear)); // go to oldest achievement
+
+        this.tabIndex = achievementCategory.findIndex(function (x) {
+          return x.achievement_year == oldestYear;
+        });
+        if (popArray) this.formAchievement.pop();
+        return false;
+      }
+
+      return true;
+    },
+    insertAchievement: function () {
+      var _insertAchievement = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11(ach) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
+          while (1) {
+            switch (_context11.prev = _context11.next) {
+              case 0:
+                if (this.checkAchievementCategory(ach.category, true)) {
+                  _context11.next = 2;
+                  break;
+                }
+
+                return _context11.abrupt("return");
+
+              case 2:
+                _context11.prev = 2;
+                _context11.next = 5;
+                return this.$axios.post('master/achievement/insert', {
+                  tournament_name: ach.tournament_name,
+                  winner_position: ach.winner_position,
+                  achievement_city: ach.achievement_city,
+                  achievement_year: ach.achievement_year,
+                  division: ach.division,
+                  category: ach.category,
+                  player_id: this.form.id
+                });
+
+              case 5:
+                this.formAchievement = [];
+                this.loadAchievement(this.form);
+                this.$noty.success('Success Insert Data');
+                _context11.next = 15;
+                break;
+
+              case 10:
+                _context11.prev = 10;
+                _context11.t0 = _context11["catch"](2);
+                console.log(_context11.t0.response);
+                this.errorValidation = _context11.t0.response.data.message;
+                this.$noty.error('Failed Insert Data');
+
+              case 15:
+              case "end":
+                return _context11.stop();
+            }
+          }
+        }, _callee11, this, [[2, 10]]);
+      }));
+
+      function insertAchievement(_x5) {
+        return _insertAchievement.apply(this, arguments);
+      }
+
+      return insertAchievement;
+    }(),
+    updateAchievement: function () {
+      var _updateAchievement = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12(ach) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
+          while (1) {
+            switch (_context12.prev = _context12.next) {
+              case 0:
+                if (this.checkAchievementCategory(ach.category, false)) {
+                  _context12.next = 2;
+                  break;
+                }
+
+                return _context12.abrupt("return");
+
+              case 2:
+                _context12.prev = 2;
+                _context12.next = 5;
+                return this.$axios.post("master/achievement/update/".concat(ach.id), {
+                  tournament_name: ach.tournament_name,
+                  winner_position: ach.winner_position,
+                  achievement_city: ach.achievement_city,
+                  achievement_year: ach.achievement_year,
+                  division: ach.division,
+                  category: ach.category,
+                  player_id: this.form.id
+                });
+
+              case 5:
+                this.$noty.success('Success Update Data');
+                _context12.next = 13;
+                break;
+
+              case 8:
+                _context12.prev = 8;
+                _context12.t0 = _context12["catch"](2);
+                console.log(_context12.t0.response);
+                this.errorValidation = _context12.t0.response.data.message;
+                this.$noty.error('Failed Update Data');
+
+              case 13:
+              case "end":
+                return _context12.stop();
+            }
+          }
+        }, _callee12, this, [[2, 8]]);
+      }));
+
+      function updateAchievement(_x6) {
+        return _updateAchievement.apply(this, arguments);
+      }
+
+      return updateAchievement;
+    }(),
+    deleteAchievement: function () {
+      var _deleteAchievement = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13(item) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
+          while (1) {
+            switch (_context13.prev = _context13.next) {
+              case 0:
+                _context13.prev = 0;
+                _context13.next = 3;
+                return this.$axios.post('master/achievement/delete', {
+                  id: item.id
+                });
+
+              case 3:
+                this.$noty.success('Success Delete Data');
+                this.formAchievement.splice(this.formAchievement.findIndex(function (x) {
+                  return x.id == item.id;
+                }), 1);
+                _context13.next = 11;
+                break;
+
+              case 7:
+                _context13.prev = 7;
+                _context13.t0 = _context13["catch"](0);
+                console.log(_context13.t0.response);
+                this.$noty.error('Failed Delete Data');
+
+              case 11:
+              case "end":
+                return _context13.stop();
+            }
+          }
+        }, _callee13, this, [[0, 7]]);
+      }));
+
+      function deleteAchievement(_x7) {
+        return _deleteAchievement.apply(this, arguments);
+      }
+
+      return deleteAchievement;
+    }(),
+    resetAchievement: function resetAchievement() {
+      this.errorValidation = null;
+      this.formAchievement[this.tabIndex].tournament_name = null;
+      this.formAchievement[this.tabIndex].winner_position = null;
+      this.formAchievement[this.tabIndex].achievement_city = null;
+      this.formAchievement[this.tabIndex].achievement_year = null;
+      this.formAchievement[this.tabIndex].division = null;
+      this.formAchievement[this.tabIndex].category = null;
+    },
+    resetData: function resetData() {
+      var _this4 = this;
 
       this.errorValidation = null;
       Object.keys(this.form).forEach(function (key) {
-        return _this3.form[key] = null;
+        return _this4.form[key] = null;
       });
       this.customFileLabelLeft = 'Select File';
       this.customFileLabelRight = 'Select File';
@@ -8514,6 +8970,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     this.getAllPlayers();
     this.getCountries();
     this.getClubs();
+  },
+  watch: {
+    'form.weight': function formWeight(val) {
+      // jika negatif maka jadikan positif
+      if (val < 0) this.form.weight = Math.abs(this.form.weight);
+    },
+    'form.height': function formHeight(val) {
+      // jika negatif maka jadikan positif
+      if (val < 0) this.form.height = Math.abs(this.form.height);
+    }
   }
 });
 
@@ -48734,6 +49200,20 @@ var render = function() {
                             on: {
                               click: function($event) {
                                 $event.preventDefault()
+                                return _vm.loadAchievement(item)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-trophy fa-fw" })]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-sm btn-warning",
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
                                 return _vm.loadData(item)
                               }
                             }
@@ -49376,6 +49856,464 @@ var render = function() {
             ])
           ])
         ]
+      ),
+      _vm._v(" "),
+      _c(
+        "b-modal",
+        {
+          attrs: {
+            id: "modal-achievement",
+            "hide-footer": "",
+            title: "Player Achievement",
+            size: "xl"
+          }
+        },
+        [
+          _vm.errorValidation
+            ? _c("div", {
+                staticClass: "alert alert-danger",
+                domProps: { innerHTML: _vm._s(_vm.errorValidation) }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary btn-sm mb-3",
+              attrs: { disabled: _vm.formAchievement.length >= 6 },
+              on: { click: _vm.addNewAchievement }
+            },
+            [_vm._v("Add achievement")]
+          ),
+          _vm._v(" "),
+          _vm.formAchievement.length != 0
+            ? _c(
+                "b-tabs",
+                {
+                  attrs: { "content-class": "mt-3" },
+                  model: {
+                    value: _vm.tabIndex,
+                    callback: function($$v) {
+                      _vm.tabIndex = $$v
+                    },
+                    expression: "tabIndex"
+                  }
+                },
+                _vm._l(_vm.formAchievement, function(item, index) {
+                  return _c(
+                    "b-tab",
+                    {
+                      key: index,
+                      attrs: {
+                        title:
+                          "Achievement " + item.category + " #" + (index + 1)
+                      }
+                    },
+                    [
+                      _c("form", { attrs: { method: "post" } }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "col" }, [
+                              _c(
+                                "label",
+                                { attrs: { for: "tournament_name" } },
+                                [_vm._v("Tournament Name")]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value:
+                                      _vm.formAchievement[index]
+                                        .tournament_name,
+                                    expression:
+                                      "formAchievement[index].tournament_name"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  id: "tournament_name",
+                                  type: "text",
+                                  placeholder: "Enter tournament name"
+                                },
+                                domProps: {
+                                  value:
+                                    _vm.formAchievement[index].tournament_name
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.formAchievement[index],
+                                      "tournament_name",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col" }, [
+                              _c(
+                                "label",
+                                { attrs: { for: "tournament_name" } },
+                                [_vm._v("Winner Position")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model.number",
+                                      value:
+                                        _vm.formAchievement[index]
+                                          .winner_position,
+                                      expression:
+                                        "formAchievement[index].winner_position",
+                                      modifiers: { number: true }
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    name: "winner_position",
+                                    id: "winner_position"
+                                  },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return _vm._n(val)
+                                        })
+                                      _vm.$set(
+                                        _vm.formAchievement[index],
+                                        "winner_position",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("option", { domProps: { value: null } }, [
+                                    _vm._v("Choose Position")
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.winnerPositionOptions, function(
+                                    item
+                                  ) {
+                                    return _c(
+                                      "option",
+                                      {
+                                        key: item.value,
+                                        domProps: { value: item.value }
+                                      },
+                                      [_vm._v(_vm._s(item.text))]
+                                    )
+                                  })
+                                ],
+                                2
+                              )
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "col" }, [
+                              _c(
+                                "label",
+                                { attrs: { for: "achievement_city" } },
+                                [_vm._v("City")]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value:
+                                      _vm.formAchievement[index]
+                                        .achievement_city,
+                                    expression:
+                                      "formAchievement[index].achievement_city"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  id: "achievement_city",
+                                  type: "text",
+                                  placeholder: "Enter city"
+                                },
+                                domProps: {
+                                  value:
+                                    _vm.formAchievement[index].achievement_city
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.formAchievement[index],
+                                      "achievement_city",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col" }, [
+                              _c(
+                                "label",
+                                { attrs: { for: "achievement_city" } },
+                                [_vm._v("Year")]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model.number",
+                                    value:
+                                      _vm.formAchievement[index]
+                                        .achievement_year,
+                                    expression:
+                                      "formAchievement[index].achievement_year",
+                                    modifiers: { number: true }
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  id: "achievement_year",
+                                  type: "number",
+                                  placeholder: "Enter year",
+                                  "max-length": "3000",
+                                  "min-length": "2000"
+                                },
+                                domProps: {
+                                  value:
+                                    _vm.formAchievement[index].achievement_year
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.formAchievement[index],
+                                      "achievement_year",
+                                      _vm._n($event.target.value)
+                                    )
+                                  },
+                                  blur: function($event) {
+                                    return _vm.$forceUpdate()
+                                  }
+                                }
+                              })
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "col" }, [
+                              _c("label", { attrs: { for: "division" } }, [
+                                _vm._v("Division")
+                              ]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.formAchievement[index].division,
+                                    expression:
+                                      "formAchievement[index].division"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  id: "division",
+                                  type: "text",
+                                  placeholder: "Enter division"
+                                },
+                                domProps: {
+                                  value: _vm.formAchievement[index].division
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.formAchievement[index],
+                                      "division",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col" }, [
+                              _c("label", { attrs: { for: "division" } }, [
+                                _vm._v("Category")
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model.number",
+                                      value:
+                                        _vm.formAchievement[index].category,
+                                      expression:
+                                        "formAchievement[index].category",
+                                      modifiers: { number: true }
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { id: "category" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return _vm._n(val)
+                                        })
+                                      _vm.$set(
+                                        _vm.formAchievement[index],
+                                        "category",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                _vm._l(_vm.categoryOptions, function(item) {
+                                  return _c(
+                                    "option",
+                                    {
+                                      key: item.value,
+                                      domProps: { value: item.value }
+                                    },
+                                    [_vm._v(_vm._s(item.text))]
+                                  )
+                                }),
+                                0
+                              )
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "d-flex justify-content-between" },
+                          [
+                            _c("div", [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-danger",
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.deleteAchievement(
+                                        _vm.formAchievement[index]
+                                      )
+                                    }
+                                  }
+                                },
+                                [_vm._v("Delete")]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "btn-group",
+                                attrs: { role: "group" }
+                              },
+                              [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-secondary",
+                                    attrs: { type: "button" },
+                                    on: { click: _vm.resetAchievement }
+                                  },
+                                  [_vm._v("Reset")]
+                                ),
+                                _vm._v(" "),
+                                _vm.formAchievement[index].id
+                                  ? _c(
+                                      "button",
+                                      {
+                                        staticClass: "btn btn-primary",
+                                        on: {
+                                          click: function($event) {
+                                            $event.preventDefault()
+                                            return _vm.updateAchievement(
+                                              _vm.formAchievement[index]
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Update")]
+                                    )
+                                  : _c(
+                                      "button",
+                                      {
+                                        staticClass: "btn btn-primary",
+                                        on: {
+                                          click: function($event) {
+                                            $event.preventDefault()
+                                            return _vm.insertAchievement(
+                                              _vm.formAchievement[index]
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Insert")]
+                                    )
+                              ]
+                            )
+                          ]
+                        )
+                      ])
+                    ]
+                  )
+                }),
+                1
+              )
+            : _vm._e()
+        ],
+        1
       )
     ],
     1

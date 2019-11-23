@@ -71,6 +71,10 @@
                 <div>
                   <button
                     class="btn btn-sm btn-warning"
+                    @click.prevent="loadAchievement(item)"
+                  ><i class="fa fa-trophy fa-fw"></i></button>
+                  <button
+                    class="btn btn-sm btn-warning"
                     @click.prevent="loadData(item)"
                   ><i class="fa fa-edit fa-fw"></i></button>
                   <button
@@ -337,6 +341,154 @@
         </div>
       </form>
     </b-modal>
+
+    <!-- modal achievement player -->
+    <b-modal
+      id="modal-achievement"
+      hide-footer
+      title="Player Achievement"
+      size="xl"
+    >
+      <div
+        v-if="errorValidation"
+        class="alert alert-danger"
+        v-html="errorValidation"
+      ></div>
+
+      <button
+        class="btn btn-primary btn-sm mb-3"
+        :disabled="formAchievement.length >=6"
+        @click="addNewAchievement"
+      >Add achievement</button>
+
+      <b-tabs
+        v-if="formAchievement.length != 0"
+        v-model="tabIndex"
+        content-class="mt-3"
+      >
+        <b-tab
+          v-for="(item, index) in formAchievement"
+          :key="index"
+          :title="`Achievement ${item.category} #${index+1}`"
+        >
+          <form method="post">
+            <div class="form-group">
+              <div class="row">
+                <div class="col">
+                  <label for="tournament_name">Tournament Name</label>
+                  <input
+                    id="tournament_name"
+                    v-model="formAchievement[index].tournament_name"
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter tournament name"
+                  >
+                </div>
+                <div class="col">
+                  <label for="tournament_name">Winner Position</label>
+                  <select
+                    name="winner_position"
+                    id="winner_position"
+                    class="form-control"
+                    v-model.number="formAchievement[index].winner_position"
+                  >
+                    <option :value="null">Choose Position</option>
+                    <option
+                      v-for="item in winnerPositionOptions"
+                      :key="item.value"
+                      :value="item.value"
+                    >{{item.text}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col">
+                  <label for="achievement_city">City</label>
+                  <input
+                    id="achievement_city"
+                    v-model="formAchievement[index].achievement_city"
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter city"
+                  >
+                </div>
+                <div class="col">
+                  <label for="achievement_city">Year</label>
+                  <input
+                    id="achievement_year"
+                    v-model.number="formAchievement[index].achievement_year"
+                    type="number"
+                    class="form-control"
+                    placeholder="Enter year"
+                    max-length="3000"
+                    min-length="2000"
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col">
+                  <label for="division">Division</label>
+                  <input
+                    id="division"
+                    v-model="formAchievement[index].division"
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter division"
+                  >
+                </div>
+                <div class="col">
+                  <label for="division">Category</label>
+                  <select
+                    id="category"
+                    class="form-control"
+                    v-model.number="formAchievement[index].category"
+                  >
+                    <option
+                      v-for="item in categoryOptions"
+                      :key="item.value"
+                      :value="item.value"
+                    >{{item.text}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div>
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  @click.prevent="deleteAchievement(formAchievement[index])"
+                >Delete</button>
+              </div>
+              <div
+                class="btn-group"
+                role="group"
+              >
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  @click="resetAchievement"
+                >Reset</button>
+                <button
+                  v-if="formAchievement[index].id"
+                  class="btn btn-primary"
+                  @click.prevent="updateAchievement(formAchievement[index])"
+                >Update</button>
+                <button
+                  v-else
+                  class="btn btn-primary"
+                  @click.prevent="insertAchievement(formAchievement[index])"
+                >Insert</button>
+              </div>
+            </div>
+          </form>
+        </b-tab>
+      </b-tabs>
+    </b-modal>
   </div>
 </template>
 
@@ -351,6 +503,7 @@ export default {
     return {
       players: [],
       countries: [],
+      achievements: [],
       clubs: [],
       genderOptions: [
         { text: 'Male', value: 'male' },
@@ -371,16 +524,52 @@ export default {
         right_photo: null,
         front_photo: null
       },
+      formAchievement: [],
       modalState: null,
       errorValidation: null,
       searchKeyword: '',
       customFileLabelLeft: null,
       customFileLabelRight: null,
-      customFileLabelFront: null
+      customFileLabelFront: null,
+      tabIndex: 0,
+      winnerPositionOptions: [
+        {
+          text: '1st winner',
+          value: 1
+        },
+        {
+          text: '2nd winner',
+          value: 2
+        },
+        {
+          text: '3rd winner',
+          value: 3
+        }
+      ],
+      categoryOptions: [
+        {
+          text: 'General',
+          value: 'general'
+        },
+        {
+          text: 'Grappling',
+          value: 'grappling'
+        }
+      ]
     };
   },
 
   methods: {
+    async getPlayerAchivements(playerId) {
+      try {
+        const achievements = await this.$axios.get(`master/achievement/filter/${playerId}`);
+        this.achievements = achievements.data.data;
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Fetch Achievements');
+      }
+    },
+
     async getCountries() {
       try {
         const countries = await this.$axios.get('master/country/get_all');
@@ -444,7 +633,6 @@ export default {
         this.errorValidation = error.response.data.message;
         this.$noty.error('Failed Insert Data');
       }
-
     },
 
     async updateData() {
@@ -564,6 +752,119 @@ export default {
       });
     },
 
+    async loadAchievement(item) {
+      this.tabIndex = 0;
+      this.form.id = item.id;
+      this.$bvModal.show('modal-achievement');
+      await this.getPlayerAchivements(item.id);
+      this.formAchievement = JSON.parse(JSON.stringify(this.achievements));
+    },
+
+    addNewAchievement() {
+      this.formAchievement.push({
+        achievement_city: null,
+        achievement_year: null,
+        category: 'general',
+        division: null,
+        tournament_name: null,
+        winner_position: null
+      });
+      setTimeout(() => {
+        this.tabIndex = this.formAchievement.length - 1;
+      }, 0);
+    },
+
+    checkAchievementCategory(category, popArray = true) {
+      this.errorValidation = null;
+      let achievementCategory = this.formAchievement.filter(item => item.category === category);
+      if (achievementCategory.length > 3) {
+        this.$noty.warning('Only 3 achivement can be registered');
+        this.errorValidation = 'Change your oldest achievement to the new one';
+
+        // find year that not falsy
+        let arrYear = achievementCategory.map(item => item.achievement_year).filter(item => !!item);
+        let oldestYear = Math.min(...arrYear);
+
+        // go to oldest achievement
+        this.tabIndex = achievementCategory.findIndex(x => x.achievement_year == oldestYear);
+
+        if (popArray) this.formAchievement.pop();
+        return false;
+      }
+      return true;
+    },
+
+    async insertAchievement(ach) {
+      // jika achievement per category melebihi batas
+      if (!this.checkAchievementCategory(ach.category, true)) return;
+
+      try {
+        await this.$axios.post('master/achievement/insert', {
+          tournament_name: ach.tournament_name,
+          winner_position: ach.winner_position,
+          achievement_city: ach.achievement_city,
+          achievement_year: ach.achievement_year,
+          division: ach.division,
+          category: ach.category,
+          player_id: this.form.id
+        });
+        this.formAchievement = [];
+        this.loadAchievement(this.form);
+        this.$noty.success('Success Insert Data');
+      } catch (error) {
+        console.log(error.response);
+        this.errorValidation = error.response.data.message;
+        this.$noty.error('Failed Insert Data');
+      }
+    },
+
+    async updateAchievement(ach) {
+      // jika achievement per category melebihi batas
+      if (!this.checkAchievementCategory(ach.category, false)) return;
+
+      try {
+        await this.$axios.post(`master/achievement/update/${ach.id}`, {
+          tournament_name: ach.tournament_name,
+          winner_position: ach.winner_position,
+          achievement_city: ach.achievement_city,
+          achievement_year: ach.achievement_year,
+          division: ach.division,
+          category: ach.category,
+          player_id: this.form.id
+        });
+        this.$noty.success('Success Update Data');
+      } catch (error) {
+        console.log(error.response);
+        this.errorValidation = error.response.data.message;
+        this.$noty.error('Failed Update Data');
+      }
+    },
+
+    async deleteAchievement(item) {
+      try {
+        await this.$axios.post('master/achievement/delete', {
+          id: item.id
+        });
+
+        this.$noty.success('Success Delete Data');
+        this.formAchievement.splice(this.formAchievement.findIndex(x => x.id == item.id), 1);
+
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Delete Data');
+      }
+    },
+
+    resetAchievement() {
+      this.errorValidation = null;
+      this.formAchievement[this.tabIndex].tournament_name = null;
+      this.formAchievement[this.tabIndex].winner_position = null;
+      this.formAchievement[this.tabIndex].achievement_city = null;
+      this.formAchievement[this.tabIndex].achievement_year = null;
+      this.formAchievement[this.tabIndex].division = null;
+      this.formAchievement[this.tabIndex].category = null;
+    },
+
     resetData() {
       this.errorValidation = null;
 
@@ -581,6 +882,17 @@ export default {
     this.getAllPlayers();
     this.getCountries();
     this.getClubs();
+  },
+
+  watch: {
+    'form.weight'(val) {
+      // jika negatif maka jadikan positif
+      if (val < 0) this.form.weight = Math.abs(this.form.weight);
+    },
+    'form.height'(val) {
+      // jika negatif maka jadikan positif
+      if (val < 0) this.form.height = Math.abs(this.form.height);
+    }
   }
 };
 </script>

@@ -22,6 +22,10 @@ Vue.use(ModalPlugin);
 import { TablePlugin } from 'bootstrap-vue';
 Vue.use(TablePlugin);
 
+// table bootstrap-vue
+import { TabsPlugin } from 'bootstrap-vue';
+Vue.use(TabsPlugin);
+
 // membuat instance axios
 import Axios from 'axios';
 Vue.prototype.$axios = Axios.create({
