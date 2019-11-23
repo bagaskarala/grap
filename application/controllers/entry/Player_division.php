@@ -162,26 +162,4 @@ class Player_division extends MY_Controller
             return $this->send_json_output("Failed Reset Pool", false, 400);
         }
     }
-
-    // public function calculate_classement($division_id)
-    // {
-    //     $result = $this->player_division->calculate_classement($division_id);
-
-    //     if ($result['status']) {
-    //         return $this->send_json_output($result['data'], true, 200);
-    //     } else {
-    //         return $this->send_json_output($result['message'], false, 400);
-    //     }
-    // }
-
-    public function get_pool_winner($division_id)
-    {
-        $result = $this->player_division->get_pool_winner($division_id);
-
-        if ($result['status']) {
-            return $this->send_json_output($result['data'], true, 200);
-        } else {
-            return $this->send_json_output($result['message'], false, 400);
-        }
-    }
 };

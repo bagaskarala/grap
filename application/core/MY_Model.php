@@ -58,9 +58,10 @@ class MY_Model extends CI_Model
         return $this->db->get_where($table, $where)->row_array();
     }
 
-    public function insert($data)
+    public function insert($data, $table = "")
     {
-        $this->db->insert($this->table, $data);
+        $table = $this->checkTable($table);
+        $this->db->insert($table, $data);
 
         // jika sukses kembalikan array data
         if ($this->db->insert_id()) {

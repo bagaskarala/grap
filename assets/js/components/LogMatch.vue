@@ -132,6 +132,13 @@
 
               <template v-slot:cell(pool_number)="data">
                 <span
+                  v-if="data.item.match_index == 1 && !data.item.pool_number"
+                  class="badge badge-primary"
+                >
+                  FINAL
+                </span>
+                <span
+                  v-else
                   class="badge"
                   :class="[data.item.pool_number ? data.item.pool_number == 'A'? 'badge-dark':'badge-danger' : null]"
                 >

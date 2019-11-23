@@ -4659,6 +4659,13 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'LogMatch',
@@ -6896,6 +6903,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
 var timeoutDebounce = null;
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PlayerDivision',
@@ -6936,8 +6944,6 @@ var timeoutDebounce = null;
     fieldPlayerDivision: function fieldPlayerDivision() {
       if (this.matchSystem == 'elimination') {
         return ['division', 'club', 'name', 'division_winner', 'action'];
-      } else if (this.matchSystem == 'roundrobin') {
-        return ['division', 'club', 'name', 'pool_number', 'win', 'draw', 'lose', 'pool_winner', 'action'];
       } else {
         return ['division', 'club', 'name', 'pool_number', 'win', 'draw', 'lose', 'pool_winner', 'division_winner', 'action'];
       }
@@ -7519,6 +7525,46 @@ var timeoutDebounce = null;
         console.log('Error ', err);
       });
     },
+    generateWinner: function () {
+      var _generateWinner = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
+        var a;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
+          while (1) {
+            switch (_context13.prev = _context13.next) {
+              case 0:
+                _context13.prev = 0;
+                _context13.next = 3;
+                return this.$axios.post("entry/player_division/calculate_classement/".concat(this.filterDivisionId));
+
+              case 3:
+                a = _context13.sent;
+                console.log(a.data.data);
+                this.$noty.success('Success Calculate Classement');
+                _context13.next = 12;
+                break;
+
+              case 8:
+                _context13.prev = 8;
+                _context13.t0 = _context13["catch"](0);
+                console.log(_context13.t0.response);
+                this.$noty.error('Failed Calculate Classement. ' + _context13.t0.response.data.message);
+
+              case 12:
+              case "end":
+                return _context13.stop();
+            }
+          }
+        }, _callee13, this, [[0, 8]]);
+      }));
+
+      function generateWinner() {
+        return _generateWinner.apply(this, arguments);
+      }
+
+      return generateWinner;
+    }(),
     // async calculateClassement() {
     //   try {
     //     const a = await this.$axios.post(`entry/player_division/calculate_classement/${this.filterDivisionId}`);
@@ -45707,30 +45753,41 @@ var render = function() {
                             key: "cell(pool_number)",
                             fn: function(data) {
                               return [
-                                _c(
-                                  "span",
-                                  {
-                                    staticClass: "badge",
-                                    class: [
-                                      data.item.pool_number
-                                        ? data.item.pool_number == "A"
-                                          ? "badge-dark"
-                                          : "badge-danger"
-                                        : null
-                                    ]
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                " +
-                                        _vm._s(
-                                          data.item.pool_number != null
-                                            ? data.item.pool_number
-                                            : ""
-                                        ) +
-                                        "\n              "
+                                data.item.match_index == 1 &&
+                                !data.item.pool_number
+                                  ? _c(
+                                      "span",
+                                      { staticClass: "badge badge-primary" },
+                                      [
+                                        _vm._v(
+                                          "\n                FINAL\n              "
+                                        )
+                                      ]
                                     )
-                                  ]
-                                )
+                                  : _c(
+                                      "span",
+                                      {
+                                        staticClass: "badge",
+                                        class: [
+                                          data.item.pool_number
+                                            ? data.item.pool_number == "A"
+                                              ? "badge-dark"
+                                              : "badge-danger"
+                                            : null
+                                        ]
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                " +
+                                            _vm._s(
+                                              data.item.pool_number != null
+                                                ? data.item.pool_number
+                                                : ""
+                                            ) +
+                                            "\n              "
+                                        )
+                                      ]
+                                    )
                               ]
                             }
                           },
@@ -45870,7 +45927,7 @@ var render = function() {
                         ],
                         null,
                         false,
-                        85807547
+                        4059796773
                       )
                     })
                   : _vm._e()
@@ -47853,6 +47910,21 @@ var render = function() {
                             }
                           },
                           [_vm._v("Reset Pool")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-sm btn-primary mr-1",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.generateWinner()
+                              }
+                            }
+                          },
+                          [_vm._v("Generate Winner")]
                         )
                       ]),
                       _vm._v(" "),
@@ -48010,11 +48082,6 @@ var render = function() {
                               return [
                                 data.item.pool_winner
                                   ? _c("span", [
-                                      _c("i", {
-                                        staticClass: "fa fa-medal",
-                                        style: _vm.medalStyle(1)
-                                      }),
-                                      _vm._v(" "),
                                       _c(
                                         "span",
                                         {
@@ -48092,7 +48159,7 @@ var render = function() {
                         ],
                         null,
                         false,
-                        327012581
+                        2462368725
                       )
                     })
                   : _vm._e()

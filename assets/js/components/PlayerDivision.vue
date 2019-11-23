@@ -61,6 +61,11 @@
                   :disabled="playerDivisions.length==0"
                   @click.prevent="confirmResetPool()"
                 >Reset Pool</button>
+                <button
+                  class="btn btn-sm btn-primary mr-1"
+                  type="button"
+                  @click.prevent="generateWinner()"
+                >Generate Winner</button>
               </div>
 
               <div>
@@ -127,10 +132,6 @@
 
               <template v-slot:cell(pool_winner)="data">
                 <span v-if="data.item.pool_winner">
-                  <i
-                    class="fa fa-medal"
-                    :style="medalStyle(1)"
-                  ></i>
                   <span
                     :class="[data.item.pool_number == 'A'? 'badge-dark':'badge-danger']"
                     class="badge"
@@ -312,8 +313,6 @@ export default {
     fieldPlayerDivision() {
       if (this.matchSystem == 'elimination') {
         return ['division', 'club', 'name', 'division_winner', 'action'];
-      } else if (this.matchSystem == 'roundrobin') {
-        return ['division', 'club', 'name', 'pool_number', 'win', 'draw', 'lose', 'pool_winner', 'action'];
       } else {
         return ['division', 'club', 'name', 'pool_number', 'win', 'draw', 'lose', 'pool_winner', 'division_winner', 'action'];
       }
@@ -556,6 +555,17 @@ export default {
         .catch(err => {
           console.log('Error ', err);
         });
+    },
+
+    async generateWinner() {
+      try {
+        const a = await this.$axios.post(`entry/player_division/calculate_classement/${this.filterDivisionId}`);
+        console.log(a.data.data);
+        this.$noty.success('Success Calculate Classement');
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Calculate Classement. ' + error.response.data.message);
+      }
     },
 
     // async calculateClassement() {
