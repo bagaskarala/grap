@@ -5899,6 +5899,65 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'LogMatchDetail',
@@ -5942,7 +6001,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         pd2_greencard: 0
       },
       winningOptions: [],
-      refereeOptions: []
+      refereeOptions: [],
+      achievements: {
+        player1: [],
+        player2: []
+      }
     };
   },
   computed: {
@@ -6085,17 +6148,57 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return getReferees;
     }(),
-    updateData: function () {
-      var _updateData = _asyncToGenerator(
+    getPlayerAchivements: function () {
+      var _getPlayerAchivements = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var a;
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(playerId, playerPosition) {
+        var achievements;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
                 _context4.prev = 0;
                 _context4.next = 3;
+                return this.$axios.get("master/achievement/filter/".concat(playerId));
+
+              case 3:
+                achievements = _context4.sent;
+                console.log(achievements);
+                this.achievements[playerPosition] = achievements.data.data;
+                _context4.next = 12;
+                break;
+
+              case 8:
+                _context4.prev = 8;
+                _context4.t0 = _context4["catch"](0);
+                console.log(_context4.t0.response);
+                this.$noty.error('Failed Fetch Achievements');
+
+              case 12:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this, [[0, 8]]);
+      }));
+
+      function getPlayerAchivements(_x, _x2) {
+        return _getPlayerAchivements.apply(this, arguments);
+      }
+
+      return getPlayerAchivements;
+    }(),
+    updateData: function () {
+      var _updateData = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var a;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.prev = 0;
+                _context5.next = 3;
                 return this.$axios.post("entry/log_match/update/".concat(this.logMatchDetail.id), {
                   division_id: this.logMatchDetail.division_id,
                   time: this.form.elapsedTime ? this.form.elapsedTime : this.convertTimeToMillisecond(this.form.time),
@@ -6112,27 +6215,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 3:
-                a = _context4.sent;
+                a = _context5.sent;
                 console.log(a.data);
                 this.getDetailLogMatch();
                 this.$noty.success('Success Update Data');
                 this.$bvModal.hide('modal-update-log-match');
-                _context4.next = 15;
+                _context5.next = 15;
                 break;
 
               case 10:
-                _context4.prev = 10;
-                _context4.t0 = _context4["catch"](0);
-                console.log(_context4.t0.response);
-                this.errorValidation = _context4.t0.response.data.message;
+                _context5.prev = 10;
+                _context5.t0 = _context5["catch"](0);
+                console.log(_context5.t0.response);
+                this.errorValidation = _context5.t0.response.data.message;
                 this.$noty.error('Failed Update Data');
 
               case 15:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4, this, [[0, 10]]);
+        }, _callee5, this, [[0, 10]]);
       }));
 
       function updateData() {
@@ -6174,13 +6277,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     resetData: function () {
       var _resetData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
-                _context5.prev = 0;
-                _context5.next = 3;
+                _context6.prev = 0;
+                _context6.next = 3;
                 return this.$axios.post("entry/log_match/update/".concat(this.logMatchDetail.id), {
                   division_id: this.logMatchDetail.division_id,
                   time: null,
@@ -6201,21 +6304,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 3:
                 this.getDetailLogMatch();
                 this.$noty.success('Success Reset Data');
-                _context5.next = 11;
+                _context6.next = 11;
                 break;
 
               case 7:
-                _context5.prev = 7;
-                _context5.t0 = _context5["catch"](0);
-                console.log(_context5.t0.response);
+                _context6.prev = 7;
+                _context6.t0 = _context6["catch"](0);
+                console.log(_context6.t0.response);
                 this.$noty.error('Failed Reset Data');
 
               case 11:
               case "end":
-                return _context5.stop();
+                return _context6.stop();
             }
           }
-        }, _callee5, this, [[0, 7]]);
+        }, _callee6, this, [[0, 7]]);
       }));
 
       function resetData() {
@@ -6260,13 +6363,50 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return hours + minutes + seconds + milliseconds;
+    },
+    parseWinnerPosition: function parseWinnerPosition(num) {
+      if (num == 1) {
+        return '1st';
+      } else if (num == 2) {
+        return '2nd';
+      } else if (num == 3) {
+        return '3rd';
+      } else {
+        return null;
+      }
     }
   },
-  created: function created() {
-    this.getDetailLogMatch();
-    this.getWinnings();
-    this.getReferees();
-  }
+  created: function () {
+    var _created = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              _context7.next = 2;
+              return this.getDetailLogMatch();
+
+            case 2:
+              this.getWinnings();
+              this.getReferees();
+              this.getPlayerAchivements(this.logMatchDetail.player1_id, 'player1');
+              this.getPlayerAchivements(this.logMatchDetail.player2_id, 'player2');
+
+            case 6:
+            case "end":
+              return _context7.stop();
+          }
+        }
+      }, _callee7, this);
+    }));
+
+    function created() {
+      return _created.apply(this, arguments);
+    }
+
+    return created;
+  }()
 });
 
 /***/ }),
@@ -8728,16 +8868,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context10.prev = _context10.next) {
               case 0:
+                this.errorValidation = null;
                 this.tabIndex = 0;
                 this.form.id = item.id;
                 this.$bvModal.show('modal-achievement');
-                _context10.next = 5;
+                _context10.next = 6;
                 return this.getPlayerAchivements(item.id);
 
-              case 5:
+              case 6:
                 this.formAchievement = JSON.parse(JSON.stringify(this.achievements));
 
-              case 6:
+              case 7:
               case "end":
                 return _context10.stop();
             }
@@ -8772,16 +8913,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var achievementCategory = this.formAchievement.filter(function (item) {
         return item.category === category;
       });
+      console.log(achievementCategory);
 
       if (achievementCategory.length > 3) {
         this.$noty.warning('Only 3 achivement can be registered');
-        this.errorValidation = 'Change your oldest achievement to the new one'; // find year that not falsy
+        this.errorValidation = "Change your oldest ".concat(category, " achievement to the new one"); // find year that not falsy
 
-        var arrYear = achievementCategory.map(function (item) {
+        var arrYear = achievementCategory.filter(function (item) {
+          return item.id;
+        }).map(function (item) {
           return item.achievement_year;
-        }).filter(function (item) {
-          return !!item;
         });
+        console.log(arrYear);
         var oldestYear = Math.min.apply(Math, _toConsumableArray(arrYear)); // go to oldest achievement
 
         this.tabIndex = achievementCategory.findIndex(function (x) {
@@ -46783,13 +46926,100 @@ var render = function() {
                 : _vm.baseUrl + "/assets/img/user_avatar.png",
               alt: _vm.logMatchDetail.player1_photo
             }
-          })
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "card card-default mt-3" }, [
+            _c("div", { staticClass: "card-header font-weight-bold" }, [
+              _vm._v("\n          Achievement\n        ")
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              [
+                _vm.achievements.player1.length == 0
+                  ? _c("div", { staticClass: "alert alert-info mb-0" }, [
+                      _vm._v("No achievement")
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm._l(_vm.achievements.player1, function(item, index) {
+                  return _c("div", { key: index, staticClass: "mb-2" }, [
+                    _c("i", {
+                      class: [
+                        item.category == "general"
+                          ? "text-dark"
+                          : "text-danger",
+                        "fa-trophy fa"
+                      ],
+                      attrs: { title: item.category }
+                    }),
+                    _vm._v(
+                      "\n            " +
+                        _vm._s(_vm.parseWinnerPosition(item.winner_position)) +
+                        " Winner " +
+                        _vm._s(item.tournament_name) +
+                        " (" +
+                        _vm._s(item.achievement_city) +
+                        " " +
+                        _vm._s(item.achievement_year) +
+                        ")\n          "
+                    )
+                  ])
+                })
+              ],
+              2
+            )
+          ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-md-6 order-1 order-md-2" }, [
           _c("div", { staticClass: "card card-default mb-md-3" }, [
             _c("div", { staticClass: "card-header font-weight-bold" }, [
-              _vm._v("\n          Match Detail\n        ")
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "d-flex justify-content-between align-items-center"
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "d-inline-block text-truncate",
+                      staticStyle: { "max-width": "40%" }
+                    },
+                    [
+                      _c("span", { staticClass: "badge badge-dark" }, [
+                        _vm._v("P1")
+                      ]),
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.logMatchDetail.player1_name) +
+                          "\n            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "d-inline-block text-truncate",
+                      staticStyle: { "max-width": "40%" }
+                    },
+                    [
+                      _c("span", { staticClass: "badge badge-dark" }, [
+                        _vm._v("P2")
+                      ]),
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.logMatchDetail.player2_name) +
+                          "\n            "
+                      )
+                    ]
+                  )
+                ]
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
@@ -46955,7 +47185,51 @@ var render = function() {
                 : _vm.baseUrl + "/assets/img/user_avatar.png",
               alt: _vm.logMatchDetail.player2_photo
             }
-          })
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "card card-default mt-3" }, [
+            _c("div", { staticClass: "card-header font-weight-bold" }, [
+              _vm._v("\n          Achievement\n        ")
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              [
+                _vm.achievements.player2.length == 0
+                  ? _c("div", { staticClass: "alert alert-info mb-0" }, [
+                      _vm._v("No achievement")
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm._l(_vm.achievements.player2, function(item, index) {
+                  return _c("div", { key: index, staticClass: "mb-2" }, [
+                    _c("i", {
+                      class: [
+                        item.category == "general"
+                          ? "text-dark"
+                          : "text-danger",
+                        "fa-trophy fa"
+                      ],
+                      attrs: { title: item.category }
+                    }),
+                    _vm._v(
+                      "\n            " +
+                        _vm._s(_vm.parseWinnerPosition(item.winner_position)) +
+                        " Winner " +
+                        _vm._s(item.tournament_name) +
+                        " (" +
+                        _vm._s(item.achievement_city) +
+                        " " +
+                        _vm._s(item.achievement_year) +
+                        ")\n          "
+                    )
+                  ])
+                })
+              ],
+              2
+            )
+          ])
         ])
       ]),
       _vm._v(" "),

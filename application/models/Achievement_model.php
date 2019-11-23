@@ -19,27 +19,27 @@ class Achievement_model extends MY_Model
             [
                 'field' => 'winner_position',
                 'label' => 'winner position',
-                'rules' => 'trim',
+                'rules' => 'required|trim',
             ],
             [
                 'field' => 'achievement_city',
                 'label' => 'city',
-                'rules' => 'trim',
+                'rules' => 'required|trim',
             ],
             [
                 'field' => 'achievement_year',
                 'label' => 'year',
-                'rules' => 'trim',
+                'rules' => 'required|trim',
             ],
             [
                 'field' => 'category',
                 'label' => 'category',
-                'rules' => 'trim',
+                'rules' => 'required|trim',
             ],
             [
                 'field' => 'division',
                 'label' => 'division',
-                'rules' => 'trim',
+                'rules' => 'required|trim',
             ],
         ];
 

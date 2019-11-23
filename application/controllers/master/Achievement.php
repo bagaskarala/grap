@@ -33,6 +33,7 @@ class Achievement extends MY_Controller
     public function filter($player_id)
     {
         $this->achievement->where('player_id', $player_id);
+        $this->achievement->order_by('category');
         $achievements = $this->achievement->get_all_array();
 
         if (count($achievements) == 0) {

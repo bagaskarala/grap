@@ -21,11 +21,48 @@
           class="rounded-circle mx-auto d-block"
           :alt="logMatchDetail.player1_photo"
         >
+        <div class="card card-default mt-3">
+          <div class="card-header font-weight-bold">
+            Achievement
+          </div>
+          <div class="card-body">
+            <div
+              v-if="achievements.player1.length == 0"
+              class="alert alert-info mb-0"
+            >No achievement</div>
+            <div
+              v-for="(item, index) in achievements.player1"
+              :key="index"
+              class="mb-2"
+            >
+              <i
+                :class="[item.category == 'general'? 'text-dark' : 'text-danger','fa-trophy fa']"
+                :title="item.category"
+              ></i>
+              {{parseWinnerPosition(item.winner_position)}} Winner {{item.tournament_name}} ({{item.achievement_city}} {{item.achievement_year}})
+            </div>
+          </div>
+        </div>
       </div>
       <div class="col-md-6 order-1 order-md-2">
         <div class="card card-default mb-md-3">
           <div class="card-header font-weight-bold">
-            Match Detail
+            <div class="d-flex justify-content-between align-items-center">
+              <div
+                class="d-inline-block text-truncate"
+                style="max-width:40%"
+              >
+                <span class="badge badge-dark">P1</span>
+                {{logMatchDetail.player1_name}}
+              </div>
+              <div
+                class="d-inline-block text-truncate"
+                style="max-width:40%"
+              >
+                <span class="badge badge-dark">P2</span>
+                {{logMatchDetail.player2_name}}
+              </div>
+            </div>
           </div>
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-2">
@@ -79,6 +116,28 @@
           class="rounded-circle mx-auto d-block"
           :alt="logMatchDetail.player2_photo"
         >
+        <div class="card card-default mt-3">
+          <div class="card-header font-weight-bold">
+            Achievement
+          </div>
+          <div class="card-body">
+            <div
+              v-if="achievements.player2.length == 0"
+              class="alert alert-info mb-0"
+            >No achievement</div>
+            <div
+              v-for="(item, index) in achievements.player2"
+              :key="index"
+              class="mb-2"
+            >
+              <i
+                :class="[item.category == 'general'? 'text-dark' : 'text-danger','fa-trophy fa']"
+                :title="item.category"
+              ></i>
+              {{parseWinnerPosition(item.winner_position)}} Winner {{item.tournament_name}} ({{item.achievement_city}} {{item.achievement_year}})
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="row justify-content-center">
@@ -514,7 +573,11 @@ export default {
         pd2_greencard: 0
       },
       winningOptions: [],
-      refereeOptions: []
+      refereeOptions: [],
+      achievements: {
+        player1: [],
+        player2: []
+      }
     };
   },
 
@@ -578,6 +641,17 @@ export default {
       } catch (error) {
         console.log(error.response);
         this.$noty.error('Failed fetch referee');
+      }
+    },
+
+    async getPlayerAchivements(playerId, playerPosition) {
+      try {
+        const achievements = await this.$axios.get(`master/achievement/filter/${playerId}`);
+        console.log(achievements);
+        this.achievements[playerPosition] = achievements.data.data;
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Fetch Achievements');
       }
     },
 
@@ -697,13 +771,27 @@ export default {
         seconds = seconds * 1000;
       }
       return hours + minutes + seconds + milliseconds;
+    },
+
+    parseWinnerPosition(num) {
+      if (num == 1) {
+        return '1st';
+      } else if (num == 2) {
+        return '2nd';
+      } else if (num == 3) {
+        return '3rd';
+      } else {
+        return null;
+      }
     }
   },
 
-  created() {
-    this.getDetailLogMatch();
+  async created() {
+    await this.getDetailLogMatch();
     this.getWinnings();
     this.getReferees();
+    this.getPlayerAchivements(this.logMatchDetail.player1_id, 'player1');
+    this.getPlayerAchivements(this.logMatchDetail.player2_id, 'player2');
   }
 };
 </script>

@@ -753,6 +753,7 @@ export default {
     },
 
     async loadAchievement(item) {
+      this.errorValidation = null;
       this.tabIndex = 0;
       this.form.id = item.id;
       this.$bvModal.show('modal-achievement');
@@ -777,12 +778,14 @@ export default {
     checkAchievementCategory(category, popArray = true) {
       this.errorValidation = null;
       let achievementCategory = this.formAchievement.filter(item => item.category === category);
+      console.log(achievementCategory);
       if (achievementCategory.length > 3) {
         this.$noty.warning('Only 3 achivement can be registered');
-        this.errorValidation = 'Change your oldest achievement to the new one';
+        this.errorValidation = `Change your oldest ${category} achievement to the new one`;
 
         // find year that not falsy
-        let arrYear = achievementCategory.map(item => item.achievement_year).filter(item => !!item);
+        let arrYear = achievementCategory.filter(item => item.id).map(item => item.achievement_year);
+        console.log(arrYear);
         let oldestYear = Math.min(...arrYear);
 
         // go to oldest achievement
