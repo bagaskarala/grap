@@ -4669,6 +4669,22 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'LogMatch',
@@ -46416,6 +46432,47 @@ var render = function() {
                                       { staticClass: "font-weight-bold" },
                                       [_vm._v(_vm._s(data.item.player1_name))]
                                     ),
+                                    _vm._v(" "),
+                                    data.item.player1_last_achievement
+                                      ? _c(
+                                          "span",
+                                          {
+                                            staticClass:
+                                              "badge badge-secondary",
+                                            attrs: {
+                                              title:
+                                                data.item
+                                                  .player1_last_achievement
+                                                  .winner_position +
+                                                " winner on " +
+                                                data.item
+                                                  .player1_last_achievement
+                                                  .tournament_name +
+                                                " (" +
+                                                data.item
+                                                  .player1_last_achievement
+                                                  .achievement_city +
+                                                "/" +
+                                                data.item
+                                                  .player1_last_achievement
+                                                  .achievement_year +
+                                                ")"
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                  " +
+                                                _vm._s(
+                                                  data.item
+                                                    .player1_last_achievement
+                                                    .winner_position
+                                                ) +
+                                                "\n                "
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e(),
+                                    _vm._v(" "),
                                     _c("br"),
                                     _vm._v(" "),
                                     _c(
@@ -46444,6 +46501,47 @@ var render = function() {
                                       { staticClass: "font-weight-bold" },
                                       [_vm._v(_vm._s(data.item.player2_name))]
                                     ),
+                                    _vm._v(" "),
+                                    data.item.player2_last_achievement
+                                      ? _c(
+                                          "span",
+                                          {
+                                            staticClass:
+                                              "badge badge-secondary",
+                                            attrs: {
+                                              title:
+                                                data.item
+                                                  .player2_last_achievement
+                                                  .winner_position +
+                                                " winner on " +
+                                                data.item
+                                                  .player2_last_achievement
+                                                  .tournament_name +
+                                                " (" +
+                                                data.item
+                                                  .player2_last_achievement
+                                                  .achievement_city +
+                                                "/" +
+                                                data.item
+                                                  .player2_last_achievement
+                                                  .achievement_year +
+                                                ")"
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                  " +
+                                                _vm._s(
+                                                  data.item
+                                                    .player2_last_achievement
+                                                    .winner_position
+                                                ) +
+                                                "\n                "
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e(),
+                                    _vm._v(" "),
                                     _c("br"),
                                     _vm._v(" "),
                                     _c(
@@ -46536,7 +46634,7 @@ var render = function() {
                         ],
                         null,
                         false,
-                        4059796773
+                        2280325413
                       )
                     })
                   : _vm._e()

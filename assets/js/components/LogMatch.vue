@@ -151,7 +151,15 @@
                   class="min-width-10"
                   :class="winnerMark(data.item,1)"
                 >
-                  <span class="font-weight-bold">{{data.item.player1_name}}</span><br>
+                  <span class="font-weight-bold">{{data.item.player1_name}}</span>
+                  <span
+                    v-if="data.item.player1_last_achievement"
+                    class="badge badge-secondary"
+                    :title="`${data.item.player1_last_achievement.winner_position} winner on ${data.item.player1_last_achievement.tournament_name} (${data.item.player1_last_achievement.achievement_city}/${data.item.player1_last_achievement.achievement_year})`"
+                  >
+                    {{data.item.player1_last_achievement.winner_position}}
+                  </span>
+                  <br>
                   <span class="small text-muted">{{data.item.player1_club}}</span>
                 </div>
               </template>
@@ -161,7 +169,15 @@
                   class="min-width-10"
                   :class="winnerMark(data.item,2)"
                 >
-                  <span class="font-weight-bold">{{data.item.player2_name}}</span><br>
+                  <span class="font-weight-bold">{{data.item.player2_name}}</span>
+                  <span
+                    v-if="data.item.player2_last_achievement"
+                    class="badge badge-secondary"
+                    :title="`${data.item.player2_last_achievement.winner_position} winner on ${data.item.player2_last_achievement.tournament_name} (${data.item.player2_last_achievement.achievement_city}/${data.item.player2_last_achievement.achievement_year})`"
+                  >
+                    {{data.item.player2_last_achievement.winner_position}}
+                  </span>
+                  <br>
                   <span class="small text-muted">{{data.item.player2_club}}</span>
                 </div>
               </template>
@@ -434,6 +450,7 @@ export default {
 
   methods: {
     checkPlayer(m, playerNumber) {
+
       // ambil player
       if (m.match_status == 2) {
         return playerNumber == 1 ? `${m.player1_name || 'Bye'} (${m.player1_club_alias || '-'})` : `${m.player2_name || 'Bye'} (${m.player2_club_alias || '-'})`;

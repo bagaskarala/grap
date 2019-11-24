@@ -70,7 +70,30 @@ class Log_match_model extends MY_Model
         $this->order_by('pool_number');
         $this->order_by('match_index');
         $this->order_by('match_number');
-        return $this->db->get()->result_array();
+        $log_matchs = $this->db->get()->result_array();
+
+        $result = [];
+        // baca tahun di setting
+        $setting   = $this->get_single_array('setting');
+        $last_city = $setting['city'];
+        $last_year = $setting['year'] - 1;
+        foreach ($log_matchs as $value) {
+            // cari kejuaraan pada masing2 player di tahun lalu dan kota yang sama dengan setting
+            $this->where('player_id', $value['player1_id']);
+            $this->where('achievement_year', $last_year);
+            $this->where('achievement_city', $last_city);
+            $this->order_by('id', 'desc');
+            $value['player1_last_achievement'] = $this->get_single_array('achievement');
+
+            $this->where('player_id', $value['player2_id']);
+            $this->where('achievement_year', $last_year);
+            $this->where('achievement_city', $last_city);
+            $this->order_by('id', 'desc');
+            $value['player2_last_achievement'] = $this->get_single_array('achievement');
+
+            array_push($result, $value);
+        }
+        return $result;
     }
 
     /**
@@ -283,7 +306,7 @@ class Log_match_model extends MY_Model
         }
 
         // get player division, urutkan club_id untuk minimalisir club sama bertemu
-        $this->select('player_division.*, player.club_id');
+        $this->select('player_division.*, player.club_id, player.name');
         $this->join_table('player', 'player_division');
         $this->where('division_id', $division_id);
         $this->order_by('club_id');
@@ -298,8 +321,8 @@ class Log_match_model extends MY_Model
         // hitung max match index 1
         $this->where('division_id', $division_id);
         $this->where('match_index', 1);
-        $log_match_count = $this->count();
-        if ($log_match_count == 0) {
+        $first_index_match_count = $this->count();
+        if ($first_index_match_count == 0) {
             return [
                 'status'  => false,
                 'message' => 'No schedule in this match',
@@ -309,40 +332,94 @@ class Log_match_model extends MY_Model
         // loop player_division, masukkan urut dari atas player1 semua, lalu player2
         $index_counter = 1;
         $flag          = true;
+        // baca tahun di setting
+        $setting             = $this->get_single_array('setting');
+        $last_city           = $setting['city'];
+        $last_year           = $setting['year'] - 1;
+        $arr_generate_player = [];
+
+        // generate array dengan achievement
         foreach ($player_divisions as $player_division) {
+            // cari kejuaraan pada masing2 player di tahun lalu dan kota yang sama
+            $this->where('player_id', $player_division['player_id']);
+            $this->where('achievement_year', $last_year);
+            $this->where('achievement_city', $last_city);
+            $this->order_by('id', 'desc');
+            $last_year_achievement = $this->get_single_array('achievement');
+
+            array_push($arr_generate_player, [
+                'pd_id'                 => $player_division['id'],
+                'idx'                   => $index_counter,
+                'name'                  => $player_division['name'],
+                'year'                  => $last_year,
+                'last_year_achievement' => $last_year_achievement,
+            ]);
+            $index_counter++;
+        }
+
+        /**
+         * pengacakan berdasar achievement
+         */
+
+        // filter player yang punya juara tahun lalu di kota yang sama
+        $players_with_achievement = array_filter($arr_generate_player, function ($item) use ($last_city, $last_year) {
+            return $item['last_year_achievement']['achievement_city'] == $last_city && $item['last_year_achievement']['achievement_year'] == $last_year;
+        });
+
+        // filter player polosan / tanpa achievement
+        $players = array_filter($arr_generate_player, function ($item) use ($last_city, $last_year) {
+            return $item['last_year_achievement'] == null;
+        });
+
+        $idx = 1;
+        foreach ($players_with_achievement as $value) {
+            // juara salah satu atas sendiri
+            if ($idx == 1) {
+                array_unshift($players, $value);
+            } else if ($idx == 2) {
+                // juara salah satu bawah sendiri
+                array_splice($players, $first_index_match_count - 2, 0, [$value]);
+            } else {
+                // juara 3 ,atch tengah
+                array_splice($players, count($arr_generate_player) / 4, 0, [$value]);
+            }
+            $idx++;
+        }
+
+        $index_counterr = 1;
+        $flagg          = true;
+        foreach ($players as $p) {
             // flag true menandakan player1 masih ada yang kosong,
             // setelah itu set flag false untuk mengisi player2
-            if ($index_counter == $log_match_count + 1) {
-                $flag          = false;
-                $index_counter = 1;
+            if ($index_counterr == $first_index_match_count + 1) {
+                $flagg          = false;
+                $index_counterr = 1;
             }
 
-            if ($flag) {
+            if ($flagg) {
                 // isi player1
                 $where = [
                     'match_index'  => 1,
-                    'match_number' => $index_counter,
+                    'match_number' => $index_counterr,
                     'division_id'  => $division_id,
                 ];
-                $result = $this->update(['pd1_id' => $player_division['id']], $where);
-                array_push($arr_generate_player, ['pd1' => $player_division['id'], 'idx' => $index_counter]);
+                $result = $this->update(['pd1_id' => $p['pd_id']], $where);
             } else {
                 // isi player2
                 $where = [
                     'match_index'  => 1,
-                    'match_number' => $index_counter,
+                    'match_number' => $index_counterr,
                     'division_id'  => $division_id,
                 ];
-                $result = $this->update(['pd2_id' => $player_division['id']], $where);
-                array_push($arr_generate_player, ['pd2' => $player_division['id'], 'idx' => $index_counter]);
+                $result = $this->update(['pd2_id' => $p['pd_id']], $where);
             }
-            $index_counter++;
+            $index_counterr++;
         }
 
         if ($result) {
             return [
                 'status' => true,
-                'data'   => 'Success generate player',
+                'data'   => $players,
             ];
         } else {
             return [
