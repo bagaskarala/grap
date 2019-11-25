@@ -410,9 +410,17 @@
                     id="division"
                     v-model="formAchievement[index].division"
                     type="text"
+                    autocomplete="off"
                     class="form-control"
                     placeholder="Enter division"
+                    list="divisionList"
                   >
+                  <datalist id="divisionList">
+                    <option
+                      v-for="division in divisionOptions"
+                      :key="division.id"
+                    >{{ division.division }}</option>
+                  </datalist>
                 </div>
               </div>
             </div>
@@ -436,7 +444,10 @@
                     class="form-control"
                     v-model.number="formAchievement[index].winner_position"
                   >
-                    <option :value="null">Choose Position</option>
+                    <option
+                      :value="null"
+                      disabled
+                    >Choose Position</option>
                     <option
                       v-for="item in winnerPositionOptions"
                       :key="item.value"
@@ -450,13 +461,22 @@
               <div class="row">
                 <div class="col">
                   <label for="achievement_city">City</label>
-                  <input
+                  <select
+                    name="achievement_city"
                     id="achievement_city"
-                    v-model="formAchievement[index].achievement_city"
-                    type="text"
                     class="form-control"
-                    placeholder="Enter city"
+                    v-model.number="formAchievement[index].achievement_city"
                   >
+                    <option
+                      :value="null"
+                      disabled
+                    >Select City</option>
+                    <option
+                      v-for="item in cities"
+                      :key="item.value"
+                      :value="item.value"
+                    >{{item.text}}</option>
+                  </select>
                 </div>
                 <div class="col">
                   <label for="achievement_city">Year</label>
@@ -509,6 +529,7 @@
 </template>
 
 <script>
+import { getCities } from '../shared';
 export default {
   name: 'PlayerList',
   props: {
@@ -548,6 +569,7 @@ export default {
       customFileLabelRight: null,
       customFileLabelFront: null,
       tabIndex: 0,
+      divisionOptions: [],
       winnerPositionOptions: [
         {
           text: '1st winner',
@@ -576,6 +598,17 @@ export default {
   },
 
   methods: {
+    getCities,
+
+    async getAllDivisions() {
+      try {
+        const divisions = await this.$axios.get('master/division/get_all');
+        this.divisionOptions = divisions.data.data;
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Fetch Division');
+      }
+    },
     async getPlayerAchivements(playerId) {
       try {
         const achievements = await this.$axios.get(`master/achievement/filter/${playerId}`);
@@ -769,6 +802,7 @@ export default {
     },
 
     async loadAchievement(item) {
+      this.getAllDivisions();
       this.errorValidation = null;
       this.tabIndex = 0;
       this.form.id = item.id;
@@ -922,6 +956,7 @@ export default {
     this.getAllPlayers();
     this.getCountries();
     this.getClubs();
+    this.cities = this.getCities();
   },
 
   watch: {

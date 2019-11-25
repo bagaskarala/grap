@@ -37,14 +37,21 @@
 
               <div class="form-group">
                 <label for="city">City</label>
-                <input
+                <select
+                  name="city"
                   id="city"
-                  v-model="form.city"
-                  type="text"
                   class="form-control"
-                  placeholder="Enter city"
+                  v-model.number="form.city"
                 >
+                  <option :value="null">Select City</option>
+                  <option
+                    v-for="item in cities"
+                    :key="item.value"
+                    :value="item.value"
+                  >{{item.text}}</option>
+                </select>
               </div>
+
               <div class="d-flex justify-content-end">
                 <div
                   class="btn-group"
@@ -65,20 +72,25 @@
 </template>
 
 <script>
+import { getCities } from '../shared';
 export default {
   name: 'Setting',
   data() {
     return {
       form: {
-        winning: null,
-        point: null,
-        description: null
+        year: null,
+        month: null,
+        city: null
       },
       modalState: null,
-      errorValidation: null
+      errorValidation: null,
+      cities: []
     };
   },
+
   methods: {
+    getCities,
+
     async getSetting() {
       try {
         const setting = await this.$axios.get('setting/get');
@@ -90,7 +102,7 @@ export default {
     },
 
     async updateData() {
-      if (this.form.year < 1900 || this.form.year > 2100) {
+      if (this.form.year < new Date().getFullYear() || this.form.year > 2100) {
         this.$noty.error('Invalid year');
         return;
       }
@@ -120,6 +132,7 @@ export default {
 
   created() {
     this.getSetting();
+    this.cities = this.getCities();
   }
 };
 </script>
