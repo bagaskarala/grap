@@ -10,9 +10,9 @@ class Auth extends MY_Controller
 
     public function index($action = null)
     {
-        // jika sudah punya sesi, arahkan ke user
+        // jika sudah punya sesi, arahkan ke profile
         if ($this->_login) {
-            redirect('user');
+            redirect('profile');
         }
 
         if (!$_POST) {
@@ -36,7 +36,7 @@ class Auth extends MY_Controller
         $result = $this->auth->login($login_data);
 
         if ($result['status']) {
-            redirect('user');
+            redirect('profile');
         } else {
             $this->session->set_flashdata('message', $result['message']);
             redirect('auth#login');
@@ -46,7 +46,7 @@ class Auth extends MY_Controller
     public function registration()
     {
         if ($this->_login) {
-            redirect('user');
+            redirect('profile');
         }
 
         // jalankan validasi

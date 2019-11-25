@@ -2,7 +2,9 @@
 
 # ignore profile photo
 /assets/img/profile
+!/assets/img/profile/default.jpg
 /assets/img/player
+!/assets/img/player/user_avatar.png
 
 application/cache/*
 !application/cache/index.html

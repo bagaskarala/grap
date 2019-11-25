@@ -369,9 +369,53 @@
         <b-tab
           v-for="(item, index) in formAchievement"
           :key="index"
-          :title="`Achievement ${item.category} #${index+1}`"
         >
+          <template v-slot:title>
+            <span>{{`Achievement ${item.category} #${index+1}`}}</span>
+            <span v-if="item && !item.id">
+              <i
+                class="fa fa-circle text-danger"
+                title="Not Saved Yet"
+              ></i>
+            </span>
+          </template>
+
+          <div
+            v-if="countAchievement(item.category) > 3"
+            class="alert alert-warning"
+          >
+            Max 3 achievement in {{item.category}} category
+          </div>
+
           <form method="post">
+            <div class="form-group">
+              <div class="row">
+                <div class="col">
+                  <label for="division">Category</label>
+                  <select
+                    id="category"
+                    class="form-control"
+                    v-model.number="formAchievement[index].category"
+                  >
+                    <option
+                      v-for="item in categoryOptions"
+                      :key="item.value"
+                      :value="item.value"
+                    >{{item.text}}</option>
+                  </select>
+                </div>
+                <div class="col">
+                  <label for="division">Division</label>
+                  <input
+                    id="division"
+                    v-model="formAchievement[index].division"
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter division"
+                  >
+                </div>
+              </div>
+            </div>
             <div class="form-group">
               <div class="row">
                 <div class="col">
@@ -425,34 +469,6 @@
                     max-length="3000"
                     min-length="2000"
                   >
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="row">
-                <div class="col">
-                  <label for="division">Division</label>
-                  <input
-                    id="division"
-                    v-model="formAchievement[index].division"
-                    type="text"
-                    class="form-control"
-                    placeholder="Enter division"
-                  >
-                </div>
-                <div class="col">
-                  <label for="division">Category</label>
-                  <select
-                    id="category"
-                    class="form-control"
-                    v-model.number="formAchievement[index].category"
-                  >
-                    <option
-                      v-for="item in categoryOptions"
-                      :key="item.value"
-                      :value="item.value"
-                    >{{item.text}}</option>
-                  </select>
                 </div>
               </div>
             </div>
@@ -762,6 +778,16 @@ export default {
     },
 
     addNewAchievement() {
+
+      let notSaved = this.formAchievement.find(item => {
+        return item.id == undefined;
+      });
+      console.log(notSaved);
+      if (notSaved) {
+        this.$noty.warning('Save your new achievement, before insert another achievement');
+        return;
+      }
+
       this.formAchievement.push({
         achievement_city: null,
         achievement_year: null,
@@ -780,8 +806,7 @@ export default {
       let achievementCategory = this.formAchievement.filter(item => item.category === category);
       console.log(achievementCategory);
       if (achievementCategory.length > 3) {
-        this.$noty.warning('Only 3 achivement can be registered');
-        this.errorValidation = `Change your oldest ${category} achievement to the new one`;
+        this.errorValidation = `Only 3 achivement can be registered per category. Change your oldest ${category} achievement to the new one`;
 
         // find year that not falsy
         let arrYear = achievementCategory.filter(item => item.id).map(item => item.achievement_year);
@@ -844,6 +869,12 @@ export default {
     },
 
     async deleteAchievement(item) {
+      // hapus arraynya saja ketika belum tersimpan di db
+      if (!item.id) {
+        this.formAchievement.splice(this.formAchievement.findIndex(x => x.id == item.id), 1);
+        return;
+      }
+
       try {
         await this.$axios.post('master/achievement/delete', {
           id: item.id
@@ -856,6 +887,12 @@ export default {
         console.log(error.response);
         this.$noty.error('Failed Delete Data');
       }
+    },
+
+    countAchievement(category) {
+      return this.formAchievement.filter(item => {
+        return item.category == category;
+      }).length;
     },
 
     resetAchievement() {

@@ -7,7 +7,7 @@
 
    <div class="row">
       <div class="col">
-         <?=form_open_multipart('user/edit')?>
+         <?=form_open_multipart('profile/edit')?>
          <div class="form-group row">
             <label
                for="email"

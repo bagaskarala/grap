@@ -12,12 +12,13 @@
       <img
          src="<?=base_url('assets/img/profile/') . $user['image'];?>"
          class="card-img"
+         alt="<?=$user['image']?>"
       >
       <div class="card-body">
          <h5 class="card-title"><?=$user['name']?></h5>
          <p class="card-text"><?=$user['email']?></p>
          <a
-            href="<?=base_url('user/edit')?>"
+            href="<?=base_url('profile/edit')?>"
             class="btn btn-primary"
          >Edit</a>
       </div>

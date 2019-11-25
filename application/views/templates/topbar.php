@@ -16,7 +16,7 @@ $setting_year  = $this->session->userdata('setting_year');
       <i class="fa fa-bars"></i>
    </button>
 
-   <!-- Topbar Search -->
+   <!-- Topbar Info -->
    <div class="d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100">
       <span class="text-uppercase font-weight-bold">
          <?=$setting_city?>
@@ -26,9 +26,7 @@ $setting_year  = $this->session->userdata('setting_year');
 
    <!-- Topbar Navbar -->
    <ul class="navbar-nav ml-auto">
-
       <div class="topbar-divider d-none d-sm-block"></div>
-
       <!-- Nav Item - User Information -->
       <li class="nav-item dropdown no-arrow">
          <a
@@ -53,7 +51,7 @@ $setting_year  = $this->session->userdata('setting_year');
          >
             <a
                class="dropdown-item"
-               href="<?=base_url('user')?>"
+               href="<?=base_url('profile')?>"
             >
                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                Profile
@@ -70,8 +68,50 @@ $setting_year  = $this->session->userdata('setting_year');
             </a>
             </form>
       </li>
-
    </ul>
-
 </nav>
 <!-- End of Topbar -->
+
+<!-- Logout Modal-->
+<div
+   class="modal fade"
+   id="logoutModal"
+   tabindex="-1"
+   role="dialog"
+   aria-labelledby="exampleModalLabel"
+   aria-hidden="true"
+>
+   <div
+      class="modal-dialog"
+      role="document"
+   >
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5
+               class="modal-title"
+               id="exampleModalLabel"
+            >Ready to Leave?</h5>
+            <button
+               class="close"
+               type="button"
+               data-dismiss="modal"
+               aria-label="Close"
+            >
+               <span aria-hidden="true">×</span>
+            </button>
+         </div>
+         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+         <div class="modal-footer">
+            <button
+               class="btn btn-secondary"
+               type="button"
+               data-dismiss="modal"
+            >Cancel</button>
+            <a
+               class="btn btn-danger"
+               href="<?=base_url('auth/logout')?>"
+            >Logout</a>
+         </div>
+      </div>
+   </div>
+</div>

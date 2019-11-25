@@ -8373,6 +8373,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PlayerList',
   props: {
@@ -8911,6 +8927,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     addNewAchievement: function addNewAchievement() {
       var _this3 = this;
 
+      var notSaved = this.formAchievement.find(function (item) {
+        return item.id == undefined;
+      });
+      console.log(notSaved);
+
+      if (notSaved) {
+        this.$noty.warning('Save your new achievement, before insert another achievement');
+        return;
+      }
+
       this.formAchievement.push({
         achievement_city: null,
         achievement_year: null,
@@ -8932,8 +8958,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       console.log(achievementCategory);
 
       if (achievementCategory.length > 3) {
-        this.$noty.warning('Only 3 achivement can be registered');
-        this.errorValidation = "Change your oldest ".concat(category, " achievement to the new one"); // find year that not falsy
+        this.errorValidation = "Only 3 achivement can be registered per category. Change your oldest ".concat(category, " achievement to the new one"); // find year that not falsy
 
         var arrYear = achievementCategory.filter(function (item) {
           return item.id;
@@ -9070,32 +9095,43 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context13.prev = _context13.next) {
               case 0:
-                _context13.prev = 0;
-                _context13.next = 3;
+                if (item.id) {
+                  _context13.next = 3;
+                  break;
+                }
+
+                this.formAchievement.splice(this.formAchievement.findIndex(function (x) {
+                  return x.id == item.id;
+                }), 1);
+                return _context13.abrupt("return");
+
+              case 3:
+                _context13.prev = 3;
+                _context13.next = 6;
                 return this.$axios.post('master/achievement/delete', {
                   id: item.id
                 });
 
-              case 3:
+              case 6:
                 this.$noty.success('Success Delete Data');
                 this.formAchievement.splice(this.formAchievement.findIndex(function (x) {
                   return x.id == item.id;
                 }), 1);
-                _context13.next = 11;
+                _context13.next = 14;
                 break;
 
-              case 7:
-                _context13.prev = 7;
-                _context13.t0 = _context13["catch"](0);
+              case 10:
+                _context13.prev = 10;
+                _context13.t0 = _context13["catch"](3);
                 console.log(_context13.t0.response);
                 this.$noty.error('Failed Delete Data');
 
-              case 11:
+              case 14:
               case "end":
                 return _context13.stop();
             }
           }
-        }, _callee13, this, [[0, 7]]);
+        }, _callee13, this, [[3, 10]]);
       }));
 
       function deleteAchievement(_x7) {
@@ -9104,6 +9140,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return deleteAchievement;
     }(),
+    countAchievement: function countAchievement(category) {
+      return this.formAchievement.filter(function (item) {
+        return item.category == category;
+      }).length;
+    },
     resetAchievement: function resetAchievement() {
       this.errorValidation = null;
       this.formAchievement[this.tabIndex].tournament_name = null;
@@ -10757,21 +10798,125 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'UserList',
   data: function data() {
     return {
       users: [],
+      form: {
+        name: null,
+        email: null,
+        role_id: null,
+        is_active: null
+      },
+      modalState: null,
+      errorValidation: null,
+      roles: [],
       fieldUser: [{
-        'key': 'name'
+        key: 'name'
       }, {
-        'key': 'email'
+        key: 'email'
       }, {
-        'key': 'role'
+        key: 'role'
       }, {
-        'key': 'is_active'
+        key: 'is_active',
+        label: 'Active'
       }, {
-        'key': 'action'
+        key: 'action'
       }]
     };
   },
@@ -10787,7 +10932,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return this.$axios.get('admin/dashboard/get_all_users');
+                return this.$axios.get('admin/user/get_all_users');
 
               case 3:
                 users = _context.sent;
@@ -10814,39 +10959,122 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return getAllUsers;
     }(),
-    deleteData: function () {
-      var _deleteData = _asyncToGenerator(
+    getAllRoles: function () {
+      var _getAllRoles = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(item) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var roles;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return this.$axios.get('admin/role/get_all');
+
+              case 3:
+                roles = _context2.sent;
+                this.roles = roles.data.data;
+                _context2.next = 10;
+                break;
+
+              case 7:
+                _context2.prev = 7;
+                _context2.t0 = _context2["catch"](0);
+                this.$noty.error('Failed Get Data');
+
+              case 10:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[0, 7]]);
+      }));
+
+      function getAllRoles() {
+        return _getAllRoles.apply(this, arguments);
+      }
+
+      return getAllRoles;
+    }(),
+    updateData: function () {
+      var _updateData = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.prev = 0;
+                _context3.next = 3;
+                return this.$axios.post("admin/user/update/".concat(this.form.id), {
+                  name: this.form.name,
+                  email: this.form.email,
+                  role_id: this.form.role_id,
+                  is_active: this.form.is_active
+                });
+
+              case 3:
+                this.$noty.success('Success Update Data');
+                this.getAllUsers();
+                this.$bvModal.hide('modal-user');
+                _context3.next = 13;
+                break;
+
+              case 8:
+                _context3.prev = 8;
+                _context3.t0 = _context3["catch"](0);
+                console.log(_context3.t0.response);
+                this.errorValidation = _context3.t0.response.data.message;
+                this.$noty.error('Failed Update Data');
+
+              case 13:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this, [[0, 8]]);
+      }));
+
+      function updateData() {
+        return _updateData.apply(this, arguments);
+      }
+
+      return updateData;
+    }(),
+    deleteData: function () {
+      var _deleteData = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(item) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
                 console.log(item.id);
-                _context2.prev = 1;
-                _context2.next = 4;
-                return this.$axios.post('admin/dashboard/delete_user', {
+                _context4.prev = 1;
+                _context4.next = 4;
+                return this.$axios.post('admin/user/delete_user', {
                   id: item.id
                 });
 
               case 4:
                 this.$noty.success('Success Delete Data');
                 this.getAllUsers();
-                _context2.next = 12;
+                _context4.next = 12;
                 break;
 
               case 8:
-                _context2.prev = 8;
-                _context2.t0 = _context2["catch"](1);
+                _context4.prev = 8;
+                _context4.t0 = _context4["catch"](1);
                 this.$noty.error('Failed Delete Data');
-                console.log(_context2.t0.response);
+                console.log(_context4.t0.response);
 
               case 12:
               case "end":
-                return _context2.stop();
+                return _context4.stop();
             }
           }
-        }, _callee2, this, [[1, 8]]);
+        }, _callee4, this, [[1, 8]]);
       }));
 
       function deleteData(_x) {
@@ -10870,6 +11098,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       })["catch"](function (err) {
         console.log('Error ', err);
       });
+    },
+    loadData: function loadData(item) {
+      this.resetData();
+      this.getAllRoles();
+      this.$bvModal.show('modal-user');
+      this.modalState = 'update'; // populate form
+
+      var id = item.id,
+          name = item.name,
+          email = item.email,
+          role_id = item.role_id,
+          is_active = item.is_active;
+      this.form.id = id;
+      this.form.name = name;
+      this.form.email = email;
+      this.form.role_id = role_id;
+      this.form.is_active = is_active;
+    },
+    resetData: function resetData() {
+      this.errorValidation = null;
+      this.form.name = null;
+      this.form.email = null;
+      this.form.role_id = null;
+      this.form.is_active = null;
     }
   },
   mounted: function mounted() {
@@ -50276,13 +50528,154 @@ var render = function() {
                     "b-tab",
                     {
                       key: index,
-                      attrs: {
-                        title:
-                          "Achievement " + item.category + " #" + (index + 1)
-                      }
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "title",
+                            fn: function() {
+                              return [
+                                _c("span", [
+                                  _vm._v(
+                                    _vm._s(
+                                      "Achievement " +
+                                        item.category +
+                                        " #" +
+                                        (index + 1)
+                                    )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                item && !item.id
+                                  ? _c("span", [
+                                      _c("i", {
+                                        staticClass: "fa fa-circle text-danger",
+                                        attrs: { title: "Not Saved Yet" }
+                                      })
+                                    ])
+                                  : _vm._e()
+                              ]
+                            },
+                            proxy: true
+                          }
+                        ],
+                        null,
+                        true
+                      )
                     },
                     [
+                      _vm._v(" "),
+                      _vm.countAchievement(item.category) > 3
+                        ? _c("div", { staticClass: "alert alert-warning" }, [
+                            _vm._v(
+                              "\n          Max 3 achievement in " +
+                                _vm._s(item.category) +
+                                " category\n        "
+                            )
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
                       _c("form", { attrs: { method: "post" } }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "col" }, [
+                              _c("label", { attrs: { for: "division" } }, [
+                                _vm._v("Category")
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model.number",
+                                      value:
+                                        _vm.formAchievement[index].category,
+                                      expression:
+                                        "formAchievement[index].category",
+                                      modifiers: { number: true }
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { id: "category" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return _vm._n(val)
+                                        })
+                                      _vm.$set(
+                                        _vm.formAchievement[index],
+                                        "category",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                _vm._l(_vm.categoryOptions, function(item) {
+                                  return _c(
+                                    "option",
+                                    {
+                                      key: item.value,
+                                      domProps: { value: item.value }
+                                    },
+                                    [_vm._v(_vm._s(item.text))]
+                                  )
+                                }),
+                                0
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col" }, [
+                              _c("label", { attrs: { for: "division" } }, [
+                                _vm._v("Division")
+                              ]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.formAchievement[index].division,
+                                    expression:
+                                      "formAchievement[index].division"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  id: "division",
+                                  type: "text",
+                                  placeholder: "Enter division"
+                                },
+                                domProps: {
+                                  value: _vm.formAchievement[index].division
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.formAchievement[index],
+                                      "division",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
                         _c("div", { staticClass: "form-group" }, [
                           _c("div", { staticClass: "row" }, [
                             _c("div", { staticClass: "col" }, [
@@ -50497,107 +50890,6 @@ var render = function() {
                                   }
                                 }
                               })
-                            ])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-group" }, [
-                          _c("div", { staticClass: "row" }, [
-                            _c("div", { staticClass: "col" }, [
-                              _c("label", { attrs: { for: "division" } }, [
-                                _vm._v("Division")
-                              ]),
-                              _vm._v(" "),
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.formAchievement[index].division,
-                                    expression:
-                                      "formAchievement[index].division"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: {
-                                  id: "division",
-                                  type: "text",
-                                  placeholder: "Enter division"
-                                },
-                                domProps: {
-                                  value: _vm.formAchievement[index].division
-                                },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      _vm.formAchievement[index],
-                                      "division",
-                                      $event.target.value
-                                    )
-                                  }
-                                }
-                              })
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col" }, [
-                              _c("label", { attrs: { for: "division" } }, [
-                                _vm._v("Category")
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "select",
-                                {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model.number",
-                                      value:
-                                        _vm.formAchievement[index].category,
-                                      expression:
-                                        "formAchievement[index].category",
-                                      modifiers: { number: true }
-                                    }
-                                  ],
-                                  staticClass: "form-control",
-                                  attrs: { id: "category" },
-                                  on: {
-                                    change: function($event) {
-                                      var $$selectedVal = Array.prototype.filter
-                                        .call($event.target.options, function(
-                                          o
-                                        ) {
-                                          return o.selected
-                                        })
-                                        .map(function(o) {
-                                          var val =
-                                            "_value" in o ? o._value : o.value
-                                          return _vm._n(val)
-                                        })
-                                      _vm.$set(
-                                        _vm.formAchievement[index],
-                                        "category",
-                                        $event.target.multiple
-                                          ? $$selectedVal
-                                          : $$selectedVal[0]
-                                      )
-                                    }
-                                  }
-                                },
-                                _vm._l(_vm.categoryOptions, function(item) {
-                                  return _c(
-                                    "option",
-                                    {
-                                      key: item.value,
-                                      domProps: { value: item.value }
-                                    },
-                                    [_vm._v(_vm._s(item.text))]
-                                  )
-                                }),
-                                0
-                              )
                             ])
                           ])
                         ]),
@@ -51927,101 +52219,364 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container-fluid" }, [
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col" }, [
-        _c("div", { staticClass: "card card-default" }, [
-          _c("div", { staticClass: "card-header" }, [_vm._v("Users")]),
+  return _c(
+    "div",
+    { staticClass: "container-fluid" },
+    [
+      _c("div", { staticClass: "row justify-content-center" }, [
+        _c("div", { staticClass: "col" }, [
+          _c("div", { staticClass: "card card-default" }, [
+            _c("div", { staticClass: "card-header" }, [_vm._v("User List")]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              [
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.users.length == 0,
+                        expression: "users.length == 0"
+                      }
+                    ],
+                    staticClass: "my-3 text-center"
+                  },
+                  [_vm._v("Empty Data")]
+                ),
+                _vm._v(" "),
+                _vm.users.length != 0
+                  ? _c("b-table", {
+                      attrs: {
+                        striped: "",
+                        hover: "",
+                        responsive: "",
+                        items: _vm.users,
+                        fields: _vm.fieldUser
+                      },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "cell(is_active)",
+                            fn: function(data) {
+                              return [
+                                data.item.is_active
+                                  ? _c(
+                                      "span",
+                                      { staticClass: "badge badge-success" },
+                                      [_c("i", { staticClass: "fa fa-check" })]
+                                    )
+                                  : _c(
+                                      "span",
+                                      { staticClass: "badge badge-secondary" },
+                                      [_c("i", { staticClass: "fa fa-times" })]
+                                    )
+                              ]
+                            }
+                          },
+                          {
+                            key: "cell(action)",
+                            fn: function(data) {
+                              return [
+                                _c("div", { staticClass: "min-width-10" }, [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-sm btn-warning",
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.loadData(data.item)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "fa fa-edit fa-fw"
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-sm btn-danger",
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.confirmDelete(data.item)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "fa fa-trash fa-fw"
+                                      })
+                                    ]
+                                  )
+                                ])
+                              ]
+                            }
+                          }
+                        ],
+                        null,
+                        false,
+                        3170774316
+                      )
+                    })
+                  : _vm._e()
+              ],
+              1
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "b-modal",
+        {
+          attrs: {
+            id: "modal-user",
+            "hide-footer": "",
+            title: _vm.modalState == "add" ? "Add Item" : "Update Item"
+          }
+        },
+        [
+          _vm.errorValidation
+            ? _c("div", {
+                staticClass: "alert alert-danger",
+                domProps: { innerHTML: _vm._s(_vm.errorValidation) }
+              })
+            : _vm._e(),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "card-body" },
-            [
+          _c("form", { attrs: { method: "post" } }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "name" } }, [_vm._v("Name")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.name,
+                    expression: "form.name"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { id: "name", type: "text", placeholder: "Enter name" },
+                domProps: { value: _vm.form.name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "name", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "email" } }, [_vm._v("Email")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.email,
+                    expression: "form.email"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  id: "email",
+                  type: "text",
+                  placeholder: "Enter email"
+                },
+                domProps: { value: _vm.form.email },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "email", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "role_id" } }, [_vm._v("Role")]),
+              _vm._v(" "),
               _c(
-                "div",
+                "select",
                 {
                   directives: [
                     {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.users.length == 0,
-                      expression: "users.length == 0"
+                      name: "model",
+                      rawName: "v-model.number",
+                      value: _vm.form.role_id,
+                      expression: "form.role_id",
+                      modifiers: { number: true }
                     }
                   ],
-                  staticClass: "my-3 text-center"
+                  staticClass: "form-control",
+                  attrs: { name: "role_id", id: "role_id" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return _vm._n(val)
+                        })
+                      _vm.$set(
+                        _vm.form,
+                        "role_id",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
                 },
-                [_vm._v("Empty Data")]
-              ),
-              _vm._v(" "),
-              _vm.users.length != 0
-                ? _c("b-table", {
-                    attrs: {
-                      striped: "",
-                      hover: "",
-                      responsive: "",
-                      items: _vm.users,
-                      fields: _vm.fieldUser
-                    },
-                    scopedSlots: _vm._u(
-                      [
-                        {
-                          key: "cell(is_active)",
-                          fn: function(data) {
-                            return [
-                              data.item.is_active
-                                ? _c(
-                                    "span",
-                                    { staticClass: "badge badge-success" },
-                                    [_c("i", { staticClass: "fa fa-check" })]
-                                  )
-                                : _c(
-                                    "span",
-                                    { staticClass: "badge badge-secondary" },
-                                    [_c("i", { staticClass: "fa fa-times" })]
-                                  )
-                            ]
-                          }
-                        },
-                        {
-                          key: "cell(action)",
-                          fn: function(data) {
-                            return [
-                              _c("div", { staticClass: "min-width-10" }, [
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-sm btn-danger",
-                                    on: {
-                                      click: function($event) {
-                                        $event.preventDefault()
-                                        return _vm.confirmDelete(data.item)
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _c("i", {
-                                      staticClass: "fa fa-trash fa-fw"
-                                    })
-                                  ]
-                                )
-                              ])
-                            ]
-                          }
-                        }
-                      ],
-                      null,
-                      false,
-                      3966427216
+                [
+                  _c(
+                    "option",
+                    { attrs: { disabled: "" }, domProps: { value: null } },
+                    [_vm._v("Select Role")]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.roles, function(item) {
+                    return _c(
+                      "option",
+                      { key: item.id, domProps: { value: item.id } },
+                      [_vm._v(_vm._s(item.role))]
                     )
                   })
-                : _vm._e()
-            ],
-            1
-          )
-        ])
-      ])
-    ])
-  ])
+                ],
+                2
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.is_active,
+                    expression: "form.is_active"
+                  }
+                ],
+                attrs: {
+                  id: "is_active",
+                  type: "checkbox",
+                  "true-value": 1,
+                  "false-value": 0
+                },
+                domProps: {
+                  checked: Array.isArray(_vm.form.is_active)
+                    ? _vm._i(_vm.form.is_active, null) > -1
+                    : _vm._q(_vm.form.is_active, 1)
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.form.is_active,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? 1 : 0
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.form, "is_active", $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.form,
+                            "is_active",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.form, "is_active", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "form-check-label",
+                  attrs: { for: "is_active" }
+                },
+                [_vm._v("Active?")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "d-flex justify-content-end" }, [
+              _c(
+                "div",
+                { staticClass: "btn-group", attrs: { role: "group" } },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.resetData()
+                        }
+                      }
+                    },
+                    [_vm._v("Reset")]
+                  ),
+                  _vm._v(" "),
+                  _vm.modalState == "add"
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.insertData()
+                            }
+                          }
+                        },
+                        [_vm._v("Add")]
+                      )
+                    : _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.updateData()
+                            }
+                          }
+                        },
+                        [_vm._v("Update")]
+                      )
+                ]
+              )
+            ])
+          ])
+        ]
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
