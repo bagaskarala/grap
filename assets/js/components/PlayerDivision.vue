@@ -145,7 +145,7 @@
                     :title="lockMatch? 'Disabled when match has been started' : 'Edit player'"
                     :disabled="lockMatch"
                     class="btn btn-sm btn-warning"
-                    @click.prevent="loadData(data.item)"
+                    @click.prevent="editData(data.item)"
                   ><i class="fa fa-edit fa-fw"></i></button>
                   <button
                     :title="lockMatch? 'Disabled when match has been started' : 'Delete player from division'"
@@ -271,6 +271,122 @@
         </div>
       </form>
     </b-modal>
+
+    <!-- modal edit player division-->
+    <b-modal
+      id="modal-edit-player-division"
+      hide-footer
+      :title="modalState == 'add'? 'Add Item' : 'Update Item'"
+    >
+      <div
+        v-if="errorValidation"
+        class="alert alert-danger"
+        v-html="errorValidation"
+      ></div>
+
+      <form method="post">
+        <div class="form-group">
+          <label for="division_id">Assign to Division</label>
+          <select
+            name="division_id"
+            id="division_id"
+            class="form-control"
+            v-model.number="form.division_id"
+            disabled
+          >
+            <option :value="null">Select Division</option>
+            <option
+              v-for="item in divisions"
+              :key="item.id"
+              :value="item.id"
+            >{{item.division}} ({{item.gender}})</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="player_id">Select Player</label>
+          <div class="input-group input-group-sm mb-2">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Filter by Weight</span>
+            </div>
+            <input
+              id="min_weight"
+              v-model.number="playerFilter.minWeight"
+              type="number"
+              class="form-control"
+              placeholder="Enter Min Weight"
+              title="Min Weight"
+              max="200"
+              min="0"
+              disabled
+            >
+            <input
+              id="max_weight"
+              v-model.number="playerFilter.maxWeight"
+              type="number"
+              class="form-control"
+              placeholder="Enter Max Weight"
+              title="Max Weight"
+              max="200"
+              min="0"
+              disabled
+            >
+          </div>
+          <select
+            name="player_id"
+            id="player_id"
+            class="form-control"
+            v-model.number="form.player_id"
+            disabled
+          >
+            <option :value="null">Select Player</option>
+            <option
+              v-for="item in players"
+              :key="item.id"
+              :value="item.id"
+            >{{item.name}} ({{item.club}}) {{item.weight}}kg</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="pool_number">Pool Number</label>
+          <select
+            name="pool_number"
+            id="pool_number"
+            class="form-control"
+            v-model="form.pool_number"
+          >
+            <option :value="null">Select pool number</option>
+            <option
+              v-for="item in poolOptions"
+              :key="item.value"
+              :value="item.value"
+            >{{item.text}}</option>
+          </select>
+        </div>
+        <div class="d-flex justify-content-end">
+          <div
+            class="btn-group"
+            role="group"
+          >
+            <button
+              type="button"
+              class="btn btn-secondary"
+              @click="resetData()"
+            >Reset</button>
+            <button
+              v-if="modalState=='add'"
+              class="btn btn-primary"
+              @click.prevent="insertData()"
+            >Add</button>
+            <button
+              v-else
+              class="btn btn-primary"
+              @click.prevent="updateData()"
+            >Update</button>
+          </div>
+        </div>
+      </form>
+    </b-modal>
+
   </div>
 </template>
 
@@ -425,6 +541,7 @@ export default {
 
         this.$noty.success('Success Update Data');
         this.$bvModal.hide('modal-player-division');
+        this.$bvModal.hide('modal-edit-player-division');
 
       } catch (error) {
         console.log(error.response);
@@ -593,6 +710,18 @@ export default {
     loadData(item) {
       this.resetData();
       this.$bvModal.show('modal-player-division');
+      this.modalState = 'update';
+      // populate form
+      let { id, division_id, player_id, pool_number } = item;
+      this.form.id = id;
+      this.form.division_id = division_id;
+      this.form.player_id = player_id;
+      this.form.pool_number = pool_number;
+    },
+
+    editData(item) {
+      this.resetData();
+      this.$bvModal.show('modal-edit-player-division');
       this.modalState = 'update';
       // populate form
       let { id, division_id, player_id, pool_number } = item;
