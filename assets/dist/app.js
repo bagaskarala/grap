@@ -4707,6 +4707,12 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'LogMatch',
@@ -46739,6 +46745,7 @@ var render = function() {
                             fn: function(data) {
                               return [
                                 data.item.match_index == 1 &&
+                                data.item.match_number == 1 &&
                                 !data.item.pool_number
                                   ? _c(
                                       "span",
@@ -46746,6 +46753,20 @@ var render = function() {
                                       [
                                         _vm._v(
                                           "\n                FINAL\n              "
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                data.item.match_index == 1 &&
+                                data.item.match_number == 2 &&
+                                !data.item.pool_number
+                                  ? _c(
+                                      "span",
+                                      { staticClass: "badge badge-primary" },
+                                      [
+                                        _vm._v(
+                                          "\n                3rd\n              "
                                         )
                                       ]
                                     )
@@ -46994,7 +47015,7 @@ var render = function() {
                         ],
                         null,
                         false,
-                        2280325413
+                        1712619714
                       )
                     })
                   : _vm._e()
@@ -49298,7 +49319,7 @@ var render = function() {
                             key: "cell(pool_winner)",
                             fn: function(data) {
                               return [
-                                data.item.pool_winner
+                                data.item.pool_winner == 1
                                   ? _c("span", [
                                       _c(
                                         "span",
@@ -49377,7 +49398,7 @@ var render = function() {
                         ],
                         null,
                         false,
-                        573780054
+                        2605302503
                       )
                     })
                   : _vm._e()

@@ -132,10 +132,16 @@
 
               <template v-slot:cell(pool_number)="data">
                 <span
-                  v-if="data.item.match_index == 1 && !data.item.pool_number"
+                  v-if="data.item.match_index == 1 && data.item.match_number == 1 && !data.item.pool_number"
                   class="badge badge-primary"
                 >
                   FINAL
+                </span>
+                <span
+                  v-if="data.item.match_index == 1 && data.item.match_number == 2 && !data.item.pool_number"
+                  class="badge badge-primary"
+                >
+                  3rd
                 </span>
                 <span
                   v-else

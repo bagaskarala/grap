@@ -130,7 +130,7 @@
               </template>
 
               <template v-slot:cell(pool_winner)="data">
-                <span v-if="data.item.pool_winner">
+                <span v-if="data.item.pool_winner == 1">
                   <span
                     :class="[data.item.pool_number == 'A'? 'badge-dark':'badge-danger']"
                     class="badge"

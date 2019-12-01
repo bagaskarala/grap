@@ -250,9 +250,10 @@ class Player_division_model extends MY_Model
             $this->where('division_id', $division_id);
             $this->order_by('win', 'desc');
             $this->order_by('total_time');
-            $pd = $this->get_single_array();
+            $pd = $this->get_all_array();
             // set pool_winner
-            $this->update(['pool_winner' => 1], ['id' => $pd['id']]);
+            $this->update(['pool_winner' => 1], ['id' => $pd[0]['id']]);
+            $this->update(['pool_winner' => 2], ['id' => $pd[1]['id']]);
         }
     }
 
@@ -264,9 +265,17 @@ class Player_division_model extends MY_Model
         $this->where('match_number', 1); // cari yang final
         $final_match = $this->get_all_array('log_match');
         if ($final_match) {
+            // delete final
             $this->delete([
                 'match_index'  => 1,
                 'match_number' => 1,
+                'division_id'  => $division_id,
+            ], 'log_match');
+
+            // delete 3rd place
+            $this->delete([
+                'match_index'  => 1,
+                'match_number' => 2,
                 'division_id'  => $division_id,
             ], 'log_match');
         }
@@ -286,7 +295,7 @@ class Player_division_model extends MY_Model
         // ambil pemenang pool A dan B
         $this->where('pool_winner', 1);
         $this->where('division_id', $division_id);
-        $pool_winners = $this->get_all_array();
+        $pool_winner = $this->get_all_array();
 
         // tambahkan match baru di logmatch
         $this->insert([
@@ -294,13 +303,28 @@ class Player_division_model extends MY_Model
             'match_index'  => 1,
             'match_system' => 'roundrobin',
             'match_number' => 1,
-            'pd1_id'       => $pool_winners[0]['id'],
-            'pd2_id'       => $pool_winners[1]['id'],
+            'pd1_id'       => $pool_winner[0]['id'],
+            'pd2_id'       => $pool_winner[1]['id'],
+        ], 'log_match');
+
+        // ambil runner-up pool A dan B
+        $this->where('pool_winner', 2);
+        $this->where('division_id', $division_id);
+        $pool_runner_up = $this->get_all_array();
+
+        // tambahkan match baru di logmatch
+        $this->insert([
+            'division_id'  => $division_id,
+            'match_index'  => 1,
+            'match_system' => 'roundrobin',
+            'match_number' => 2,
+            'pd1_id'       => $pool_runner_up[0]['id'],
+            'pd2_id'       => $pool_runner_up[1]['id'],
         ], 'log_match');
 
         return [
             'status' => true,
-            'data'   => $pool_winners,
+            'data'   => $pool_winner,
         ];
     }
 
@@ -312,8 +336,14 @@ class Player_division_model extends MY_Model
         $this->where('match_number', 1);
         $final_match = $this->get_single_array('log_match');
 
+        // ambil third place
+        $this->where('division_id', $division_id);
+        $this->where('match_index', 1);
+        $this->where('match_number', 2);
+        $third_place = $this->get_single_array('log_match');
+
         // jika match belum selesai, return
-        if ($final_match['match_status'] != 2) {
+        if ($final_match['match_status'] != 2 || $third_place['match_status'] != 2) {
             return;
         }
 
@@ -321,12 +351,16 @@ class Player_division_model extends MY_Model
         $this->update(['division_winner' => 1], ['id' => $final_match['winner']]);
 
         // update juara 2
+        $second_winner = null;
         if ($final_match['winner'] == $final_match['pd1_id']) {
             $second_winner = $final_match['pd2_id'];
-        } else {
+        } else if ($final_match['winner'] == $final_match['pd2_id']) {
             $second_winner = $final_match['pd1_id'];
         }
         $this->update(['division_winner' => 2], ['id' => $second_winner]);
+
+        // update juara 3
+        $this->update(['division_winner' => 3], ['id' => $third_place['winner']]);
     }
 
     public function reset_classement($division_id)
