@@ -7201,6 +7201,11 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
+//
+//
+//
 var timeoutDebounce = null;
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PlayerDivision',
@@ -7242,7 +7247,7 @@ var timeoutDebounce = null;
       if (this.matchSystem == 'elimination') {
         return ['division', 'club', 'name', 'division_winner', 'action'];
       } else {
-        return ['division', 'club', 'name', 'pool_number', 'win', 'draw', 'lose', 'pool_winner', 'division_winner', 'action'];
+        return ['division', 'club', 'name', 'pool_number', 'win', 'draw', 'lose', 'total_time', 'pool_winner', 'division_winner', 'action'];
       }
     },
     lockMatch: function lockMatch() {
@@ -7823,8 +7828,24 @@ var timeoutDebounce = null;
         console.log('Error ', err);
       });
     },
-    generateWinner: function () {
-      var _generateWinner = _asyncToGenerator(
+    confirmGenerateFinalMatch: function confirmGenerateFinalMatch() {
+      var _this3 = this;
+
+      this.$bvModal.msgBoxConfirm('Are you sure want to remove current final match, and generate new final match?', {
+        title: 'Reset Pool',
+        size: 'md',
+        okVariant: 'danger',
+        centered: true
+      }).then(function (value) {
+        if (value) {
+          _this3.generateFinalMatch();
+        }
+      })["catch"](function (err) {
+        console.log('Error ', err);
+      });
+    },
+    generateFinalMatch: function () {
+      var _generateFinalMatch = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
         var a;
@@ -7834,34 +7855,35 @@ var timeoutDebounce = null;
               case 0:
                 _context13.prev = 0;
                 _context13.next = 3;
-                return this.$axios.post("entry/player_division/calculate_classement/".concat(this.filterDivisionId));
+                return this.$axios.post("entry/player_division/create_final_match_roundrobin/".concat(this.filterDivisionId));
 
               case 3:
                 a = _context13.sent;
                 console.log(a.data.data);
-                this.$noty.success('Success Calculate Classement');
-                _context13.next = 12;
+                this.$noty.success('Success Create Final Match');
+                this.filterData(this.filterDivisionId);
+                _context13.next = 13;
                 break;
 
-              case 8:
-                _context13.prev = 8;
+              case 9:
+                _context13.prev = 9;
                 _context13.t0 = _context13["catch"](0);
                 console.log(_context13.t0.response);
-                this.$noty.error('Failed Calculate Classement. ' + _context13.t0.response.data.message);
+                this.$noty.error('Failed Create Final Match. ' + _context13.t0.response.data.message);
 
-              case 12:
+              case 13:
               case "end":
                 return _context13.stop();
             }
           }
-        }, _callee13, this, [[0, 8]]);
+        }, _callee13, this, [[0, 9]]);
       }));
 
-      function generateWinner() {
-        return _generateWinner.apply(this, arguments);
+      function generateFinalMatch() {
+        return _generateFinalMatch.apply(this, arguments);
       }
 
-      return generateWinner;
+      return generateFinalMatch;
     }(),
     // async calculateClassement() {
     //   try {
@@ -49236,15 +49258,19 @@ var render = function() {
                           "button",
                           {
                             staticClass: "btn btn-sm btn-primary mr-1",
-                            attrs: { type: "button" },
+                            attrs: {
+                              type: "button",
+                              title:
+                                "Generate final match based on winner on each pool"
+                            },
                             on: {
                               click: function($event) {
                                 $event.preventDefault()
-                                return _vm.generateWinner()
+                                return _vm.confirmGenerateFinalMatch()
                               }
                             }
                           },
-                          [_vm._v("Generate Winner")]
+                          [_vm._v("Generate Final Match")]
                         )
                       ]),
                       _vm._v(" "),
@@ -49397,6 +49423,22 @@ var render = function() {
                             }
                           },
                           {
+                            key: "cell(total_time)",
+                            fn: function(data) {
+                              return [
+                                _c("span", [
+                                  _vm._v(
+                                    _vm._s(
+                                      data.item.total_time != 0
+                                        ? data.item.total_time / 1000
+                                        : data.item.total_time
+                                    ) + " s"
+                                  )
+                                ])
+                              ]
+                            }
+                          },
+                          {
                             key: "cell(pool_winner)",
                             fn: function(data) {
                               return [
@@ -49479,7 +49521,7 @@ var render = function() {
                         ],
                         null,
                         false,
-                        3183543983
+                        377559788
                       )
                     })
                   : _vm._e()

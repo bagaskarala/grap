@@ -54,7 +54,7 @@ class Player_division_model extends MY_Model
         $this->db->where('division_id', $division_id);
         $this->order_by('pool_number');
         $this->order_by('win', 'desc');
-        $this->order_by('lose');
+        $this->order_by('total_time');
         return $this->get_all_array();
     }
 
@@ -148,7 +148,7 @@ class Player_division_model extends MY_Model
     public function calculate_classement_roundrobin($division_id)
     {
         // cari logmatch yang sudah ada pemenang
-        $this->select('winner, pd1_id, pd2_id');
+        $this->select('winner, pd1_id, pd2_id,time');
         $this->where('division_id', $division_id);
         $this->where('winner !=', null);
         $this->where('match_number', null); // cari yang bukan final
@@ -161,11 +161,18 @@ class Player_division_model extends MY_Model
         foreach ($winner_arr as $item) {
             if ($item['winner'] == $item['pd1_id']) {
                 // jika p1 winner, increment p1 di array win, increment p2 array lose
-                $count_win[$item['winner']]  = !array_key_exists($item['winner'], $count_win) ? 1 : $count_win[$item['winner']] + 1;
+                $count_win[$item['winner']] = [
+                    'win'  => !array_key_exists($item['winner'], $count_win) ? 1 : $count_win[$item['winner']]['win'] + 1,
+                    'time' => !array_key_exists($item['winner'], $count_win) ? $item['time'] : $count_win[$item['winner']]['time'] + $item['time'],
+                ];
                 $count_lose[$item['pd2_id']] = !array_key_exists($item['pd2_id'], $count_lose) ? 1 : $count_lose[$item['pd2_id']] + 1;
             } elseif ($item['winner'] == $item['pd2_id']) {
                 // jika p2 winner, increment p2 di array win, increment p1 array lose
-                $count_win[$item['winner']]  = !array_key_exists($item['winner'], $count_win) ? 1 : $count_win[$item['winner']] + 1;
+                // $count_win[$item['winner']]  = !array_key_exists($item['winner'], $count_win) ? 1 : $count_win[$item['winner']] + 1;
+                $count_win[$item['winner']] = [
+                    'win'  => !array_key_exists($item['winner'], $count_win) ? 1 : $count_win[$item['winner']]['win'] + 1,
+                    'time' => !array_key_exists($item['winner'], $count_win) ? $item['time'] : $count_win[$item['winner']]['time'] + $item['time'],
+                ];
                 $count_lose[$item['pd1_id']] = !array_key_exists($item['pd1_id'], $count_lose) ? 1 : $count_lose[$item['pd1_id']] + 1;
             } else {
                 // jka draw, increment p1 dan p2 di array draw
@@ -177,8 +184,8 @@ class Player_division_model extends MY_Model
         $fail_flag = 0;
 
         // insert win ke db
-        foreach ($count_win as $pd_id => $win) {
-            if ($this->update(['win' => $win], ['id' => $pd_id]) == false) {
+        foreach ($count_win as $pd_id => $item) {
+            if ($this->update(['win' => $item['win'], 'total_time' => $item['time']], ['id' => $pd_id]) == false) {
                 $fail_flag++;
             }
         }
@@ -201,20 +208,22 @@ class Player_division_model extends MY_Model
         $this->get_pool_winner($division_id);
 
         // final match roundrobin
-        $this->create_final_match_roundrobin($division_id);
+        // $this->create_final_match_roundrobin($division_id);
         $this->update_division_winner_roundrobin($division_id);
 
-        if ($fail_flag == 0) {
-            return [
-                'status' => true,
-                'data'   => 'Classement generated',
-            ];
-        } else {
-            return [
-                'status'  => false,
-                'message' => 'Failed set classement in roundrobin match',
-            ];
-        }
+        return $count_win;
+
+        // if ($fail_flag == 0) {
+        //     return [
+        //         'status' => true,
+        //         'data'   => 'Classement generated',
+        //     ];
+        // } else {
+        //     return [
+        //         'status'  => false,
+        //         'message' => 'Failed set classement in roundrobin match',
+        //     ];
+        // }
     }
 
     public function get_pool_winner($division_id)
@@ -240,7 +249,7 @@ class Player_division_model extends MY_Model
             $this->where('pool_number', $item['pool_number']);
             $this->where('division_id', $division_id);
             $this->order_by('win', 'desc');
-            $this->order_by('lose');
+            $this->order_by('total_time');
             $pd = $this->get_single_array();
             // set pool_winner
             $this->update(['pool_winner' => 1], ['id' => $pd['id']]);
@@ -249,16 +258,17 @@ class Player_division_model extends MY_Model
 
     public function create_final_match_roundrobin($division_id)
     {
-        // jika final udah ada, return
+        // jika final udah ada, hapus final dan buat ulang
         $this->where('division_id', $division_id);
         $this->where('match_index', 1); // cari yang final
         $this->where('match_number', 1); // cari yang final
         $final_match = $this->get_all_array('log_match');
         if ($final_match) {
-            return [
-                'status'  => false,
-                'message' => 'Final match has been created',
-            ];
+            $this->delete([
+                'match_index'  => 1,
+                'match_number' => 1,
+                'division_id'  => $division_id,
+            ], 'log_match');
         }
 
         // cek apakah match sudah selesai semua

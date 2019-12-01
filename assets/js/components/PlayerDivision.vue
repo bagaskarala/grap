@@ -64,8 +64,9 @@
                 <button
                   class="btn btn-sm btn-primary mr-1"
                   type="button"
-                  @click.prevent="generateWinner()"
-                >Generate Winner</button>
+                  title="Generate final match based on winner on each pool"
+                  @click.prevent="confirmGenerateFinalMatch()"
+                >Generate Final Match</button>
               </div>
 
               <div>
@@ -128,6 +129,10 @@
                   ></i>
                   <span>{{winnerPosition(data.item.division_winner)}}</span>
                 </span>
+              </template>
+
+              <template v-slot:cell(total_time)="data">
+                <span>{{data.item.total_time != 0 ? data.item.total_time/1000 : data.item.total_time}} s</span>
               </template>
 
               <template v-slot:cell(pool_winner)="data">
@@ -430,7 +435,7 @@ export default {
       if (this.matchSystem == 'elimination') {
         return ['division', 'club', 'name', 'division_winner', 'action'];
       } else {
-        return ['division', 'club', 'name', 'pool_number', 'win', 'draw', 'lose', 'pool_winner', 'division_winner', 'action'];
+        return ['division', 'club', 'name', 'pool_number', 'win', 'draw', 'lose', 'total_time', 'pool_winner', 'division_winner', 'action'];
       }
     },
 
@@ -674,14 +679,32 @@ export default {
         });
     },
 
-    async generateWinner() {
+    confirmGenerateFinalMatch() {
+      this.$bvModal.msgBoxConfirm('Are you sure want to remove current final match, and generate new final match?', {
+        title: 'Reset Pool',
+        size: 'md',
+        okVariant: 'danger',
+        centered: true
+      })
+        .then(value => {
+          if (value) {
+            this.generateFinalMatch();
+          }
+        })
+        .catch(err => {
+          console.log('Error ', err);
+        });
+    },
+
+    async generateFinalMatch() {
       try {
-        const a = await this.$axios.post(`entry/player_division/calculate_classement/${this.filterDivisionId}`);
+        const a = await this.$axios.post(`entry/player_division/create_final_match_roundrobin/${this.filterDivisionId}`);
         console.log(a.data.data);
-        this.$noty.success('Success Calculate Classement');
+        this.$noty.success('Success Create Final Match');
+        this.filterData(this.filterDivisionId);
       } catch (error) {
         console.log(error.response);
-        this.$noty.error('Failed Calculate Classement. ' + error.response.data.message);
+        this.$noty.error('Failed Create Final Match. ' + error.response.data.message);
       }
     },
 

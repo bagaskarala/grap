@@ -144,6 +144,7 @@ class Player_division extends MY_Controller
     {
         $request = parse_post_data();
 
+        // ketika reset pool, maka reset schedule juga
         $this->load->model('Log_Match_model', 'log_match');
         if (count($this->log_match->filter_division($request->division_id)) != 0) {
             $reset_schedule_result = $this->log_match->reset_schedule($request->division_id);
@@ -160,6 +161,28 @@ class Player_division extends MY_Controller
             return $this->send_json_output($result, true, 200);
         } else {
             return $this->send_json_output("Failed Reset Pool", false, 400);
+        }
+    }
+
+    public function calculate_classement($division_id)
+    {
+        $result = $this->player_division->calculate_classement($division_id);
+
+        if ($result) {
+            return $this->send_json_output($result, true, 200);
+        } else {
+            return $this->send_json_output("Failed calculate classement", false, 400);
+        }
+    }
+
+    public function create_final_match_roundrobin($division_id)
+    {
+        $result = $this->player_division->create_final_match_roundrobin($division_id);
+
+        if ($result) {
+            return $this->send_json_output($result, true, 200);
+        } else {
+            return $this->send_json_output("Failed create final match roundrobin", false, 400);
         }
     }
 };
