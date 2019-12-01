@@ -7088,124 +7088,6 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 var timeoutDebounce = null;
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PlayerDivision',
@@ -7536,23 +7418,22 @@ var timeoutDebounce = null;
 
                 this.$noty.success('Success Update Data');
                 this.$bvModal.hide('modal-player-division');
-                this.$bvModal.hide('modal-edit-player-division');
-                _context7.next = 14;
+                _context7.next = 13;
                 break;
 
-              case 9:
-                _context7.prev = 9;
+              case 8:
+                _context7.prev = 8;
                 _context7.t0 = _context7["catch"](0);
                 console.log(_context7.t0.response);
                 this.errorValidation = _context7.t0.response.data.message;
                 this.$noty.error('Failed Update Data');
 
-              case 14:
+              case 13:
               case "end":
                 return _context7.stop();
             }
           }
-        }, _callee7, this, [[0, 9]]);
+        }, _callee7, this, [[0, 8]]);
       }));
 
       function updateData() {
@@ -7885,17 +7766,6 @@ var timeoutDebounce = null;
 
       return generateFinalMatch;
     }(),
-    // async calculateClassement() {
-    //   try {
-    //     const a = await this.$axios.post(`entry/player_division/calculate_classement/${this.filterDivisionId}`);
-    //     console.log(a.data.data);
-    //     this.$noty.success('Success Calculate Classement');
-    //   } catch (error) {
-    //     console.log(error.response);
-    //     this.$noty.error('Failed Calculate Classement. ' + error.response.data.message);
-    //   }
-    //   this.filterData(this.filterDivisionId);
-    // },
     addData: function addData() {
       this.resetData();
       this.$bvModal.show('modal-player-division');
@@ -7908,20 +7778,6 @@ var timeoutDebounce = null;
     loadData: function loadData(item) {
       this.resetData();
       this.$bvModal.show('modal-player-division');
-      this.modalState = 'update'; // populate form
-
-      var id = item.id,
-          division_id = item.division_id,
-          player_id = item.player_id,
-          pool_number = item.pool_number;
-      this.form.id = id;
-      this.form.division_id = division_id;
-      this.form.player_id = player_id;
-      this.form.pool_number = pool_number;
-    },
-    editData: function editData(item) {
-      this.resetData();
-      this.$bvModal.show('modal-edit-player-division');
       this.modalState = 'update'; // populate form
 
       var id = item.id,
@@ -49480,7 +49336,7 @@ var render = function() {
                                       on: {
                                         click: function($event) {
                                           $event.preventDefault()
-                                          return _vm.editData(data.item)
+                                          return _vm.loadData(data.item)
                                         }
                                       }
                                     },
@@ -49521,7 +49377,7 @@ var render = function() {
                         ],
                         null,
                         false,
-                        377559788
+                        573780054
                       )
                     })
                   : _vm._e()
@@ -49568,346 +49424,10 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control",
-                  attrs: { name: "division_id", id: "division_id" },
-                  on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return _vm._n(val)
-                        })
-                      _vm.$set(
-                        _vm.form,
-                        "division_id",
-                        $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      )
-                    }
-                  }
-                },
-                [
-                  _c("option", { domProps: { value: null } }, [
-                    _vm._v("Select Division")
-                  ]),
-                  _vm._v(" "),
-                  _vm._l(_vm.divisions, function(item) {
-                    return _c(
-                      "option",
-                      { key: item.id, domProps: { value: item.id } },
-                      [
-                        _vm._v(
-                          _vm._s(item.division) +
-                            " (" +
-                            _vm._s(item.gender) +
-                            ")"
-                        )
-                      ]
-                    )
-                  })
-                ],
-                2
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "player_id" } }, [
-                _vm._v("Select Player")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "input-group input-group-sm mb-2" }, [
-                _c("div", { staticClass: "input-group-prepend" }, [
-                  _c("span", { staticClass: "input-group-text" }, [
-                    _vm._v("Filter by Weight")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model.number",
-                      value: _vm.playerFilter.minWeight,
-                      expression: "playerFilter.minWeight",
-                      modifiers: { number: true }
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    id: "min_weight",
-                    type: "number",
-                    placeholder: "Enter Min Weight",
-                    title: "Min Weight",
-                    max: "200",
-                    min: "0"
-                  },
-                  domProps: { value: _vm.playerFilter.minWeight },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(
-                        _vm.playerFilter,
-                        "minWeight",
-                        _vm._n($event.target.value)
-                      )
-                    },
-                    blur: function($event) {
-                      return _vm.$forceUpdate()
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model.number",
-                      value: _vm.playerFilter.maxWeight,
-                      expression: "playerFilter.maxWeight",
-                      modifiers: { number: true }
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    id: "max_weight",
-                    type: "number",
-                    placeholder: "Enter Max Weight",
-                    title: "Max Weight",
-                    max: "200",
-                    min: "0"
-                  },
-                  domProps: { value: _vm.playerFilter.maxWeight },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(
-                        _vm.playerFilter,
-                        "maxWeight",
-                        _vm._n($event.target.value)
-                      )
-                    },
-                    blur: function($event) {
-                      return _vm.$forceUpdate()
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model.number",
-                      value: _vm.form.player_id,
-                      expression: "form.player_id",
-                      modifiers: { number: true }
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { name: "player_id", id: "player_id" },
-                  on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return _vm._n(val)
-                        })
-                      _vm.$set(
-                        _vm.form,
-                        "player_id",
-                        $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      )
-                    }
-                  }
-                },
-                [
-                  _c("option", { domProps: { value: null } }, [
-                    _vm._v("Select Player")
-                  ]),
-                  _vm._v(" "),
-                  _vm._l(_vm.players, function(item) {
-                    return _c(
-                      "option",
-                      { key: item.id, domProps: { value: item.id } },
-                      [
-                        _vm._v(
-                          _vm._s(item.name) +
-                            " (" +
-                            _vm._s(item.club) +
-                            ") " +
-                            _vm._s(item.weight) +
-                            "kg"
-                        )
-                      ]
-                    )
-                  })
-                ],
-                2
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "pool_number" } }, [
-                _vm._v("Pool Number")
-              ]),
-              _vm._v(" "),
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.form.pool_number,
-                      expression: "form.pool_number"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { name: "pool_number", id: "pool_number" },
-                  on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.$set(
-                        _vm.form,
-                        "pool_number",
-                        $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      )
-                    }
-                  }
-                },
-                [
-                  _c("option", { domProps: { value: null } }, [
-                    _vm._v("Select pool number")
-                  ]),
-                  _vm._v(" "),
-                  _vm._l(_vm.poolOptions, function(item) {
-                    return _c(
-                      "option",
-                      { key: item.value, domProps: { value: item.value } },
-                      [_vm._v(_vm._s(item.text))]
-                    )
-                  })
-                ],
-                2
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "d-flex justify-content-end" }, [
-              _c(
-                "div",
-                { staticClass: "btn-group", attrs: { role: "group" } },
-                [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-secondary",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.resetData()
-                        }
-                      }
-                    },
-                    [_vm._v("Reset")]
-                  ),
-                  _vm._v(" "),
-                  _vm.modalState == "add"
-                    ? _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-primary",
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.insertData()
-                            }
-                          }
-                        },
-                        [_vm._v("Add")]
-                      )
-                    : _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-primary",
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.updateData()
-                            }
-                          }
-                        },
-                        [_vm._v("Update")]
-                      )
-                ]
-              )
-            ])
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "b-modal",
-        {
-          attrs: {
-            id: "modal-edit-player-division",
-            "hide-footer": "",
-            title: _vm.modalState == "add" ? "Add Item" : "Update Item"
-          }
-        },
-        [
-          _vm.errorValidation
-            ? _c("div", {
-                staticClass: "alert alert-danger",
-                domProps: { innerHTML: _vm._s(_vm.errorValidation) }
-              })
-            : _vm._e(),
-          _vm._v(" "),
-          _c("form", { attrs: { method: "post" } }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "division_id" } }, [
-                _vm._v("Assign to Division")
-              ]),
-              _vm._v(" "),
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model.number",
-                      value: _vm.form.division_id,
-                      expression: "form.division_id",
-                      modifiers: { number: true }
-                    }
-                  ],
-                  staticClass: "form-control",
                   attrs: {
                     name: "division_id",
                     id: "division_id",
-                    disabled: ""
+                    disabled: _vm.modalState == "update"
                   },
                   on: {
                     change: function($event) {
@@ -49983,7 +49503,7 @@ var render = function() {
                     title: "Min Weight",
                     max: "200",
                     min: "0",
-                    disabled: ""
+                    disabled: _vm.modalState == "update"
                   },
                   domProps: { value: _vm.playerFilter.minWeight },
                   on: {
@@ -50021,7 +49541,7 @@ var render = function() {
                     title: "Max Weight",
                     max: "200",
                     min: "0",
-                    disabled: ""
+                    disabled: _vm.modalState == "update"
                   },
                   domProps: { value: _vm.playerFilter.maxWeight },
                   on: {
@@ -50055,7 +49575,11 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control",
-                  attrs: { name: "player_id", id: "player_id", disabled: "" },
+                  attrs: {
+                    name: "player_id",
+                    id: "player_id",
+                    disabled: _vm.modalState == "update"
+                  },
                   on: {
                     change: function($event) {
                       var $$selectedVal = Array.prototype.filter
