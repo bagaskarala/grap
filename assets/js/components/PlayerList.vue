@@ -75,6 +75,7 @@
                   ><i class="fa fa-trophy fa-fw"></i></button>
                   <button
                     class="btn btn-sm btn-warning"
+                    :class="[!item.left_photo || !item.right_photo || !item.front_photo ? 'text-danger' : 'asd'  ]"
                     @click.prevent="loadPhoto(item)"
                   ><i class="fa fa-file-image fa-fw"></i></button>
                   <button
@@ -258,7 +259,7 @@
           class="img-thumbnail mb-2"
           style="max-width:30%"
         >
-        <label>Left Photo</label>
+        <label>Left Photo *</label>
         <div class="input-group">
           <div class="custom-file">
             <input
@@ -290,7 +291,7 @@
           class="img-thumbnail mb-2"
           style="max-width:30%"
         >
-        <label>Right Photo</label>
+        <label>Right Photo *</label>
         <div class="input-group">
           <div class="custom-file">
             <input
@@ -322,7 +323,7 @@
           class="img-thumbnail mb-2"
           style="max-width:30%"
         >
-        <label>Front Photo</label>
+        <label>Front Photo *</label>
         <div class="input-group">
           <div class="custom-file">
             <input

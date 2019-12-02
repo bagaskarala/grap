@@ -8437,6 +8437,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PlayerList',
@@ -50046,6 +50047,13 @@ var render = function() {
                           "button",
                           {
                             staticClass: "btn btn-sm btn-warning",
+                            class: [
+                              !item.left_photo ||
+                              !item.right_photo ||
+                              !item.front_photo
+                                ? "text-danger"
+                                : "asd"
+                            ],
                             on: {
                               click: function($event) {
                                 $event.preventDefault()
@@ -50538,7 +50546,7 @@ var render = function() {
                 })
               : _vm._e(),
             _vm._v(" "),
-            _c("label", [_vm._v("Left Photo")]),
+            _c("label", [_vm._v("Left Photo *")]),
             _vm._v(" "),
             _c("div", { staticClass: "input-group" }, [
               _c("div", { staticClass: "custom-file" }, [
@@ -50594,7 +50602,7 @@ var render = function() {
                 })
               : _vm._e(),
             _vm._v(" "),
-            _c("label", [_vm._v("Right Photo")]),
+            _c("label", [_vm._v("Right Photo *")]),
             _vm._v(" "),
             _c("div", { staticClass: "input-group" }, [
               _c("div", { staticClass: "custom-file" }, [
@@ -50650,7 +50658,7 @@ var render = function() {
                 })
               : _vm._e(),
             _vm._v(" "),
-            _c("label", [_vm._v("Front Photo")]),
+            _c("label", [_vm._v("Front Photo *")]),
             _vm._v(" "),
             _c("div", { staticClass: "input-group" }, [
               _c("div", { staticClass: "custom-file" }, [
