@@ -29,7 +29,7 @@ class Log_match_model extends MY_Model
             pd1.player_id as player1_id,
             p1.name as player1_name,
             p1.weight as player1_weight,
-            p1.left_photo as player1_photo,
+            p1.right_photo as player1_photo,
             c1.club as player1_club,
             c1.alias as player1_club_alias,
             ct1.country as player1_country,

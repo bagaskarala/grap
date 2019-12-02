@@ -39924,7 +39924,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.min-width-10 {\r\n  min-width: 10rem;\n}\n.min-width-7 {\r\n  min-width: 7rem;\n}\nimg {\r\n  width: 80%;\n}\r\n", ""]);
+exports.push([module.i, "\n.min-width-10 {\r\n  min-width: 10rem;\n}\n.min-width-7 {\r\n  min-width: 7rem;\n}\n.square-img {\r\n  width: 200px;\r\n  height: 200px;\r\n  object-fit: cover;\n}\r\n", ""]);
 
 // exports
 
@@ -47383,7 +47383,7 @@ var render = function() {
                   }
                 }
               },
-              [_vm._v("Reset Match")]
+              [_vm._v("Reset")]
             ),
             _vm._v(" "),
             _c(
@@ -47396,16 +47396,16 @@ var render = function() {
                   }
                 }
               },
-              [_vm._v("Update Match")]
+              [_vm._v("Update")]
             )
           ])
         ]
       ),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col p-3 order-2 order-md-1" }, [
+        _c("div", { staticClass: "col p-3 order-2 order-xl-1" }, [
           _c("img", {
-            staticClass: "rounded-circle mx-auto d-block",
+            staticClass: "rounded-circle mx-auto d-block square-img",
             attrs: {
               src: _vm.logMatchDetail.player1_photo
                 ? _vm.baseUrl +
@@ -47461,7 +47461,7 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-6 order-1 order-md-2" }, [
+        _c("div", { staticClass: "col-xl-6 order-1 order-xl-2" }, [
           _c("div", { staticClass: "card card-default mb-md-3" }, [
             _c("div", { staticClass: "card-header font-weight-bold" }, [
               _c(
@@ -47662,9 +47662,9 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col p-3 order-3 order-md-3" }, [
+        _c("div", { staticClass: "col p-3 order-3 order-xl-3" }, [
           _c("img", {
-            staticClass: "rounded-circle mx-auto d-block",
+            staticClass: "rounded-circle mx-auto d-block square-img",
             attrs: {
               src: _vm.logMatchDetail.player2_photo
                 ? _vm.baseUrl +

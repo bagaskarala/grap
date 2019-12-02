@@ -7,18 +7,18 @@
           type="button"
           class="btn btn-danger"
           @click="resetData()"
-        >Reset Match</button>
+        >Reset</button>
         <button
           class="btn btn-warning"
           @click="loadData()"
-        >Update Match</button>
+        >Update</button>
       </div>
     </div>
     <div class="row">
-      <div class="col p-3 order-2 order-md-1">
+      <div class="col p-3 order-2 order-xl-1">
         <img
           :src="logMatchDetail.player1_photo? baseUrl+ '/assets/img/player/' + logMatchDetail.player1_photo : baseUrl + '/assets/img/user_avatar.png'"
-          class="rounded-circle mx-auto d-block"
+          class="rounded-circle mx-auto d-block square-img"
           :alt="logMatchDetail.player1_photo"
         >
         <div class="card card-default mt-3">
@@ -44,7 +44,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6 order-1 order-md-2">
+      <div class="col-xl-6 order-1 order-xl-2">
         <div class="card card-default mb-md-3">
           <div class="card-header font-weight-bold">
             <div class="d-flex justify-content-between align-items-center">
@@ -110,10 +110,10 @@
           </div>
         </div>
       </div>
-      <div class="col p-3 order-3 order-md-3">
+      <div class="col p-3 order-3 order-xl-3">
         <img
           :src="logMatchDetail.player2_photo? baseUrl+ '/assets/img/player/' + logMatchDetail.player2_photo : baseUrl + '/assets/img/user_avatar.png'"
-          class="rounded-circle mx-auto d-block"
+          class="rounded-circle mx-auto d-block square-img"
           :alt="logMatchDetail.player2_photo"
         >
         <div class="card card-default mt-3">
@@ -803,7 +803,9 @@ export default {
 .min-width-7 {
   min-width: 7rem;
 }
-img {
-  width: 80%;
+.square-img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
 }
 </style>

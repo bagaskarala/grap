@@ -105,6 +105,7 @@ class Player_model extends MY_Model
         $data_player = $this->db->get_where('player', ['id' => $id])->row_array();
 
         $config['allowed_types'] = 'gif|jpg|png';
+        $config['file_name']     = "player_{$id}_$photo_type";
         $config['max_size']      = '10000';
         $config['upload_path']   = './assets/img/player';
 
