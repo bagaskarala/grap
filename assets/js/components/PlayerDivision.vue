@@ -62,9 +62,11 @@
                   @click.prevent="confirmResetPool()"
                 >Reset Pool</button>
                 <button
+                  v-if="playerDivisions.length!=0"
                   class="btn btn-sm btn-primary mr-1"
                   type="button"
                   title="Generate final match based on winner on each pool"
+                  :disabled="logMatchs.length==0"
                   @click.prevent="confirmGenerateFinalMatch()"
                 >Generate Final Match</button>
               </div>
@@ -106,6 +108,19 @@
               :items="playerDivisions"
               :fields="fieldPlayerDivision"
             >
+              <template v-slot:cell(last_achievement)="data">
+                <div
+                  v-if="data.item.last_achievement"
+                  style="min-width:150px"
+                >
+                  <p class="mb-0">
+                    {{winnerPosition(data.item.last_achievement.winner_position)}}
+                  </p>
+                  {{data.item.last_achievement.tournament_name}} {{data.item.last_achievement.achievement_year}}
+                </div>
+                <span v-else>-</span>
+              </template>
+
               <template v-slot:cell(pool_number)="data">
                 <span
                   class="badge"
@@ -315,9 +330,9 @@ export default {
   computed: {
     fieldPlayerDivision() {
       if (this.matchSystem == 'elimination') {
-        return ['division', 'club', 'name', 'division_winner', 'action'];
+        return ['last_achievement', 'club', 'name', 'division_winner', 'action'];
       } else {
-        return ['division', 'club', 'name', 'pool_number', 'win', 'draw', 'lose', 'total_time', 'pool_winner', 'division_winner', 'action'];
+        return ['last_achievement', 'club', 'name', 'pool_number', 'win', 'draw', 'lose', 'total_time', 'pool_winner', 'division_winner', 'action'];
       }
     },
 
@@ -376,17 +391,6 @@ export default {
       } catch (error) {
         console.log(error.response);
         this.$noty.error('Failed Get Data');
-      }
-    },
-
-    async getLogMatch(divisionId) {
-      try {
-        const logMatchs = await this.$axios.get(`entry/log_match/filter_division/${divisionId}`);
-        this.logMatchs = logMatchs.data.data;
-
-      } catch (error) {
-        console.log(error.response);
-        this.$noty.error('Failed Get Log Match');
       }
     },
 
@@ -480,9 +484,7 @@ export default {
         this.playerDivisions = playerDivisions.data.data;
 
         // panggil check match
-        if (this.playerDivisions.length != 0) {
-          this.checkDivisionLogMatch(divisionId);
-        }
+        this.checkDivisionLogMatch(divisionId);
       } catch (error) {
         console.log(error.response);
         this.$noty.error('Failed Filter Data');
@@ -500,6 +502,9 @@ export default {
 
           // simpan logmatch
           this.logMatchs = result.data.data;
+        } else {
+          // jika logmatch kosong, maka set kosong
+          this.logMatchs = [];
         }
       } catch (error) {
         console.log(error.response);

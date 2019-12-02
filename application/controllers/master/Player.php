@@ -39,7 +39,6 @@ class Player extends MY_Controller
             'name'        => $request->name,
             'nickname'    => $request->nickname,
             'gender'      => $request->gender,
-            'img'         => $request->img,
             'height'      => $request->height,
             'weight'      => $request->weight,
             'achievement' => $request->achievement,
@@ -69,7 +68,6 @@ class Player extends MY_Controller
             'name'        => $request->name,
             'nickname'    => $request->nickname,
             'gender'      => $request->gender,
-            'img'         => $request->img,
             'height'      => $request->height,
             'weight'      => $request->weight,
             'achievement' => $request->achievement,
@@ -96,7 +94,10 @@ class Player extends MY_Controller
         if ($upload_image) {
             $result = $this->player->upload_photo($id, $photo_type);
         } else {
-            $result = 'no photo uploaded';
+            $result = [
+                'status'  => false,
+                'message' => 'no photo uploaded',
+            ];
         }
 
         if ($result['status']) {

@@ -277,6 +277,9 @@ class Log_match_model extends MY_Model
 
     public function reset_schedule($division_id)
     {
+        // reset total time ketika clear schedule
+        $this->update(['total_time' => 0], ['division_id' => $division_id], 'player_division');
+
         // delete logmatch pada divisi terpilih
         $this->where('division_id', $division_id);
         return $this->delete(['division_id' => $division_id]);

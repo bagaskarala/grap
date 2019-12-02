@@ -45,7 +45,8 @@ function check_access($role_id, $menu_id)
 // mengambil post data dari client
 function parse_post_data()
 {
-    $ci           = get_instance();
-    $stream_clean = $ci->security->xss_clean($ci->input->raw_input_stream);
+    $ci = get_instance();
+    // $stream_clean = $ci->security->xss_clean($ci->input->raw_input_stream);
+    $stream_clean = $ci->input->raw_input_stream;
     return json_decode($stream_clean);
 }

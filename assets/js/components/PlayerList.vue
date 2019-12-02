@@ -75,6 +75,10 @@
                   ><i class="fa fa-trophy fa-fw"></i></button>
                   <button
                     class="btn btn-sm btn-warning"
+                    @click.prevent="loadPhoto(item)"
+                  ><i class="fa fa-file-image fa-fw"></i></button>
+                  <button
+                    class="btn btn-sm btn-warning"
                     @click.prevent="loadData(item)"
                   ><i class="fa fa-edit fa-fw"></i></button>
                   <button
@@ -172,16 +176,6 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="img">Image</label>
-          <input
-            id="img"
-            v-model="form.img"
-            type="text"
-            class="form-control"
-            placeholder="Enter img"
-          >
-        </div>
-        <div class="form-group">
           <label for="height">Height</label>
           <div class="input-group mb-3">
             <input
@@ -221,102 +215,6 @@
             placeholder="Enter achievement"
           >
         </div>
-        <div class="form-group">
-          <img
-            v-if="form.left_photo && typeof form.left_photo == 'string'"
-            :src="baseUrl+ 'assets/img/player/' + form.left_photo"
-            class="img-thumbnail mb-2"
-            style="max-width:30%"
-          >
-          <label>Left Photo</label>
-          <div class="input-group">
-            <div class="custom-file">
-              <input
-                id="left-photo"
-                ref="left_photo"
-                type="file"
-                class="custom-file-input"
-                @change="handleFileChange('left_photo')"
-              >
-              <label
-                class="custom-file-label"
-                ref="left_photo_label"
-                for="left-photo"
-              >{{customFileLabelLeft}}</label>
-            </div>
-            <div class="input-group-append">
-              <button
-                class="btn btn-success"
-                type="button"
-                @click="uploadPhoto('left_photo')"
-              >Upload</button>
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <img
-            v-if="form.right_photo && typeof form.right_photo == 'string'"
-            :src="baseUrl+ 'assets/img/player/' + form.right_photo"
-            class="img-thumbnail mb-2"
-            style="max-width:30%"
-          >
-          <label>Right Photo</label>
-          <div class="input-group">
-            <div class="custom-file">
-              <input
-                id="right-photo"
-                ref="right_photo"
-                type="file"
-                class="custom-file-input"
-                @change="handleFileChange('right_photo')"
-              >
-              <label
-                class="custom-file-label"
-                ref="left_photo_label"
-                for="right-photo"
-              >{{customFileLabelRight}}</label>
-            </div>
-            <div class="input-group-append">
-              <button
-                class="btn btn-success"
-                type="button"
-                @click="uploadPhoto('right_photo')"
-              >Upload</button>
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <img
-            v-if="form.front_photo && typeof form.front_photo == 'string'"
-            :src="baseUrl+ 'assets/img/player/' + form.front_photo"
-            class="img-thumbnail mb-2"
-            style="max-width:30%"
-          >
-          <label>Front Photo</label>
-          <div class="input-group">
-            <div class="custom-file">
-              <input
-                id="front-photo"
-                ref="front_photo"
-                type="file"
-                class="custom-file-input"
-                @change="handleFileChange('front_photo')"
-              >
-              <label
-                class="custom-file-label"
-                ref="left_photo_label"
-                for="front-photo"
-              >{{customFileLabelFront}}</label>
-            </div>
-            <div class="input-group-append">
-              <button
-                class="btn btn-success"
-                type="button"
-                @click="uploadPhoto('front_photo')"
-              >Upload</button>
-            </div>
-          </div>
-        </div>
         <div class="d-flex justify-content-end">
           <div
             class="btn-group"
@@ -340,6 +238,115 @@
           </div>
         </div>
       </form>
+    </b-modal>
+
+    <!-- modal player photo -->
+    <b-modal
+      id="modal-player-photo"
+      hide-footer
+      title="Player Photo"
+    >
+      <div
+        v-if="errorValidation"
+        class="alert alert-danger"
+        v-html="errorValidation"
+      ></div>
+      <div class="form-group">
+        <img
+          v-if="form.left_photo && typeof form.left_photo == 'string'"
+          :src="baseUrl+ 'assets/img/player/' + form.left_photo"
+          class="img-thumbnail mb-2"
+          style="max-width:30%"
+        >
+        <label>Left Photo</label>
+        <div class="input-group">
+          <div class="custom-file">
+            <input
+              id="left-photo"
+              ref="left_photo"
+              type="file"
+              class="custom-file-input"
+              @change="handleFileChange('left_photo')"
+            >
+            <label
+              class="custom-file-label"
+              ref="left_photo_label"
+              for="left-photo"
+            >{{customFileLabelLeft}}</label>
+          </div>
+          <div class="input-group-append">
+            <button
+              class="btn btn-success"
+              type="button"
+              @click="uploadPhoto('left_photo')"
+            >Upload</button>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <img
+          v-if="form.right_photo && typeof form.right_photo == 'string'"
+          :src="baseUrl+ 'assets/img/player/' + form.right_photo"
+          class="img-thumbnail mb-2"
+          style="max-width:30%"
+        >
+        <label>Right Photo</label>
+        <div class="input-group">
+          <div class="custom-file">
+            <input
+              id="right-photo"
+              ref="right_photo"
+              type="file"
+              class="custom-file-input"
+              @change="handleFileChange('right_photo')"
+            >
+            <label
+              class="custom-file-label"
+              ref="left_photo_label"
+              for="right-photo"
+            >{{customFileLabelRight}}</label>
+          </div>
+          <div class="input-group-append">
+            <button
+              class="btn btn-success"
+              type="button"
+              @click="uploadPhoto('right_photo')"
+            >Upload</button>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <img
+          v-if="form.front_photo && typeof form.front_photo == 'string'"
+          :src="baseUrl+ 'assets/img/player/' + form.front_photo"
+          class="img-thumbnail mb-2"
+          style="max-width:30%"
+        >
+        <label>Front Photo</label>
+        <div class="input-group">
+          <div class="custom-file">
+            <input
+              id="front-photo"
+              ref="front_photo"
+              type="file"
+              class="custom-file-input"
+              @change="handleFileChange('front_photo')"
+            >
+            <label
+              class="custom-file-label"
+              ref="left_photo_label"
+              for="front-photo"
+            >{{customFileLabelFront}}</label>
+          </div>
+          <div class="input-group-append">
+            <button
+              class="btn btn-success"
+              type="button"
+              @click="uploadPhoto('front_photo')"
+            >Upload</button>
+          </div>
+        </div>
+      </div>
     </b-modal>
 
     <!-- modal achievement player -->
@@ -414,6 +421,7 @@
                     class="form-control"
                     placeholder="Enter division"
                     list="divisionList"
+                    :disabled="countAchievement(item.category) > 3"
                   >
                   <datalist id="divisionList">
                     <option
@@ -434,6 +442,7 @@
                     type="text"
                     class="form-control"
                     placeholder="Enter tournament name"
+                    :disabled="countAchievement(item.category) > 3"
                   >
                 </div>
                 <div class="col">
@@ -443,6 +452,7 @@
                     id="winner_position"
                     class="form-control"
                     v-model.number="formAchievement[index].winner_position"
+                    :disabled="countAchievement(item.category) > 3"
                   >
                     <option
                       :value="null"
@@ -466,6 +476,7 @@
                     id="achievement_city"
                     class="form-control"
                     v-model.number="formAchievement[index].achievement_city"
+                    :disabled="countAchievement(item.category) > 3"
                   >
                     <option
                       :value="null"
@@ -488,6 +499,7 @@
                     placeholder="Enter year"
                     max-length="3000"
                     min-length="2000"
+                    :disabled="countAchievement(item.category) > 3"
                   >
                 </div>
               </div>
@@ -512,11 +524,13 @@
                 <button
                   v-if="formAchievement[index].id"
                   class="btn btn-primary"
+                  :disabled="countAchievement(item.category) > 3"
                   @click.prevent="updateAchievement(formAchievement[index])"
                 >Update</button>
                 <button
                   v-else
                   class="btn btn-primary"
+                  :disabled="countAchievement(item.category) > 3"
                   @click.prevent="insertAchievement(formAchievement[index])"
                 >Insert</button>
               </div>
@@ -553,7 +567,6 @@ export default {
         name: null,
         nickname: null,
         gender: null,
-        img: null,
         height: null,
         weight: null,
         achievement: null,
@@ -667,7 +680,6 @@ export default {
           name: this.form.name,
           nickname: this.form.nickname,
           gender: this.form.gender,
-          img: this.form.img,
           height: this.form.height,
           weight: this.form.weight,
           achievement: this.form.achievement
@@ -692,7 +704,6 @@ export default {
           name: this.form.name,
           nickname: this.form.nickname,
           gender: this.form.gender,
-          img: this.form.img,
           height: this.form.height,
           weight: this.form.weight,
           achievement: this.form.achievement
@@ -769,17 +780,18 @@ export default {
       }
 
       try {
-        const a = await this.$axios.post(`master/player/upload_photo/${this.form.id}/${photoType}`, formData, {
+        await this.$axios.post(`master/player/upload_photo/${this.form.id}/${photoType}`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         });
-        console.log(a.data);
+        this.$bvModal.hide('modal-player-photo');
         this.getAllPlayers();
         this.$noty.success('Success Upload Photo');
         this.$bvModal.hide('modal-player');
       } catch (error) {
-        console.log(error.response);
+        console.log('gatot');
+        console.log(error);
         this.errorValidation = error.response.data.message;
         this.$noty.error('Failed Upload Photo');
       }
@@ -801,6 +813,15 @@ export default {
       });
     },
 
+    loadPhoto(item) {
+      this.resetData();
+      this.$bvModal.show('modal-player-photo');
+      // populate form
+      Object.keys(this.form).forEach(key => {
+        return this.form[key] = item[key];
+      });
+    },
+
     async loadAchievement(item) {
       this.getAllDivisions();
       this.errorValidation = null;
@@ -812,7 +833,6 @@ export default {
     },
 
     addNewAchievement() {
-
       let notSaved = this.formAchievement.find(item => {
         return item.id == undefined;
       });
@@ -822,10 +842,16 @@ export default {
         return;
       }
 
+      // auto select grappling, jika general sudah 3
+      let categorySelected = 'general';
+      if (this.countAchievement('general') == 3) {
+        categorySelected = 'grappling';
+      }
+
       this.formAchievement.push({
         achievement_city: null,
         achievement_year: null,
-        category: 'general',
+        category: categorySelected,
         division: null,
         tournament_name: null,
         winner_position: null
@@ -842,14 +868,19 @@ export default {
       if (achievementCategory.length > 3) {
         this.errorValidation = `Only 3 achivement can be registered per category. Change your oldest ${category} achievement to the new one`;
 
-        // find year that not falsy
+        // ubah category yang kelebihan, menjadi category lain
+        this.formAchievement[this.tabIndex].category = this.formAchievement[this.tabIndex].category == 'general' ? 'grappling' : 'general';
+
+        // cari item yang sudah tersimpan
+        // cari tahun yang paling tua
         let arrYear = achievementCategory.filter(item => item.id).map(item => item.achievement_year);
         console.log(arrYear);
         let oldestYear = Math.min(...arrYear);
 
-        // go to oldest achievement
+        // pindah ke oldest achievement
         this.tabIndex = achievementCategory.findIndex(x => x.achievement_year == oldestYear);
 
+        // pop item baru ketika insert new achievement
         if (popArray) this.formAchievement.pop();
         return false;
       }
@@ -913,10 +944,8 @@ export default {
         await this.$axios.post('master/achievement/delete', {
           id: item.id
         });
-
         this.$noty.success('Success Delete Data');
         this.formAchievement.splice(this.formAchievement.findIndex(x => x.id == item.id), 1);
-
       } catch (error) {
         console.log(error.response);
         this.$noty.error('Failed Delete Data');
@@ -924,6 +953,7 @@ export default {
     },
 
     countAchievement(category) {
+      // menghitung achievement per category
       return this.formAchievement.filter(item => {
         return item.category == category;
       }).length;
@@ -946,9 +976,9 @@ export default {
         return this.form[key] = null;
       });
 
-      this.customFileLabelLeft = 'Select File';
-      this.customFileLabelRight = 'Select File';
-      this.customFileLabelFront = 'Select File';
+      this.customFileLabelLeft = 'Select File for Left Photo';
+      this.customFileLabelRight = 'Select File for Right Photo';
+      this.customFileLabelFront = 'Select File for Front Photo';
     }
   },
 

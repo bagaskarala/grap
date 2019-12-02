@@ -34,6 +34,7 @@ class Achievement extends MY_Controller
     {
         $this->achievement->where('player_id', $player_id);
         $this->achievement->order_by('category');
+        $this->achievement->order_by('achievement_year');
         $achievements = $this->achievement->get_all_array();
 
         if (count($achievements) == 0) {

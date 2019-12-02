@@ -55,7 +55,17 @@ class Player_division_model extends MY_Model
         $this->order_by('pool_number');
         $this->order_by('win', 'desc');
         $this->order_by('total_time');
-        return $this->get_all_array();
+        $player_divisions = $this->get_all_array();
+
+        $result = [];
+        foreach ($player_divisions as $value) {
+            // cari achievement terakhir
+            $this->where('player_id', $value['player_id']);
+            $this->order_by('achievement_year', 'desc');
+            $value['last_achievement'] = $this->get_single_array('achievement');
+            array_push($result, $value);
+        }
+        return $result;
     }
 
     public function check_player($data)
@@ -154,6 +164,11 @@ class Player_division_model extends MY_Model
         $this->where('match_number', null); // cari yang bukan final
         $winner_arr = $this->get_all_array('log_match');
 
+        // reset total time ketika clear schedule
+        if (count($winner_arr) == 0) {
+            $this->update(['total_time' => 0], ['division_id' => $division_id]);
+        }
+
         // hitung win lose draw
         $count_win  = [];
         $count_lose = [];
@@ -168,7 +183,6 @@ class Player_division_model extends MY_Model
                 $count_lose[$item['pd2_id']] = !array_key_exists($item['pd2_id'], $count_lose) ? 1 : $count_lose[$item['pd2_id']] + 1;
             } elseif ($item['winner'] == $item['pd2_id']) {
                 // jika p2 winner, increment p2 di array win, increment p1 array lose
-                // $count_win[$item['winner']]  = !array_key_exists($item['winner'], $count_win) ? 1 : $count_win[$item['winner']] + 1;
                 $count_win[$item['winner']] = [
                     'win'  => !array_key_exists($item['winner'], $count_win) ? 1 : $count_win[$item['winner']]['win'] + 1,
                     'time' => !array_key_exists($item['winner'], $count_win) ? $item['time'] : $count_win[$item['winner']]['time'] + $item['time'],
@@ -183,7 +197,7 @@ class Player_division_model extends MY_Model
 
         $fail_flag = 0;
 
-        // insert win ke db
+        // insert win dan time ke db
         foreach ($count_win as $pd_id => $item) {
             if ($this->update(['win' => $item['win'], 'total_time' => $item['time']], ['id' => $pd_id]) == false) {
                 $fail_flag++;
@@ -259,6 +273,15 @@ class Player_division_model extends MY_Model
 
     public function create_final_match_roundrobin($division_id)
     {
+        $this->where('division_id', $division_id);
+        $log_matchs = $this->get_all_array('log_match');
+        if (!$log_matchs) {
+            return [
+                'status'  => false,
+                'message' => 'No match for this division',
+            ];
+        }
+
         // jika final udah ada, hapus final dan buat ulang
         $this->where('division_id', $division_id);
         $this->where('match_index', 1); // cari yang final
@@ -288,7 +311,7 @@ class Player_division_model extends MY_Model
         if ($count_match_unfinished > 0) {
             return [
                 'status'  => false,
-                'message' => 'Match not finished yet or there is error',
+                'message' => 'Match not finished yet',
             ];
         }
 
@@ -373,39 +396,6 @@ class Player_division_model extends MY_Model
 
     public function generate_pool($division_id)
     {
-        // MENIRU FUNGSI DI EXCEL, TAPI STUCK
-        // $this->query_player_division();
-        // $this->order_by('pool_number');
-        // $data = $this->db->get($this->table);
-
-        // $count       = $data->num_rows();
-        // $mod_count   = $count % 4;
-        // $div_count   = floor($count / 4);
-        // $pool4_count = 0;
-        // $pool3_count = 0;
-
-        // // count 3,4,5 tidak bisa dihitung dengan rumus ini
-
-        // if ($mod_count == 1) {
-        //     $pool4_count = $div_count - 2;
-        //     $pool3_count = 3;
-        // } else {
-        //     if ($mod_count == 2) {
-        //         $pool4_count = $div_count - 1;
-        //         $pool3_count = 2;
-        //     } else {
-        //         $pool4_count = $div_count;
-        //         if ($mod_count == 3) {
-        //             $pool3_count = 1;
-        //         } else {
-        //             $pool3_count = 0;
-        //         }
-        //     }
-        // }
-        // $arr_data = $data->result_array();
-
-        // return ['m' => $mod_count, 'd' => $div_count, '4' => $pool4_count, '3' => $pool3_count, 'arr' => $arr_data];
-
         // get player di divisi
         $this->query_player_division();
         $this->where('division_id', $division_id);

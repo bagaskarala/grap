@@ -7094,6 +7094,21 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var timeoutDebounce = null;
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PlayerDivision',
@@ -7133,9 +7148,9 @@ var timeoutDebounce = null;
   computed: {
     fieldPlayerDivision: function fieldPlayerDivision() {
       if (this.matchSystem == 'elimination') {
-        return ['division', 'club', 'name', 'division_winner', 'action'];
+        return ['last_achievement', 'club', 'name', 'division_winner', 'action'];
       } else {
-        return ['division', 'club', 'name', 'pool_number', 'win', 'draw', 'lose', 'total_time', 'pool_winner', 'division_winner', 'action'];
+        return ['last_achievement', 'club', 'name', 'pool_number', 'win', 'draw', 'lose', 'total_time', 'pool_winner', 'division_winner', 'action'];
       }
     },
     lockMatch: function lockMatch() {
@@ -7314,55 +7329,16 @@ var timeoutDebounce = null;
 
       return getAllPlayerDivisions;
     }(),
-    getLogMatch: function () {
-      var _getLogMatch = _asyncToGenerator(
+    insertData: function () {
+      var _insertData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(divisionId) {
-        var logMatchs;
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
                 _context5.prev = 0;
                 _context5.next = 3;
-                return this.$axios.get("entry/log_match/filter_division/".concat(divisionId));
-
-              case 3:
-                logMatchs = _context5.sent;
-                this.logMatchs = logMatchs.data.data;
-                _context5.next = 11;
-                break;
-
-              case 7:
-                _context5.prev = 7;
-                _context5.t0 = _context5["catch"](0);
-                console.log(_context5.t0.response);
-                this.$noty.error('Failed Get Log Match');
-
-              case 11:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5, this, [[0, 7]]);
-      }));
-
-      function getLogMatch(_x) {
-        return _getLogMatch.apply(this, arguments);
-      }
-
-      return getLogMatch;
-    }(),
-    insertData: function () {
-      var _insertData = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
-          while (1) {
-            switch (_context6.prev = _context6.next) {
-              case 0:
-                _context6.prev = 0;
-                _context6.next = 3;
                 return this.$axios.post('entry/player_division/insert', {
                   division_id: this.form.division_id,
                   player_id: this.form.player_id,
@@ -7376,22 +7352,22 @@ var timeoutDebounce = null;
                 this.filterDivisionId = this.form.division_id;
                 this.$noty.success('Success Insert Data');
                 this.$bvModal.hide('modal-player-division');
-                _context6.next = 14;
+                _context5.next = 14;
                 break;
 
               case 9:
-                _context6.prev = 9;
-                _context6.t0 = _context6["catch"](0);
-                console.log(_context6.t0.response);
-                this.errorValidation = _context6.t0.response.data.message;
+                _context5.prev = 9;
+                _context5.t0 = _context5["catch"](0);
+                console.log(_context5.t0.response);
+                this.errorValidation = _context5.t0.response.data.message;
                 this.$noty.error('Failed Insert Data.');
 
               case 14:
               case "end":
-                return _context6.stop();
+                return _context5.stop();
             }
           }
-        }, _callee6, this, [[0, 9]]);
+        }, _callee5, this, [[0, 9]]);
       }));
 
       function insertData() {
@@ -7403,13 +7379,13 @@ var timeoutDebounce = null;
     updateData: function () {
       var _updateData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context7.prev = _context7.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
-                _context7.prev = 0;
-                _context7.next = 3;
+                _context6.prev = 0;
+                _context6.next = 3;
                 return this.$axios.post("entry/player_division/update/".concat(this.form.id), {
                   division_id: this.form.division_id,
                   player_id: this.form.player_id,
@@ -7424,22 +7400,22 @@ var timeoutDebounce = null;
 
                 this.$noty.success('Success Update Data');
                 this.$bvModal.hide('modal-player-division');
-                _context7.next = 13;
+                _context6.next = 13;
                 break;
 
               case 8:
-                _context7.prev = 8;
-                _context7.t0 = _context7["catch"](0);
-                console.log(_context7.t0.response);
-                this.errorValidation = _context7.t0.response.data.message;
+                _context6.prev = 8;
+                _context6.t0 = _context6["catch"](0);
+                console.log(_context6.t0.response);
+                this.errorValidation = _context6.t0.response.data.message;
                 this.$noty.error('Failed Update Data');
 
               case 13:
               case "end":
-                return _context7.stop();
+                return _context6.stop();
             }
           }
-        }, _callee7, this, [[0, 8]]);
+        }, _callee6, this, [[0, 8]]);
       }));
 
       function updateData() {
@@ -7451,13 +7427,13 @@ var timeoutDebounce = null;
     deleteData: function () {
       var _deleteData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(item) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(item) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context8.prev = _context8.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
-                _context8.prev = 0;
-                _context8.next = 3;
+                _context7.prev = 0;
+                _context7.next = 3;
                 return this.$axios.post('entry/player_division/delete', {
                   id: item.id
                 });
@@ -7470,24 +7446,24 @@ var timeoutDebounce = null;
 
                 this.$noty.success('Success Delete Data');
                 this.$bvModal.hide('modal-player-division');
-                _context8.next = 12;
+                _context7.next = 12;
                 break;
 
               case 8:
-                _context8.prev = 8;
-                _context8.t0 = _context8["catch"](0);
-                console.log(_context8.t0.response);
+                _context7.prev = 8;
+                _context7.t0 = _context7["catch"](0);
+                console.log(_context7.t0.response);
                 this.$noty.error('Failed Delete Data');
 
               case 12:
               case "end":
-                return _context8.stop();
+                return _context7.stop();
             }
           }
-        }, _callee8, this, [[0, 8]]);
+        }, _callee7, this, [[0, 8]]);
       }));
 
-      function deleteData(_x2) {
+      function deleteData(_x) {
         return _deleteData.apply(this, arguments);
       }
 
@@ -7512,43 +7488,40 @@ var timeoutDebounce = null;
     filterData: function () {
       var _filterData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(divisionId) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(divisionId) {
         var playerDivisions;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
           while (1) {
-            switch (_context9.prev = _context9.next) {
+            switch (_context8.prev = _context8.next) {
               case 0:
                 this.matchSystem = null;
-                _context9.prev = 1;
-                _context9.next = 4;
+                _context8.prev = 1;
+                _context8.next = 4;
                 return this.$axios.get("entry/player_division/filter_division/".concat(divisionId));
 
               case 4:
-                playerDivisions = _context9.sent;
+                playerDivisions = _context8.sent;
                 this.playerDivisions = playerDivisions.data.data; // panggil check match
 
-                if (this.playerDivisions.length != 0) {
-                  this.checkDivisionLogMatch(divisionId);
-                }
-
-                _context9.next = 13;
+                this.checkDivisionLogMatch(divisionId);
+                _context8.next = 13;
                 break;
 
               case 9:
-                _context9.prev = 9;
-                _context9.t0 = _context9["catch"](1);
-                console.log(_context9.t0.response);
+                _context8.prev = 9;
+                _context8.t0 = _context8["catch"](1);
+                console.log(_context8.t0.response);
                 this.$noty.error('Failed Filter Data');
 
               case 13:
               case "end":
-                return _context9.stop();
+                return _context8.stop();
             }
           }
-        }, _callee9, this, [[1, 9]]);
+        }, _callee8, this, [[1, 9]]);
       }));
 
-      function filterData(_x3) {
+      function filterData(_x2) {
         return _filterData.apply(this, arguments);
       }
 
@@ -7557,18 +7530,18 @@ var timeoutDebounce = null;
     checkDivisionLogMatch: function () {
       var _checkDivisionLogMatch = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10(divisionId) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(divisionId) {
         var result;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
           while (1) {
-            switch (_context10.prev = _context10.next) {
+            switch (_context9.prev = _context9.next) {
               case 0:
-                _context10.prev = 0;
-                _context10.next = 3;
+                _context9.prev = 0;
+                _context9.next = 3;
                 return this.$axios.get("entry/log_match/filter_division/".concat(divisionId));
 
               case 3:
-                result = _context10.sent;
+                result = _context9.sent;
 
                 if (result.data.data.length != 0) {
                   // cetak match system jika terdapat match pada divisi tsb
@@ -7576,26 +7549,29 @@ var timeoutDebounce = null;
                   this.matchSystem = result.data.data[0].match_system; // simpan logmatch
 
                   this.logMatchs = result.data.data;
+                } else {
+                  // jika logmatch kosong, maka set kosong
+                  this.logMatchs = [];
                 }
 
-                _context10.next = 11;
+                _context9.next = 11;
                 break;
 
               case 7:
-                _context10.prev = 7;
-                _context10.t0 = _context10["catch"](0);
-                console.log(_context10.t0.response);
-                this.$noty.error('Failed. ' + _context10.t0.response.data.message);
+                _context9.prev = 7;
+                _context9.t0 = _context9["catch"](0);
+                console.log(_context9.t0.response);
+                this.$noty.error('Failed. ' + _context9.t0.response.data.message);
 
               case 11:
               case "end":
-                return _context10.stop();
+                return _context9.stop();
             }
           }
-        }, _callee10, this, [[0, 7]]);
+        }, _callee9, this, [[0, 7]]);
       }));
 
-      function checkDivisionLogMatch(_x4) {
+      function checkDivisionLogMatch(_x3) {
         return _checkDivisionLogMatch.apply(this, arguments);
       }
 
@@ -7604,22 +7580,22 @@ var timeoutDebounce = null;
     generatePool: function () {
       var _generatePool = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
           while (1) {
-            switch (_context11.prev = _context11.next) {
+            switch (_context10.prev = _context10.next) {
               case 0:
                 if (!(this.filterDivisionId == null)) {
-                  _context11.next = 3;
+                  _context10.next = 3;
                   break;
                 }
 
                 this.$noty.warning('Select division first before generate pool');
-                return _context11.abrupt("return");
+                return _context10.abrupt("return");
 
               case 3:
-                _context11.prev = 3;
-                _context11.next = 6;
+                _context10.prev = 3;
+                _context10.next = 6;
                 return this.$axios.post('entry/player_division/generate_pool', {
                   division_id: this.filterDivisionId
                 });
@@ -7627,21 +7603,21 @@ var timeoutDebounce = null;
               case 6:
                 this.filterData(this.filterDivisionId);
                 this.$noty.success('Success Generate Pool');
-                _context11.next = 14;
+                _context10.next = 14;
                 break;
 
               case 10:
-                _context11.prev = 10;
-                _context11.t0 = _context11["catch"](3);
-                console.log(_context11.t0.response);
-                this.$noty.error('Failed Generate Pool. ' + _context11.t0.response.data.message);
+                _context10.prev = 10;
+                _context10.t0 = _context10["catch"](3);
+                console.log(_context10.t0.response);
+                this.$noty.error('Failed Generate Pool. ' + _context10.t0.response.data.message);
 
               case 14:
               case "end":
-                return _context11.stop();
+                return _context10.stop();
             }
           }
-        }, _callee11, this, [[3, 10]]);
+        }, _callee10, this, [[3, 10]]);
       }));
 
       function generatePool() {
@@ -7653,22 +7629,22 @@ var timeoutDebounce = null;
     resetPool: function () {
       var _resetPool = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
           while (1) {
-            switch (_context12.prev = _context12.next) {
+            switch (_context11.prev = _context11.next) {
               case 0:
                 if (!(this.filterDivisionId == null)) {
-                  _context12.next = 3;
+                  _context11.next = 3;
                   break;
                 }
 
                 this.$noty.warning('Select division first before reset pool');
-                return _context12.abrupt("return");
+                return _context11.abrupt("return");
 
               case 3:
-                _context12.prev = 3;
-                _context12.next = 6;
+                _context11.prev = 3;
+                _context11.next = 6;
                 return this.$axios.post('entry/player_division/reset_pool', {
                   division_id: this.filterDivisionId
                 });
@@ -7676,21 +7652,21 @@ var timeoutDebounce = null;
               case 6:
                 this.filterData(this.filterDivisionId);
                 this.$noty.success('Success Reset Pool');
-                _context12.next = 14;
+                _context11.next = 14;
                 break;
 
               case 10:
-                _context12.prev = 10;
-                _context12.t0 = _context12["catch"](3);
-                console.log(_context12.t0.response);
+                _context11.prev = 10;
+                _context11.t0 = _context11["catch"](3);
+                console.log(_context11.t0.response);
                 this.$noty.error('Failed Reset Pool');
 
               case 14:
               case "end":
-                return _context12.stop();
+                return _context11.stop();
             }
           }
-        }, _callee12, this, [[3, 10]]);
+        }, _callee11, this, [[3, 10]]);
       }));
 
       function resetPool() {
@@ -7734,36 +7710,36 @@ var timeoutDebounce = null;
     generateFinalMatch: function () {
       var _generateFinalMatch = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
         var a;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
           while (1) {
-            switch (_context13.prev = _context13.next) {
+            switch (_context12.prev = _context12.next) {
               case 0:
-                _context13.prev = 0;
-                _context13.next = 3;
+                _context12.prev = 0;
+                _context12.next = 3;
                 return this.$axios.post("entry/player_division/create_final_match_roundrobin/".concat(this.filterDivisionId));
 
               case 3:
-                a = _context13.sent;
+                a = _context12.sent;
                 console.log(a.data.data);
                 this.$noty.success('Success Create Final Match');
                 this.filterData(this.filterDivisionId);
-                _context13.next = 13;
+                _context12.next = 13;
                 break;
 
               case 9:
-                _context13.prev = 9;
-                _context13.t0 = _context13["catch"](0);
-                console.log(_context13.t0.response);
-                this.$noty.error('Failed Create Final Match. ' + _context13.t0.response.data.message);
+                _context12.prev = 9;
+                _context12.t0 = _context12["catch"](0);
+                console.log(_context12.t0.response);
+                this.$noty.error('Failed Create Final Match. ' + _context12.t0.response.data.message);
 
               case 13:
               case "end":
-                return _context13.stop();
+                return _context12.stop();
             }
           }
-        }, _callee13, this, [[0, 9]]);
+        }, _callee12, this, [[0, 9]]);
       }));
 
       function generateFinalMatch() {
@@ -8447,6 +8423,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PlayerList',
@@ -8473,7 +8463,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         name: null,
         nickname: null,
         gender: null,
-        img: null,
         height: null,
         weight: null,
         achievement: null,
@@ -8761,7 +8750,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   name: this.form.name,
                   nickname: this.form.nickname,
                   gender: this.form.gender,
-                  img: this.form.img,
                   height: this.form.height,
                   weight: this.form.weight,
                   achievement: this.form.achievement
@@ -8811,7 +8799,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   name: this.form.name,
                   nickname: this.form.nickname,
                   gender: this.form.gender,
-                  img: this.form.img,
                   height: this.form.height,
                   weight: this.form.weight,
                   achievement: this.form.achievement
@@ -8921,7 +8908,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _uploadPhoto = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10(photoType) {
-        var formData, a;
+        var formData;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
           while (1) {
             switch (_context10.prev = _context10.next) {
@@ -8947,18 +8934,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 8:
-                a = _context10.sent;
-                console.log(a.data);
+                this.$bvModal.hide('modal-player-photo');
                 this.getAllPlayers();
                 this.$noty.success('Success Upload Photo');
                 this.$bvModal.hide('modal-player');
                 _context10.next = 20;
                 break;
 
-              case 15:
-                _context10.prev = 15;
+              case 14:
+                _context10.prev = 14;
                 _context10.t0 = _context10["catch"](5);
-                console.log(_context10.t0.response);
+                console.log('gatot');
+                console.log(_context10.t0);
                 this.errorValidation = _context10.t0.response.data.message;
                 this.$noty.error('Failed Upload Photo');
 
@@ -8967,7 +8954,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context10.stop();
             }
           }
-        }, _callee10, this, [[5, 15]]);
+        }, _callee10, this, [[5, 14]]);
       }));
 
       function uploadPhoto(_x3) {
@@ -8990,6 +8977,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       Object.keys(this.form).forEach(function (key) {
         return _this2.form[key] = item[key];
+      });
+    },
+    loadPhoto: function loadPhoto(item) {
+      var _this3 = this;
+
+      this.resetData();
+      this.$bvModal.show('modal-player-photo'); // populate form
+
+      Object.keys(this.form).forEach(function (key) {
+        return _this3.form[key] = item[key];
       });
     },
     loadAchievement: function () {
@@ -9026,7 +9023,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return loadAchievement;
     }(),
     addNewAchievement: function addNewAchievement() {
-      var _this3 = this;
+      var _this4 = this;
 
       var notSaved = this.formAchievement.find(function (item) {
         return item.id == undefined;
@@ -9036,18 +9033,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (notSaved) {
         this.$noty.warning('Save your new achievement, before insert another achievement');
         return;
+      } // auto select grappling, jika general sudah 3
+
+
+      var categorySelected = 'general';
+
+      if (this.countAchievement('general') == 3) {
+        categorySelected = 'grappling';
       }
 
       this.formAchievement.push({
         achievement_city: null,
         achievement_year: null,
-        category: 'general',
+        category: categorySelected,
         division: null,
         tournament_name: null,
         winner_position: null
       });
       setTimeout(function () {
-        _this3.tabIndex = _this3.formAchievement.length - 1;
+        _this4.tabIndex = _this4.formAchievement.length - 1;
       }, 0);
     },
     checkAchievementCategory: function checkAchievementCategory(category) {
@@ -9059,7 +9063,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       console.log(achievementCategory);
 
       if (achievementCategory.length > 3) {
-        this.errorValidation = "Only 3 achivement can be registered per category. Change your oldest ".concat(category, " achievement to the new one"); // find year that not falsy
+        this.errorValidation = "Only 3 achivement can be registered per category. Change your oldest ".concat(category, " achievement to the new one"); // ubah category yang kelebihan, menjadi category lain
+
+        this.formAchievement[this.tabIndex].category = this.formAchievement[this.tabIndex].category == 'general' ? 'grappling' : 'general'; // cari item yang sudah tersimpan
+        // cari tahun yang paling tua
 
         var arrYear = achievementCategory.filter(function (item) {
           return item.id;
@@ -9067,11 +9074,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           return item.achievement_year;
         });
         console.log(arrYear);
-        var oldestYear = Math.min.apply(Math, _toConsumableArray(arrYear)); // go to oldest achievement
+        var oldestYear = Math.min.apply(Math, _toConsumableArray(arrYear)); // pindah ke oldest achievement
 
         this.tabIndex = achievementCategory.findIndex(function (x) {
           return x.achievement_year == oldestYear;
-        });
+        }); // pop item baru ketika insert new achievement
+
         if (popArray) this.formAchievement.pop();
         return false;
       }
@@ -9242,6 +9250,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return deleteAchievement;
     }(),
     countAchievement: function countAchievement(category) {
+      // menghitung achievement per category
       return this.formAchievement.filter(function (item) {
         return item.category == category;
       }).length;
@@ -9256,15 +9265,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.formAchievement[this.tabIndex].category = null;
     },
     resetData: function resetData() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.errorValidation = null;
       Object.keys(this.form).forEach(function (key) {
-        return _this4.form[key] = null;
+        return _this5.form[key] = null;
       });
-      this.customFileLabelLeft = 'Select File';
-      this.customFileLabelRight = 'Select File';
-      this.customFileLabelFront = 'Select File';
+      this.customFileLabelLeft = 'Select File for Left Photo';
+      this.customFileLabelRight = 'Select File for Right Photo';
+      this.customFileLabelFront = 'Select File for Front Photo';
     }
   },
   created: function created() {
@@ -49131,24 +49140,27 @@ var render = function() {
                           [_vm._v("Reset Pool")]
                         ),
                         _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-sm btn-primary mr-1",
-                            attrs: {
-                              type: "button",
-                              title:
-                                "Generate final match based on winner on each pool"
-                            },
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                return _vm.confirmGenerateFinalMatch()
-                              }
-                            }
-                          },
-                          [_vm._v("Generate Final Match")]
-                        )
+                        _vm.playerDivisions.length != 0
+                          ? _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-sm btn-primary mr-1",
+                                attrs: {
+                                  type: "button",
+                                  title:
+                                    "Generate final match based on winner on each pool",
+                                  disabled: _vm.logMatchs.length == 0
+                                },
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    return _vm.confirmGenerateFinalMatch()
+                                  }
+                                }
+                              },
+                              [_vm._v("Generate Final Match")]
+                            )
+                          : _vm._e()
                       ]),
                       _vm._v(" "),
                       _c(
@@ -49241,6 +49253,46 @@ var render = function() {
                       },
                       scopedSlots: _vm._u(
                         [
+                          {
+                            key: "cell(last_achievement)",
+                            fn: function(data) {
+                              return [
+                                data.item.last_achievement
+                                  ? _c(
+                                      "div",
+                                      { staticStyle: { "min-width": "150px" } },
+                                      [
+                                        _c("p", { staticClass: "mb-0" }, [
+                                          _vm._v(
+                                            "\n                  " +
+                                              _vm._s(
+                                                _vm.winnerPosition(
+                                                  data.item.last_achievement
+                                                    .winner_position
+                                                )
+                                              ) +
+                                              "\n                "
+                                          )
+                                        ]),
+                                        _vm._v(
+                                          "\n                " +
+                                            _vm._s(
+                                              data.item.last_achievement
+                                                .tournament_name
+                                            ) +
+                                            " " +
+                                            _vm._s(
+                                              data.item.last_achievement
+                                                .achievement_year
+                                            ) +
+                                            "\n              "
+                                        )
+                                      ]
+                                    )
+                                  : _c("span", [_vm._v("-")])
+                              ]
+                            }
+                          },
                           {
                             key: "cell(pool_number)",
                             fn: function(data) {
@@ -49398,7 +49450,7 @@ var render = function() {
                         ],
                         null,
                         false,
-                        2605302503
+                        2115157718
                       )
                     })
                   : _vm._e()
@@ -49997,6 +50049,20 @@ var render = function() {
                             on: {
                               click: function($event) {
                                 $event.preventDefault()
+                                return _vm.loadPhoto(item)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-file-image fa-fw" })]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-sm btn-warning",
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
                                 return _vm.loadData(item)
                               }
                             }
@@ -50267,32 +50333,6 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "img" } }, [_vm._v("Image")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.form.img,
-                    expression: "form.img"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { id: "img", type: "text", placeholder: "Enter img" },
-                domProps: { value: _vm.form.img },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.form, "img", $event.target.value)
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
               _c("label", { attrs: { for: "height" } }, [_vm._v("Height")]),
               _vm._v(" "),
               _c("div", { staticClass: "input-group mb-3" }, [
@@ -50416,178 +50456,6 @@ var render = function() {
               })
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _vm.form.left_photo && typeof _vm.form.left_photo == "string"
-                ? _c("img", {
-                    staticClass: "img-thumbnail mb-2",
-                    staticStyle: { "max-width": "30%" },
-                    attrs: {
-                      src:
-                        _vm.baseUrl + "assets/img/player/" + _vm.form.left_photo
-                    }
-                  })
-                : _vm._e(),
-              _vm._v(" "),
-              _c("label", [_vm._v("Left Photo")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "input-group" }, [
-                _c("div", { staticClass: "custom-file" }, [
-                  _c("input", {
-                    ref: "left_photo",
-                    staticClass: "custom-file-input",
-                    attrs: { id: "left-photo", type: "file" },
-                    on: {
-                      change: function($event) {
-                        return _vm.handleFileChange("left_photo")
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      ref: "left_photo_label",
-                      staticClass: "custom-file-label",
-                      attrs: { for: "left-photo" }
-                    },
-                    [_vm._v(_vm._s(_vm.customFileLabelLeft))]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "input-group-append" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-success",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.uploadPhoto("left_photo")
-                        }
-                      }
-                    },
-                    [_vm._v("Upload")]
-                  )
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _vm.form.right_photo && typeof _vm.form.right_photo == "string"
-                ? _c("img", {
-                    staticClass: "img-thumbnail mb-2",
-                    staticStyle: { "max-width": "30%" },
-                    attrs: {
-                      src:
-                        _vm.baseUrl +
-                        "assets/img/player/" +
-                        _vm.form.right_photo
-                    }
-                  })
-                : _vm._e(),
-              _vm._v(" "),
-              _c("label", [_vm._v("Right Photo")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "input-group" }, [
-                _c("div", { staticClass: "custom-file" }, [
-                  _c("input", {
-                    ref: "right_photo",
-                    staticClass: "custom-file-input",
-                    attrs: { id: "right-photo", type: "file" },
-                    on: {
-                      change: function($event) {
-                        return _vm.handleFileChange("right_photo")
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      ref: "left_photo_label",
-                      staticClass: "custom-file-label",
-                      attrs: { for: "right-photo" }
-                    },
-                    [_vm._v(_vm._s(_vm.customFileLabelRight))]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "input-group-append" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-success",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.uploadPhoto("right_photo")
-                        }
-                      }
-                    },
-                    [_vm._v("Upload")]
-                  )
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _vm.form.front_photo && typeof _vm.form.front_photo == "string"
-                ? _c("img", {
-                    staticClass: "img-thumbnail mb-2",
-                    staticStyle: { "max-width": "30%" },
-                    attrs: {
-                      src:
-                        _vm.baseUrl +
-                        "assets/img/player/" +
-                        _vm.form.front_photo
-                    }
-                  })
-                : _vm._e(),
-              _vm._v(" "),
-              _c("label", [_vm._v("Front Photo")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "input-group" }, [
-                _c("div", { staticClass: "custom-file" }, [
-                  _c("input", {
-                    ref: "front_photo",
-                    staticClass: "custom-file-input",
-                    attrs: { id: "front-photo", type: "file" },
-                    on: {
-                      change: function($event) {
-                        return _vm.handleFileChange("front_photo")
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      ref: "left_photo_label",
-                      staticClass: "custom-file-label",
-                      attrs: { for: "front-photo" }
-                    },
-                    [_vm._v(_vm._s(_vm.customFileLabelFront))]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "input-group-append" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-success",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.uploadPhoto("front_photo")
-                        }
-                      }
-                    },
-                    [_vm._v("Upload")]
-                  )
-                ])
-              ])
-            ]),
-            _vm._v(" "),
             _c("div", { staticClass: "d-flex justify-content-end" }, [
               _c(
                 "div",
@@ -50636,6 +50504,193 @@ var render = function() {
                       )
                 ]
               )
+            ])
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "b-modal",
+        {
+          attrs: {
+            id: "modal-player-photo",
+            "hide-footer": "",
+            title: "Player Photo"
+          }
+        },
+        [
+          _vm.errorValidation
+            ? _c("div", {
+                staticClass: "alert alert-danger",
+                domProps: { innerHTML: _vm._s(_vm.errorValidation) }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _vm.form.left_photo && typeof _vm.form.left_photo == "string"
+              ? _c("img", {
+                  staticClass: "img-thumbnail mb-2",
+                  staticStyle: { "max-width": "30%" },
+                  attrs: {
+                    src:
+                      _vm.baseUrl + "assets/img/player/" + _vm.form.left_photo
+                  }
+                })
+              : _vm._e(),
+            _vm._v(" "),
+            _c("label", [_vm._v("Left Photo")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "input-group" }, [
+              _c("div", { staticClass: "custom-file" }, [
+                _c("input", {
+                  ref: "left_photo",
+                  staticClass: "custom-file-input",
+                  attrs: { id: "left-photo", type: "file" },
+                  on: {
+                    change: function($event) {
+                      return _vm.handleFileChange("left_photo")
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    ref: "left_photo_label",
+                    staticClass: "custom-file-label",
+                    attrs: { for: "left-photo" }
+                  },
+                  [_vm._v(_vm._s(_vm.customFileLabelLeft))]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "input-group-append" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.uploadPhoto("left_photo")
+                      }
+                    }
+                  },
+                  [_vm._v("Upload")]
+                )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _vm.form.right_photo && typeof _vm.form.right_photo == "string"
+              ? _c("img", {
+                  staticClass: "img-thumbnail mb-2",
+                  staticStyle: { "max-width": "30%" },
+                  attrs: {
+                    src:
+                      _vm.baseUrl + "assets/img/player/" + _vm.form.right_photo
+                  }
+                })
+              : _vm._e(),
+            _vm._v(" "),
+            _c("label", [_vm._v("Right Photo")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "input-group" }, [
+              _c("div", { staticClass: "custom-file" }, [
+                _c("input", {
+                  ref: "right_photo",
+                  staticClass: "custom-file-input",
+                  attrs: { id: "right-photo", type: "file" },
+                  on: {
+                    change: function($event) {
+                      return _vm.handleFileChange("right_photo")
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    ref: "left_photo_label",
+                    staticClass: "custom-file-label",
+                    attrs: { for: "right-photo" }
+                  },
+                  [_vm._v(_vm._s(_vm.customFileLabelRight))]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "input-group-append" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.uploadPhoto("right_photo")
+                      }
+                    }
+                  },
+                  [_vm._v("Upload")]
+                )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _vm.form.front_photo && typeof _vm.form.front_photo == "string"
+              ? _c("img", {
+                  staticClass: "img-thumbnail mb-2",
+                  staticStyle: { "max-width": "30%" },
+                  attrs: {
+                    src:
+                      _vm.baseUrl + "assets/img/player/" + _vm.form.front_photo
+                  }
+                })
+              : _vm._e(),
+            _vm._v(" "),
+            _c("label", [_vm._v("Front Photo")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "input-group" }, [
+              _c("div", { staticClass: "custom-file" }, [
+                _c("input", {
+                  ref: "front_photo",
+                  staticClass: "custom-file-input",
+                  attrs: { id: "front-photo", type: "file" },
+                  on: {
+                    change: function($event) {
+                      return _vm.handleFileChange("front_photo")
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    ref: "left_photo_label",
+                    staticClass: "custom-file-label",
+                    attrs: { for: "front-photo" }
+                  },
+                  [_vm._v(_vm._s(_vm.customFileLabelFront))]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "input-group-append" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.uploadPhoto("front_photo")
+                      }
+                    }
+                  },
+                  [_vm._v("Upload")]
+                )
+              ])
             ])
           ])
         ]
@@ -50815,7 +50870,9 @@ var render = function() {
                                   type: "text",
                                   autocomplete: "off",
                                   placeholder: "Enter division",
-                                  list: "divisionList"
+                                  list: "divisionList",
+                                  disabled:
+                                    _vm.countAchievement(item.category) > 3
                                 },
                                 domProps: {
                                   value: _vm.formAchievement[index].division
@@ -50873,7 +50930,9 @@ var render = function() {
                                 attrs: {
                                   id: "tournament_name",
                                   type: "text",
-                                  placeholder: "Enter tournament name"
+                                  placeholder: "Enter tournament name",
+                                  disabled:
+                                    _vm.countAchievement(item.category) > 3
                                 },
                                 domProps: {
                                   value:
@@ -50919,7 +50978,9 @@ var render = function() {
                                   staticClass: "form-control",
                                   attrs: {
                                     name: "winner_position",
-                                    id: "winner_position"
+                                    id: "winner_position",
+                                    disabled:
+                                      _vm.countAchievement(item.category) > 3
                                   },
                                   on: {
                                     change: function($event) {
@@ -51000,7 +51061,9 @@ var render = function() {
                                   staticClass: "form-control",
                                   attrs: {
                                     name: "achievement_city",
-                                    id: "achievement_city"
+                                    id: "achievement_city",
+                                    disabled:
+                                      _vm.countAchievement(item.category) > 3
                                   },
                                   on: {
                                     change: function($event) {
@@ -51076,7 +51139,9 @@ var render = function() {
                                   type: "number",
                                   placeholder: "Enter year",
                                   "max-length": "3000",
-                                  "min-length": "2000"
+                                  "min-length": "2000",
+                                  disabled:
+                                    _vm.countAchievement(item.category) > 3
                                 },
                                 domProps: {
                                   value:
@@ -51147,6 +51212,12 @@ var render = function() {
                                       "button",
                                       {
                                         staticClass: "btn btn-primary",
+                                        attrs: {
+                                          disabled:
+                                            _vm.countAchievement(
+                                              item.category
+                                            ) > 3
+                                        },
                                         on: {
                                           click: function($event) {
                                             $event.preventDefault()
@@ -51162,6 +51233,12 @@ var render = function() {
                                       "button",
                                       {
                                         staticClass: "btn btn-primary",
+                                        attrs: {
+                                          disabled:
+                                            _vm.countAchievement(
+                                              item.category
+                                            ) > 3
+                                        },
                                         on: {
                                           click: function($event) {
                                             $event.preventDefault()

@@ -32,11 +32,6 @@ class Player_model extends MY_Model
                 'rules' => 'required|trim',
             ],
             [
-                'field' => 'img',
-                'label' => 'img',
-                'rules' => 'trim',
-            ],
-            [
                 'field' => 'height',
                 'label' => 'height',
                 'rules' => 'numeric|trim',
