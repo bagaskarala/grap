@@ -39,12 +39,7 @@ class Player_model extends MY_Model
             [
                 'field' => 'weight',
                 'label' => 'weight',
-                'rules' => 'numeric|trim',
-            ],
-            [
-                'field' => 'achievement',
-                'label' => 'achievement',
-                'rules' => 'integer|trim',
+                'rules' => 'required|numeric|trim',
             ],
         ];
 

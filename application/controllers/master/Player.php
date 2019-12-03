@@ -34,14 +34,13 @@ class Player extends MY_Controller
         $request = parse_post_data();
 
         $data = [
-            'country_id'  => $request->country_id,
-            'club_id'     => $request->club_id,
-            'name'        => $request->name,
-            'nickname'    => $request->nickname,
-            'gender'      => $request->gender,
-            'height'      => $request->height,
-            'weight'      => $request->weight,
-            'achievement' => $request->achievement,
+            'country_id' => $request->country_id,
+            'club_id'    => $request->club_id,
+            'name'       => $request->name,
+            'nickname'   => $request->nickname,
+            'gender'     => $request->gender,
+            'height'     => $request->height,
+            'weight'     => $request->weight,
         ];
 
         // validasi
@@ -63,14 +62,13 @@ class Player extends MY_Controller
         $request = parse_post_data();
 
         $data = [
-            'country_id'  => $request->country_id,
-            'club_id'     => $request->club_id,
-            'name'        => $request->name,
-            'nickname'    => $request->nickname,
-            'gender'      => $request->gender,
-            'height'      => $request->height,
-            'weight'      => $request->weight,
-            'achievement' => $request->achievement,
+            'country_id' => $request->country_id,
+            'club_id'    => $request->club_id,
+            'name'       => $request->name,
+            'nickname'   => $request->nickname,
+            'gender'     => $request->gender,
+            'height'     => $request->height,
+            'weight'     => $request->weight,
         ];
 
         // validasi

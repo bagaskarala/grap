@@ -8554,14 +8554,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PlayerList',
@@ -8590,7 +8582,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         gender: null,
         height: null,
         weight: null,
-        achievement: null,
         left_photo: null,
         right_photo: null,
         front_photo: null
@@ -8876,8 +8867,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   nickname: this.form.nickname,
                   gender: this.form.gender,
                   height: this.form.height,
-                  weight: this.form.weight,
-                  achievement: this.form.achievement
+                  weight: this.form.weight
                 });
 
               case 3:
@@ -8925,8 +8915,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   nickname: this.form.nickname,
                   gender: this.form.gender,
                   height: this.form.height,
-                  weight: this.form.weight,
-                  achievement: this.form.achievement
+                  weight: this.form.weight
                 });
 
               case 3:
@@ -9411,6 +9400,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     'form.weight': function formWeight(val) {
       // jika negatif maka jadikan positif
       if (val < 0) this.form.weight = Math.abs(this.form.weight);
+      if (val > 200) this.form.weight = 200;
     },
     'form.height': function formHeight(val) {
       // jika negatif maka jadikan positif
@@ -50588,7 +50578,9 @@ var render = function() {
                   attrs: {
                     id: "weight",
                     type: "number",
-                    placeholder: "Enter weight"
+                    placeholder: "Enter weight",
+                    max: "200",
+                    min: "0"
                   },
                   domProps: { value: _vm.form.weight },
                   on: {
@@ -50610,46 +50602,6 @@ var render = function() {
                   ])
                 ])
               ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "achievement" } }, [
-                _vm._v("Achievement")
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model.number",
-                    value: _vm.form.achievement,
-                    expression: "form.achievement",
-                    modifiers: { number: true }
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: {
-                  id: "achievement",
-                  type: "number",
-                  placeholder: "Enter achievement"
-                },
-                domProps: { value: _vm.form.achievement },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(
-                      _vm.form,
-                      "achievement",
-                      _vm._n($event.target.value)
-                    )
-                  },
-                  blur: function($event) {
-                    return _vm.$forceUpdate()
-                  }
-                }
-              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "d-flex justify-content-end" }, [

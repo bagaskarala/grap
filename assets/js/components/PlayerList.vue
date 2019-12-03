@@ -200,21 +200,13 @@
               type="number"
               class="form-control"
               placeholder="Enter weight"
+              max="200"
+              min="0"
             >
             <div class="input-group-append">
               <span class="input-group-text">kg</span>
             </div>
           </div>
-        </div>
-        <div class="form-group">
-          <label for="achievement">Achievement</label>
-          <input
-            id="achievement"
-            v-model.number="form.achievement"
-            type="number"
-            class="form-control"
-            placeholder="Enter achievement"
-          >
         </div>
         <div class="d-flex justify-content-end">
           <div
@@ -570,7 +562,6 @@ export default {
         gender: null,
         height: null,
         weight: null,
-        achievement: null,
         left_photo: null,
         right_photo: null,
         front_photo: null
@@ -682,8 +673,7 @@ export default {
           nickname: this.form.nickname,
           gender: this.form.gender,
           height: this.form.height,
-          weight: this.form.weight,
-          achievement: this.form.achievement
+          weight: this.form.weight
         });
 
         this.$noty.success('Success Insert Data');
@@ -706,8 +696,7 @@ export default {
           nickname: this.form.nickname,
           gender: this.form.gender,
           height: this.form.height,
-          weight: this.form.weight,
-          achievement: this.form.achievement
+          weight: this.form.weight
         });
 
         this.$noty.success('Success Update Data');
@@ -994,6 +983,7 @@ export default {
     'form.weight'(val) {
       // jika negatif maka jadikan positif
       if (val < 0) this.form.weight = Math.abs(this.form.weight);
+      if (val > 200) this.form.weight = 200;
     },
     'form.height'(val) {
       // jika negatif maka jadikan positif
