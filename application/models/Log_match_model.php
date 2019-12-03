@@ -222,8 +222,14 @@ class Log_match_model extends MY_Model
             foreach ($pd_pools as $pd_item) {
                 $this->where('division_id', $division_id);
                 $this->where('pool_number', $pd_item['pool_number']);
-                $pd_pools = $this->get_all_array('player_division');
-                array_push($pool_bucket, [$pd_item['pool_number'] => $pd_pools]);
+                $pd_in_pools = $this->get_all_array('player_division');
+                if (count($pd_in_pools) < 2) {
+                    return [
+                        'status'  => false,
+                        'message' => 'Minimum player per pool is 2',
+                    ];
+                }
+                array_push($pool_bucket, [$pd_item['pool_number'] => $pd_in_pools]);
             }
 
             // generate player, matching roundrobin

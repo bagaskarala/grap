@@ -630,8 +630,8 @@ export default {
       let { id, division_id, player_id, pool_number } = item;
       this.form.id = id;
       this.form.division_id = division_id;
-      this.form.player_id = player_id;
       this.form.pool_number = pool_number;
+      this.form.player_id = player_id;
     },
 
     resetData() {
@@ -733,8 +733,10 @@ export default {
       this.playerFilter.minWeight = findDivision.min_weight;
       this.playerFilter.maxWeight = findDivision.max_weight;
 
-      // reset player
-      this.form.player_id = null;
+      // reset player ketika berganti divisi
+      if (this.modalState == 'add') {
+        this.form.player_id = null;
+      }
 
       // Debounce 1s
       clearTimeout(timeoutDebounce);

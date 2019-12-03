@@ -7839,8 +7839,8 @@ var timeoutDebounce = null;
           pool_number = item.pool_number;
       this.form.id = id;
       this.form.division_id = division_id;
-      this.form.player_id = player_id;
       this.form.pool_number = pool_number;
+      this.form.player_id = player_id;
     },
     resetData: function resetData() {
       this.errorValidation = null;
@@ -7958,9 +7958,12 @@ var timeoutDebounce = null;
 
 
       this.playerFilter.minWeight = findDivision.min_weight;
-      this.playerFilter.maxWeight = findDivision.max_weight; // reset player
+      this.playerFilter.maxWeight = findDivision.max_weight; // reset player ketika berganti divisi
 
-      this.form.player_id = null; // Debounce 1s
+      if (this.modalState == 'add') {
+        this.form.player_id = null;
+      } // Debounce 1s
+
 
       clearTimeout(timeoutDebounce);
       var self = this;
