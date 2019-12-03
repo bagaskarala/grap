@@ -75,19 +75,18 @@ class Log_match_model extends MY_Model
         $result = [];
         // baca tahun di setting
         $setting   = $this->get_single_array('setting');
-        $last_city = $setting['city'];
         $last_year = $setting['year'] - 1;
         foreach ($log_matchs as $value) {
-            // cari kejuaraan pada masing2 player di tahun lalu dan kota yang sama dengan setting
+            // cari kejuaraan GRAPPLING pada masing2 player di tahun lalu
             $this->where('player_id', $value['player1_id']);
             $this->where('achievement_year', $last_year);
-            $this->where('achievement_city', $last_city);
+            $this->where('category', 'grappling');
             $this->order_by('id', 'desc');
             $value['player1_last_achievement'] = $this->get_single_array('achievement');
 
             $this->where('player_id', $value['player2_id']);
             $this->where('achievement_year', $last_year);
-            $this->where('achievement_city', $last_city);
+            $this->where('category', 'grappling');
             $this->order_by('id', 'desc');
             $value['player2_last_achievement'] = $this->get_single_array('achievement');
 
@@ -334,10 +333,9 @@ class Log_match_model extends MY_Model
 
         // loop player_division, masukkan urut dari atas player1 semua, lalu player2
         $index_counter = 1;
-        $flag          = true;
         // baca tahun di setting
         $setting             = $this->get_single_array('setting');
-        $last_city           = $setting['city'];
+        $last_category       = 'grappling';
         $last_year           = $setting['year'] - 1;
         $arr_generate_player = [];
 
@@ -346,7 +344,7 @@ class Log_match_model extends MY_Model
             // cari kejuaraan pada masing2 player di tahun lalu dan kota yang sama
             $this->where('player_id', $player_division['player_id']);
             $this->where('achievement_year', $last_year);
-            $this->where('achievement_city', $last_city);
+            $this->where('category', $last_category);
             $this->order_by('id', 'desc');
             $last_year_achievement = $this->get_single_array('achievement');
 
@@ -354,7 +352,6 @@ class Log_match_model extends MY_Model
                 'pd_id'                 => $player_division['id'],
                 'idx'                   => $index_counter,
                 'name'                  => $player_division['name'],
-                'year'                  => $last_year,
                 'last_year_achievement' => $last_year_achievement,
             ]);
             $index_counter++;
@@ -365,12 +362,12 @@ class Log_match_model extends MY_Model
          */
 
         // filter player yang punya juara tahun lalu di kota yang sama
-        $players_with_achievement = array_filter($arr_generate_player, function ($item) use ($last_city, $last_year) {
-            return $item['last_year_achievement']['achievement_city'] == $last_city && $item['last_year_achievement']['achievement_year'] == $last_year;
+        $players_with_achievement = array_filter($arr_generate_player, function ($item) use ($last_category) {
+            return $item['last_year_achievement']['category'] == $last_category;
         });
 
         // filter player polosan / tanpa achievement
-        $players = array_filter($arr_generate_player, function ($item) use ($last_city, $last_year) {
+        $players = array_filter($arr_generate_player, function ($item) {
             return $item['last_year_achievement'] == null;
         });
 
@@ -383,7 +380,7 @@ class Log_match_model extends MY_Model
                 // juara salah satu bawah sendiri
                 array_splice($players, $first_index_match_count - 2, 0, [$value]);
             } else {
-                // juara 3 ,atch tengah
+                // juara lainnya di tengah
                 array_splice($players, count($arr_generate_player) / 4, 0, [$value]);
             }
             $idx++;
