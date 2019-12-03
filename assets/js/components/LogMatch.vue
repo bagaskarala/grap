@@ -193,16 +193,9 @@
               </template>
 
               <template v-slot:cell(action)="data">
-                <span
-                  v-if="data.item.pd1_id == null && data.item.pd2_id == null && data.item.match_status == 2"
-                  class="text-danger font-italic"
-                >Skipped Match</span>
-                <div
-                  v-else
-                  class="min-width-10"
-                >
+                <div class="min-width-10">
                   <button
-                    :disabled="data.item.pd1_id == null && data.item.pd2_id == null"
+                    :disabled="data.item.pd1_id == null || data.item.pd2_id == null"
                     class="btn btn-sm btn-primary"
                     @click.prevent="goToDetail(data.item)"
                   ><i class="fa fa-eye fa-fw"></i></button>
@@ -450,7 +443,8 @@ export default {
     },
 
     logMatchsFiltered() {
-      return this.logMatchs.filter(item => item.winner != -1);
+      return this.logMatchs;
+      // return this.logMatchs.filter(item => item.winner != -1);
     }
   },
 
@@ -544,13 +538,16 @@ export default {
         return;
       }
 
-      const checkGeneratedPlayer = this.logMatchs.find(lm => {
-        return lm.pd1_id == this.form.pd1_id && lm.pd2_id == this.form.pd2_id || lm.pd1_id == this.form.pd2_id && lm.pd2_id == this.form.pd1_id;
-      });
+      // jika keduanya tidak null, maka cek lebih lanjut
+      if (this.form.pd1_id || this.form.pd2_id) {
+        const checkGeneratedPlayer = this.logMatchs.find(lm => {
+          return lm.pd1_id == this.form.pd1_id && lm.pd2_id == this.form.pd2_id || lm.pd1_id == this.form.pd2_id && lm.pd2_id == this.form.pd1_id;
+        });
 
-      if (checkGeneratedPlayer) {
-        this.$noty.error('This player matching has been generated');
-        return;
+        if (checkGeneratedPlayer) {
+          this.$noty.error('This player matching has been generated');
+          return;
+        }
       }
 
       try {
@@ -763,6 +760,9 @@ export default {
 
     winnerMark(item, playerDivision) {
       if (item.match_status == 0) return '';
+
+      // skipped match
+      if (item.winner == -1) return 'text-dark';
 
       // draw
       if (item.match_status == 2 && item.winner == 0) {

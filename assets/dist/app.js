@@ -4706,13 +4706,6 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'LogMatch',
@@ -4847,9 +4840,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       }) ? true : false;
     },
     logMatchsFiltered: function logMatchsFiltered() {
-      return this.logMatchs.filter(function (item) {
-        return item.winner != -1;
-      });
+      return this.logMatchs; // return this.logMatchs.filter(item => item.winner != -1);
     }
   },
   methods: {
@@ -5001,28 +4992,33 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 return _context3.abrupt("return");
 
               case 3:
+                if (!(this.form.pd1_id || this.form.pd2_id)) {
+                  _context3.next = 8;
+                  break;
+                }
+
                 checkGeneratedPlayer = this.logMatchs.find(function (lm) {
                   return lm.pd1_id == _this2.form.pd1_id && lm.pd2_id == _this2.form.pd2_id || lm.pd1_id == _this2.form.pd2_id && lm.pd2_id == _this2.form.pd1_id;
                 });
 
                 if (!checkGeneratedPlayer) {
-                  _context3.next = 7;
+                  _context3.next = 8;
                   break;
                 }
 
                 this.$noty.error('This player matching has been generated');
                 return _context3.abrupt("return");
 
-              case 7:
-                _context3.prev = 7;
-                _context3.next = 10;
+              case 8:
+                _context3.prev = 8;
+                _context3.next = 11;
                 return this.$axios.post("entry/log_match/update/".concat(this.form.id), {
                   division_id: this.form.division_id,
                   pd1_id: this.form.pd1_id,
                   pd2_id: this.form.pd2_id
                 });
 
-              case 10:
+              case 11:
                 // tampilkan data setelah aksi
                 if (this.filterDivisionId) {
                   this.filterData(this.filterDivisionId);
@@ -5032,22 +5028,22 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
                 this.$noty.success('Success Update Data');
                 this.$bvModal.hide('modal-log-match');
-                _context3.next = 20;
+                _context3.next = 21;
                 break;
 
-              case 15:
-                _context3.prev = 15;
-                _context3.t0 = _context3["catch"](7);
+              case 16:
+                _context3.prev = 16;
+                _context3.t0 = _context3["catch"](8);
                 console.log(_context3.t0.response);
                 this.errorValidation = _context3.t0.response.data.message;
                 this.$noty.error('Failed Update Data');
 
-              case 20:
+              case 21:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, this, [[7, 15]]);
+        }, _callee3, this, [[8, 16]]);
       }));
 
       function updateData() {
@@ -5417,7 +5413,9 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       if (item.winner === -1) return 'table-secondary';
     },
     winnerMark: function winnerMark(item, playerDivision) {
-      if (item.match_status == 0) return ''; // draw
+      if (item.match_status == 0) return ''; // skipped match
+
+      if (item.winner == -1) return 'text-dark'; // draw
 
       if (item.match_status == 2 && item.winner == 0) {
         return 'text-primary';
@@ -47105,71 +47103,61 @@ var render = function() {
                             key: "cell(action)",
                             fn: function(data) {
                               return [
-                                data.item.pd1_id == null &&
-                                data.item.pd2_id == null &&
-                                data.item.match_status == 2
-                                  ? _c(
-                                      "span",
-                                      {
-                                        staticClass: "text-danger font-italic"
+                                _c("div", { staticClass: "min-width-10" }, [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-sm btn-primary",
+                                      attrs: {
+                                        disabled:
+                                          data.item.pd1_id == null ||
+                                          data.item.pd2_id == null
                                       },
-                                      [_vm._v("Skipped Match")]
-                                    )
-                                  : _c("div", { staticClass: "min-width-10" }, [
-                                      _c(
-                                        "button",
-                                        {
-                                          staticClass: "btn btn-sm btn-primary",
-                                          attrs: {
-                                            disabled:
-                                              data.item.pd1_id == null &&
-                                              data.item.pd2_id == null
-                                          },
-                                          on: {
-                                            click: function($event) {
-                                              $event.preventDefault()
-                                              return _vm.goToDetail(data.item)
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c("i", {
-                                            staticClass: "fa fa-eye fa-fw"
-                                          })
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "button",
-                                        {
-                                          staticClass: "btn btn-sm btn-warning",
-                                          attrs: {
-                                            title: _vm.lockMatch
-                                              ? "Disabled when match has been started"
-                                              : "Edit player matching",
-                                            disabled: _vm.lockMatch
-                                          },
-                                          on: {
-                                            click: function($event) {
-                                              $event.preventDefault()
-                                              return _vm.loadData(data.item)
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c("i", {
-                                            staticClass: "fa fa-edit fa-fw"
-                                          })
-                                        ]
-                                      )
-                                    ])
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.goToDetail(data.item)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "fa fa-eye fa-fw"
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-sm btn-warning",
+                                      attrs: {
+                                        title: _vm.lockMatch
+                                          ? "Disabled when match has been started"
+                                          : "Edit player matching",
+                                        disabled: _vm.lockMatch
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.loadData(data.item)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "fa fa-edit fa-fw"
+                                      })
+                                    ]
+                                  )
+                                ])
                               ]
                             }
                           }
                         ],
                         null,
                         false,
-                        1712619714
+                        4040159987
                       )
                     })
                   : _vm._e()
