@@ -60,6 +60,21 @@ class Achievement extends MY_Controller
             'division'         => $request->division,
         ];
 
+        // ketika save achievement pada pemenang, ambil setting
+        $setting = $this->achievement->get_single_array('setting');
+
+        if ($data['achievement_year'] == null) {
+            $data['achievement_year'] = $setting['year'];
+        }
+
+        if ($data['achievement_city'] == null) {
+            $data['achievement_city'] = $setting['city'];
+        }
+
+        if ($data['tournament_name'] == null) {
+            $data['tournament_name'] = 'SUPPER GRAPPLER';
+        }
+
         // validasi
         if ($this->achievement->validate($data) == false) {
             return $this->send_json_output(validation_errors(), false, 422);

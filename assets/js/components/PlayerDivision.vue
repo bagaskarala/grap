@@ -154,7 +154,14 @@
               </template>
 
               <template v-slot:cell(action)="data">
-                <div class="min-width-7">
+                <div class="min-width-10 text-right">
+                  <button
+                    v-if="data.item.division_winner"
+                    title="Save achievement to player"
+                    class="btn btn-success btn-sm"
+                    :disabled="isAchievementSaved(data.item)"
+                    @click="saveAchievement(data.item)"
+                  ><i class="fa fa-save fa-fw"></i></button>
                   <button
                     :title="lockMatch? 'Disabled when match has been started' : 'Edit player'"
                     :disabled="lockMatch"
@@ -323,7 +330,8 @@ export default {
       errorValidation: null,
       filterDivisionId: null,
       matchSystem: null,
-      logMatchs: []
+      logMatchs: [],
+      setting: {}
     };
   },
 
@@ -366,6 +374,16 @@ export default {
       } catch (error) {
         console.log(error.response);
         this.$noty.error('Failed Fetch Players');
+      }
+    },
+
+    async getSetting() {
+      try {
+        const setting = await this.$axios.get('setting/get');
+        this.setting = setting.data.data;
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Fetch Setting');
       }
     },
 
@@ -651,6 +669,36 @@ export default {
       } else {
         return '3rd Winner';
       }
+    },
+
+    async saveAchievement(item) {
+      try {
+        await this.$axios.post('master/achievement/insert', {
+          tournament_name: null,
+          achievement_city: null,
+          achievement_year: null,
+          winner_position: item.division_winner,
+          division: item.division,
+          category: 'grappling',
+          player_id: item.player_id
+        });
+        this.filterData(this.filterDivisionId);
+        this.$noty.success('Success Insert Achivement');
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Insert Achivement');
+      }
+    },
+
+    isAchievementSaved(item) {
+      if (item.last_achievement && item.division == item.last_achievement.division
+        && item.division_winner == item.last_achievement.winner_position
+        && this.setting.year == item.last_achievement.achievement_year
+        && this.setting.city == item.last_achievement.achievement_city) {
+        return true;
+      } else {
+        return false;
+      }
     }
   },
 
@@ -665,6 +713,7 @@ export default {
 
     this.getDivisions();
     this.getPlayers();
+    this.getSetting();
   },
 
   watch: {
@@ -722,8 +771,5 @@ export default {
 <style lang="css">
 .min-width-10 {
   min-width: 10rem;
-}
-.min-width-7 {
-  min-width: 7rem;
 }
 </style>

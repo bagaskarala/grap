@@ -53,14 +53,25 @@ class Achievement_model extends MY_Model
         $count_achievement = $this->count();
         if ($count_achievement == 3) {
 
-            //     $this->db->select('MIN(ACHIevement_year) as oldest_achievement');
-            // $this->where('division_id', $log_match['division_id']);
-            // $idx = $this->get_single_array();
+            $this->db->select('MIN(achievement_year) as oldest_achievement');
+            $this->where('player_id', $data['player_id']);
+            $this->order_by('id');
+            $item = $this->get_single_array('achievement');
+
+            $this->update($data, [
+                'achievement_year' => $item['oldest_achievement'],
+                'player_id'        => $data['player_id'],
+            ]);
 
             return [
-                'status'  => false,
-                'message' => '3 max achievement per category, just edit your oldest achievement',
+                'status' => true,
+                'data'   => 'good',
             ];
+
+            // return [
+            //     'status'  => false,
+            //     'message' => '3 max achievement per category, just edit your oldest achievement',
+            // ];
         }
 
         if ($this->insert($data)) {
