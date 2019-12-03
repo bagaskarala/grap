@@ -391,7 +391,7 @@
             <div class="form-group">
               <div class="row">
                 <div class="col">
-                  <label for="division">Category</label>
+                  <label for="division_id">Category</label>
                   <select
                     id="category"
                     class="form-control"
@@ -405,23 +405,23 @@
                   </select>
                 </div>
                 <div class="col">
-                  <label for="division">Division</label>
-                  <input
-                    id="division"
-                    v-model="formAchievement[index].division"
-                    type="text"
-                    autocomplete="off"
+                  <label for="division_id">Division</label>
+                  <select
+                    id="division_id"
                     class="form-control"
-                    placeholder="Enter division"
-                    list="divisionList"
+                    v-model.number="formAchievement[index].division_id"
                     :disabled="countAchievement(item.category) > 3"
                   >
-                  <datalist id="divisionList">
                     <option
-                      v-for="division in divisionOptions"
-                      :key="division.id"
-                    >{{ division.division }}</option>
-                  </datalist>
+                      :value="null"
+                      disabled
+                    >Select Division</option>
+                    <option
+                      v-for="item in divisionOptions"
+                      :key="item.id"
+                      :value="item.id"
+                    >{{ item.division }}</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -450,7 +450,7 @@
                     <option
                       :value="null"
                       disabled
-                    >Choose Position</option>
+                    >Select Position</option>
                     <option
                       v-for="item in winnerPositionOptions"
                       :key="item.value"
@@ -826,23 +826,22 @@ export default {
       let notSaved = this.formAchievement.find(item => {
         return item.id == undefined;
       });
-      console.log(notSaved);
       if (notSaved) {
         this.$noty.warning('Save your new achievement, before insert another achievement');
         return;
       }
 
       // auto select grappling, jika general sudah 3
-      let categorySelected = 'general';
-      if (this.countAchievement('general') == 3) {
-        categorySelected = 'grappling';
+      let categorySelected = 'grappling';
+      if (this.countAchievement('grappling') == 3) {
+        categorySelected = 'general';
       }
 
       this.formAchievement.push({
         achievement_city: null,
         achievement_year: null,
         category: categorySelected,
-        division: null,
+        division_id: null,
         tournament_name: null,
         winner_position: null
       });
@@ -887,7 +886,7 @@ export default {
           winner_position: ach.winner_position,
           achievement_city: ach.achievement_city,
           achievement_year: ach.achievement_year,
-          division: ach.division,
+          division_id: ach.division_id,
           category: ach.category,
           player_id: this.form.id
         });
@@ -911,7 +910,7 @@ export default {
           winner_position: ach.winner_position,
           achievement_city: ach.achievement_city,
           achievement_year: ach.achievement_year,
-          division: ach.division,
+          division_id: ach.division_id,
           category: ach.category,
           player_id: this.form.id
         });
@@ -955,7 +954,7 @@ export default {
       this.formAchievement[this.tabIndex].winner_position = null;
       this.formAchievement[this.tabIndex].achievement_city = null;
       this.formAchievement[this.tabIndex].achievement_year = null;
-      this.formAchievement[this.tabIndex].division = null;
+      this.formAchievement[this.tabIndex].division_id = null;
       this.formAchievement[this.tabIndex].category = null;
     },
 

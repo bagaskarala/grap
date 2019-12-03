@@ -4076,6 +4076,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'DivisionList',
   data: function data() {
@@ -4114,7 +4115,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return "Division ".concat(this.form.min_weight, " kg - ").concat(this.form.max_weight, " kg");
       }
     },
-    divisonName: function divisonName() {
+    divisionName: function divisionName() {
       if (this.customName) {
         return this.form.division;
       } else {
@@ -4173,7 +4174,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context2.prev = 0;
                 _context2.next = 3;
                 return this.$axios.post('master/division/insert', {
-                  division: this.divisonName,
+                  division: this.divisionName,
                   min_weight: this.form.min_weight,
                   max_weight: this.form.max_weight,
                   gender: this.form.gender,
@@ -4221,7 +4222,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context3.prev = 0;
                 _context3.next = 3;
                 return this.$axios.post("master/division/update/".concat(this.form.id), {
-                  division: this.divisonName,
+                  division: this.divisionName,
                   min_weight: this.form.min_weight,
                   max_weight: this.form.max_weight,
                   gender: this.form.gender,
@@ -7179,9 +7180,9 @@ var timeoutDebounce = null;
   computed: {
     fieldPlayerDivision: function fieldPlayerDivision() {
       if (this.matchSystem == 'elimination') {
-        return ['last_achievement', 'club', 'name', 'division_winner', 'action'];
+        return ['name', 'club', 'last_achievement', 'division_winner', 'action'];
       } else {
-        return ['last_achievement', 'club', 'name', 'pool_number', 'win', 'draw', 'lose', 'total_time', 'pool_winner', 'division_winner', 'action'];
+        return ['name', 'club', 'last_achievement', 'pool_number', 'win', 'draw', 'lose', 'total_time', 'pool_winner', 'division_winner', 'action'];
       }
     },
     lockMatch: function lockMatch() {
@@ -7891,7 +7892,7 @@ var timeoutDebounce = null;
                   achievement_city: null,
                   achievement_year: null,
                   winner_position: item.division_winner,
-                  division: item.division,
+                  division_id: item.division_id,
                   category: 'grappling',
                   player_id: item.player_id
                 });
@@ -7923,7 +7924,7 @@ var timeoutDebounce = null;
       return saveAchievement;
     }(),
     isAchievementSaved: function isAchievementSaved(item) {
-      if (item.last_achievement && item.division == item.last_achievement.division && item.division_winner == item.last_achievement.winner_position && this.setting.year == item.last_achievement.achievement_year && this.setting.city == item.last_achievement.achievement_city) {
+      if (item.last_achievement && item.division_id == item.last_achievement.division_id && item.last_achievement.category == 'grappling' && item.division_winner == item.last_achievement.winner_position && this.setting.year == item.last_achievement.achievement_year && this.setting.city == item.last_achievement.achievement_city) {
         return true;
       } else {
         return false;
@@ -9142,7 +9143,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var notSaved = this.formAchievement.find(function (item) {
         return item.id == undefined;
       });
-      console.log(notSaved);
 
       if (notSaved) {
         this.$noty.warning('Save your new achievement, before insert another achievement');
@@ -9150,17 +9150,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       } // auto select grappling, jika general sudah 3
 
 
-      var categorySelected = 'general';
+      var categorySelected = 'grappling';
 
-      if (this.countAchievement('general') == 3) {
-        categorySelected = 'grappling';
+      if (this.countAchievement('grappling') == 3) {
+        categorySelected = 'general';
       }
 
       this.formAchievement.push({
         achievement_city: null,
         achievement_year: null,
         category: categorySelected,
-        division: null,
+        division_id: null,
         tournament_name: null,
         winner_position: null
       });
@@ -9223,7 +9223,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   winner_position: ach.winner_position,
                   achievement_city: ach.achievement_city,
                   achievement_year: ach.achievement_year,
-                  division: ach.division,
+                  division_id: ach.division_id,
                   category: ach.category,
                   player_id: this.form.id
                 });
@@ -9279,7 +9279,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   winner_position: ach.winner_position,
                   achievement_city: ach.achievement_city,
                   achievement_year: ach.achievement_year,
-                  division: ach.division,
+                  division_id: ach.division_id,
                   category: ach.category,
                   player_id: this.form.id
                 });
@@ -9375,7 +9375,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.formAchievement[this.tabIndex].winner_position = null;
       this.formAchievement[this.tabIndex].achievement_city = null;
       this.formAchievement[this.tabIndex].achievement_year = null;
-      this.formAchievement[this.tabIndex].division = null;
+      this.formAchievement[this.tabIndex].division_id = null;
       this.formAchievement[this.tabIndex].category = null;
     },
     resetData: function resetData() {
@@ -46211,7 +46211,11 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { id: "division", type: "text" },
+                      attrs: {
+                        id: "division",
+                        type: "text",
+                        placeholder: "Enter custom division name"
+                      },
                       domProps: { value: _vm.form.division },
                       on: {
                         input: function($event) {
@@ -50940,7 +50944,7 @@ var render = function() {
                         _c("div", { staticClass: "form-group" }, [
                           _c("div", { staticClass: "row" }, [
                             _c("div", { staticClass: "col" }, [
-                              _c("label", { attrs: { for: "division" } }, [
+                              _c("label", { attrs: { for: "division_id" } }, [
                                 _vm._v("Category")
                               ]),
                               _vm._v(" "),
@@ -50998,56 +51002,75 @@ var render = function() {
                             ]),
                             _vm._v(" "),
                             _c("div", { staticClass: "col" }, [
-                              _c("label", { attrs: { for: "division" } }, [
+                              _c("label", { attrs: { for: "division_id" } }, [
                                 _vm._v("Division")
                               ]),
                               _vm._v(" "),
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.formAchievement[index].division,
-                                    expression:
-                                      "formAchievement[index].division"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: {
-                                  id: "division",
-                                  type: "text",
-                                  autocomplete: "off",
-                                  placeholder: "Enter division",
-                                  list: "divisionList",
-                                  disabled:
-                                    _vm.countAchievement(item.category) > 3
-                                },
-                                domProps: {
-                                  value: _vm.formAchievement[index].division
-                                },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      _vm.formAchievement[index],
-                                      "division",
-                                      $event.target.value
-                                    )
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
                               _c(
-                                "datalist",
-                                { attrs: { id: "divisionList" } },
-                                _vm._l(_vm.divisionOptions, function(division) {
-                                  return _c("option", { key: division.id }, [
-                                    _vm._v(_vm._s(division.division))
-                                  ])
-                                }),
-                                0
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model.number",
+                                      value:
+                                        _vm.formAchievement[index].division_id,
+                                      expression:
+                                        "formAchievement[index].division_id",
+                                      modifiers: { number: true }
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    id: "division_id",
+                                    disabled:
+                                      _vm.countAchievement(item.category) > 3
+                                  },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return _vm._n(val)
+                                        })
+                                      _vm.$set(
+                                        _vm.formAchievement[index],
+                                        "division_id",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "option",
+                                    {
+                                      attrs: { disabled: "" },
+                                      domProps: { value: null }
+                                    },
+                                    [_vm._v("Select Division")]
+                                  ),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.divisionOptions, function(item) {
+                                    return _c(
+                                      "option",
+                                      {
+                                        key: item.id,
+                                        domProps: { value: item.id }
+                                      },
+                                      [_vm._v(_vm._s(item.division))]
+                                    )
+                                  })
+                                ],
+                                2
                               )
                             ])
                           ])
@@ -51160,7 +51183,7 @@ var render = function() {
                                       attrs: { disabled: "" },
                                       domProps: { value: null }
                                     },
-                                    [_vm._v("Choose Position")]
+                                    [_vm._v("Select Position")]
                                   ),
                                   _vm._v(" "),
                                   _vm._l(_vm.winnerPositionOptions, function(

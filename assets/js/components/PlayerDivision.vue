@@ -338,9 +338,9 @@ export default {
   computed: {
     fieldPlayerDivision() {
       if (this.matchSystem == 'elimination') {
-        return ['last_achievement', 'club', 'name', 'division_winner', 'action'];
+        return ['name', 'club', 'last_achievement', 'division_winner', 'action'];
       } else {
-        return ['last_achievement', 'club', 'name', 'pool_number', 'win', 'draw', 'lose', 'total_time', 'pool_winner', 'division_winner', 'action'];
+        return ['name', 'club', 'last_achievement', 'pool_number', 'win', 'draw', 'lose', 'total_time', 'pool_winner', 'division_winner', 'action'];
       }
     },
 
@@ -678,7 +678,7 @@ export default {
           achievement_city: null,
           achievement_year: null,
           winner_position: item.division_winner,
-          division: item.division,
+          division_id: item.division_id,
           category: 'grappling',
           player_id: item.player_id
         });
@@ -691,7 +691,9 @@ export default {
     },
 
     isAchievementSaved(item) {
-      if (item.last_achievement && item.division == item.last_achievement.division
+      if (item.last_achievement
+        && item.division_id == item.last_achievement.division_id
+        && item.last_achievement.category == 'grappling'
         && item.division_winner == item.last_achievement.winner_position
         && this.setting.year == item.last_achievement.achievement_year
         && this.setting.city == item.last_achievement.achievement_city) {

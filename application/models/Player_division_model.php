@@ -62,7 +62,7 @@ class Player_division_model extends MY_Model
             // cari achievement terakhir
             $this->where('player_id', $value['player_id']);
             $this->order_by('achievement_year', 'desc');
-            $this->order_by('id', 'desc');
+            $this->order_by('category', 'desc');
             $value['last_achievement'] = $this->get_single_array('achievement');
             array_push($result, $value);
         }

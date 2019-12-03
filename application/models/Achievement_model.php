@@ -37,8 +37,8 @@ class Achievement_model extends MY_Model
                 'rules' => 'required|trim',
             ],
             [
-                'field' => 'division',
-                'label' => 'division',
+                'field' => 'division_id',
+                'label' => 'division_id',
                 'rules' => 'required|trim',
             ],
         ];
@@ -53,31 +53,38 @@ class Achievement_model extends MY_Model
         $count_achievement = $this->count();
         if ($count_achievement == 3) {
 
-            $this->db->select('MIN(achievement_year) as oldest_achievement');
+            // cek achievement terlama
+            $this->db->select('MIN(achievement_year) as oldest_achievement, id');
             $this->where('player_id', $data['player_id']);
+            $this->where('category', $data['category']);
             $this->order_by('id');
             $item = $this->get_single_array('achievement');
 
-            $this->update($data, [
-                'achievement_year' => $item['oldest_achievement'],
-                'player_id'        => $data['player_id'],
-            ]);
+            // update data lama,
+            $result = $this->update($data, ['id' => $item['id']]);
 
-            return [
-                'status' => true,
-                'data'   => 'good',
-            ];
-
-            // return [
-            //     'status'  => false,
-            //     'message' => '3 max achievement per category, just edit your oldest achievement',
-            // ];
+            if ($result) {
+                return [
+                    'status' => true,
+                    'data'   => 'Success update old achievement',
+                ];
+            } else {
+                return [
+                    'status'  => false,
+                    'message' => $item,
+                ];
+            }
         }
 
         if ($this->insert($data)) {
             return [
                 'status' => true,
-                'data'   => 'good',
+                'data'   => 'Success insert achievement',
+            ];
+        } else {
+            return [
+                'status'  => false,
+                'message' => 'Failed insert achievement',
             ];
         }
     }

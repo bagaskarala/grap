@@ -57,7 +57,7 @@ class Achievement extends MY_Controller
             'achievement_city' => $request->achievement_city,
             'achievement_year' => $request->achievement_year,
             'category'         => $request->category,
-            'division'         => $request->division,
+            'division_id'      => $request->division_id,
         ];
 
         // ketika save achievement pada pemenang, ambil setting
@@ -72,7 +72,7 @@ class Achievement extends MY_Controller
         }
 
         if ($data['tournament_name'] == null) {
-            $data['tournament_name'] = 'SUPPER GRAPPLER';
+            $data['tournament_name'] = 'Super Grappler';
         }
 
         // validasi
@@ -100,7 +100,7 @@ class Achievement extends MY_Controller
             'achievement_city' => $request->achievement_city,
             'achievement_year' => $request->achievement_year,
             'category'         => $request->category,
-            'division'         => $request->division,
+            'division_id'      => $request->division_id,
         ];
 
         // validasi

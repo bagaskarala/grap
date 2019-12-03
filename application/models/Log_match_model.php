@@ -83,6 +83,7 @@ class Log_match_model extends MY_Model
             // cari kejuaraan GRAPPLING pada masing2 player di grappling terakhir
             $this->where('player_id', $value['player1_id']);
             $this->where('category', $category);
+            $this->where('division_id', $division_id);
             $this->where('achievement_year', $ach['latest_grappling_year']);
             $this->order_by('achievement_year', 'desc');
             $this->order_by('id', 'desc');
@@ -90,6 +91,7 @@ class Log_match_model extends MY_Model
 
             $this->where('player_id', $value['player2_id']);
             $this->where('category', $category);
+            $this->where('division_id', $division_id);
             $this->where('achievement_year', $ach['latest_grappling_year']);
             $this->order_by('achievement_year', 'desc');
             $this->order_by('id', 'desc');
@@ -345,9 +347,10 @@ class Log_match_model extends MY_Model
         $arr_generate_player = [];
         // generate array dengan achievement
         foreach ($player_divisions as $player_division) {
-            // cari kejuaraan pada masing2 player di tahun lalu dan kota yang sama
+            // cari kejuaraan pada masing2 player pada match grappling terakhir, dan divisi yang sama
             $this->where('player_id', $player_division['player_id']);
             $this->where('category', $category);
+            $this->where('division_id', $division_id);
             $this->where('achievement_year', $ach['latest_grappling_year']);
             $this->order_by('achievement_year', 'desc');
             $this->order_by('id', 'desc');

@@ -96,6 +96,7 @@
               id="division"
               type="text"
               class="form-control"
+              placeholder="Enter custom division name"
               v-model="form.division"
             >
           </div>
@@ -237,7 +238,7 @@ export default {
       }
     },
 
-    divisonName() {
+    divisionName() {
       if (this.customName) {
         return this.form.division;
       } else {
@@ -260,7 +261,7 @@ export default {
     async insertData() {
       try {
         await this.$axios.post('master/division/insert', {
-          division: this.divisonName,
+          division: this.divisionName,
           min_weight: this.form.min_weight,
           max_weight: this.form.max_weight,
           gender: this.form.gender,
@@ -283,7 +284,7 @@ export default {
     async updateData() {
       try {
         await this.$axios.post(`master/division/update/${this.form.id}`, {
-          division: this.divisonName,
+          division: this.divisionName,
           min_weight: this.form.min_weight,
           max_weight: this.form.max_weight,
           gender: this.form.gender,
