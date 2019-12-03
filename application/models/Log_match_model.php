@@ -72,21 +72,26 @@ class Log_match_model extends MY_Model
         $this->order_by('match_number');
         $log_matchs = $this->db->get()->result_array();
 
-        $result = [];
-        // baca tahun di setting
-        $setting   = $this->get_single_array('setting');
-        $last_year = $setting['year'] - 1;
+        // cari max year grappling, untuk mencari tahu grappling terakhir
+        $this->select('MAX(achievement_year) as latest_grappling_year');
+        $this->where('category', 'grappling');
+        $ach = $this->get_single_array('achievement');
+
+        $result   = [];
+        $category = 'grappling';
         foreach ($log_matchs as $value) {
-            // cari kejuaraan GRAPPLING pada masing2 player di tahun lalu
+            // cari kejuaraan GRAPPLING pada masing2 player di grappling terakhir
             $this->where('player_id', $value['player1_id']);
-            $this->where('achievement_year', $last_year);
-            $this->where('category', 'grappling');
+            $this->where('category', $category);
+            $this->where('achievement_year', $ach['latest_grappling_year']);
+            $this->order_by('achievement_year', 'desc');
             $this->order_by('id', 'desc');
             $value['player1_last_achievement'] = $this->get_single_array('achievement');
 
             $this->where('player_id', $value['player2_id']);
-            $this->where('achievement_year', $last_year);
-            $this->where('category', 'grappling');
+            $this->where('category', $category);
+            $this->where('achievement_year', $ach['latest_grappling_year']);
+            $this->order_by('achievement_year', 'desc');
             $this->order_by('id', 'desc');
             $value['player2_last_achievement'] = $this->get_single_array('achievement');
 
@@ -331,39 +336,37 @@ class Log_match_model extends MY_Model
             ];
         }
 
-        // loop player_division, masukkan urut dari atas player1 semua, lalu player2
-        $index_counter = 1;
-        // baca tahun di setting
-        $setting             = $this->get_single_array('setting');
-        $last_category       = 'grappling';
-        $last_year           = $setting['year'] - 1;
-        $arr_generate_player = [];
+        // cari max year grappling, untuk mencari tahu grappling terakhir
+        $this->select('MAX(achievement_year) as latest_grappling_year');
+        $this->where('category', 'grappling');
+        $ach = $this->get_single_array('achievement');
 
+        $category            = 'grappling';
+        $arr_generate_player = [];
         // generate array dengan achievement
         foreach ($player_divisions as $player_division) {
             // cari kejuaraan pada masing2 player di tahun lalu dan kota yang sama
             $this->where('player_id', $player_division['player_id']);
-            $this->where('achievement_year', $last_year);
-            $this->where('category', $last_category);
+            $this->where('category', $category);
+            $this->where('achievement_year', $ach['latest_grappling_year']);
+            $this->order_by('achievement_year', 'desc');
             $this->order_by('id', 'desc');
             $last_year_achievement = $this->get_single_array('achievement');
 
             array_push($arr_generate_player, [
                 'pd_id'                 => $player_division['id'],
-                'idx'                   => $index_counter,
                 'name'                  => $player_division['name'],
                 'last_year_achievement' => $last_year_achievement,
             ]);
-            $index_counter++;
         }
 
         /**
          * pengacakan berdasar achievement
          */
 
-        // filter player yang punya juara tahun lalu di kota yang sama
-        $players_with_achievement = array_filter($arr_generate_player, function ($item) use ($last_category) {
-            return $item['last_year_achievement']['category'] == $last_category;
+        // filter player yang punya juara di grappling terakhir
+        $players_with_achievement = array_filter($arr_generate_player, function ($item) {
+            return $item['last_year_achievement'] != null;
         });
 
         // filter player polosan / tanpa achievement
@@ -386,21 +389,21 @@ class Log_match_model extends MY_Model
             $idx++;
         }
 
-        $index_counterr = 1;
-        $flagg          = true;
+        $index_counter = 1;
+        $flag          = true;
         foreach ($players as $p) {
             // flag true menandakan player1 masih ada yang kosong,
             // setelah itu set flag false untuk mengisi player2
-            if ($index_counterr == $first_index_match_count + 1) {
-                $flagg          = false;
-                $index_counterr = 1;
+            if ($index_counter == $first_index_match_count + 1) {
+                $flag          = false;
+                $index_counter = 1;
             }
 
-            if ($flagg) {
+            if ($flag) {
                 // isi player1
                 $where = [
                     'match_index'  => 1,
-                    'match_number' => $index_counterr,
+                    'match_number' => $index_counter,
                     'division_id'  => $division_id,
                 ];
                 $result = $this->update(['pd1_id' => $p['pd_id']], $where);
@@ -408,12 +411,12 @@ class Log_match_model extends MY_Model
                 // isi player2
                 $where = [
                     'match_index'  => 1,
-                    'match_number' => $index_counterr,
+                    'match_number' => $index_counter,
                     'division_id'  => $division_id,
                 ];
                 $result = $this->update(['pd2_id' => $p['pd_id']], $where);
             }
-            $index_counterr++;
+            $index_counter++;
         }
 
         if ($result) {
