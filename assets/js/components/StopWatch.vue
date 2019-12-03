@@ -46,6 +46,10 @@
 
 <script>
 export default {
+  name: 'StopWatch',
+  props: {
+    maxTime: Number
+  },
   data() {
     return {
       times: [],
@@ -53,7 +57,8 @@ export default {
       nowTime: 0,
       diffTime: 0,
       startTime: 0,
-      isRunning: false
+      isRunning: false,
+      isMaxTime: false
     };
   },
   methods: {
@@ -81,13 +86,19 @@ export default {
       this.isRunning = false;
       cancelAnimationFrame(this.animateFrame);
       if (clear) {
+        // clear true akan menyelesaikan waktu pertandingan
         this.$emit('stop-timer', {
           hours: this.hours,
           minutes: this.minutes,
           seconds: this.seconds,
           milliSeconds: this.milliSeconds,
-          elapsedTime: this.diffTime
+          elapsedTime: this.diffTime,
+          message: this.isMaxTime ? true : false
         });
+        this.isMaxTime = false;
+      } else {
+        // clear false hanya akan mereset waktu
+        this.$emit('clear-timer');
       }
     },
     // 計測中の時間を配列に追加
@@ -107,7 +118,6 @@ export default {
       this.times = [];
       this.stopTimer(false);
       this.animateFrame = 0;
-      this.$emit('clear-timer');
     }
   },
   computed: {
@@ -133,6 +143,14 @@ export default {
     zeroPad: function (value, num) {
       num = typeof num !== 'undefined' ? num : 2;
       return value.toString().padStart(num, '0');
+    }
+  },
+  watch: {
+    minutes(val) {
+      if (val == this.maxTime) {
+        this.isMaxTime = true;
+        this.stopTimer();
+      }
     }
   }
 };

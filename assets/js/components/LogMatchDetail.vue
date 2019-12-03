@@ -66,6 +66,10 @@
           </div>
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-2">
+              <span>Match <i class="fa fa-angle-double-right"></i></span>
+              <span>{{matchPhase.toUpperCase()}}</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-2">
               <span>Division <i class="fa fa-angle-double-right"></i></span>
               <span>{{logMatchDetail.division}}</span>
             </div>
@@ -101,6 +105,7 @@
             <div class="d-flex justify-content-center align-items-center">
               <div>
                 <StopWatch
+                  :max-time="maxTimeLimit"
                   @start-timer="startTimer"
                   @stop-timer="stopTimer"
                   @clear-timer="clearTimer"
@@ -610,6 +615,22 @@ export default {
         this.convertMillisecondToTime(this.logMatchDetail.time, 'minutes') + ' m : ' +
         this.convertMillisecondToTime(this.logMatchDetail.time, 'seconds') + ' s : ' +
         this.convertMillisecondToTime(this.logMatchDetail.time, 'milliseconds') + ' ms';
+    },
+
+    maxTimeLimit() {
+      if (this.matchPhase == 'final') return 10;
+      else if (this.matchPhase == 'semifinal') return 8;
+      else return 6;
+    },
+
+    matchPhase() {
+      if (this.logMatchDetail.match_index == this.logMatchDetail.max_match_index) {
+        return 'final';
+      } else if (this.logMatchDetail.match_index == this.logMatchDetail.max_match_index - 1) {
+        return 'semifinal';
+      } else {
+        return 'regular';
+      }
     }
   },
 
@@ -687,6 +708,10 @@ export default {
     },
 
     loadData() {
+      // load options
+      this.getWinnings();
+      this.getReferees();
+
       this.$bvModal.show('modal-update-log-match');
       // populate form
       let { match_status, time, winning_id, referee_id, winner, pd1_redcard, pd1_yellowcard, pd1_greencard, pd2_redcard, pd2_yellowcard, pd2_greencard } = this.logMatchDetail;
@@ -740,11 +765,17 @@ export default {
       this.updateData();
     },
 
-    stopTimer(time) {
-      this.form.elapsedTime = time.elapsedTime;
+    stopTimer(obj) {
+      this.form.elapsedTime = obj.elapsedTime;
       this.form.match_status = 2;
       this.updateData();
-      this.form.elapsedTime = 0;
+      if (obj.message) {
+        this.$bvModal.msgBoxOk(`Match finished automatically because the time reach max limit. ${this.matchPhase.toUpperCase()} = ${this.maxTimeLimit} minutes`, {
+          title: 'Match Finished',
+          centered: true
+        });
+      }
+      // this.form.elapsedTime = 0;
     },
 
     clearTimer() {
@@ -788,8 +819,6 @@ export default {
 
   async created() {
     await this.getDetailLogMatch();
-    this.getWinnings();
-    this.getReferees();
     this.getPlayerAchivements(this.logMatchDetail.player1_id, 'player1');
     this.getPlayerAchivements(this.logMatchDetail.player2_id, 'player2');
   }

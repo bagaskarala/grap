@@ -457,8 +457,16 @@ class Log_match_model extends MY_Model
     public function get_detail_log_match($log_match_id)
     {
         $this->query_log_match();
-        $this->db->where('lm.id', $log_match_id);
-        return $this->db->get()->row_array();
+        $this->where('lm.id', $log_match_id);
+        $log_match_detail = $this->get_single_array();
+
+        // cari max match index, untuk mencari tahu seminfinal/final
+        $this->db->select('MAX(match_index) as max_match_index');
+        $this->where('division_id', $log_match_detail['division_id']);
+        $idx = $this->get_single_array();
+
+        $log_match_detail['max_match_index'] = $idx['max_match_index'];
+        return $log_match_detail;
     }
 
     public function start_play($division_id)

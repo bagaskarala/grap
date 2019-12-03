@@ -6002,6 +6002,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'LogMatchDetail',
@@ -6072,6 +6077,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     showTime: function showTime() {
       return this.convertMillisecondToTime(this.logMatchDetail.time, 'hours') + ' h : ' + this.convertMillisecondToTime(this.logMatchDetail.time, 'minutes') + ' m : ' + this.convertMillisecondToTime(this.logMatchDetail.time, 'seconds') + ' s : ' + this.convertMillisecondToTime(this.logMatchDetail.time, 'milliseconds') + ' ms';
+    },
+    maxTimeLimit: function maxTimeLimit() {
+      if (this.matchPhase == 'final') return 10;else if (this.matchPhase == 'semifinal') return 8;else return 6;
+    },
+    matchPhase: function matchPhase() {
+      if (this.logMatchDetail.match_index == this.logMatchDetail.max_match_index) {
+        return 'final';
+      } else if (this.logMatchDetail.match_index == this.logMatchDetail.max_match_index - 1) {
+        return 'semifinal';
+      } else {
+        return 'regular';
+      }
     }
   },
   methods: {
@@ -6289,6 +6306,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return updateData;
     }(),
     loadData: function loadData() {
+      // load options
+      this.getWinnings();
+      this.getReferees();
       this.$bvModal.show('modal-update-log-match'); // populate form
 
       var _this$logMatchDetail = this.logMatchDetail,
@@ -6375,11 +6395,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.form.match_status = 1;
       this.updateData();
     },
-    stopTimer: function stopTimer(time) {
-      this.form.elapsedTime = time.elapsedTime;
+    stopTimer: function stopTimer(obj) {
+      this.form.elapsedTime = obj.elapsedTime;
       this.form.match_status = 2;
       this.updateData();
-      this.form.elapsedTime = 0;
+
+      if (obj.message) {
+        this.$bvModal.msgBoxOk("Match finished automatically because the time reach max limit. ".concat(this.matchPhase.toUpperCase(), " = ").concat(this.maxTimeLimit, " minutes"), {
+          title: 'Match Finished',
+          centered: true
+        });
+      } // this.form.elapsedTime = 0;
+
     },
     clearTimer: function clearTimer() {
       this.form.match_status = 0;
@@ -6432,12 +6459,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               return this.getDetailLogMatch();
 
             case 2:
-              this.getWinnings();
-              this.getReferees();
               this.getPlayerAchivements(this.logMatchDetail.player1_id, 'player1');
               this.getPlayerAchivements(this.logMatchDetail.player2_id, 'player2');
 
-            case 6:
+            case 4:
             case "end":
               return _context7.stop();
           }
@@ -10271,6 +10296,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'StopWatch',
+  props: {
+    maxTime: Number
+  },
   data: function data() {
     return {
       times: [],
@@ -10278,7 +10307,8 @@ __webpack_require__.r(__webpack_exports__);
       nowTime: 0,
       diffTime: 0,
       startTime: 0,
-      isRunning: false
+      isRunning: false,
+      isMaxTime: false
     };
   },
   methods: {
@@ -10309,13 +10339,19 @@ __webpack_require__.r(__webpack_exports__);
       cancelAnimationFrame(this.animateFrame);
 
       if (clear) {
+        // clear true akan menyelesaikan waktu pertandingan
         this.$emit('stop-timer', {
           hours: this.hours,
           minutes: this.minutes,
           seconds: this.seconds,
           milliSeconds: this.milliSeconds,
-          elapsedTime: this.diffTime
+          elapsedTime: this.diffTime,
+          message: this.isMaxTime ? true : false
         });
+        this.isMaxTime = false;
+      } else {
+        // clear false hanya akan mereset waktu
+        this.$emit('clear-timer');
       }
     },
     // 計測中の時間を配列に追加
@@ -10335,7 +10371,6 @@ __webpack_require__.r(__webpack_exports__);
       this.times = [];
       this.stopTimer(false);
       this.animateFrame = 0;
-      this.$emit('clear-timer');
     }
   },
   computed: {
@@ -10361,6 +10396,14 @@ __webpack_require__.r(__webpack_exports__);
     zeroPad: function zeroPad(value, num) {
       num = typeof num !== 'undefined' ? num : 2;
       return value.toString().padStart(num, '0');
+    }
+  },
+  watch: {
+    minutes: function minutes(val) {
+      if (val == this.maxTime) {
+        this.isMaxTime = true;
+        this.stopTimer();
+      }
     }
   }
 });
@@ -47521,7 +47564,7 @@ var render = function() {
                 [
                   _vm._m(0),
                   _vm._v(" "),
-                  _c("span", [_vm._v(_vm._s(_vm.logMatchDetail.division))])
+                  _c("span", [_vm._v(_vm._s(_vm.matchPhase.toUpperCase()))])
                 ]
               ),
               _vm._v(" "),
@@ -47533,6 +47576,19 @@ var render = function() {
                 },
                 [
                   _vm._m(1),
+                  _vm._v(" "),
+                  _c("span", [_vm._v(_vm._s(_vm.logMatchDetail.division))])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "d-flex justify-content-between align-items-center mb-2"
+                },
+                [
+                  _vm._m(2),
                   _vm._v(" "),
                   _c("span", [
                     _vm._v(
@@ -47553,7 +47609,7 @@ var render = function() {
                     "d-flex justify-content-between align-items-center mb-2"
                 },
                 [
-                  _vm._m(2),
+                  _vm._m(3),
                   _vm._v(" "),
                   _c("span", [
                     _vm._v(
@@ -47572,7 +47628,7 @@ var render = function() {
                     "d-flex justify-content-between align-items-center mb-2"
                 },
                 [
-                  _vm._m(3),
+                  _vm._m(4),
                   _vm._v(" "),
                   _c("span", [_vm._v(_vm._s(_vm.showTime))])
                 ]
@@ -47585,7 +47641,7 @@ var render = function() {
                     "d-flex justify-content-between align-items-center mb-2"
                 },
                 [
-                  _vm._m(4),
+                  _vm._m(5),
                   _vm._v(" "),
                   _c(
                     "span",
@@ -47618,7 +47674,7 @@ var render = function() {
                     "d-flex justify-content-between align-items-center mb-2"
                 },
                 [
-                  _vm._m(5),
+                  _vm._m(6),
                   _vm._v(" "),
                   _c("span", [_vm._v(_vm._s(_vm.logMatchDetail.winning))])
                 ]
@@ -47648,6 +47704,7 @@ var render = function() {
                     "div",
                     [
                       _c("StopWatch", {
+                        attrs: { "max-time": _vm.maxTimeLimit },
                         on: {
                           "start-timer": _vm.startTimer,
                           "stop-timer": _vm.stopTimer,
@@ -48689,6 +48746,15 @@ var render = function() {
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("Match "),
+      _c("i", { staticClass: "fa fa-angle-double-right" })
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
