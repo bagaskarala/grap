@@ -36,19 +36,22 @@
               </div>
 
               <div class="form-group">
-                <label for="city">City</label>
+                <label for="city_id">City</label>
                 <select
-                  name="city"
-                  id="city"
+                  name="city_id"
+                  id="city_id"
                   class="form-control"
-                  v-model.number="form.city"
+                  v-model.number="form.city_id"
                 >
-                  <option :value="null">Select City</option>
+                  <option
+                    :value="null"
+                    disabled
+                  >Select City</option>
                   <option
                     v-for="item in cities"
-                    :key="item.value"
-                    :value="item.value"
-                  >{{item.text}}</option>
+                    :key="item.id"
+                    :value="item.id"
+                  >{{item.city}}</option>
                 </select>
               </div>
 
@@ -72,7 +75,6 @@
 </template>
 
 <script>
-import { getCities } from '../shared';
 export default {
   name: 'Setting',
   data() {
@@ -80,7 +82,7 @@ export default {
       form: {
         year: null,
         month: null,
-        city: null
+        city_id: null
       },
       modalState: null,
       errorValidation: null,
@@ -89,15 +91,23 @@ export default {
   },
 
   methods: {
-    getCities,
-
     async getSetting() {
       try {
         const setting = await this.$axios.get('setting/get');
         this.form = setting.data.data;
       } catch (error) {
         console.log(error.response);
-        this.$noty.error('Failed Get Data');
+        this.$noty.error('Failed Get Setting');
+      }
+    },
+
+    async getCities() {
+      try {
+        const cities = await this.$axios.get('master/city/get_all');
+        this.cities = cities.data.data;
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Get Cities');
       }
     },
 
@@ -116,7 +126,7 @@ export default {
         await this.$axios.post('setting/update', {
           year: this.form.year,
           month: this.form.month,
-          city: this.form.city
+          city_id: this.form.city_id
         });
 
         this.$noty.success('Success Update Data');
@@ -132,7 +142,7 @@ export default {
 
   created() {
     this.getSetting();
-    this.cities = this.getCities();
+    this.getCities();
   }
 };
 </script>

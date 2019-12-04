@@ -51,6 +51,7 @@ Vue.component('Setting', require('./components/Setting.vue').default);
 Vue.component('MenuList', require('./components/MenuList.vue').default);
 Vue.component('SubMenuList', require('./components/SubMenuList.vue').default);
 Vue.component('RoleList', require('./components/RoleList.vue').default);
+Vue.component('CityList', require('./components/CityList.vue').default);
 
 new Vue({
    el: '#app'

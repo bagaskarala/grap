@@ -161,7 +161,7 @@
                   <span
                     v-if="data.item.player1_last_achievement"
                     class="badge badge-secondary"
-                    :title="`${data.item.player1_last_achievement.winner_position} winner on ${data.item.player1_last_achievement.tournament_name} (${data.item.player1_last_achievement.achievement_city}/${data.item.player1_last_achievement.achievement_year})`"
+                    :title="tooltipAchievement(data.item.player1_last_achievement)"
                   >
                     {{data.item.player1_last_achievement.winner_position}}
                   </span>
@@ -179,7 +179,7 @@
                   <span
                     v-if="data.item.player2_last_achievement"
                     class="badge badge-secondary"
-                    :title="`${data.item.player2_last_achievement.winner_position} winner on ${data.item.player2_last_achievement.tournament_name} (${data.item.player2_last_achievement.achievement_city}/${data.item.player2_last_achievement.achievement_year})`"
+                    :title="tooltipAchievement(data.item.player2_last_achievement)"
                   >
                     {{data.item.player2_last_achievement.winner_position}}
                   </span>
@@ -205,10 +205,6 @@
                     class="btn btn-sm btn-warning"
                     @click.prevent="loadData(data.item)"
                   ><i class="fa fa-edit fa-fw"></i></button>
-                  <!-- <button
-                    class="btn btn-sm btn-danger"
-                    @click.prevent="confirmDelete(data.item)"
-                  ><i class="fa fa-trash fa-fw"></i></button> -->
                 </div>
               </template>
             </b-table>
@@ -308,6 +304,7 @@
 
 <script>
 import Bracket from 'vue-tournament-bracket';
+import { parseWinner } from '../shared';
 export default {
   name: 'LogMatch',
   props: {
@@ -449,8 +446,9 @@ export default {
   },
 
   methods: {
-    checkPlayer(m, playerNumber) {
+    parseWinner,
 
+    checkPlayer(m, playerNumber) {
       // ambil player
       if (m.match_status == 2) {
         return playerNumber == 1 ? `${m.player1_name || 'Bye'} (${m.player1_club_alias || '-'})` : `${m.player2_name || 'Bye'} (${m.player2_club_alias || '-'})`;
@@ -495,41 +493,6 @@ export default {
         this.$noty.error('Failed Fetch player division');
       }
     },
-
-    // async getAllLogMatchs() {
-    //   try {
-    //     const logMatchs = await this.$axios.get('entry/log_match/get_all');
-    //     this.logMatchs = logMatchs.data.data;
-    //     this.filterDivisionId = null;
-    //   } catch (error) {
-    //     console.log(error.response);
-    //     this.$noty.error('Failed Get Data');
-    //   }
-    // },
-
-    // async insertData() {
-    //   try {
-    //     await this.$axios.post('entry/log_match/insert', {
-    //       division_id: this.form.division_id,
-    //       pd1_id: this.form.pd1_id,
-    //       pd2_id: this.form.pd2_id,
-    //       match_system: this.form.match_system
-    //     });
-
-    //     // tampilkan data setelah aksi
-    //     // menuju tampilan divisi yang telah terinput
-    //     this.filterData(this.form.division_id);
-    //     this.filterDivisionId = this.form.division_id;
-
-    //     this.$noty.success('Success Insert Data');
-    //     this.$bvModal.hide('modal-log-match');
-
-    //   } catch (error) {
-    //     console.log(error.response);
-    //     this.errorValidation = error.response.data.message;
-    //     this.$noty.error('Failed Insert Data');
-    //   }
-    // },
 
     async updateData() {
       // jika p1 dan p2 sama maka error
@@ -724,16 +687,6 @@ export default {
       window.location.href = `log_match/detail/${item.id}`;
     },
 
-    // addData() {
-    //   this.resetData();
-    //   this.$bvModal.show('modal-log-match');
-    //   this.modalState = 'add';
-    //   // auto select division, ketika filternya sedang aktif
-    //   if (this.filterDivisionId) {
-    //     this.form.division_id = this.filterDivisionId;
-    //   }
-    // },
-
     loadData(item) {
       this.resetData();
       this.$bvModal.show('modal-log-match');
@@ -783,7 +736,10 @@ export default {
           return 'text-danger';
         }
       }
+    },
 
+    tooltipAchievement(achievement) {
+      return `${parseWinner(achievement.winner_position)} winner on ${achievement.tournament_name} (${achievement.city} ${achievement.achievement_year})`;
     }
   },
 
@@ -794,8 +750,6 @@ export default {
   },
 
   created() {
-    // this.getAllLogMatchs();
-
     // auto pilih division yang tersimpan di session
     if (this.divisionId) {
       this.filterDivisionId = parseInt(this.divisionId);

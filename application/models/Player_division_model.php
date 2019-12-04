@@ -51,7 +51,7 @@ class Player_division_model extends MY_Model
 
         // tampilkan player per divisi
         $this->query_player_division();
-        $this->db->where('division_id', $division_id);
+        $this->where('division_id', $division_id);
         $this->order_by('pool_number');
         $this->order_by('win', 'desc');
         $this->order_by('total_time');
@@ -59,10 +59,13 @@ class Player_division_model extends MY_Model
 
         $result = [];
         foreach ($player_divisions as $value) {
-            // cari achievement terakhir
+            // cari achievement grappling terakhir
+            $this->select('achievement.*,city.city');
+            $this->join_table('city', 'achievement');
             $this->where('player_id', $value['player_id']);
+            $this->where('category', 'grappling');
             $this->order_by('achievement_year', 'desc');
-            $this->order_by('category', 'desc');
+            $this->order_by('id', 'desc');
             $value['last_achievement'] = $this->get_single_array('achievement');
             array_push($result, $value);
         }

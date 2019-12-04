@@ -81,6 +81,9 @@ class Log_match_model extends MY_Model
         $category = 'grappling';
         foreach ($log_matchs as $value) {
             // cari kejuaraan GRAPPLING pada masing2 player di grappling terakhir
+            // player 1
+            $this->select('achievement.*,city.city');
+            $this->join_table('city', 'achievement');
             $this->where('player_id', $value['player1_id']);
             $this->where('category', $category);
             $this->where('division_id', $division_id);
@@ -89,6 +92,9 @@ class Log_match_model extends MY_Model
             $this->order_by('id', 'desc');
             $value['player1_last_achievement'] = $this->get_single_array('achievement');
 
+            // player 2
+            $this->select('achievement.*,city.city');
+            $this->join_table('city', 'achievement');
             $this->where('player_id', $value['player2_id']);
             $this->where('category', $category);
             $this->where('division_id', $division_id);

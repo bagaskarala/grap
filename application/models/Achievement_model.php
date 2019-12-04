@@ -22,7 +22,7 @@ class Achievement_model extends MY_Model
                 'rules' => 'required|trim',
             ],
             [
-                'field' => 'achievement_city',
+                'field' => 'city_id',
                 'label' => 'city',
                 'rules' => 'required|trim',
             ],
@@ -52,26 +52,25 @@ class Achievement_model extends MY_Model
         $this->where('player_id', $data['player_id']);
         $count_achievement = $this->count();
         if ($count_achievement == 3) {
-
             // cek achievement terlama
-            $this->db->select('MIN(achievement_year) as oldest_achievement, id');
+            $this->select('MIN(achievement_year) as oldest_achievement, id');
             $this->where('player_id', $data['player_id']);
             $this->where('category', $data['category']);
-            $this->order_by('id');
             $item = $this->get_single_array('achievement');
 
-            // update data lama,
-            $result = $this->update($data, ['id' => $item['id']]);
+            // delete achievement terlama, insert achievement baru
+            $this->delete(['id' => $item['id']]);
+            $result = $this->insert($data);
 
             if ($result) {
                 return [
                     'status' => true,
-                    'data'   => 'Success update old achievement',
+                    'data'   => 'Success save achievement',
                 ];
             } else {
                 return [
                     'status'  => false,
-                    'message' => $item,
+                    'message' => 'Failed save achievement',
                 ];
             }
         }

@@ -60,7 +60,7 @@ class Auth_model extends MY_Model
                         'role_id'       => $user['role_id'],
                         'name'          => $user['name'],
                         'image'         => $user['image'],
-                        'setting_city'  => $setting ? $setting['city'] : null,
+                        'setting_city'  => $setting ? $setting['city_id'] : null,
                         'setting_year'  => $setting ? $setting['year'] : null,
                         'setting_month' => $setting ? $setting['month'] : null,
                         'login'         => true,

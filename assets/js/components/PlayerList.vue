@@ -463,12 +463,12 @@
             <div class="form-group">
               <div class="row">
                 <div class="col">
-                  <label for="achievement_city">City</label>
+                  <label for="city_id">City</label>
                   <select
-                    name="achievement_city"
-                    id="achievement_city"
+                    name="city_id"
+                    id="city_id"
                     class="form-control"
-                    v-model.number="formAchievement[index].achievement_city"
+                    v-model.number="formAchievement[index].city_id"
                     :disabled="countAchievement(item.category) > 3"
                   >
                     <option
@@ -477,13 +477,13 @@
                     >Select City</option>
                     <option
                       v-for="item in cities"
-                      :key="item.value"
-                      :value="item.value"
-                    >{{item.text}}</option>
+                      :key="item.id"
+                      :value="item.id"
+                    >{{item.city}}</option>
                   </select>
                 </div>
                 <div class="col">
-                  <label for="achievement_city">Year</label>
+                  <label for="city_id">Year</label>
                   <input
                     id="achievement_year"
                     v-model.number="formAchievement[index].achievement_year"
@@ -536,7 +536,6 @@
 </template>
 
 <script>
-import { getCities } from '../shared';
 export default {
   name: 'PlayerList',
   props: {
@@ -603,7 +602,15 @@ export default {
   },
 
   methods: {
-    getCities,
+    async getCities() {
+      try {
+        const cities = await this.$axios.get('master/city/get_all');
+        this.cities = cities.data.data;
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Get Cities');
+      }
+    },
 
     async getAllDivisions() {
       try {
@@ -780,7 +787,6 @@ export default {
         this.$noty.success('Success Upload Photo');
         this.$bvModal.hide('modal-player');
       } catch (error) {
-        console.log('gatot');
         console.log(error);
         this.errorValidation = error.response.data.message;
         this.$noty.error('Failed Upload Photo');
@@ -838,7 +844,7 @@ export default {
       }
 
       this.formAchievement.push({
-        achievement_city: null,
+        city_id: null,
         achievement_year: null,
         category: categorySelected,
         division_id: null,
@@ -853,7 +859,6 @@ export default {
     checkAchievementCategory(category, popArray = true) {
       this.errorValidation = null;
       let achievementCategory = this.formAchievement.filter(item => item.category === category);
-      console.log(achievementCategory);
       if (achievementCategory.length > 3) {
         this.errorValidation = `Only 3 achivement can be registered per category. Change your oldest ${category} achievement to the new one`;
 
@@ -863,7 +868,6 @@ export default {
         // cari item yang sudah tersimpan
         // cari tahun yang paling tua
         let arrYear = achievementCategory.filter(item => item.id).map(item => item.achievement_year);
-        console.log(arrYear);
         let oldestYear = Math.min(...arrYear);
 
         // pindah ke oldest achievement
@@ -884,7 +888,7 @@ export default {
         await this.$axios.post('master/achievement/insert', {
           tournament_name: ach.tournament_name,
           winner_position: ach.winner_position,
-          achievement_city: ach.achievement_city,
+          city_id: ach.city_id,
           achievement_year: ach.achievement_year,
           division_id: ach.division_id,
           category: ach.category,
@@ -908,7 +912,7 @@ export default {
         await this.$axios.post(`master/achievement/update/${ach.id}`, {
           tournament_name: ach.tournament_name,
           winner_position: ach.winner_position,
-          achievement_city: ach.achievement_city,
+          city_id: ach.city_id,
           achievement_year: ach.achievement_year,
           division_id: ach.division_id,
           category: ach.category,
@@ -952,7 +956,7 @@ export default {
       this.errorValidation = null;
       this.formAchievement[this.tabIndex].tournament_name = null;
       this.formAchievement[this.tabIndex].winner_position = null;
-      this.formAchievement[this.tabIndex].achievement_city = null;
+      this.formAchievement[this.tabIndex].city_id = null;
       this.formAchievement[this.tabIndex].achievement_year = null;
       this.formAchievement[this.tabIndex].division_id = null;
       this.formAchievement[this.tabIndex].category = null;
@@ -975,7 +979,7 @@ export default {
     this.getAllPlayers();
     this.getCountries();
     this.getClubs();
-    this.cities = this.getCities();
+    this.getCities();
   },
 
   watch: {

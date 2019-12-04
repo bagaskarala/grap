@@ -114,9 +114,10 @@
                   style="min-width:150px"
                 >
                   <p class="mb-0">
-                    {{winnerPosition(data.item.last_achievement.winner_position)}}
+                    {{parseWinner(data.item.last_achievement.winner_position)}} Winner
                   </p>
-                  {{data.item.last_achievement.tournament_name}} {{data.item.last_achievement.achievement_year}}
+                  {{data.item.last_achievement.tournament_name}}
+                  ({{data.item.last_achievement.city}} {{data.item.last_achievement.achievement_year}})
                 </div>
                 <span v-else>-</span>
               </template>
@@ -136,12 +137,18 @@
                     class="fa fa-medal"
                     :style="medalStyle(data.item.division_winner)"
                   ></i>
-                  <span>{{winnerPosition(data.item.division_winner)}}</span>
+                  <span>{{parseWinner(data.item.division_winner)}}</span>
                 </span>
               </template>
 
               <template v-slot:cell(total_time)="data">
-                <span>{{data.item.total_time != 0 ? data.item.total_time/1000 : data.item.total_time}} s</span>
+                <span
+                  v-if="data.item.total_time"
+                  title="Total time when player is win on match"
+                >
+                  {{data.item.total_time != 0 ? data.item.total_time/1000 : data.item.total_time}} s
+                </span>
+                <span v-else>-</span>
               </template>
 
               <template v-slot:cell(pool_winner)="data">
@@ -154,7 +161,10 @@
               </template>
 
               <template v-slot:cell(action)="data">
-                <div class="min-width-10 text-right">
+                <div
+                  class="text-right"
+                  :class="[data.item.division_winner? 'min-width-triple' : 'min-width-double']"
+                >
                   <button
                     v-if="data.item.division_winner"
                     title="Save achievement to player"
@@ -300,6 +310,7 @@
 </template>
 
 <script>
+import { parseWinner } from '../shared';
 var timeoutDebounce = null;
 export default {
   name: 'PlayerDivision',
@@ -357,6 +368,8 @@ export default {
   },
 
   methods: {
+    parseWinner,
+
     async getDivisions() {
       try {
         const divisions = await this.$axios.get('master/division/get_all');
@@ -585,7 +598,7 @@ export default {
 
     confirmGenerateFinalMatch() {
       this.$bvModal.msgBoxConfirm('Are you sure want to remove current final match, and generate new final match?', {
-        title: 'Reset Pool',
+        title: 'Generate Final Match',
         size: 'md',
         okVariant: 'danger',
         centered: true
@@ -661,21 +674,11 @@ export default {
       }
     },
 
-    winnerPosition(position) {
-      if (position == 1) {
-        return '1st Winner';
-      } else if (position == 2) {
-        return '2nd Winner';
-      } else {
-        return '3rd Winner';
-      }
-    },
-
     async saveAchievement(item) {
       try {
         await this.$axios.post('master/achievement/insert', {
           tournament_name: null,
-          achievement_city: null,
+          city_id: null,
           achievement_year: null,
           winner_position: item.division_winner,
           division_id: item.division_id,
@@ -696,7 +699,7 @@ export default {
         && item.last_achievement.category == 'grappling'
         && item.division_winner == item.last_achievement.winner_position
         && this.setting.year == item.last_achievement.achievement_year
-        && this.setting.city == item.last_achievement.achievement_city) {
+        && this.setting.city_id == item.last_achievement.city_id) {
         return true;
       } else {
         return false;
@@ -773,7 +776,10 @@ export default {
 </script>
 
 <style lang="css">
-.min-width-10 {
-  min-width: 10rem;
+.min-width-triple {
+  min-width: 8rem;
+}
+.min-width-double {
+  min-width: 5rem;
 }
 </style>

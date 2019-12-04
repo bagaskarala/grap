@@ -39,7 +39,7 @@
                 :class="[item.category == 'general'? 'text-dark' : 'text-danger','fa-trophy fa']"
                 :title="item.category"
               ></i>
-              {{parseWinnerPosition(item.winner_position)}} Winner {{item.tournament_name}} ({{item.achievement_city}} {{item.achievement_year}})
+              {{parseWinner(item.winner_position)}} Winner {{item.tournament_name}} ({{item.city}} {{item.achievement_year}})
             </div>
           </div>
         </div>
@@ -139,7 +139,7 @@
                 :class="[item.category == 'general'? 'text-dark' : 'text-danger','fa-trophy fa']"
                 :title="item.category"
               ></i>
-              {{parseWinnerPosition(item.winner_position)}} Winner {{item.tournament_name}} ({{item.achievement_city}} {{item.achievement_year}})
+              {{parseWinner(item.winner_position)}} Winner {{item.tournament_name}} ({{item.city}} {{item.achievement_year}})
             </div>
           </div>
         </div>
@@ -531,6 +531,7 @@
 
 <script>
 import StopWatch from './StopWatch';
+import { parseWinner } from '../shared';
 export default {
   name: 'LogMatchDetail',
   components: {
@@ -635,6 +636,8 @@ export default {
   },
 
   methods: {
+    parseWinner,
+
     async getDetailLogMatch() {
       try {
         const logMatchDetail = await this.$axios.get(`entry/log_match/get_detail/${this.logMatchId}`);
@@ -802,18 +805,6 @@ export default {
         seconds = seconds * 1000;
       }
       return hours + minutes + seconds + milliseconds;
-    },
-
-    parseWinnerPosition(num) {
-      if (num == 1) {
-        return '1st';
-      } else if (num == 2) {
-        return '2nd';
-      } else if (num == 3) {
-        return '3rd';
-      } else {
-        return null;
-      }
     }
   },
 

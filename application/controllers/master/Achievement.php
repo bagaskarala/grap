@@ -32,7 +32,9 @@ class Achievement extends MY_Controller
 
     public function filter($player_id)
     {
+        $this->achievement->select('achievement.*,city.city');
         $this->achievement->where('player_id', $player_id);
+        $this->achievement->join('city');
         $this->achievement->order_by('category');
         $this->achievement->order_by('achievement_year');
         $achievements = $this->achievement->get_all_array();
@@ -54,7 +56,7 @@ class Achievement extends MY_Controller
             'player_id'        => $request->player_id,
             'tournament_name'  => $request->tournament_name,
             'winner_position'  => $request->winner_position,
-            'achievement_city' => $request->achievement_city,
+            'city_id'          => $request->city_id,
             'achievement_year' => $request->achievement_year,
             'category'         => $request->category,
             'division_id'      => $request->division_id,
@@ -67,8 +69,8 @@ class Achievement extends MY_Controller
             $data['achievement_year'] = $setting['year'];
         }
 
-        if ($data['achievement_city'] == null) {
-            $data['achievement_city'] = $setting['city'];
+        if ($data['city_id'] == null) {
+            $data['city_id'] = $setting['city_id'];
         }
 
         if ($data['tournament_name'] == null) {
@@ -97,7 +99,7 @@ class Achievement extends MY_Controller
             'player_id'        => $request->player_id,
             'tournament_name'  => $request->tournament_name,
             'winner_position'  => $request->winner_position,
-            'achievement_city' => $request->achievement_city,
+            'city_id'          => $request->city_id,
             'achievement_year' => $request->achievement_year,
             'category'         => $request->category,
             'division_id'      => $request->division_id,

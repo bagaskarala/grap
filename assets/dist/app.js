@@ -152,9 +152,79 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('Setting', __webpack_requir
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('MenuList', __webpack_require__(/*! ./components/MenuList.vue */ "./assets/js/components/MenuList.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('SubMenuList', __webpack_require__(/*! ./components/SubMenuList.vue */ "./assets/js/components/SubMenuList.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('RoleList', __webpack_require__(/*! ./components/RoleList.vue */ "./assets/js/components/RoleList.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('CityList', __webpack_require__(/*! ./components/CityList.vue */ "./assets/js/components/CityList.vue")["default"]);
 new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app'
 });
+
+/***/ }),
+
+/***/ "./assets/js/components/CityList.vue":
+/*!*******************************************!*\
+  !*** ./assets/js/components/CityList.vue ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CityList_vue_vue_type_template_id_6b8d8b4a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CityList.vue?vue&type=template&id=6b8d8b4a& */ "./assets/js/components/CityList.vue?vue&type=template&id=6b8d8b4a&");
+/* harmony import */ var _CityList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CityList.vue?vue&type=script&lang=js& */ "./assets/js/components/CityList.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CityList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CityList_vue_vue_type_template_id_6b8d8b4a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CityList_vue_vue_type_template_id_6b8d8b4a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "assets/js/components/CityList.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./assets/js/components/CityList.vue?vue&type=script&lang=js&":
+/*!********************************************************************!*\
+  !*** ./assets/js/components/CityList.vue?vue&type=script&lang=js& ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CityList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./CityList.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./assets/js/components/CityList.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CityList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./assets/js/components/CityList.vue?vue&type=template&id=6b8d8b4a&":
+/*!**************************************************************************!*\
+  !*** ./assets/js/components/CityList.vue?vue&type=template&id=6b8d8b4a& ***!
+  \**************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CityList_vue_vue_type_template_id_6b8d8b4a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./CityList.vue?vue&type=template&id=6b8d8b4a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./assets/js/components/CityList.vue?vue&type=template&id=6b8d8b4a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CityList_vue_vue_type_template_id_6b8d8b4a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CityList_vue_vue_type_template_id_6b8d8b4a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
@@ -1251,12 +1321,13 @@ __webpack_require__.r(__webpack_exports__);
 /*!*****************************!*\
   !*** ./assets/js/shared.js ***!
   \*****************************/
-/*! exports provided: getCities */
+/*! exports provided: getCities, parseWinner */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCities", function() { return getCities; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "parseWinner", function() { return parseWinner; });
 var cities = ['surabaya', 'jakarta', 'semarang'];
 function getCities() {
   return cities.map(function (item) {
@@ -1265,6 +1336,17 @@ function getCities() {
       text: item.charAt(0).toUpperCase() + item.slice(1)
     };
   });
+}
+function parseWinner(num) {
+  if (num == 1) {
+    return '1st';
+  } else if (num == 2) {
+    return '2nd';
+  } else if (num == 3) {
+    return '3rd';
+  } else {
+    return null;
+  }
 }
 
 /***/ }),
@@ -3024,6 +3106,344 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./assets/js/components/CityList.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./assets/js/components/CityList.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'CityList',
+  data: function data() {
+    return {
+      cities: [],
+      form: {
+        city: null
+      },
+      modalState: null,
+      errorValidation: null
+    };
+  },
+  methods: {
+    getAllCities: function () {
+      var _getAllCities = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var cities;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return this.$axios.get('master/city/get_all');
+
+              case 3:
+                cities = _context.sent;
+                this.cities = cities.data.data;
+                _context.next = 11;
+                break;
+
+              case 7:
+                _context.prev = 7;
+                _context.t0 = _context["catch"](0);
+                console.log(_context.t0.response);
+                this.$noty.error('Failed Get Data');
+
+              case 11:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[0, 7]]);
+      }));
+
+      function getAllCities() {
+        return _getAllCities.apply(this, arguments);
+      }
+
+      return getAllCities;
+    }(),
+    insertData: function () {
+      var _insertData = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return this.$axios.post('master/city/insert', {
+                  city: this.form.city
+                });
+
+              case 3:
+                this.$noty.success('Success Insert Data');
+                this.getAllCities();
+                this.$bvModal.hide('modal-city');
+                _context2.next = 13;
+                break;
+
+              case 8:
+                _context2.prev = 8;
+                _context2.t0 = _context2["catch"](0);
+                console.log(_context2.t0.response);
+                this.errorValidation = _context2.t0.response.data.message;
+                this.$noty.error('Failed Insert Data');
+
+              case 13:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[0, 8]]);
+      }));
+
+      function insertData() {
+        return _insertData.apply(this, arguments);
+      }
+
+      return insertData;
+    }(),
+    updateData: function () {
+      var _updateData = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.prev = 0;
+                _context3.next = 3;
+                return this.$axios.post("master/city/update/".concat(this.form.id), {
+                  city: this.form.city
+                });
+
+              case 3:
+                this.$noty.success('Success Update Data');
+                this.getAllCities();
+                this.$bvModal.hide('modal-city');
+                _context3.next = 13;
+                break;
+
+              case 8:
+                _context3.prev = 8;
+                _context3.t0 = _context3["catch"](0);
+                console.log(_context3.t0.response);
+                this.errorValidation = _context3.t0.response.data.message;
+                this.$noty.error('Failed Update Data');
+
+              case 13:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this, [[0, 8]]);
+      }));
+
+      function updateData() {
+        return _updateData.apply(this, arguments);
+      }
+
+      return updateData;
+    }(),
+    deleteData: function () {
+      var _deleteData = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(item) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.prev = 0;
+                _context4.next = 3;
+                return this.$axios.post('master/city/delete', {
+                  id: item.id
+                });
+
+              case 3:
+                this.$noty.success('Success Delete Data');
+                this.getAllCities();
+                this.$bvModal.hide('modal-city');
+                _context4.next = 12;
+                break;
+
+              case 8:
+                _context4.prev = 8;
+                _context4.t0 = _context4["catch"](0);
+                console.log(_context4.t0.response);
+                this.$noty.error('Failed Delete Data');
+
+              case 12:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this, [[0, 8]]);
+      }));
+
+      function deleteData(_x) {
+        return _deleteData.apply(this, arguments);
+      }
+
+      return deleteData;
+    }(),
+    confirmDelete: function confirmDelete(item) {
+      var _this = this;
+
+      this.$bvModal.msgBoxConfirm("Please confirm that you want to delete ".concat(item.city), {
+        title: 'Delete Data',
+        size: 'md',
+        okVariant: 'danger',
+        centered: true
+      }).then(function (value) {
+        if (value) {
+          _this.deleteData(item);
+        }
+      })["catch"](function (err) {
+        console.log('Error ', err);
+      });
+    },
+    addData: function addData() {
+      this.resetData();
+      this.$bvModal.show('modal-city');
+      this.modalState = 'add';
+    },
+    loadData: function loadData(item) {
+      this.resetData();
+      this.$bvModal.show('modal-city');
+      this.modalState = 'update'; // populate form
+
+      var id = item.id,
+          city = item.city;
+      this.form.id = id;
+      this.form.city = city;
+    },
+    resetData: function resetData() {
+      this.errorValidation = null;
+      this.form.city = null;
+    }
+  },
+  created: function created() {
+    this.getAllCities();
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./assets/js/components/ClubList.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./assets/js/components/ClubList.vue?vue&type=script&lang=js& ***!
@@ -4385,6 +4805,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_tournament_bracket__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-tournament-bracket */ "./node_modules/vue-tournament-bracket/dist/vue-tournament-bracket.common.js");
 /* harmony import */ var vue_tournament_bracket__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_tournament_bracket__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _shared__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../shared */ "./assets/js/shared.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -4703,10 +5124,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
-//
-//
-//
-//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'LogMatch',
@@ -4845,6 +5263,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     }
   },
   methods: {
+    parseWinner: _shared__WEBPACK_IMPORTED_MODULE_2__["parseWinner"],
     checkPlayer: function checkPlayer(m, playerNumber) {
       // ambil player
       if (m.match_status == 2) {
@@ -4943,36 +5362,6 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
       return getPlayerDivisions;
     }(),
-    // async getAllLogMatchs() {
-    //   try {
-    //     const logMatchs = await this.$axios.get('entry/log_match/get_all');
-    //     this.logMatchs = logMatchs.data.data;
-    //     this.filterDivisionId = null;
-    //   } catch (error) {
-    //     console.log(error.response);
-    //     this.$noty.error('Failed Get Data');
-    //   }
-    // },
-    // async insertData() {
-    //   try {
-    //     await this.$axios.post('entry/log_match/insert', {
-    //       division_id: this.form.division_id,
-    //       pd1_id: this.form.pd1_id,
-    //       pd2_id: this.form.pd2_id,
-    //       match_system: this.form.match_system
-    //     });
-    //     // tampilkan data setelah aksi
-    //     // menuju tampilan divisi yang telah terinput
-    //     this.filterData(this.form.division_id);
-    //     this.filterDivisionId = this.form.division_id;
-    //     this.$noty.success('Success Insert Data');
-    //     this.$bvModal.hide('modal-log-match');
-    //   } catch (error) {
-    //     console.log(error.response);
-    //     this.errorValidation = error.response.data.message;
-    //     this.$noty.error('Failed Insert Data');
-    //   }
-    // },
     updateData: function () {
       var _updateData = _asyncToGenerator(
       /*#__PURE__*/
@@ -5380,15 +5769,6 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     goToDetail: function goToDetail(item) {
       window.location.href = "log_match/detail/".concat(item.id);
     },
-    // addData() {
-    //   this.resetData();
-    //   this.$bvModal.show('modal-log-match');
-    //   this.modalState = 'add';
-    //   // auto select division, ketika filternya sedang aktif
-    //   if (this.filterDivisionId) {
-    //     this.form.division_id = this.filterDivisionId;
-    //   }
-    // },
     loadData: function loadData(item) {
       this.resetData();
       this.$bvModal.show('modal-log-match');
@@ -5436,6 +5816,9 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
           return 'text-danger';
         }
       }
+    },
+    tooltipAchievement: function tooltipAchievement(achievement) {
+      return "".concat(Object(_shared__WEBPACK_IMPORTED_MODULE_2__["parseWinner"])(achievement.winner_position), " winner on ").concat(achievement.tournament_name, " (").concat(achievement.city, " ").concat(achievement.achievement_year, ")");
     }
   },
   watch: {
@@ -5444,7 +5827,6 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     }
   },
   created: function created() {
-    // this.getAllLogMatchs();
     // auto pilih division yang tersimpan di session
     if (this.divisionId) {
       this.filterDivisionId = parseInt(this.divisionId);
@@ -5469,6 +5851,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _StopWatch__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./StopWatch */ "./assets/js/components/StopWatch.vue");
+/* harmony import */ var _shared__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../shared */ "./assets/js/shared.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -6007,6 +6390,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'LogMatchDetail',
   components: {
@@ -6091,6 +6475,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   methods: {
+    parseWinner: _shared__WEBPACK_IMPORTED_MODULE_2__["parseWinner"],
     getDetailLogMatch: function () {
       var _getDetailLogMatch = _asyncToGenerator(
       /*#__PURE__*/
@@ -6433,17 +6818,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return hours + minutes + seconds + milliseconds;
-    },
-    parseWinnerPosition: function parseWinnerPosition(num) {
-      if (num == 1) {
-        return '1st';
-      } else if (num == 2) {
-        return '2nd';
-      } else if (num == 3) {
-        return '3rd';
-      } else {
-        return null;
-      }
     }
   },
   created: function () {
@@ -6825,6 +7199,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _shared__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../shared */ "./assets/js/shared.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -7140,6 +7515,17 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 var timeoutDebounce = null;
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PlayerDivision',
@@ -7200,6 +7586,7 @@ var timeoutDebounce = null;
     }
   },
   methods: {
+    parseWinner: _shared__WEBPACK_IMPORTED_MODULE_1__["parseWinner"],
     getDivisions: function () {
       var _getDivisions = _asyncToGenerator(
       /*#__PURE__*/
@@ -7766,7 +8153,7 @@ var timeoutDebounce = null;
       var _this3 = this;
 
       this.$bvModal.msgBoxConfirm('Are you sure want to remove current final match, and generate new final match?', {
-        title: 'Reset Pool',
+        title: 'Generate Final Match',
         size: 'md',
         okVariant: 'danger',
         centered: true
@@ -7868,15 +8255,6 @@ var timeoutDebounce = null;
         };
       }
     },
-    winnerPosition: function winnerPosition(position) {
-      if (position == 1) {
-        return '1st Winner';
-      } else if (position == 2) {
-        return '2nd Winner';
-      } else {
-        return '3rd Winner';
-      }
-    },
     saveAchievement: function () {
       var _saveAchievement = _asyncToGenerator(
       /*#__PURE__*/
@@ -7889,7 +8267,7 @@ var timeoutDebounce = null;
                 _context14.next = 3;
                 return this.$axios.post('master/achievement/insert', {
                   tournament_name: null,
-                  achievement_city: null,
+                  city_id: null,
                   achievement_year: null,
                   winner_position: item.division_winner,
                   division_id: item.division_id,
@@ -7924,7 +8302,7 @@ var timeoutDebounce = null;
       return saveAchievement;
     }(),
     isAchievementSaved: function isAchievementSaved(item) {
-      if (item.last_achievement && item.division_id == item.last_achievement.division_id && item.last_achievement.category == 'grappling' && item.division_winner == item.last_achievement.winner_position && this.setting.year == item.last_achievement.achievement_year && this.setting.city == item.last_achievement.achievement_city) {
+      if (item.last_achievement && item.division_id == item.last_achievement.division_id && item.last_achievement.category == 'grappling' && item.division_winner == item.last_achievement.winner_position && this.setting.year == item.last_achievement.achievement_year && this.setting.city_id == item.last_achievement.city_id) {
         return true;
       } else {
         return false;
@@ -8006,7 +8384,6 @@ var timeoutDebounce = null;
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _shared__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../shared */ "./assets/js/shared.js");
 
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
@@ -8558,7 +8935,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PlayerList',
   props: {
@@ -8619,23 +8995,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   methods: {
-    getCities: _shared__WEBPACK_IMPORTED_MODULE_1__["getCities"],
-    getAllDivisions: function () {
-      var _getAllDivisions = _asyncToGenerator(
+    getCities: function () {
+      var _getCities = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var divisions;
+        var cities;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return this.$axios.get('master/division/get_all');
+                return this.$axios.get('master/city/get_all');
 
               case 3:
-                divisions = _context.sent;
-                this.divisionOptions = divisions.data.data;
+                cities = _context.sent;
+                this.cities = cities.data.data;
                 _context.next = 11;
                 break;
 
@@ -8643,7 +9018,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.prev = 7;
                 _context.t0 = _context["catch"](0);
                 console.log(_context.t0.response);
-                this.$noty.error('Failed Fetch Division');
+                this.$noty.error('Failed Get Cities');
 
               case 11:
               case "end":
@@ -8651,6 +9026,45 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee, this, [[0, 7]]);
+      }));
+
+      function getCities() {
+        return _getCities.apply(this, arguments);
+      }
+
+      return getCities;
+    }(),
+    getAllDivisions: function () {
+      var _getAllDivisions = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var divisions;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return this.$axios.get('master/division/get_all');
+
+              case 3:
+                divisions = _context2.sent;
+                this.divisionOptions = divisions.data.data;
+                _context2.next = 11;
+                break;
+
+              case 7:
+                _context2.prev = 7;
+                _context2.t0 = _context2["catch"](0);
+                console.log(_context2.t0.response);
+                this.$noty.error('Failed Fetch Division');
+
+              case 11:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[0, 7]]);
       }));
 
       function getAllDivisions() {
@@ -8662,34 +9076,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getPlayerAchivements: function () {
       var _getPlayerAchivements = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(playerId) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(playerId) {
         var achievements;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
-                _context2.prev = 0;
-                _context2.next = 3;
+                _context3.prev = 0;
+                _context3.next = 3;
                 return this.$axios.get("master/achievement/filter/".concat(playerId));
 
               case 3:
-                achievements = _context2.sent;
+                achievements = _context3.sent;
                 this.achievements = achievements.data.data;
-                _context2.next = 11;
+                _context3.next = 11;
                 break;
 
               case 7:
-                _context2.prev = 7;
-                _context2.t0 = _context2["catch"](0);
-                console.log(_context2.t0.response);
+                _context3.prev = 7;
+                _context3.t0 = _context3["catch"](0);
+                console.log(_context3.t0.response);
                 this.$noty.error('Failed Fetch Achievements');
 
               case 11:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this, [[0, 7]]);
+        }, _callee3, this, [[0, 7]]);
       }));
 
       function getPlayerAchivements(_x) {
@@ -8701,34 +9115,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getCountries: function () {
       var _getCountries = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var countries;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                _context3.prev = 0;
-                _context3.next = 3;
+                _context4.prev = 0;
+                _context4.next = 3;
                 return this.$axios.get('master/country/get_all');
 
               case 3:
-                countries = _context3.sent;
+                countries = _context4.sent;
                 this.countries = countries.data.data;
-                _context3.next = 11;
+                _context4.next = 11;
                 break;
 
               case 7:
-                _context3.prev = 7;
-                _context3.t0 = _context3["catch"](0);
-                console.log(_context3.t0.response);
+                _context4.prev = 7;
+                _context4.t0 = _context4["catch"](0);
+                console.log(_context4.t0.response);
                 this.$noty.error('Failed Fetch Countries');
 
               case 11:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, this, [[0, 7]]);
+        }, _callee4, this, [[0, 7]]);
       }));
 
       function getCountries() {
@@ -8740,34 +9154,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getClubs: function () {
       var _getClubs = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
         var clubs;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
-                _context4.prev = 0;
-                _context4.next = 3;
+                _context5.prev = 0;
+                _context5.next = 3;
                 return this.$axios.get('master/club/get_all');
 
               case 3:
-                clubs = _context4.sent;
+                clubs = _context5.sent;
                 this.clubs = clubs.data.data;
-                _context4.next = 11;
+                _context5.next = 11;
                 break;
 
               case 7:
-                _context4.prev = 7;
-                _context4.t0 = _context4["catch"](0);
-                console.log(_context4.t0.response);
+                _context5.prev = 7;
+                _context5.t0 = _context5["catch"](0);
+                console.log(_context5.t0.response);
                 this.$noty.error('Failed Fetch Clubs');
 
               case 11:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4, this, [[0, 7]]);
+        }, _callee5, this, [[0, 7]]);
       }));
 
       function getClubs() {
@@ -8779,34 +9193,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getAllPlayers: function () {
       var _getAllPlayers = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
         var players;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
-                _context5.prev = 0;
-                _context5.next = 3;
+                _context6.prev = 0;
+                _context6.next = 3;
                 return this.$axios.get('master/player/get_all');
 
               case 3:
-                players = _context5.sent;
+                players = _context6.sent;
                 this.players = players.data.data;
-                _context5.next = 11;
+                _context6.next = 11;
                 break;
 
               case 7:
-                _context5.prev = 7;
-                _context5.t0 = _context5["catch"](0);
-                console.log(_context5.t0.response);
+                _context6.prev = 7;
+                _context6.t0 = _context6["catch"](0);
+                console.log(_context6.t0.response);
                 this.$noty.error('Failed Get Data');
 
               case 11:
               case "end":
-                return _context5.stop();
+                return _context6.stop();
             }
           }
-        }, _callee5, this, [[0, 7]]);
+        }, _callee6, this, [[0, 7]]);
       }));
 
       function getAllPlayers() {
@@ -8818,34 +9232,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     searchData: function () {
       var _searchData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
         var result;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context6.prev = _context6.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
-                _context6.prev = 0;
-                _context6.next = 3;
+                _context7.prev = 0;
+                _context7.next = 3;
                 return this.$axios.post("master/player/search/".concat(this.searchKeyword));
 
               case 3:
-                result = _context6.sent;
+                result = _context7.sent;
                 this.players = result.data.data;
-                _context6.next = 11;
+                _context7.next = 11;
                 break;
 
               case 7:
-                _context6.prev = 7;
-                _context6.t0 = _context6["catch"](0);
-                console.log(_context6.t0.response);
+                _context7.prev = 7;
+                _context7.t0 = _context7["catch"](0);
+                console.log(_context7.t0.response);
                 this.$noty.error('Failed Search Data');
 
               case 11:
               case "end":
-                return _context6.stop();
+                return _context7.stop();
             }
           }
-        }, _callee6, this, [[0, 7]]);
+        }, _callee7, this, [[0, 7]]);
       }));
 
       function searchData() {
@@ -8857,13 +9271,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     insertData: function () {
       var _insertData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
           while (1) {
-            switch (_context7.prev = _context7.next) {
+            switch (_context8.prev = _context8.next) {
               case 0:
-                _context7.prev = 0;
-                _context7.next = 3;
+                _context8.prev = 0;
+                _context8.next = 3;
                 return this.$axios.post('master/player/insert', {
                   country_id: this.form.country_id,
                   club_id: this.form.club_id,
@@ -8878,22 +9292,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.$noty.success('Success Insert Data');
                 this.getAllPlayers();
                 this.$bvModal.hide('modal-player');
-                _context7.next = 13;
+                _context8.next = 13;
                 break;
 
               case 8:
-                _context7.prev = 8;
-                _context7.t0 = _context7["catch"](0);
-                console.log(_context7.t0.response);
-                this.errorValidation = _context7.t0.response.data.message;
+                _context8.prev = 8;
+                _context8.t0 = _context8["catch"](0);
+                console.log(_context8.t0.response);
+                this.errorValidation = _context8.t0.response.data.message;
                 this.$noty.error('Failed Insert Data');
 
               case 13:
               case "end":
-                return _context7.stop();
+                return _context8.stop();
             }
           }
-        }, _callee7, this, [[0, 8]]);
+        }, _callee8, this, [[0, 8]]);
       }));
 
       function insertData() {
@@ -8905,13 +9319,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     updateData: function () {
       var _updateData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
           while (1) {
-            switch (_context8.prev = _context8.next) {
+            switch (_context9.prev = _context9.next) {
               case 0:
-                _context8.prev = 0;
-                _context8.next = 3;
+                _context9.prev = 0;
+                _context9.next = 3;
                 return this.$axios.post("master/player/update/".concat(this.form.id), {
                   country_id: this.form.country_id,
                   club_id: this.form.club_id,
@@ -8926,22 +9340,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.$noty.success('Success Update Data');
                 this.getAllPlayers();
                 this.$bvModal.hide('modal-player');
-                _context8.next = 13;
+                _context9.next = 13;
                 break;
 
               case 8:
-                _context8.prev = 8;
-                _context8.t0 = _context8["catch"](0);
-                console.log(_context8.t0.response);
-                this.errorValidation = _context8.t0.response.data.message;
+                _context9.prev = 8;
+                _context9.t0 = _context9["catch"](0);
+                console.log(_context9.t0.response);
+                this.errorValidation = _context9.t0.response.data.message;
                 this.$noty.error('Failed Update Data');
 
               case 13:
               case "end":
-                return _context8.stop();
+                return _context9.stop();
             }
           }
-        }, _callee8, this, [[0, 8]]);
+        }, _callee9, this, [[0, 8]]);
       }));
 
       function updateData() {
@@ -8953,13 +9367,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     deleteData: function () {
       var _deleteData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(item) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10(item) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
           while (1) {
-            switch (_context9.prev = _context9.next) {
+            switch (_context10.prev = _context10.next) {
               case 0:
-                _context9.prev = 0;
-                _context9.next = 3;
+                _context10.prev = 0;
+                _context10.next = 3;
                 return this.$axios.post('master/player/delete', {
                   id: item.id
                 });
@@ -8968,21 +9382,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.$noty.success('Success Delete Data');
                 this.getAllPlayers();
                 this.$bvModal.hide('modal-player');
-                _context9.next = 12;
+                _context10.next = 12;
                 break;
 
               case 8:
-                _context9.prev = 8;
-                _context9.t0 = _context9["catch"](0);
-                console.log(_context9.t0.response);
+                _context10.prev = 8;
+                _context10.t0 = _context10["catch"](0);
+                console.log(_context10.t0.response);
                 this.$noty.error('Failed Delete Data');
 
               case 12:
               case "end":
-                return _context9.stop();
+                return _context10.stop();
             }
           }
-        }, _callee9, this, [[0, 8]]);
+        }, _callee10, this, [[0, 8]]);
       }));
 
       function deleteData(_x2) {
@@ -9025,26 +9439,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     uploadPhoto: function () {
       var _uploadPhoto = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10(photoType) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11(photoType) {
         var formData;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
           while (1) {
-            switch (_context10.prev = _context10.next) {
+            switch (_context11.prev = _context11.next) {
               case 0:
                 formData = new FormData();
                 formData.append(photoType, this.form[photoType]); // error jika tidak pilih file
 
                 if (this.form[photoType].name) {
-                  _context10.next = 5;
+                  _context11.next = 5;
                   break;
                 }
 
                 this.$noty.error('No file selected');
-                return _context10.abrupt("return");
+                return _context11.abrupt("return");
 
               case 5:
-                _context10.prev = 5;
-                _context10.next = 8;
+                _context11.prev = 5;
+                _context11.next = 8;
                 return this.$axios.post("master/player/upload_photo/".concat(this.form.id, "/").concat(photoType), formData, {
                   headers: {
                     'Content-Type': 'multipart/form-data'
@@ -9056,23 +9470,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.getAllPlayers();
                 this.$noty.success('Success Upload Photo');
                 this.$bvModal.hide('modal-player');
-                _context10.next = 20;
+                _context11.next = 19;
                 break;
 
               case 14:
-                _context10.prev = 14;
-                _context10.t0 = _context10["catch"](5);
-                console.log('gatot');
-                console.log(_context10.t0);
-                this.errorValidation = _context10.t0.response.data.message;
+                _context11.prev = 14;
+                _context11.t0 = _context11["catch"](5);
+                console.log(_context11.t0);
+                this.errorValidation = _context11.t0.response.data.message;
                 this.$noty.error('Failed Upload Photo');
 
-              case 20:
+              case 19:
               case "end":
-                return _context10.stop();
+                return _context11.stop();
             }
           }
-        }, _callee10, this, [[5, 14]]);
+        }, _callee11, this, [[5, 14]]);
       }));
 
       function uploadPhoto(_x3) {
@@ -9110,17 +9523,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     loadAchievement: function () {
       var _loadAchievement = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11(item) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12(item) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
           while (1) {
-            switch (_context11.prev = _context11.next) {
+            switch (_context12.prev = _context12.next) {
               case 0:
                 this.getAllDivisions();
                 this.errorValidation = null;
                 this.tabIndex = 0;
                 this.form.id = item.id;
                 this.$bvModal.show('modal-achievement');
-                _context11.next = 7;
+                _context12.next = 7;
                 return this.getPlayerAchivements(item.id);
 
               case 7:
@@ -9128,10 +9541,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 8:
               case "end":
-                return _context11.stop();
+                return _context12.stop();
             }
           }
-        }, _callee11, this);
+        }, _callee12, this);
       }));
 
       function loadAchievement(_x4) {
@@ -9160,7 +9573,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       this.formAchievement.push({
-        achievement_city: null,
+        city_id: null,
         achievement_year: null,
         category: categorySelected,
         division_id: null,
@@ -9177,7 +9590,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var achievementCategory = this.formAchievement.filter(function (item) {
         return item.category === category;
       });
-      console.log(achievementCategory);
 
       if (achievementCategory.length > 3) {
         this.errorValidation = "Only 3 achivement can be registered per category. Change your oldest ".concat(category, " achievement to the new one"); // ubah category yang kelebihan, menjadi category lain
@@ -9190,7 +9602,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }).map(function (item) {
           return item.achievement_year;
         });
-        console.log(arrYear);
         var oldestYear = Math.min.apply(Math, _toConsumableArray(arrYear)); // pindah ke oldest achievement
 
         this.tabIndex = achievementCategory.findIndex(function (x) {
@@ -9206,25 +9617,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     insertAchievement: function () {
       var _insertAchievement = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12(ach) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13(ach) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
           while (1) {
-            switch (_context12.prev = _context12.next) {
+            switch (_context13.prev = _context13.next) {
               case 0:
                 if (this.checkAchievementCategory(ach.category, true)) {
-                  _context12.next = 2;
+                  _context13.next = 2;
                   break;
                 }
 
-                return _context12.abrupt("return");
+                return _context13.abrupt("return");
 
               case 2:
-                _context12.prev = 2;
-                _context12.next = 5;
+                _context13.prev = 2;
+                _context13.next = 5;
                 return this.$axios.post('master/achievement/insert', {
                   tournament_name: ach.tournament_name,
                   winner_position: ach.winner_position,
-                  achievement_city: ach.achievement_city,
+                  city_id: ach.city_id,
                   achievement_year: ach.achievement_year,
                   division_id: ach.division_id,
                   category: ach.category,
@@ -9235,22 +9646,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.formAchievement = [];
                 this.loadAchievement(this.form);
                 this.$noty.success('Success Insert Data');
-                _context12.next = 15;
+                _context13.next = 15;
                 break;
 
               case 10:
-                _context12.prev = 10;
-                _context12.t0 = _context12["catch"](2);
-                console.log(_context12.t0.response);
-                this.errorValidation = _context12.t0.response.data.message;
+                _context13.prev = 10;
+                _context13.t0 = _context13["catch"](2);
+                console.log(_context13.t0.response);
+                this.errorValidation = _context13.t0.response.data.message;
                 this.$noty.error('Failed Insert Data');
 
               case 15:
               case "end":
-                return _context12.stop();
+                return _context13.stop();
             }
           }
-        }, _callee12, this, [[2, 10]]);
+        }, _callee13, this, [[2, 10]]);
       }));
 
       function insertAchievement(_x5) {
@@ -9262,25 +9673,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     updateAchievement: function () {
       var _updateAchievement = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13(ach) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14(ach) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
           while (1) {
-            switch (_context13.prev = _context13.next) {
+            switch (_context14.prev = _context14.next) {
               case 0:
                 if (this.checkAchievementCategory(ach.category, false)) {
-                  _context13.next = 2;
+                  _context14.next = 2;
                   break;
                 }
 
-                return _context13.abrupt("return");
+                return _context14.abrupt("return");
 
               case 2:
-                _context13.prev = 2;
-                _context13.next = 5;
+                _context14.prev = 2;
+                _context14.next = 5;
                 return this.$axios.post("master/achievement/update/".concat(ach.id), {
                   tournament_name: ach.tournament_name,
                   winner_position: ach.winner_position,
-                  achievement_city: ach.achievement_city,
+                  city_id: ach.city_id,
                   achievement_year: ach.achievement_year,
                   division_id: ach.division_id,
                   category: ach.category,
@@ -9289,22 +9700,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 5:
                 this.$noty.success('Success Update Data');
-                _context13.next = 13;
+                _context14.next = 13;
                 break;
 
               case 8:
-                _context13.prev = 8;
-                _context13.t0 = _context13["catch"](2);
-                console.log(_context13.t0.response);
-                this.errorValidation = _context13.t0.response.data.message;
+                _context14.prev = 8;
+                _context14.t0 = _context14["catch"](2);
+                console.log(_context14.t0.response);
+                this.errorValidation = _context14.t0.response.data.message;
                 this.$noty.error('Failed Update Data');
 
               case 13:
               case "end":
-                return _context13.stop();
+                return _context14.stop();
             }
           }
-        }, _callee13, this, [[2, 8]]);
+        }, _callee14, this, [[2, 8]]);
       }));
 
       function updateAchievement(_x6) {
@@ -9316,24 +9727,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     deleteAchievement: function () {
       var _deleteAchievement = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14(item) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15(item) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
           while (1) {
-            switch (_context14.prev = _context14.next) {
+            switch (_context15.prev = _context15.next) {
               case 0:
                 if (item.id) {
-                  _context14.next = 3;
+                  _context15.next = 3;
                   break;
                 }
 
                 this.formAchievement.splice(this.formAchievement.findIndex(function (x) {
                   return x.id == item.id;
                 }), 1);
-                return _context14.abrupt("return");
+                return _context15.abrupt("return");
 
               case 3:
-                _context14.prev = 3;
-                _context14.next = 6;
+                _context15.prev = 3;
+                _context15.next = 6;
                 return this.$axios.post('master/achievement/delete', {
                   id: item.id
                 });
@@ -9343,21 +9754,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.formAchievement.splice(this.formAchievement.findIndex(function (x) {
                   return x.id == item.id;
                 }), 1);
-                _context14.next = 14;
+                _context15.next = 14;
                 break;
 
               case 10:
-                _context14.prev = 10;
-                _context14.t0 = _context14["catch"](3);
-                console.log(_context14.t0.response);
+                _context15.prev = 10;
+                _context15.t0 = _context15["catch"](3);
+                console.log(_context15.t0.response);
                 this.$noty.error('Failed Delete Data');
 
               case 14:
               case "end":
-                return _context14.stop();
+                return _context15.stop();
             }
           }
-        }, _callee14, this, [[3, 10]]);
+        }, _callee15, this, [[3, 10]]);
       }));
 
       function deleteAchievement(_x7) {
@@ -9376,7 +9787,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.errorValidation = null;
       this.formAchievement[this.tabIndex].tournament_name = null;
       this.formAchievement[this.tabIndex].winner_position = null;
-      this.formAchievement[this.tabIndex].achievement_city = null;
+      this.formAchievement[this.tabIndex].city_id = null;
       this.formAchievement[this.tabIndex].achievement_year = null;
       this.formAchievement[this.tabIndex].division_id = null;
       this.formAchievement[this.tabIndex].category = null;
@@ -9397,7 +9808,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     this.getAllPlayers();
     this.getCountries();
     this.getClubs();
-    this.cities = this.getCities();
+    this.getCities();
   },
   watch: {
     'form.weight': function formWeight(val) {
@@ -10126,7 +10537,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _shared__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../shared */ "./assets/js/shared.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -10206,7 +10616,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Setting',
   data: function data() {
@@ -10214,7 +10626,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       form: {
         year: null,
         month: null,
-        city: null
+        city_id: null
       },
       modalState: null,
       errorValidation: null,
@@ -10222,7 +10634,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   methods: {
-    getCities: _shared__WEBPACK_IMPORTED_MODULE_1__["getCities"],
     getSetting: function () {
       var _getSetting = _asyncToGenerator(
       /*#__PURE__*/
@@ -10246,7 +10657,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.prev = 7;
                 _context.t0 = _context["catch"](0);
                 console.log(_context.t0.response);
-                this.$noty.error('Failed Get Data');
+                this.$noty.error('Failed Get Setting');
 
               case 11:
               case "end":
@@ -10262,59 +10673,98 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return getSetting;
     }(),
-    updateData: function () {
-      var _updateData = _asyncToGenerator(
+    getCities: function () {
+      var _getCities = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var cities;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return this.$axios.get('master/city/get_all');
+
+              case 3:
+                cities = _context2.sent;
+                this.cities = cities.data.data;
+                _context2.next = 11;
+                break;
+
+              case 7:
+                _context2.prev = 7;
+                _context2.t0 = _context2["catch"](0);
+                console.log(_context2.t0.response);
+                this.$noty.error('Failed Get Cities');
+
+              case 11:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[0, 7]]);
+      }));
+
+      function getCities() {
+        return _getCities.apply(this, arguments);
+      }
+
+      return getCities;
+    }(),
+    updateData: function () {
+      var _updateData = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
                 if (!(this.form.year < new Date().getFullYear() || this.form.year > 2100)) {
-                  _context2.next = 3;
+                  _context3.next = 3;
                   break;
                 }
 
                 this.$noty.error('Invalid year');
-                return _context2.abrupt("return");
+                return _context3.abrupt("return");
 
               case 3:
                 if (!(this.form.montgh < 1 || this.form.month > 12)) {
-                  _context2.next = 6;
+                  _context3.next = 6;
                   break;
                 }
 
                 this.$noty.error('Invalid month');
-                return _context2.abrupt("return");
+                return _context3.abrupt("return");
 
               case 6:
-                _context2.prev = 6;
-                _context2.next = 9;
+                _context3.prev = 6;
+                _context3.next = 9;
                 return this.$axios.post('setting/update', {
                   year: this.form.year,
                   month: this.form.month,
-                  city: this.form.city
+                  city_id: this.form.city_id
                 });
 
               case 9:
                 this.$noty.success('Success Update Data');
                 this.getSetting();
-                _context2.next = 18;
+                _context3.next = 18;
                 break;
 
               case 13:
-                _context2.prev = 13;
-                _context2.t0 = _context2["catch"](6);
-                console.log(_context2.t0.response);
-                this.errorValidation = _context2.t0.response.data.message;
+                _context3.prev = 13;
+                _context3.t0 = _context3["catch"](6);
+                console.log(_context3.t0.response);
+                this.errorValidation = _context3.t0.response.data.message;
                 this.$noty.error('Failed Update Data');
 
               case 18:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this, [[6, 13]]);
+        }, _callee3, this, [[6, 13]]);
       }));
 
       function updateData() {
@@ -10326,7 +10776,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   created: function created() {
     this.getSetting();
-    this.cities = this.getCities();
+    this.getCities();
   }
 });
 
@@ -40079,7 +40529,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.min-width-10 {\r\n  min-width: 10rem;\n}\r\n", ""]);
+exports.push([module.i, "\n.min-width-triple {\r\n  min-width: 8rem;\n}\n.min-width-double {\r\n  min-width: 5rem;\n}\r\n", ""]);
 
 // exports
 
@@ -45273,6 +45723,239 @@ var e=function(){return(e=Object.assign||function(e){for(var t,r=1,s=arguments.l
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./assets/js/components/CityList.vue?vue&type=template&id=6b8d8b4a&":
+/*!********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./assets/js/components/CityList.vue?vue&type=template&id=6b8d8b4a& ***!
+  \********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "container-fluid" },
+    [
+      _c("div", { staticClass: "row justify-content-center" }, [
+        _c("div", { staticClass: "col" }, [
+          _c("div", { staticClass: "card card-default" }, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "card-header d-flex justify-content-between align-items-center"
+              },
+              [
+                _c("span", [_vm._v("City List")]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-sm btn-primary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.addData()
+                      }
+                    }
+                  },
+                  [_vm._v("\n            Add city\n          ")]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.cities.length == 0,
+                      expression: "cities.length == 0"
+                    }
+                  ],
+                  staticClass: "my-3 text-center"
+                },
+                [_vm._v("Empty Data")]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "list-group" },
+                _vm._l(_vm.cities, function(item) {
+                  return _c(
+                    "div",
+                    {
+                      key: item.id,
+                      staticClass:
+                        "list-group-item d-flex justify-content-between align-items-center"
+                    },
+                    [
+                      _c("div", [
+                        _c("p", { staticClass: "font-weight-bold m-0" }, [
+                          _vm._v(
+                            "\n                  " +
+                              _vm._s(item.city) +
+                              "\n                "
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-sm btn-warning",
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.loadData(item)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-edit fa-fw" })]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-sm btn-danger",
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.confirmDelete(item)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-trash fa-fw" })]
+                        )
+                      ])
+                    ]
+                  )
+                }),
+                0
+              )
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "b-modal",
+        {
+          attrs: {
+            id: "modal-city",
+            "hide-footer": "",
+            title: _vm.modalState == "add" ? "Add Item" : "Update Item"
+          }
+        },
+        [
+          _vm.errorValidation
+            ? _c("div", {
+                staticClass: "alert alert-danger",
+                domProps: { innerHTML: _vm._s(_vm.errorValidation) }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _c("form", { attrs: { method: "post" } }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "city" } }, [_vm._v("City")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.city,
+                    expression: "form.city"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { id: "city", type: "text", placeholder: "Enter city" },
+                domProps: { value: _vm.form.city },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "city", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "d-flex justify-content-end" }, [
+              _c(
+                "div",
+                { staticClass: "btn-group", attrs: { role: "group" } },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.resetData()
+                        }
+                      }
+                    },
+                    [_vm._v("Reset")]
+                  ),
+                  _vm._v(" "),
+                  _vm.modalState == "add"
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.insertData()
+                            }
+                          }
+                        },
+                        [_vm._v("Add")]
+                      )
+                    : _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.updateData()
+                            }
+                          }
+                        },
+                        [_vm._v("Update")]
+                      )
+                ]
+              )
+            ])
+          ])
+        ]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./assets/js/components/ClubList.vue?vue&type=template&id=6741c8d6&":
 /*!********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./assets/js/components/ClubList.vue?vue&type=template&id=6741c8d6& ***!
@@ -46970,23 +47653,10 @@ var render = function() {
                                             staticClass:
                                               "badge badge-secondary",
                                             attrs: {
-                                              title:
+                                              title: _vm.tooltipAchievement(
                                                 data.item
                                                   .player1_last_achievement
-                                                  .winner_position +
-                                                " winner on " +
-                                                data.item
-                                                  .player1_last_achievement
-                                                  .tournament_name +
-                                                " (" +
-                                                data.item
-                                                  .player1_last_achievement
-                                                  .achievement_city +
-                                                "/" +
-                                                data.item
-                                                  .player1_last_achievement
-                                                  .achievement_year +
-                                                ")"
+                                              )
                                             }
                                           },
                                           [
@@ -47039,23 +47709,10 @@ var render = function() {
                                             staticClass:
                                               "badge badge-secondary",
                                             attrs: {
-                                              title:
+                                              title: _vm.tooltipAchievement(
                                                 data.item
                                                   .player2_last_achievement
-                                                  .winner_position +
-                                                " winner on " +
-                                                data.item
-                                                  .player2_last_achievement
-                                                  .tournament_name +
-                                                " (" +
-                                                data.item
-                                                  .player2_last_achievement
-                                                  .achievement_city +
-                                                "/" +
-                                                data.item
-                                                  .player2_last_achievement
-                                                  .achievement_year +
-                                                ")"
+                                              )
                                             }
                                           },
                                           [
@@ -47154,7 +47811,7 @@ var render = function() {
                         ],
                         null,
                         false,
-                        4040159987
+                        3333905648
                       )
                     })
                   : _vm._e()
@@ -47574,11 +48231,11 @@ var render = function() {
                     }),
                     _vm._v(
                       "\n            " +
-                        _vm._s(_vm.parseWinnerPosition(item.winner_position)) +
+                        _vm._s(_vm.parseWinner(item.winner_position)) +
                         " Winner " +
                         _vm._s(item.tournament_name) +
                         " (" +
-                        _vm._s(item.achievement_city) +
+                        _vm._s(item.city) +
                         " " +
                         _vm._s(item.achievement_year) +
                         ")\n          "
@@ -47847,11 +48504,11 @@ var render = function() {
                     }),
                     _vm._v(
                       "\n            " +
-                        _vm._s(_vm.parseWinnerPosition(item.winner_position)) +
+                        _vm._s(_vm.parseWinner(item.winner_position)) +
                         " Winner " +
                         _vm._s(item.tournament_name) +
                         " (" +
-                        _vm._s(item.achievement_city) +
+                        _vm._s(item.city) +
                         " " +
                         _vm._s(item.achievement_year) +
                         ")\n          "
@@ -49419,12 +50076,12 @@ var render = function() {
                                           _vm._v(
                                             "\n                  " +
                                               _vm._s(
-                                                _vm.winnerPosition(
+                                                _vm.parseWinner(
                                                   data.item.last_achievement
                                                     .winner_position
                                                 )
                                               ) +
-                                              "\n                "
+                                              " Winner\n                "
                                           )
                                         ]),
                                         _vm._v(
@@ -49433,12 +50090,16 @@ var render = function() {
                                               data.item.last_achievement
                                                 .tournament_name
                                             ) +
+                                            "\n                (" +
+                                            _vm._s(
+                                              data.item.last_achievement.city
+                                            ) +
                                             " " +
                                             _vm._s(
                                               data.item.last_achievement
                                                 .achievement_year
                                             ) +
-                                            "\n              "
+                                            ")\n              "
                                         )
                                       ]
                                     )
@@ -49493,7 +50154,7 @@ var render = function() {
                                       _c("span", [
                                         _vm._v(
                                           _vm._s(
-                                            _vm.winnerPosition(
+                                            _vm.parseWinner(
                                               data.item.division_winner
                                             )
                                           )
@@ -49508,15 +50169,28 @@ var render = function() {
                             key: "cell(total_time)",
                             fn: function(data) {
                               return [
-                                _c("span", [
-                                  _vm._v(
-                                    _vm._s(
-                                      data.item.total_time != 0
-                                        ? data.item.total_time / 1000
-                                        : data.item.total_time
-                                    ) + " s"
-                                  )
-                                ])
+                                data.item.total_time
+                                  ? _c(
+                                      "span",
+                                      {
+                                        attrs: {
+                                          title:
+                                            "Total time when player is win on match"
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                " +
+                                            _vm._s(
+                                              data.item.total_time != 0
+                                                ? data.item.total_time / 1000
+                                                : data.item.total_time
+                                            ) +
+                                            " s\n              "
+                                        )
+                                      ]
+                                    )
+                                  : _c("span", [_vm._v("-")])
                               ]
                             }
                           },
@@ -49550,7 +50224,14 @@ var render = function() {
                               return [
                                 _c(
                                   "div",
-                                  { staticClass: "min-width-10 text-right" },
+                                  {
+                                    staticClass: "text-right",
+                                    class: [
+                                      data.item.division_winner
+                                        ? "min-width-triple"
+                                        : "min-width-double"
+                                    ]
+                                  },
                                   [
                                     data.item.division_winner
                                       ? _c(
@@ -49636,7 +50317,7 @@ var render = function() {
                         ],
                         null,
                         false,
-                        597242692
+                        2199452314
                       )
                     })
                   : _vm._e()
@@ -51211,11 +51892,9 @@ var render = function() {
                         _c("div", { staticClass: "form-group" }, [
                           _c("div", { staticClass: "row" }, [
                             _c("div", { staticClass: "col" }, [
-                              _c(
-                                "label",
-                                { attrs: { for: "achievement_city" } },
-                                [_vm._v("City")]
-                              ),
+                              _c("label", { attrs: { for: "city_id" } }, [
+                                _vm._v("City")
+                              ]),
                               _vm._v(" "),
                               _c(
                                 "select",
@@ -51224,18 +51903,16 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model.number",
-                                      value:
-                                        _vm.formAchievement[index]
-                                          .achievement_city,
+                                      value: _vm.formAchievement[index].city_id,
                                       expression:
-                                        "formAchievement[index].achievement_city",
+                                        "formAchievement[index].city_id",
                                       modifiers: { number: true }
                                     }
                                   ],
                                   staticClass: "form-control",
                                   attrs: {
-                                    name: "achievement_city",
-                                    id: "achievement_city",
+                                    name: "city_id",
+                                    id: "city_id",
                                     disabled:
                                       _vm.countAchievement(item.category) > 3
                                   },
@@ -51254,7 +51931,7 @@ var render = function() {
                                         })
                                       _vm.$set(
                                         _vm.formAchievement[index],
-                                        "achievement_city",
+                                        "city_id",
                                         $event.target.multiple
                                           ? $$selectedVal
                                           : $$selectedVal[0]
@@ -51276,10 +51953,10 @@ var render = function() {
                                     return _c(
                                       "option",
                                       {
-                                        key: item.value,
-                                        domProps: { value: item.value }
+                                        key: item.id,
+                                        domProps: { value: item.id }
                                       },
-                                      [_vm._v(_vm._s(item.text))]
+                                      [_vm._v(_vm._s(item.city))]
                                     )
                                   })
                                 ],
@@ -51288,11 +51965,9 @@ var render = function() {
                             ]),
                             _vm._v(" "),
                             _c("div", { staticClass: "col" }, [
-                              _c(
-                                "label",
-                                { attrs: { for: "achievement_city" } },
-                                [_vm._v("Year")]
-                              ),
+                              _c("label", { attrs: { for: "city_id" } }, [
+                                _vm._v("Year")
+                              ]),
                               _vm._v(" "),
                               _c("input", {
                                 directives: [
@@ -52081,7 +52756,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "city" } }, [_vm._v("City")]),
+                _c("label", { attrs: { for: "city_id" } }, [_vm._v("City")]),
                 _vm._v(" "),
                 _c(
                   "select",
@@ -52090,13 +52765,13 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model.number",
-                        value: _vm.form.city,
-                        expression: "form.city",
+                        value: _vm.form.city_id,
+                        expression: "form.city_id",
                         modifiers: { number: true }
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { name: "city", id: "city" },
+                    attrs: { name: "city_id", id: "city_id" },
                     on: {
                       change: function($event) {
                         var $$selectedVal = Array.prototype.filter
@@ -52109,7 +52784,7 @@ var render = function() {
                           })
                         _vm.$set(
                           _vm.form,
-                          "city",
+                          "city_id",
                           $event.target.multiple
                             ? $$selectedVal
                             : $$selectedVal[0]
@@ -52118,15 +52793,17 @@ var render = function() {
                     }
                   },
                   [
-                    _c("option", { domProps: { value: null } }, [
-                      _vm._v("Select City")
-                    ]),
+                    _c(
+                      "option",
+                      { attrs: { disabled: "" }, domProps: { value: null } },
+                      [_vm._v("Select City")]
+                    ),
                     _vm._v(" "),
                     _vm._l(_vm.cities, function(item) {
                       return _c(
                         "option",
-                        { key: item.value, domProps: { value: item.value } },
-                        [_vm._v(_vm._s(item.text))]
+                        { key: item.id, domProps: { value: item.id } },
+                        [_vm._v(_vm._s(item.city))]
                       )
                     })
                   ],

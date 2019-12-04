@@ -35,9 +35,9 @@ class Setting extends MY_Controller
         $request = parse_post_data();
 
         $data = [
-            'year'  => $request->year,
-            'month' => $request->month,
-            'city'  => $request->city,
+            'year'    => $request->year,
+            'month'   => $request->month,
+            'city_id' => $request->city_id,
         ];
 
         // validasi
@@ -47,7 +47,7 @@ class Setting extends MY_Controller
             $result = $this->setting->update_setting($data);
 
             $this->session->set_userdata([
-                'setting_city'  => $data['city'],
+                'setting_city'  => $data['city_id'],
                 'setting_year'  => $data['year'],
                 'setting_month' => $data['month'],
             ]);
