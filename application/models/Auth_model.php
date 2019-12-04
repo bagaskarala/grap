@@ -53,6 +53,8 @@ class Auth_model extends MY_Model
             if ($user['is_active'] == 1) {
                 if (password_verify($login_data['login_password'], $user['password'])) {
 
+                    $this->select('setting.*,city.city');
+                    $this->join_table('city', 'setting');
                     $setting = $this->get_single_array('setting');
 
                     $data = [
@@ -60,7 +62,7 @@ class Auth_model extends MY_Model
                         'role_id'       => $user['role_id'],
                         'name'          => $user['name'],
                         'image'         => $user['image'],
-                        'setting_city'  => $setting ? $setting['city_id'] : null,
+                        'setting_city'  => $setting ? $setting['city'] : null,
                         'setting_year'  => $setting ? $setting['year'] : null,
                         'setting_month' => $setting ? $setting['month'] : null,
                         'login'         => true,

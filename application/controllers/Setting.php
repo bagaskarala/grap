@@ -46,10 +46,14 @@ class Setting extends MY_Controller
         } else {
             $result = $this->setting->update_setting($data);
 
+            $this->setting->select('setting.*,city.city');
+            $this->setting->join_table('city', 'setting');
+            $setting = $this->setting->get_single_array('setting');
+
             $this->session->set_userdata([
-                'setting_city'  => $data['city_id'],
-                'setting_year'  => $data['year'],
-                'setting_month' => $data['month'],
+                'setting_city'  => $setting['city'],
+                'setting_year'  => $setting['year'],
+                'setting_month' => $setting['month'],
             ]);
         }
 
