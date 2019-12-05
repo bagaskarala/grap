@@ -75,6 +75,7 @@ class Log_match_model extends MY_Model
         // cari max year grappling, untuk mencari tahu grappling terakhir
         $this->select('MAX(achievement_year) as latest_grappling_year');
         $this->where('category', 'grappling');
+        $this->where('division_id', $division_id);
         $ach = $this->get_single_array('achievement');
 
         $result   = [];
@@ -353,6 +354,7 @@ class Log_match_model extends MY_Model
         // cari max year grappling, untuk mencari tahu grappling terakhir
         $this->select('MAX(achievement_year) as latest_grappling_year');
         $this->where('category', 'grappling');
+        $this->where('division_id', $division_id);
         $ach = $this->get_single_array('achievement');
 
         $category            = 'grappling';
@@ -484,7 +486,7 @@ class Log_match_model extends MY_Model
         return $log_match_detail;
     }
 
-    public function start_play($division_id)
+    public function start_match($division_id)
     {
         /**
          * Memulai pertandingan dengan melakukan skip match
@@ -493,10 +495,23 @@ class Log_match_model extends MY_Model
         // cari match index 1
         $this->where('division_id', $division_id);
         $this->where('match_index', 1);
-        $log_matchs_first = $this->get_all_array();
+        $first_index_match = $this->get_all_array();
 
-        // loop logmatch berindex 1/ pertandingan pertama
-        foreach ($log_matchs_first as $lm) {
+        foreach ($first_index_match as $lm) {
+            if ($lm['pd1_id'] == null or $lm['pd2_id'] == null) {
+                if ($lm['winner'] == -1) {
+                    return [
+                        'status'  => false,
+                        'message' => 'Match has been started',
+                    ];
+                }
+            }
+        }
+
+        $flag = 0;
+        // loop logmatch berindex 1 / pertandingan pertama
+        foreach ($first_index_match as $lm) {
+            // skip ke next match, jka player tidak punya lawan
             if ($lm['pd1_id'] == null or $lm['pd2_id'] == null) {
                 // baca index dan number untuk next-match
                 $index  = explode('.', $lm['next_match'])[0];
@@ -519,11 +534,13 @@ class Log_match_model extends MY_Model
 
                 // update logmatch tujuan
                 if ($destination['pd1_id'] == null) {
-                    $data = ['pd1_id' => $lm[$pd_selected]];
-                    $this->update($data, $where);
+                    if (!$this->update(['pd1_id' => $lm[$pd_selected]], $where)) {
+                        $flag++;
+                    }
                 } else {
-                    $data = ['pd2_id' => $lm[$pd_selected]];
-                    $this->update($data, $where);
+                    if (!$this->update(['pd2_id' => $lm[$pd_selected]], $where)) {
+                        $flag++;
+                    }
                 }
 
                 // update logmatch asal
@@ -533,8 +550,22 @@ class Log_match_model extends MY_Model
                     // 'pd1_id'       => null,
                     // 'pd2_id'       => null,
                 ];
-                $this->update($data, ['id' => $lm['id']]);
+
+                if (!$this->update($data, ['id' => $lm['id']])) {
+                    $flag++;
+                }
             }
+        }
+        if ($flag == 0) {
+            return [
+                'status' => true,
+                'data'   => 'Success start play',
+            ];
+        } else {
+            return [
+                'status'  => false,
+                'message' => 'Failed start play, there is an error on updating data',
+            ];
         }
     }
 

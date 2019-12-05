@@ -52,7 +52,7 @@
                 </select>
                 <div class="input-group-append">
                   <button
-                    class="btn btn-success"
+                    class="btn btn-primary"
                     type="button"
                     :disabled="logMatchs.length > 0"
                     @click.prevent="generateSchedule()"
@@ -83,6 +83,12 @@
                 :disabled="logMatchs.length == 0"
                 @click.prevent="confirmResetPlayer()"
               >Reset Player</button>
+              <button
+                class="btn btn-sm btn-success"
+                type="button"
+                :disabled="logMatchs.length == 0 || lockMatch || !logMatchs[0].pd1_id"
+                @click.prevent="startMatch()"
+              >Start Match</button>
             </div>
           </div>
 
@@ -120,7 +126,7 @@
               striped
               hover
               responsive
-              :items="logMatchsFiltered"
+              :items="logMatchs"
               :fields="fieldLogMatch"
               :tbody-tr-class="rowClass"
             >
@@ -154,6 +160,11 @@
 
               <template v-slot:cell(player1_name)="data">
                 <div
+                  v-if="!data.item.player1_name && data.item.match_index == 1 && data.item.match_system == 'elimination' && data.item.winner != -1"
+                  class="text-danger font-italic"
+                >Click Start Match to skip 'BYE'</div>
+                <div
+                  v-else
                   class="min-width-10"
                   :class="winnerMark(data.item,1)"
                 >
@@ -172,6 +183,11 @@
 
               <template v-slot:cell(player2_name)="data">
                 <div
+                  v-if="!data.item.player2_name && data.item.match_index == 1 && data.item.match_system == 'elimination' && data.item.winner != -1"
+                  class="text-danger font-italic"
+                >Click Start match to skip 'BYE'</div>
+                <div
+                  v-else
                   class="min-width-10"
                   :class="winnerMark(data.item,2)"
                 >
@@ -193,9 +209,12 @@
               </template>
 
               <template v-slot:cell(action)="data">
-                <div class="min-width-10">
+                <div
+                  v-if="data.item.winner != -1"
+                  class="min-width-10"
+                >
                   <button
-                    :disabled="data.item.pd1_id == null || data.item.pd2_id == null"
+                    :disabled="(data.item.pd1_id == null || data.item.pd2_id == null) && data.item.winner == -1"
                     class="btn btn-sm btn-primary"
                     @click.prevent="goToDetail(data.item)"
                   ><i class="fa fa-eye fa-fw"></i></button>
@@ -206,6 +225,10 @@
                     @click.prevent="loadData(data.item)"
                   ><i class="fa fa-edit fa-fw"></i></button>
                 </div>
+                <div
+                  v-else
+                  class="text-left text-danger"
+                >BYE</div>
               </template>
             </b-table>
           </div>
@@ -333,7 +356,8 @@ export default {
       modalState: null,
       errorValidation: null,
       filterDivisionId: null,
-      selectedMatchSystem: 'elimination'
+      selectedMatchSystem: 'elimination',
+      lockMatchTemporary: false
     };
   },
 
@@ -430,18 +454,13 @@ export default {
     },
 
     countMatchFinished() {
-      return this.logMatchsFiltered.filter(item => item.winner != null && item.winner != -1).length
+      return this.logMatchs.filter(item => item.winner != null && item.winner != -1).length
         + ' / ' +
-        this.logMatchsFiltered.length;
+        this.logMatchs.length;
     },
 
     lockMatch() {
-      return this.logMatchs.find(item => item.winner != null && item.winner >= 0) ? true : false;
-    },
-
-    logMatchsFiltered() {
-      return this.logMatchs;
-      // return this.logMatchs.filter(item => item.winner != -1);
+      return this.logMatchs.find(item => item.winner != null && item.winner >= 0 || item.match_status == 2 || this.lockMatchTemporary) ? true : false;
     }
   },
 
@@ -453,7 +472,7 @@ export default {
       if (m.match_status == 2) {
         return playerNumber == 1 ? `${m.player1_name || 'Bye'} (${m.player1_club_alias || '-'})` : `${m.player2_name || 'Bye'} (${m.player2_club_alias || '-'})`;
       } else {
-        return playerNumber == 1 ? `${m.player1_name || '...'} (${m.player1_club_alias || '...'})` : `${m.player2_name || '...'} (${m.player2_club_alias || '...'})`;
+        return playerNumber == 1 ? `${m.player1_name || '...'} (${m.player1_club_alias || '...'}) ${m.player1_last_achievement ? ' - ' + m.player1_last_achievement.winner_position : ''}` : `${m.player2_name || '...'} (${m.player2_club_alias || '...'}) ${m.player2_last_achievement ? ' - ' + m.player2_last_achievement.winner_position : ''}`;
       }
     },
 
@@ -680,6 +699,20 @@ export default {
       } catch (error) {
         console.log(error.response);
         this.$noty.error('Failed Reset Player');
+      }
+    },
+
+    async startMatch() {
+      this.lockMatchTemporary = true;
+      try {
+        await this.$axios.post('entry/log_match/start_match', {
+          division_id: this.filterDivisionId
+        });
+        this.filterData(this.filterDivisionId);
+        this.$noty.success('Success Start Match');
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Start Match. ' + error.response.data.message);
       }
     },
 
