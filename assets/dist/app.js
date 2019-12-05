@@ -5292,7 +5292,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       if (m.match_status == 2) {
         return playerNumber == 1 ? "".concat(m.player1_name || 'Bye', " (").concat(m.player1_club_alias || '-', ")") : "".concat(m.player2_name || 'Bye', " (").concat(m.player2_club_alias || '-', ")");
       } else {
-        return playerNumber == 1 ? "".concat(m.player1_name || '...', " (").concat(m.player1_club_alias || '...', ")") : "".concat(m.player2_name || '...', " (").concat(m.player2_club_alias || '...', ")");
+        return playerNumber == 1 ? "".concat(m.player1_name || '...', " (").concat(m.player1_club_alias || '...', ") ").concat(m.player1_last_achievement ? ' - ' + m.player1_last_achievement.winner_position : '') : "".concat(m.player2_name || '...', " (").concat(m.player2_club_alias || '...', ") ").concat(m.player2_last_achievement ? ' - ' + m.player2_last_achievement.winner_position : '');
       }
     },
     checkWinner: function checkWinner(m, playerNumber) {
@@ -7589,6 +7589,13 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 var timeoutDebounce = null;
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -8270,6 +8277,71 @@ var timeoutDebounce = null;
 
       return generateFinalMatch;
     }(),
+    confirmResetSchedule: function confirmResetSchedule() {
+      var _this4 = this;
+
+      this.$bvModal.msgBoxConfirm('Please confirm that you want to clear this match schedule', {
+        title: 'Clear Schedule',
+        size: 'md',
+        okVariant: 'danger',
+        centered: true
+      }).then(function (value) {
+        if (value) {
+          _this4.resetSchedule();
+        }
+      })["catch"](function (err) {
+        console.log('Error ', err);
+      });
+    },
+    resetSchedule: function () {
+      var _resetSchedule = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
+          while (1) {
+            switch (_context14.prev = _context14.next) {
+              case 0:
+                if (!(this.filterDivisionId == null)) {
+                  _context14.next = 3;
+                  break;
+                }
+
+                this.$noty.warning('Select division first before reset schedule');
+                return _context14.abrupt("return");
+
+              case 3:
+                _context14.prev = 3;
+                _context14.next = 6;
+                return this.$axios.post('entry/log_match/reset_schedule', {
+                  division_id: this.filterDivisionId
+                });
+
+              case 6:
+                this.filterData(this.filterDivisionId);
+                this.$noty.success('Success Reset Schedule');
+                _context14.next = 14;
+                break;
+
+              case 10:
+                _context14.prev = 10;
+                _context14.t0 = _context14["catch"](3);
+                console.log(_context14.t0.response);
+                this.$noty.error('Failed Reset Schedule');
+
+              case 14:
+              case "end":
+                return _context14.stop();
+            }
+          }
+        }, _callee14, this, [[3, 10]]);
+      }));
+
+      function resetSchedule() {
+        return _resetSchedule.apply(this, arguments);
+      }
+
+      return resetSchedule;
+    }(),
     addData: function addData() {
       this.resetData();
       this.$bvModal.show('modal-player-division');
@@ -8322,13 +8394,13 @@ var timeoutDebounce = null;
     saveAchievement: function () {
       var _saveAchievement = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14(item) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15(item) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
           while (1) {
-            switch (_context14.prev = _context14.next) {
+            switch (_context15.prev = _context15.next) {
               case 0:
-                _context14.prev = 0;
-                _context14.next = 3;
+                _context15.prev = 0;
+                _context15.next = 3;
                 return this.$axios.post('master/achievement/insert', {
                   tournament_name: null,
                   city_id: null,
@@ -8342,21 +8414,21 @@ var timeoutDebounce = null;
               case 3:
                 this.filterData(this.filterDivisionId);
                 this.$noty.success('Success Insert Achivement');
-                _context14.next = 11;
+                _context15.next = 11;
                 break;
 
               case 7:
-                _context14.prev = 7;
-                _context14.t0 = _context14["catch"](0);
-                console.log(_context14.t0.response);
+                _context15.prev = 7;
+                _context15.t0 = _context15["catch"](0);
+                console.log(_context15.t0.response);
                 this.$noty.error('Failed Insert Achivement');
 
               case 11:
               case "end":
-                return _context14.stop();
+                return _context15.stop();
             }
           }
-        }, _callee14, this, [[0, 7]]);
+        }, _callee15, this, [[0, 7]]);
       }));
 
       function saveAchievement(_x4) {
@@ -50226,7 +50298,29 @@ var render = function() {
                     _vm._v(" system"),
                     _c("br"),
                     _vm._v(" "),
-                    _vm._m(2)
+                    _vm._m(2),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger btn-sm mt-2",
+                        attrs: {
+                          type: "button",
+                          title: "Clear Schedule",
+                          disabled:
+                            _vm.playerDivisions.length == 0 ||
+                            _vm.filterDivisionId == null
+                        },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.confirmResetSchedule()
+                          }
+                        }
+                      },
+                      [_vm._v("Clear Match")]
+                    )
                   ])
                 : _vm._e()
             ]),

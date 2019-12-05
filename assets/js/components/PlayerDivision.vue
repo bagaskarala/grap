@@ -90,7 +90,14 @@
               class="mt-3 mb-0 alert alert-info"
             >
               Match has been generated using <span class="font-weight-bold">{{matchSystem || 'No match found in this division'}}</span> system<br>
-              <span class="small text-muted"><i class="fa fa-info-circle"></i> Clear this division match to edit player or generate pool.</span>
+              <span class="small text-muted"><i class="fa fa-info-circle"></i> Clear this division match to edit player or generate pool.</span><br>
+              <button
+                class="btn btn-danger btn-sm mt-2"
+                type="button"
+                title="Clear Schedule"
+                :disabled="playerDivisions.length == 0 || filterDivisionId==null"
+                @click.prevent="confirmResetSchedule()"
+              >Clear Match</button>
             </div>
           </div>
 
@@ -622,6 +629,41 @@ export default {
       } catch (error) {
         console.log(error.response);
         this.$noty.error('Failed Create Final Match. ' + error.response.data.message);
+      }
+    },
+
+    confirmResetSchedule() {
+      this.$bvModal.msgBoxConfirm('Please confirm that you want to clear this match schedule', {
+        title: 'Clear Schedule',
+        size: 'md',
+        okVariant: 'danger',
+        centered: true
+      })
+        .then(value => {
+          if (value) {
+            this.resetSchedule();
+          }
+        })
+        .catch(err => {
+          console.log('Error ', err);
+        });
+    },
+
+    async resetSchedule() {
+      if (this.filterDivisionId == null) {
+        this.$noty.warning('Select division first before reset schedule');
+        return;
+      }
+
+      try {
+        await this.$axios.post('entry/log_match/reset_schedule', {
+          division_id: this.filterDivisionId
+        });
+        this.filterData(this.filterDivisionId);
+        this.$noty.success('Success Reset Schedule');
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Reset Schedule');
       }
     },
 

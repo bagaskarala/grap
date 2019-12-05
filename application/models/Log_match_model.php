@@ -75,6 +75,7 @@ class Log_match_model extends MY_Model
         // cari max year grappling, untuk mencari tahu grappling terakhir
         $this->select('MAX(achievement_year) as latest_grappling_year');
         $this->where('category', 'grappling');
+        $this->where('division_id', $division_id);
         $ach = $this->get_single_array('achievement');
 
         $result   = [];
@@ -353,6 +354,7 @@ class Log_match_model extends MY_Model
         // cari max year grappling, untuk mencari tahu grappling terakhir
         $this->select('MAX(achievement_year) as latest_grappling_year');
         $this->where('category', 'grappling');
+        $this->where('division_id', $division_id);
         $ach = $this->get_single_array('achievement');
 
         $category            = 'grappling';

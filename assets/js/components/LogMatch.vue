@@ -472,7 +472,7 @@ export default {
       if (m.match_status == 2) {
         return playerNumber == 1 ? `${m.player1_name || 'Bye'} (${m.player1_club_alias || '-'})` : `${m.player2_name || 'Bye'} (${m.player2_club_alias || '-'})`;
       } else {
-        return playerNumber == 1 ? `${m.player1_name || '...'} (${m.player1_club_alias || '...'})` : `${m.player2_name || '...'} (${m.player2_club_alias || '...'})`;
+        return playerNumber == 1 ? `${m.player1_name || '...'} (${m.player1_club_alias || '...'}) ${m.player1_last_achievement ? ' - ' + m.player1_last_achievement.winner_position : ''}` : `${m.player2_name || '...'} (${m.player2_club_alias || '...'}) ${m.player2_last_achievement ? ' - ' + m.player2_last_achievement.winner_position : ''}`;
       }
     },
 
