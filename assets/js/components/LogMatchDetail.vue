@@ -543,6 +543,7 @@ export default {
 
   data() {
     return {
+      setting: {},
       logMatchDetail: {},
       errorValidation: null,
       matchStatusOptions: [
@@ -619,9 +620,9 @@ export default {
     },
 
     maxTimeLimit() {
-      if (this.matchPhase == 'final') return 10;
-      else if (this.matchPhase == 'semifinal') return 8;
-      else return 6;
+      if (this.matchPhase == 'final') return this.setting.final_time;
+      else if (this.matchPhase == 'semifinal') return this.setting.semifinal_time;
+      else return this.setting.regular_time;
     },
 
     matchPhase() {
@@ -676,6 +677,16 @@ export default {
       } catch (error) {
         console.log(error.response);
         this.$noty.error('Failed Fetch Achievements');
+      }
+    },
+
+    async getSetting() {
+      try {
+        const setting = await this.$axios.get('setting/get');
+        this.setting = setting.data.data;
+      } catch (error) {
+        console.log(error.response);
+        this.$noty.error('Failed Fetch Setting');
       }
     },
 
@@ -812,6 +823,7 @@ export default {
     await this.getDetailLogMatch();
     this.getPlayerAchivements(this.logMatchDetail.player1_id, 'player1');
     this.getPlayerAchivements(this.logMatchDetail.player2_id, 'player2');
+    this.getSetting();
   }
 };
 </script>
