@@ -6465,6 +6465,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
+      setting: {},
       logMatchDetail: {},
       errorValidation: null,
       matchStatusOptions: [{
@@ -6526,7 +6527,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return this.convertMillisecondToTime(this.logMatchDetail.time, 'hours') + ' h : ' + this.convertMillisecondToTime(this.logMatchDetail.time, 'minutes') + ' m : ' + this.convertMillisecondToTime(this.logMatchDetail.time, 'seconds') + ' s : ' + this.convertMillisecondToTime(this.logMatchDetail.time, 'milliseconds') + ' ms';
     },
     maxTimeLimit: function maxTimeLimit() {
-      if (this.matchPhase == 'final') return 10;else if (this.matchPhase == 'semifinal') return 8;else return 6;
+      if (this.matchPhase == 'final') return this.setting.final_time;else if (this.matchPhase == 'semifinal') return this.setting.semifinal_time;else return this.setting.regular_time;
     },
     matchPhase: function matchPhase() {
       if (this.logMatchDetail.match_index == this.logMatchDetail.max_match_index) {
@@ -6697,17 +6698,56 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return getPlayerAchivements;
     }(),
-    updateData: function () {
-      var _updateData = _asyncToGenerator(
+    getSetting: function () {
+      var _getSetting = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        var a;
+        var setting;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
                 _context5.prev = 0;
                 _context5.next = 3;
+                return this.$axios.get('setting/get');
+
+              case 3:
+                setting = _context5.sent;
+                this.setting = setting.data.data;
+                _context5.next = 11;
+                break;
+
+              case 7:
+                _context5.prev = 7;
+                _context5.t0 = _context5["catch"](0);
+                console.log(_context5.t0.response);
+                this.$noty.error('Failed Fetch Setting');
+
+              case 11:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, this, [[0, 7]]);
+      }));
+
+      function getSetting() {
+        return _getSetting.apply(this, arguments);
+      }
+
+      return getSetting;
+    }(),
+    updateData: function () {
+      var _updateData = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        var a;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                _context6.prev = 0;
+                _context6.next = 3;
                 return this.$axios.post("entry/log_match/update/".concat(this.logMatchDetail.id), {
                   division_id: this.logMatchDetail.division_id,
                   time: this.form.elapsedTime ? this.form.elapsedTime : this.convertTimeToMillisecond(this.form.time),
@@ -6724,27 +6764,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 3:
-                a = _context5.sent;
+                a = _context6.sent;
                 console.log(a.data);
                 this.getDetailLogMatch();
                 this.$noty.success('Success Update Data');
                 this.$bvModal.hide('modal-update-log-match');
-                _context5.next = 15;
+                _context6.next = 15;
                 break;
 
               case 10:
-                _context5.prev = 10;
-                _context5.t0 = _context5["catch"](0);
-                console.log(_context5.t0.response);
-                this.errorValidation = _context5.t0.response.data.message;
+                _context6.prev = 10;
+                _context6.t0 = _context6["catch"](0);
+                console.log(_context6.t0.response);
+                this.errorValidation = _context6.t0.response.data.message;
                 this.$noty.error('Failed Update Data');
 
               case 15:
               case "end":
-                return _context5.stop();
+                return _context6.stop();
             }
           }
-        }, _callee5, this, [[0, 10]]);
+        }, _callee6, this, [[0, 10]]);
       }));
 
       function updateData() {
@@ -6789,13 +6829,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     resetData: function () {
       var _resetData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context6.prev = _context6.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
-                _context6.prev = 0;
-                _context6.next = 3;
+                _context7.prev = 0;
+                _context7.next = 3;
                 return this.$axios.post("entry/log_match/update/".concat(this.logMatchDetail.id), {
                   division_id: this.logMatchDetail.division_id,
                   time: null,
@@ -6816,21 +6856,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 3:
                 this.getDetailLogMatch();
                 this.$noty.success('Success Reset Data');
-                _context6.next = 11;
+                _context7.next = 11;
                 break;
 
               case 7:
-                _context6.prev = 7;
-                _context6.t0 = _context6["catch"](0);
-                console.log(_context6.t0.response);
+                _context7.prev = 7;
+                _context7.t0 = _context7["catch"](0);
+                console.log(_context7.t0.response);
                 this.$noty.error('Failed Reset Data');
 
               case 11:
               case "end":
-                return _context6.stop();
+                return _context7.stop();
             }
           }
-        }, _callee6, this, [[0, 7]]);
+        }, _callee7, this, [[0, 7]]);
       }));
 
       function resetData() {
@@ -6887,24 +6927,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   created: function () {
     var _created = _asyncToGenerator(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
         while (1) {
-          switch (_context7.prev = _context7.next) {
+          switch (_context8.prev = _context8.next) {
             case 0:
-              _context7.next = 2;
+              _context8.next = 2;
               return this.getDetailLogMatch();
 
             case 2:
               this.getPlayerAchivements(this.logMatchDetail.player1_id, 'player1');
               this.getPlayerAchivements(this.logMatchDetail.player2_id, 'player2');
+              this.getSetting();
 
-            case 4:
+            case 5:
             case "end":
-              return _context7.stop();
+              return _context8.stop();
           }
         }
-      }, _callee7, this);
+      }, _callee8, this);
     }));
 
     function created() {

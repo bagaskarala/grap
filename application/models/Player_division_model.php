@@ -357,37 +357,62 @@ class Player_division_model extends MY_Model
 
     public function update_division_winner_roundrobin($division_id)
     {
-        // ambil final match
+        // ambil semua pool unik yang ada
+        $this->db->distinct();
+        $this->select('pool_number');
         $this->where('division_id', $division_id);
-        $this->where('match_index', 1);
-        $this->where('match_number', 1);
-        $final_match = $this->get_single_array('log_match');
+        $this->where('pool_number !=', null);
+        $pools = $this->get_all_array();
 
-        // ambil third place
-        $this->where('division_id', $division_id);
-        $this->where('match_index', 1);
-        $this->where('match_number', 2);
-        $third_place = $this->get_single_array('log_match');
+        if (count($pools) == 1) {
+            // // ambil playerdivision sesuai urutan classsement
+            $this->query_player_division();
+            $this->where('division_id', $division_id);
+            $this->order_by('pool_number');
+            $this->order_by('win', 'desc');
+            $this->order_by('total_time');
+            $player_divisions = $this->get_all_array();
 
-        // jika match belum selesai, return
-        if ($final_match['match_status'] != 2 || $third_place['match_status'] != 2) {
-            return;
+            // jadikan 3 teratas sebagai juara
+            for ($i = 0; $i < 3; $i++) {
+                if ($player_divisions[$i]) {
+                    $this->update(['division_winner' => $i + 1], ['id' => $player_divisions[$i]['id']]);
+                }
+            }
+        } else if (count($pools) == 2) {
+            // ambil final match
+            $this->where('division_id', $division_id);
+            $this->where('match_index', 1);
+            $this->where('match_number', 1);
+            $final_match = $this->get_single_array('log_match');
+
+            // ambil third place
+            $this->where('division_id', $division_id);
+            $this->where('match_index', 1);
+            $this->where('match_number', 2);
+            $third_place = $this->get_single_array('log_match');
+
+            // jika match belum selesai, return
+            if ($final_match['match_status'] != 2 || $third_place['match_status'] != 2) {
+                return;
+            }
+
+            // update juara 1
+            $this->update(['division_winner' => 1], ['id' => $final_match['winner']]);
+
+            // update juara 2
+            $second_winner = null;
+            if ($final_match['winner'] == $final_match['pd1_id']) {
+                $second_winner = $final_match['pd2_id'];
+            } else if ($final_match['winner'] == $final_match['pd2_id']) {
+                $second_winner = $final_match['pd1_id'];
+            }
+            $this->update(['division_winner' => 2], ['id' => $second_winner]);
+
+            // update juara 3
+            $this->update(['division_winner' => 3], ['id' => $third_place['winner']]);
         }
 
-        // update juara 1
-        $this->update(['division_winner' => 1], ['id' => $final_match['winner']]);
-
-        // update juara 2
-        $second_winner = null;
-        if ($final_match['winner'] == $final_match['pd1_id']) {
-            $second_winner = $final_match['pd2_id'];
-        } else if ($final_match['winner'] == $final_match['pd2_id']) {
-            $second_winner = $final_match['pd1_id'];
-        }
-        $this->update(['division_winner' => 2], ['id' => $second_winner]);
-
-        // update juara 3
-        $this->update(['division_winner' => 3], ['id' => $third_place['winner']]);
     }
 
     public function reset_classement($division_id)
