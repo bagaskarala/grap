@@ -178,8 +178,6 @@ class Log_match extends MY_Controller
         $result = $this->log_match->generate_player($request->division_id, $request->match_system);
 
         if ($result['status']) {
-            // start play, pemain yang ga punya musuh langsung next ke match berikutnya
-            $this->log_match->start_play($request->division_id);
             return $this->send_json_output($result['data'], true, 200);
         } else {
             return $this->send_json_output($result['message'], false, 400);
@@ -193,6 +191,20 @@ class Log_match extends MY_Controller
         $result = $this->log_match->reset_player($request->division_id);
 
         return $result;
+    }
+
+    public function start_match()
+    {
+        $request = parse_post_data();
+
+        // start play, pemain yang ga punya musuh langsung next ke match berikutnya
+        $result = $this->log_match->start_match($request->division_id);
+
+        if ($result['status']) {
+            return $this->send_json_output($result['data'], true, 200);
+        } else {
+            return $this->send_json_output($result['message'], false, 400);
+        }
     }
 
     public function detail()

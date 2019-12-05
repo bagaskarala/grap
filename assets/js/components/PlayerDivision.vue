@@ -50,7 +50,7 @@
 
                 <button
                   :title="lockMatch? 'Disabled when match has been started' : 'Generate pool to players'"
-                  class="btn btn-sm btn-success mr-1"
+                  class="btn btn-sm btn-primary mr-1"
                   type="button"
                   :disabled="playerDivisions.length==0 || lockMatch || matchSystem"
                   @click.prevent="generatePool()"
@@ -63,7 +63,7 @@
                 >Reset Pool</button>
                 <button
                   v-if="playerDivisions.length!=0"
-                  class="btn btn-sm btn-primary mr-1"
+                  class="btn btn-sm btn-success mr-1"
                   type="button"
                   title="Generate final match based on winner on each pool"
                   :disabled="logMatchs.length==0"
