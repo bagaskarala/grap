@@ -10619,6 +10619,45 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Setting',
   data: function data() {
@@ -10729,7 +10768,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context3.abrupt("return");
 
               case 3:
-                if (!(this.form.montgh < 1 || this.form.month > 12)) {
+                if (!(this.form.month < 1 || this.form.month > 12)) {
                   _context3.next = 6;
                   break;
                 }
@@ -10738,33 +10777,63 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context3.abrupt("return");
 
               case 6:
-                _context3.prev = 6;
-                _context3.next = 9;
+                if (!(this.form.regular_time < 1 || this.form.regular_time > 20)) {
+                  _context3.next = 9;
+                  break;
+                }
+
+                this.$noty.error('Invalid regular time');
+                return _context3.abrupt("return");
+
+              case 9:
+                if (!(this.form.semifinal_time < 1 || this.form.semifinal_time > 20)) {
+                  _context3.next = 12;
+                  break;
+                }
+
+                this.$noty.error('Invalid semifinal time');
+                return _context3.abrupt("return");
+
+              case 12:
+                if (!(this.form.final_time < 1 || this.form.final_time > 20)) {
+                  _context3.next = 15;
+                  break;
+                }
+
+                this.$noty.error('Invalid final time');
+                return _context3.abrupt("return");
+
+              case 15:
+                _context3.prev = 15;
+                _context3.next = 18;
                 return this.$axios.post('setting/update', {
                   year: this.form.year,
                   month: this.form.month,
-                  city_id: this.form.city_id
+                  city_id: this.form.city_id,
+                  regular_time: this.form.regular_time,
+                  semifinal_time: this.form.semifinal_time,
+                  final_time: this.form.final_time
                 });
 
-              case 9:
+              case 18:
                 this.$noty.success('Success Update Data');
                 this.getSetting();
-                _context3.next = 18;
+                _context3.next = 27;
                 break;
 
-              case 13:
-                _context3.prev = 13;
-                _context3.t0 = _context3["catch"](6);
+              case 22:
+                _context3.prev = 22;
+                _context3.t0 = _context3["catch"](15);
                 console.log(_context3.t0.response);
                 this.errorValidation = _context3.t0.response.data.message;
                 this.$noty.error('Failed Update Data');
 
-              case 18:
+              case 27:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, this, [[6, 13]]);
+        }, _callee3, this, [[15, 22]]);
       }));
 
       function updateData() {
@@ -52811,6 +52880,132 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "month" } }, [
+                  _vm._v("Waktu Regular")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model.number",
+                      value: _vm.form.regular_time,
+                      expression: "form.regular_time",
+                      modifiers: { number: true }
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    id: "month",
+                    type: "number",
+                    placeholder: "Enter Regular Time Match",
+                    max: "20",
+                    min: "1"
+                  },
+                  domProps: { value: _vm.form.regular_time },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.form,
+                        "regular_time",
+                        _vm._n($event.target.value)
+                      )
+                    },
+                    blur: function($event) {
+                      return _vm.$forceUpdate()
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "month" } }, [
+                  _vm._v("Waktu Semi Final")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model.number",
+                      value: _vm.form.semifinal_time,
+                      expression: "form.semifinal_time",
+                      modifiers: { number: true }
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    id: "month",
+                    type: "number",
+                    placeholder: "Enter Semi Final Time Match",
+                    max: "20",
+                    min: "1"
+                  },
+                  domProps: { value: _vm.form.semifinal_time },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.form,
+                        "semifinal_time",
+                        _vm._n($event.target.value)
+                      )
+                    },
+                    blur: function($event) {
+                      return _vm.$forceUpdate()
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "month" } }, [
+                  _vm._v("Waktu Final")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model.number",
+                      value: _vm.form.final_time,
+                      expression: "form.final_time",
+                      modifiers: { number: true }
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    id: "month",
+                    type: "number",
+                    placeholder: "Enter Final Time Match",
+                    max: "20",
+                    min: "1"
+                  },
+                  domProps: { value: _vm.form.final_time },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.form,
+                        "final_time",
+                        _vm._n($event.target.value)
+                      )
+                    },
+                    blur: function($event) {
+                      return _vm.$forceUpdate()
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
               _c("div", { staticClass: "d-flex justify-content-end" }, [
                 _c(
                   "div",
@@ -52850,7 +53045,7 @@ var staticRenderFns = [
         staticClass:
           "card-header d-flex justify-content-between align-items-center"
       },
-      [_c("span", [_vm._v("Setting")])]
+      [_c("span", [_vm._v("Setting Kota")])]
     )
   }
 ]

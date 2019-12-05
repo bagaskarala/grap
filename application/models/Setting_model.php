@@ -21,6 +21,21 @@ class Setting_model extends MY_Model
                 'label' => 'city',
                 'rules' => 'trim',
             ],
+            [
+                'field' => 'regular_time',
+                'label' => 'regular time',
+                'rules' => 'trim',
+            ],
+            [
+                'field' => 'semifinal_time',
+                'label' => 'semifinal time',
+                'rules' => 'trim',
+            ],
+            [
+                'field' => 'final_time',
+                'label' => 'final time',
+                'rules' => 'trim',
+            ],
         ];
 
         return $validationRules;

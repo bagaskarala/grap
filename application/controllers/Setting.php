@@ -35,12 +35,15 @@ class Setting extends MY_Controller
         $request = parse_post_data();
 
         $data = [
-            'year'    => $request->year,
-            'month'   => $request->month,
-            'city_id' => $request->city_id,
+            'year'           => $request->year,
+            'month'          => $request->month,
+            'city_id'        => $request->city_id,
+            'regular_time'   => $request->regular_time,
+            'semifinal_time' => $request->semifinal_time,
+            'final_time'     => $request->final_time,
         ];
 
-        // validasi
+        // validasi untuk mendapat nama kota yg atas
         if ($this->setting->validate($data) == false) {
             return $this->send_json_output(validation_errors(), false, 422);
         } else {
