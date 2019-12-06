@@ -699,6 +699,96 @@ class Log_match_model extends MY_Model
             ];
         }
     }
+
+    public function create_final_match_roundrobin($division_id)
+    {
+        // hanya untuk match roundrobin dan tidak kosong
+        $this->where('division_id', $division_id);
+        $log_matchs = $this->get_all_array();
+        if (!$log_matchs) {
+            return [
+                'status'  => false,
+                'message' => 'No match for this division',
+            ];
+        } else if ($log_matchs[0]['match_system'] != 'roundrobin') {
+            return [
+                'status'  => false,
+                'message' => 'Only for round robin',
+            ];
+        }
+
+        // false jika pool hanya satu
+        $this->db->distinct();
+        $this->select('pool_number');
+        $this->where('division_id', $division_id);
+        $this->where('pool_number !=', null);
+        $pools = $this->get_all_array();
+        if (count($pools) == 1) {
+            return [
+                'status'  => false,
+                'message' => 'One pool match doesn\'t require final match',
+            ];
+        }
+
+        // jika final udah ada, hapus final dan buat ulang
+        $this->where('division_id', $division_id);
+        $this->where('match_index', 1); // cari yang final
+        $this->where('match_number', 1); // cari yang final
+        $final_match = $this->get_all_array();
+        if ($final_match) {
+            return [
+                'status'  => false,
+                'message' => 'Final match & 3rd match has been generated',
+            ];
+        }
+
+        // cek apakah match sudah selesai semua
+        $this->where('division_id', $division_id);
+        $this->where('winner', null);
+        $this->where('match_number', null); // cari yang bukan final
+        $count_match_unfinished = $this->count();
+        if ($count_match_unfinished > 0) {
+            return [
+                'status'  => false,
+                'message' => 'Pool match not finished yet',
+            ];
+        }
+
+        // ambil pemenang pool A dan B
+        $this->where('pool_winner', 1);
+        $this->where('division_id', $division_id);
+        $pool_winner = $this->get_all_array('player_division');
+
+        // tambahkan match baru final di logmatch
+        $this->insert([
+            'division_id'  => $division_id,
+            'match_index'  => 1,
+            'match_system' => 'roundrobin',
+            'match_number' => 1,
+            'pd1_id'       => $pool_winner[0]['id'],
+            'pd2_id'       => $pool_winner[1]['id'],
+        ]);
+
+        // ambil runner-up pool A dan B
+        $this->where('pool_winner', 2);
+        $this->where('division_id', $division_id);
+        $pool_runner_up = $this->get_all_array('player_division');
+
+        // tambahkan match baru 3rd di logmatch
+        $this->insert([
+            'division_id'  => $division_id,
+            'match_index'  => 1,
+            'match_system' => 'roundrobin',
+            'match_number' => 2,
+            'pd1_id'       => $pool_runner_up[0]['id'],
+            'pd2_id'       => $pool_runner_up[1]['id'],
+        ]);
+
+        return [
+            'status' => true,
+            'data'   => $pool_winner,
+        ];
+    }
 }
 
 /* End of file Log_match_model.php */

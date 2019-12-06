@@ -61,14 +61,6 @@
                   :disabled="playerDivisions.length==0"
                   @click.prevent="confirmResetPool()"
                 >Reset Pool</button>
-                <button
-                  v-if="playerDivisions.length!=0"
-                  class="btn btn-sm btn-success mr-1"
-                  type="button"
-                  title="Generate final match based on winner on each pool"
-                  :disabled="logMatchs.length==0"
-                  @click.prevent="confirmGenerateFinalMatch()"
-                >Generate Final Match</button>
               </div>
 
               <div>
@@ -601,35 +593,6 @@ export default {
         .catch(err => {
           console.log('Error ', err);
         });
-    },
-
-    confirmGenerateFinalMatch() {
-      this.$bvModal.msgBoxConfirm('Are you sure want to remove current final match, and generate new final match?', {
-        title: 'Generate Final Match',
-        size: 'md',
-        okVariant: 'danger',
-        centered: true
-      })
-        .then(value => {
-          if (value) {
-            this.generateFinalMatch();
-          }
-        })
-        .catch(err => {
-          console.log('Error ', err);
-        });
-    },
-
-    async generateFinalMatch() {
-      try {
-        const a = await this.$axios.post(`entry/player_division/create_final_match_roundrobin/${this.filterDivisionId}`);
-        console.log(a.data.data);
-        this.$noty.success('Success Create Final Match');
-        this.filterData(this.filterDivisionId);
-      } catch (error) {
-        console.log(error.response);
-        this.$noty.error('Failed Create Final Match. ' + error.response.data.message);
-      }
     },
 
     confirmResetSchedule() {

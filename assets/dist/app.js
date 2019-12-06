@@ -7629,14 +7629,6 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 var timeoutDebounce = null;
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -8261,65 +8253,8 @@ var timeoutDebounce = null;
         console.log('Error ', err);
       });
     },
-    confirmGenerateFinalMatch: function confirmGenerateFinalMatch() {
-      var _this3 = this;
-
-      this.$bvModal.msgBoxConfirm('Are you sure want to remove current final match, and generate new final match?', {
-        title: 'Generate Final Match',
-        size: 'md',
-        okVariant: 'danger',
-        centered: true
-      }).then(function (value) {
-        if (value) {
-          _this3.generateFinalMatch();
-        }
-      })["catch"](function (err) {
-        console.log('Error ', err);
-      });
-    },
-    generateFinalMatch: function () {
-      var _generateFinalMatch = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
-        var a;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
-          while (1) {
-            switch (_context13.prev = _context13.next) {
-              case 0:
-                _context13.prev = 0;
-                _context13.next = 3;
-                return this.$axios.post("entry/player_division/create_final_match_roundrobin/".concat(this.filterDivisionId));
-
-              case 3:
-                a = _context13.sent;
-                console.log(a.data.data);
-                this.$noty.success('Success Create Final Match');
-                this.filterData(this.filterDivisionId);
-                _context13.next = 13;
-                break;
-
-              case 9:
-                _context13.prev = 9;
-                _context13.t0 = _context13["catch"](0);
-                console.log(_context13.t0.response);
-                this.$noty.error('Failed Create Final Match. ' + _context13.t0.response.data.message);
-
-              case 13:
-              case "end":
-                return _context13.stop();
-            }
-          }
-        }, _callee13, this, [[0, 9]]);
-      }));
-
-      function generateFinalMatch() {
-        return _generateFinalMatch.apply(this, arguments);
-      }
-
-      return generateFinalMatch;
-    }(),
     confirmResetSchedule: function confirmResetSchedule() {
-      var _this4 = this;
+      var _this3 = this;
 
       this.$bvModal.msgBoxConfirm('Please confirm that you want to clear this match schedule', {
         title: 'Clear Schedule',
@@ -8328,7 +8263,7 @@ var timeoutDebounce = null;
         centered: true
       }).then(function (value) {
         if (value) {
-          _this4.resetSchedule();
+          _this3.resetSchedule();
         }
       })["catch"](function (err) {
         console.log('Error ', err);
@@ -8337,22 +8272,22 @@ var timeoutDebounce = null;
     resetSchedule: function () {
       var _resetSchedule = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
           while (1) {
-            switch (_context14.prev = _context14.next) {
+            switch (_context13.prev = _context13.next) {
               case 0:
                 if (!(this.filterDivisionId == null)) {
-                  _context14.next = 3;
+                  _context13.next = 3;
                   break;
                 }
 
                 this.$noty.warning('Select division first before reset schedule');
-                return _context14.abrupt("return");
+                return _context13.abrupt("return");
 
               case 3:
-                _context14.prev = 3;
-                _context14.next = 6;
+                _context13.prev = 3;
+                _context13.next = 6;
                 return this.$axios.post('entry/log_match/reset_schedule', {
                   division_id: this.filterDivisionId
                 });
@@ -8360,21 +8295,21 @@ var timeoutDebounce = null;
               case 6:
                 this.filterData(this.filterDivisionId);
                 this.$noty.success('Success Reset Schedule');
-                _context14.next = 14;
+                _context13.next = 14;
                 break;
 
               case 10:
-                _context14.prev = 10;
-                _context14.t0 = _context14["catch"](3);
-                console.log(_context14.t0.response);
+                _context13.prev = 10;
+                _context13.t0 = _context13["catch"](3);
+                console.log(_context13.t0.response);
                 this.$noty.error('Failed Reset Schedule');
 
               case 14:
               case "end":
-                return _context14.stop();
+                return _context13.stop();
             }
           }
-        }, _callee14, this, [[3, 10]]);
+        }, _callee13, this, [[3, 10]]);
       }));
 
       function resetSchedule() {
@@ -8435,13 +8370,13 @@ var timeoutDebounce = null;
     saveAchievement: function () {
       var _saveAchievement = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15(item) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14(item) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
           while (1) {
-            switch (_context15.prev = _context15.next) {
+            switch (_context14.prev = _context14.next) {
               case 0:
-                _context15.prev = 0;
-                _context15.next = 3;
+                _context14.prev = 0;
+                _context14.next = 3;
                 return this.$axios.post('master/achievement/insert', {
                   tournament_name: null,
                   city_id: null,
@@ -8455,21 +8390,21 @@ var timeoutDebounce = null;
               case 3:
                 this.filterData(this.filterDivisionId);
                 this.$noty.success('Success Insert Achivement');
-                _context15.next = 11;
+                _context14.next = 11;
                 break;
 
               case 7:
-                _context15.prev = 7;
-                _context15.t0 = _context15["catch"](0);
-                console.log(_context15.t0.response);
+                _context14.prev = 7;
+                _context14.t0 = _context14["catch"](0);
+                console.log(_context14.t0.response);
                 this.$noty.error('Failed Insert Achivement');
 
               case 11:
               case "end":
-                return _context15.stop();
+                return _context14.stop();
             }
           }
-        }, _callee15, this, [[0, 7]]);
+        }, _callee14, this, [[0, 7]]);
       }));
 
       function saveAchievement(_x4) {
@@ -50268,29 +50203,7 @@ var render = function() {
                             }
                           },
                           [_vm._v("Reset Pool")]
-                        ),
-                        _vm._v(" "),
-                        _vm.playerDivisions.length != 0
-                          ? _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-sm btn-success mr-1",
-                                attrs: {
-                                  type: "button",
-                                  title:
-                                    "Generate final match based on winner on each pool",
-                                  disabled: _vm.logMatchs.length == 0
-                                },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.confirmGenerateFinalMatch()
-                                  }
-                                }
-                              },
-                              [_vm._v("Generate Final Match")]
-                            )
-                          : _vm._e()
+                        )
                       ]),
                       _vm._v(" "),
                       _c(

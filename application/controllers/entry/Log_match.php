@@ -128,6 +128,7 @@ class Log_match extends MY_Controller
         if ($division_id === 'null') {
             $result = $this->log_match->get_all_log_match();
         } else {
+            $this->create_final_match_roundrobin($division_id);
             $result = $this->log_match->filter_division($division_id);
         }
 
@@ -225,6 +226,20 @@ class Log_match extends MY_Controller
             return $this->send_json_output($log_matchs, true, 200);
         } else {
             return $this->send_json_output("Failed get data", false, 400);
+        }
+    }
+
+    public function create_final_match_roundrobin($division_id)
+    {
+        $this->load->model('Player_division_model', 'player_division');
+        $this->player_division->calculate_classement($division_id);
+
+        $result = $this->log_match->create_final_match_roundrobin($division_id);
+
+        if ($result['status']) {
+            return $this->send_json_output($result['data'], true, 200);
+        } else {
+            return $this->send_json_output($result['message'], false, 400);
         }
     }
 };

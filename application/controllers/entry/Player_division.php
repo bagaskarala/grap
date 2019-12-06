@@ -174,15 +174,4 @@ class Player_division extends MY_Controller
             return $this->send_json_output("Failed calculate classement", false, 400);
         }
     }
-
-    public function create_final_match_roundrobin($division_id)
-    {
-        $result = $this->player_division->create_final_match_roundrobin($division_id);
-
-        if ($result['status']) {
-            return $this->send_json_output($result['data'], true, 200);
-        } else {
-            return $this->send_json_output($result['message'], false, 400);
-        }
-    }
 };

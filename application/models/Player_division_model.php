@@ -226,7 +226,6 @@ class Player_division_model extends MY_Model
         $this->get_pool_winner($division_id);
 
         // final match roundrobin
-        // $this->create_final_match_roundrobin($division_id);
         $this->update_division_winner_roundrobin($division_id);
 
         return $count_win;
@@ -273,86 +272,6 @@ class Player_division_model extends MY_Model
             $this->update(['pool_winner' => 1], ['id' => $pd[0]['id']]);
             $this->update(['pool_winner' => 2], ['id' => $pd[1]['id']]);
         }
-    }
-
-    public function create_final_match_roundrobin($division_id)
-    {
-        $this->where('division_id', $division_id);
-        $log_matchs = $this->get_all_array('log_match');
-        if (!$log_matchs) {
-            return [
-                'status'  => false,
-                'message' => 'No match for this division',
-            ];
-        }
-
-        // jika final udah ada, hapus final dan buat ulang
-        $this->where('division_id', $division_id);
-        $this->where('match_index', 1); // cari yang final
-        $this->where('match_number', 1); // cari yang final
-        $final_match = $this->get_all_array('log_match');
-        if ($final_match) {
-            // delete final
-            $this->delete([
-                'match_index'  => 1,
-                'match_number' => 1,
-                'division_id'  => $division_id,
-            ], 'log_match');
-
-            // delete 3rd place
-            $this->delete([
-                'match_index'  => 1,
-                'match_number' => 2,
-                'division_id'  => $division_id,
-            ], 'log_match');
-        }
-
-        // cek apakah match sudah selesai semua
-        $this->where('division_id', $division_id);
-        $this->where('winner', null);
-        $this->where('match_number', null); // cari yang bukan final
-        $count_match_unfinished = $this->count('log_match');
-        if ($count_match_unfinished > 0) {
-            return [
-                'status'  => false,
-                'message' => 'Match not finished yet',
-            ];
-        }
-
-        // ambil pemenang pool A dan B
-        $this->where('pool_winner', 1);
-        $this->where('division_id', $division_id);
-        $pool_winner = $this->get_all_array();
-
-        // tambahkan match baru di logmatch
-        $this->insert([
-            'division_id'  => $division_id,
-            'match_index'  => 1,
-            'match_system' => 'roundrobin',
-            'match_number' => 1,
-            'pd1_id'       => $pool_winner[0]['id'],
-            'pd2_id'       => $pool_winner[1]['id'],
-        ], 'log_match');
-
-        // ambil runner-up pool A dan B
-        $this->where('pool_winner', 2);
-        $this->where('division_id', $division_id);
-        $pool_runner_up = $this->get_all_array();
-
-        // tambahkan match baru di logmatch
-        $this->insert([
-            'division_id'  => $division_id,
-            'match_index'  => 1,
-            'match_system' => 'roundrobin',
-            'match_number' => 2,
-            'pd1_id'       => $pool_runner_up[0]['id'],
-            'pd2_id'       => $pool_runner_up[1]['id'],
-        ], 'log_match');
-
-        return [
-            'status' => true,
-            'data'   => $pool_winner,
-        ];
     }
 
     public function update_division_winner_roundrobin($division_id)
