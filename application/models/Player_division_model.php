@@ -268,9 +268,12 @@ class Player_division_model extends MY_Model
             $this->order_by('win', 'desc');
             $this->order_by('total_time');
             $pd = $this->get_all_array();
-            // set pool_winner
-            $this->update(['pool_winner' => 1], ['id' => $pd[0]['id']]);
-            $this->update(['pool_winner' => 2], ['id' => $pd[1]['id']]);
+
+            if ($pd[0]['win'] != 0) {
+                // set pool_winner
+                $this->update(['pool_winner' => 1], ['id' => $pd[0]['id']]);
+                $this->update(['pool_winner' => 2], ['id' => $pd[1]['id']]);
+            }
         }
     }
 
@@ -292,10 +295,12 @@ class Player_division_model extends MY_Model
             $this->order_by('total_time');
             $player_divisions = $this->get_all_array();
 
-            // jadikan 3 teratas sebagai juara
-            for ($i = 0; $i < 3; $i++) {
-                if ($player_divisions[$i]) {
-                    $this->update(['division_winner' => $i + 1], ['id' => $player_divisions[$i]['id']]);
+            if ($player_divisions[0]['win'] != 0) {
+                // jadikan 3 teratas sebagai juara
+                for ($i = 0; $i < 3; $i++) {
+                    if ($player_divisions[$i]) {
+                        $this->update(['division_winner' => $i + 1], ['id' => $player_divisions[$i]['id']]);
+                    }
                 }
             }
         } else if (count($pools) == 2) {

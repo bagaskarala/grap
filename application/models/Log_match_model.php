@@ -759,6 +759,14 @@ class Log_match_model extends MY_Model
         $this->where('division_id', $division_id);
         $pool_winner = $this->get_all_array('player_division');
 
+        // jika tidak ada pool winner, maka jangan create final
+        if (count($pool_winner) == 0 || count($pool_winner) == 1) {
+            return [
+                'status'  => false,
+                'message' => 'No pool winner',
+            ];
+        }
+
         // tambahkan match baru final di logmatch
         $this->insert([
             'division_id'  => $division_id,
