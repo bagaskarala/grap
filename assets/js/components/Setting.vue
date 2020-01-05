@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
-    <div class="row justify-content-center">
-      <div class="col">
+    <div class="row">
+      <div class="col-md-6">
         <div class="card card-default">
           <div class="card-header d-flex justify-content-between align-items-center">
             <span>Setting Kota</span>
@@ -56,42 +56,58 @@
               </div>
 
               <div class="form-group">
-                <label for="month">Waktu Regular</label>
-                <input
-                  id="month"
-                  v-model.number="form.regular_time"
-                  type="number"
-                  class="form-control"
-                  placeholder="Enter Regular Time Match"
-                  max="20"
-                  min="1"
-                >
+                <label for="month">Regular Match Timeout</label>
+                <div class="input-group">
+                  <input
+                    id="regular_time"
+                    v-model.number="form.regular_time"
+                    type="number"
+                    class="form-control"
+                    placeholder="Enter Regular Match Timeout"
+                    max="20"
+                    min="1"
+                  >
+                  <div class="input-group-append">
+                    <span class="input-group-text">minutes</span>
+                  </div>
+                </div>
               </div>
 
               <div class="form-group">
-                <label for="month">Waktu Semi Final</label>
-                <input
-                  id="month"
-                  v-model.number="form.semifinal_time"
-                  type="number"
-                  class="form-control"
-                  placeholder="Enter Semi Final Time Match"
-                  max="20"
-                  min="1"
-                >
+                <label for="month">Semifinal Match Timeout</label>
+                <div class="input-group">
+                  <input
+                    id="semifinal_time"
+                    v-model.number="form.semifinal_time"
+                    type="number"
+                    class="form-control"
+                    placeholder="Enter Semi Final Match Timeout"
+                    max="20"
+                    min="1"
+                  >
+                  <div class="input-group-append">
+                    <span class="input-group-text">minutes</span>
+                  </div>
+                </div>
               </div>
 
               <div class="form-group">
-                <label for="month">Waktu Final</label>
-                <input
-                  id="month"
-                  v-model.number="form.final_time"
-                  type="number"
-                  class="form-control"
-                  placeholder="Enter Final Time Match"
-                  max="20"
-                  min="1"
-                >
+                <label for="month">Final Match Timeout</label>
+                <div class="input-group">
+                  <input
+                    id="final_time"
+                    v-model.number="form.final_time"
+                    type="number"
+                    class="form-control"
+                    placeholder="Enter Final Match Timeout"
+                    max="20"
+                    min="1"
+                  >
+                  <div class="input-group-append">
+                    <span class="input-group-text">minutes</span>
+                  </div>
+                </div>
+
               </div>
 
               <div class="d-flex justify-content-end">

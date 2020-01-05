@@ -6,7 +6,7 @@
    <h1 class="h3 mb-4 text-gray-800"><?=$title?></h1>
 
    <div class="row">
-      <div class="col">
+      <div class="col-md-6">
          <?=form_open_multipart('profile/edit')?>
          <div class="form-group row">
             <label
@@ -44,13 +44,13 @@
             <div class="col-sm-2">Foto</div>
             <div class="col-sm-10">
                <div class="row">
-                  <div class="col-sm-2">
+                  <div class="col-sm-4">
                      <img
                         src=" <?=base_url('assets/img/profile/') . $user['image']?> "
                         class="img-thumbnail"
                      >
                   </div>
-                  <div col-sm-9>
+                  <div class="col-sm-8">
                      <div class="custom-file">
                         <input
                            type="file"

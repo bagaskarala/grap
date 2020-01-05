@@ -361,6 +361,8 @@ export default {
     },
 
     getUniquePool() {
+      // jika tidak ada pool
+      if (!this.isPoolGenerated) return [];
       let poolNumberArr = this.playerDivisions.map(item => item.pool_number);
       return [... new Set(poolNumberArr)];
     },

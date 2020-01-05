@@ -7684,6 +7684,8 @@ var timeoutDebounce = null;
       }) ? true : false;
     },
     getUniquePool: function getUniquePool() {
+      // jika tidak ada pool
+      if (!this.isPoolGenerated) return [];
       var poolNumberArr = this.playerDivisions.map(function (item) {
         return item.pool_number;
       });
@@ -10661,6 +10663,22 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -52948,8 +52966,8 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container-fluid" }, [
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-6" }, [
         _c("div", { staticClass: "card card-default" }, [
           _vm._m(0),
           _vm._v(" "),
@@ -53085,128 +53103,140 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
                 _c("label", { attrs: { for: "month" } }, [
-                  _vm._v("Waktu Regular")
+                  _vm._v("Regular Match Timeout")
                 ]),
                 _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model.number",
-                      value: _vm.form.regular_time,
-                      expression: "form.regular_time",
-                      modifiers: { number: true }
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    id: "month",
-                    type: "number",
-                    placeholder: "Enter Regular Time Match",
-                    max: "20",
-                    min: "1"
-                  },
-                  domProps: { value: _vm.form.regular_time },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+                _c("div", { staticClass: "input-group" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model.number",
+                        value: _vm.form.regular_time,
+                        expression: "form.regular_time",
+                        modifiers: { number: true }
                       }
-                      _vm.$set(
-                        _vm.form,
-                        "regular_time",
-                        _vm._n($event.target.value)
-                      )
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      id: "regular_time",
+                      type: "number",
+                      placeholder: "Enter Regular Match Timeout",
+                      max: "20",
+                      min: "1"
                     },
-                    blur: function($event) {
-                      return _vm.$forceUpdate()
+                    domProps: { value: _vm.form.regular_time },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.form,
+                          "regular_time",
+                          _vm._n($event.target.value)
+                        )
+                      },
+                      blur: function($event) {
+                        return _vm.$forceUpdate()
+                      }
                     }
-                  }
-                })
+                  }),
+                  _vm._v(" "),
+                  _vm._m(1)
+                ])
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
                 _c("label", { attrs: { for: "month" } }, [
-                  _vm._v("Waktu Semi Final")
+                  _vm._v("Semifinal Match Timeout")
                 ]),
                 _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model.number",
-                      value: _vm.form.semifinal_time,
-                      expression: "form.semifinal_time",
-                      modifiers: { number: true }
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    id: "month",
-                    type: "number",
-                    placeholder: "Enter Semi Final Time Match",
-                    max: "20",
-                    min: "1"
-                  },
-                  domProps: { value: _vm.form.semifinal_time },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+                _c("div", { staticClass: "input-group" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model.number",
+                        value: _vm.form.semifinal_time,
+                        expression: "form.semifinal_time",
+                        modifiers: { number: true }
                       }
-                      _vm.$set(
-                        _vm.form,
-                        "semifinal_time",
-                        _vm._n($event.target.value)
-                      )
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      id: "semifinal_time",
+                      type: "number",
+                      placeholder: "Enter Semi Final Match Timeout",
+                      max: "20",
+                      min: "1"
                     },
-                    blur: function($event) {
-                      return _vm.$forceUpdate()
+                    domProps: { value: _vm.form.semifinal_time },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.form,
+                          "semifinal_time",
+                          _vm._n($event.target.value)
+                        )
+                      },
+                      blur: function($event) {
+                        return _vm.$forceUpdate()
+                      }
                     }
-                  }
-                })
+                  }),
+                  _vm._v(" "),
+                  _vm._m(2)
+                ])
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
                 _c("label", { attrs: { for: "month" } }, [
-                  _vm._v("Waktu Final")
+                  _vm._v("Final Match Timeout")
                 ]),
                 _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model.number",
-                      value: _vm.form.final_time,
-                      expression: "form.final_time",
-                      modifiers: { number: true }
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    id: "month",
-                    type: "number",
-                    placeholder: "Enter Final Time Match",
-                    max: "20",
-                    min: "1"
-                  },
-                  domProps: { value: _vm.form.final_time },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+                _c("div", { staticClass: "input-group" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model.number",
+                        value: _vm.form.final_time,
+                        expression: "form.final_time",
+                        modifiers: { number: true }
                       }
-                      _vm.$set(
-                        _vm.form,
-                        "final_time",
-                        _vm._n($event.target.value)
-                      )
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      id: "final_time",
+                      type: "number",
+                      placeholder: "Enter Final Match Timeout",
+                      max: "20",
+                      min: "1"
                     },
-                    blur: function($event) {
-                      return _vm.$forceUpdate()
+                    domProps: { value: _vm.form.final_time },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.form,
+                          "final_time",
+                          _vm._n($event.target.value)
+                        )
+                      },
+                      blur: function($event) {
+                        return _vm.$forceUpdate()
+                      }
                     }
-                  }
-                })
+                  }),
+                  _vm._v(" "),
+                  _vm._m(3)
+                ])
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "d-flex justify-content-end" }, [
@@ -53250,6 +53280,30 @@ var staticRenderFns = [
       },
       [_c("span", [_vm._v("Setting Kota")])]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-append" }, [
+      _c("span", { staticClass: "input-group-text" }, [_vm._v("minutes")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-append" }, [
+      _c("span", { staticClass: "input-group-text" }, [_vm._v("minutes")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-append" }, [
+      _c("span", { staticClass: "input-group-text" }, [_vm._v("minutes")])
+    ])
   }
 ]
 render._withStripped = true
