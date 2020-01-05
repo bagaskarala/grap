@@ -8,37 +8,69 @@
           </div>
 
           <div class="mx-3 mt-3">
-            <div class="input-group input-group-sm">
-              <div class="input-group-prepend">
-                <span class="input-group-text">Division</span>
+            <div class="row">
+              <div class="col-md-2">
+                <!-- <div class="input-group input-group-sm">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Year</span>
+                  </div>
+                  <input
+                    :value="year"
+                    type="number"
+                    class="form-control"
+                    disabled
+                  >
+                </div> -->
+                <YearSelector :year="year"></YearSelector>
               </div>
-              <select
-                name="filter_division"
-                id="filter_division"
-                class="form-control"
-                v-model.number="filterDivisionId"
-                @change="filterData(filterDivisionId)"
-              >
-                <option
-                  :value="null"
-                  disabled
-                >--- Select Division ---</option>
-                <option
-                  v-for="item in divisions"
-                  :key="item.id"
-                  :value="item.id"
-                >{{item.division}}</option>
-              </select>
-              <div class="input-group-append">
-                <button
-                  :title="lockMatch? 'Disabled when match has been started' : 'Add player to division'"
-                  :disabled="lockMatch"
-                  type="button"
-                  class="btn btn-sm btn-primary"
-                  @click.prevent="addData()"
-                >
-                  Add player
-                </button>
+              <div class="col-md-2">
+                <!-- <div class="input-group input-group-sm">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">City</span>
+                  </div>
+                  <input
+                    :value="city + ' ' + city_id "
+                    type="text"
+                    class="form-control"
+                    disabled
+                  >
+                </div> -->
+                <CitySelector :city-id="city_id"></CitySelector>
+              </div>
+              <div class="col-md-8">
+                <div class="input-group input-group-sm">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Division</span>
+                  </div>
+                  <select
+                    name="filter_division"
+                    id="filter_division"
+                    class="form-control"
+                    v-model.number="filterDivisionId"
+                    @change="filterData(filterDivisionId)"
+                  >
+                    <option
+                      :value="null"
+                      disabled
+                    >--- Select Division ---</option>
+                    <option
+                      v-for="item in divisions"
+                      :key="item.id"
+                      :value="item.id"
+                    >{{item.division}}</option>
+                  </select>
+                  <div class="input-group-append">
+                    <button
+                      :title="lockMatch? 'Disabled when match has been started' : 'Add player to division'"
+                      :disabled="lockMatch"
+                      type="button"
+                      class="btn btn-sm btn-primary"
+                      @click.prevent="addData()"
+                    >
+                      Add player
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -72,7 +104,7 @@
                   <span
                     class="badge"
                     :class="[item == 'A'? 'badge-dark' : 'badge-danger']"
-                  >{{item}}</span> : <span class="mr-3">{{countPlayerPerPool(item)}}</span>
+                  >{{item}}</span> <span class="mr-3">{{item ? countPlayerPerPool(item) : null}}</span>
                 </span>
               </div>
             </div>
@@ -310,10 +342,15 @@
 
 <script>
 import { parseWinner } from '../shared';
+import CitySelector from './CitySelector';
+import YearSelector from './YearSelector';
 var timeoutDebounce = null;
 export default {
   name: 'PlayerDivision',
-  props: ['divisionId'],
+  props: ['divisionId', 'year', 'city', 'city_id'],
+  components: {
+    CitySelector, YearSelector
+  },
   data() {
     return {
       poolOptions: [
@@ -348,9 +385,9 @@ export default {
   computed: {
     fieldPlayerDivision() {
       if (this.matchSystem == 'elimination') {
-        return ['name', 'club', 'last_achievement', 'division_winner', 'action'];
+        return ['year', 'city_id', 'name', 'club', 'last_achievement', 'division_winner', 'action'];
       } else {
-        return ['name', 'club', 'last_achievement', 'pool_number', 'win', 'draw', 'lose', 'total_time', 'pool_winner', 'division_winner', 'action'];
+        return ['year', 'city_id', 'name', 'club', 'last_achievement', 'pool_number', 'win', 'draw', 'lose', 'total_time', 'pool_winner', 'division_winner', 'action'];
       }
     },
 

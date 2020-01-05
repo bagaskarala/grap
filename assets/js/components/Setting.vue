@@ -4,7 +4,7 @@
       <div class="col-md-6">
         <div class="card card-default">
           <div class="card-header d-flex justify-content-between align-items-center">
-            <span>Setting Kota</span>
+            <span>Setting</span>
           </div>
 
           <div class="card-body">
@@ -167,7 +167,9 @@ export default {
     },
 
     async updateData() {
-      if (this.form.year < new Date().getFullYear() || this.form.year > 2100) {
+      console.log(this.form.year);
+      console.log(new Date().getFullYear());
+      if (this.form.year > new Date().getFullYear() || this.form.year > 2100) {
         this.$noty.error('Invalid year');
         return;
       }

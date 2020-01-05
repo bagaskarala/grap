@@ -34,14 +34,21 @@ class Setting extends MY_Controller
     {
         $request = parse_post_data();
 
-        $data = [
-            'year'           => $request->year,
-            'month'          => $request->month,
-            'city_id'        => $request->city_id,
-            'regular_time'   => $request->regular_time,
-            'semifinal_time' => $request->semifinal_time,
-            'final_time'     => $request->final_time,
-        ];
+        // $data = [
+        //     'year'           => $request->year,
+        //     'month'          => $request->month,
+        //     'city_id'        => $request->city_id,
+        //     'regular_time'   => $request->regular_time,
+        //     'semifinal_time' => $request->semifinal_time,
+        //     'final_time'     => $request->final_time,
+        // ];
+
+        // dynamic data input pada setting
+        // ubah object jadi array untuk ke database
+        $data = [];
+        foreach ($request as $key => $value) {
+            $data[$key] = $value;
+        }
 
         // validasi untuk mendapat nama kota yg atas
         if ($this->setting->validate($data) == false) {
@@ -54,9 +61,10 @@ class Setting extends MY_Controller
             $setting = $this->setting->get_single_array('setting');
 
             $this->session->set_userdata([
-                'setting_city'  => $setting['city'],
-                'setting_year'  => $setting['year'],
-                'setting_month' => $setting['month'],
+                'setting_city_id' => $setting['city_id'],
+                'setting_city'    => $setting['city'],
+                'setting_year'    => $setting['year'],
+                'setting_month'   => $setting['month'],
             ]);
         }
 

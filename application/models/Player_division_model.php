@@ -43,7 +43,7 @@ class Player_division_model extends MY_Model
         return $this->get_all_array();
     }
 
-    public function filter_division($division_id)
+    public function filter_division($division_id, $year, $city_id)
     {
         // hitung win-lose-draw pada divisi terpilih
         // generate winner
@@ -52,6 +52,8 @@ class Player_division_model extends MY_Model
         // tampilkan player per divisi
         $this->query_player_division();
         $this->where('division_id', $division_id);
+        $this->where('year', $year);
+        $this->where('city_id', $city_id);
         $this->order_by('pool_number');
         $this->order_by('win', 'desc');
         $this->order_by('total_time');
@@ -76,7 +78,12 @@ class Player_division_model extends MY_Model
     {
         // isi $data = division_id,player_id,pool_number
         // cek apakah player sudah masuk ke player_division
-        $check_player = $this->get_where(['player_id' => $data['player_id'], 'division_id' => $data['division_id']]);
+        $check_player = $this->get_where([
+            'player_id'   => $data['player_id'],
+            'division_id' => $data['division_id'],
+            'year'        => $data['year'],
+            'city_id'     => $data['city_id'],
+        ]);
         if ($check_player) {
             return false;
         } else {
@@ -392,6 +399,14 @@ class Player_division_model extends MY_Model
         $data  = ['pool_number' => null];
         $where = ['division_id' => $division_id];
         return $this->update($data, $where);
+    }
+
+    public function find_all_year()
+    {
+        $this->db->distinct();
+        $this->select('year');
+        $this->where('year !=', 0);
+        return $this->get_all_array();
     }
 }
 

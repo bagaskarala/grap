@@ -19,9 +19,9 @@ $setting_year  = $this->session->userdata('setting_year');
    <!-- Topbar Info -->
    <div class="d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100">
       <span class="text-uppercase font-weight-bold">
-         <?=$setting_city?>
+         <i class="fa fa-map-marker-alt"></i> <?=$setting_city?>
       </span>
-      <span><?=$setting_month?>/<?=$setting_year?></span>
+      <span><?=$setting_year?></span>
    </div>
 
    <!-- Topbar Navbar -->

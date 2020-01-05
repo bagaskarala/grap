@@ -6,6 +6,8 @@ class Player_division extends MY_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->year    = $this->session->userdata('setting_year');
+        $this->city_id = $this->session->userdata('setting_city_id');
     }
 
     public function index()
@@ -37,6 +39,8 @@ class Player_division extends MY_Controller
             'division_id' => $request->division_id,
             'player_id'   => $request->player_id,
             'pool_number' => $request->pool_number,
+            'year'        => $this->year,
+            'city_id'     => $this->city_id,
         ];
 
         // validasi
@@ -115,7 +119,7 @@ class Player_division extends MY_Controller
             $result = $this->player_division->get_all_player_division();
         } else {
             $this->player_division->order_by('pool_number');
-            $result = $this->player_division->filter_division($division_id);
+            $result = $this->player_division->filter_division($division_id, $this->year, $this->city_id);
         }
 
         if (count($result) == 0) {
@@ -172,6 +176,17 @@ class Player_division extends MY_Controller
             return $this->send_json_output($result, true, 200);
         } else {
             return $this->send_json_output("Failed calculate classement", false, 400);
+        }
+    }
+
+    public function find_all_year()
+    {
+        $result = $this->player_division->find_all_year();
+
+        if ($result) {
+            return $this->send_json_output($result, true, 200);
+        } else {
+            return $this->send_json_output("Failed find max year", false, 400);
         }
     }
 };

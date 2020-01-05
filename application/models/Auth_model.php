@@ -58,14 +58,15 @@ class Auth_model extends MY_Model
                     $setting = $this->get_single_array('setting');
 
                     $data = [
-                        'email'         => $user['email'],
-                        'role_id'       => $user['role_id'],
-                        'name'          => $user['name'],
-                        'image'         => $user['image'],
-                        'setting_city'  => $setting ? $setting['city'] : null,
-                        'setting_year'  => $setting ? $setting['year'] : null,
-                        'setting_month' => $setting ? $setting['month'] : null,
-                        'login'         => true,
+                        'email'           => $user['email'],
+                        'role_id'         => $user['role_id'],
+                        'name'            => $user['name'],
+                        'image'           => $user['image'],
+                        'setting_city_id' => $setting ? $setting['city_id'] : null,
+                        'setting_city'    => $setting ? $setting['city'] : null,
+                        'setting_year'    => $setting ? $setting['year'] : null,
+                        'setting_month'   => $setting ? $setting['month'] : null,
+                        'login'           => true,
                     ];
                     // set session, masuk ke app
                     $this->session->set_userdata($data);
@@ -122,11 +123,15 @@ class Auth_model extends MY_Model
     {
         // reset session
         $data = [
-            'name'    => null,
-            'email'   => null,
-            'image'   => null,
-            'role_id' => null,
-            'login'   => false,
+            'name'            => null,
+            'email'           => null,
+            'image'           => null,
+            'role_id'         => null,
+            'setting_city_id' => null,
+            'setting_city'    => null,
+            'setting_year'    => null,
+            'setting_month'   => null,
+            'login'           => false,
         ];
         $this->session->unset_userdata($data);
         $this->session->sess_destroy();

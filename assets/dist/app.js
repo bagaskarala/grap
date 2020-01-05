@@ -228,6 +228,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./assets/js/components/CitySelector.vue":
+/*!***********************************************!*\
+  !*** ./assets/js/components/CitySelector.vue ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CitySelector_vue_vue_type_template_id_1a899c0b___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CitySelector.vue?vue&type=template&id=1a899c0b& */ "./assets/js/components/CitySelector.vue?vue&type=template&id=1a899c0b&");
+/* harmony import */ var _CitySelector_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CitySelector.vue?vue&type=script&lang=js& */ "./assets/js/components/CitySelector.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CitySelector_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CitySelector_vue_vue_type_template_id_1a899c0b___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CitySelector_vue_vue_type_template_id_1a899c0b___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "assets/js/components/CitySelector.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./assets/js/components/CitySelector.vue?vue&type=script&lang=js&":
+/*!************************************************************************!*\
+  !*** ./assets/js/components/CitySelector.vue?vue&type=script&lang=js& ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CitySelector_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./CitySelector.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./assets/js/components/CitySelector.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CitySelector_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./assets/js/components/CitySelector.vue?vue&type=template&id=1a899c0b&":
+/*!******************************************************************************!*\
+  !*** ./assets/js/components/CitySelector.vue?vue&type=template&id=1a899c0b& ***!
+  \******************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CitySelector_vue_vue_type_template_id_1a899c0b___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./CitySelector.vue?vue&type=template&id=1a899c0b& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./assets/js/components/CitySelector.vue?vue&type=template&id=1a899c0b&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CitySelector_vue_vue_type_template_id_1a899c0b___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CitySelector_vue_vue_type_template_id_1a899c0b___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./assets/js/components/ClubList.vue":
 /*!*******************************************!*\
   !*** ./assets/js/components/ClubList.vue ***!
@@ -1312,6 +1381,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_WinningList_vue_vue_type_template_id_72595c86___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_WinningList_vue_vue_type_template_id_72595c86___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./assets/js/components/YearSelector.vue":
+/*!***********************************************!*\
+  !*** ./assets/js/components/YearSelector.vue ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _YearSelector_vue_vue_type_template_id_66cc4046___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./YearSelector.vue?vue&type=template&id=66cc4046& */ "./assets/js/components/YearSelector.vue?vue&type=template&id=66cc4046&");
+/* harmony import */ var _YearSelector_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./YearSelector.vue?vue&type=script&lang=js& */ "./assets/js/components/YearSelector.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _YearSelector_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _YearSelector_vue_vue_type_template_id_66cc4046___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _YearSelector_vue_vue_type_template_id_66cc4046___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "assets/js/components/YearSelector.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./assets/js/components/YearSelector.vue?vue&type=script&lang=js&":
+/*!************************************************************************!*\
+  !*** ./assets/js/components/YearSelector.vue?vue&type=script&lang=js& ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_YearSelector_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./YearSelector.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./assets/js/components/YearSelector.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_YearSelector_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./assets/js/components/YearSelector.vue?vue&type=template&id=66cc4046&":
+/*!******************************************************************************!*\
+  !*** ./assets/js/components/YearSelector.vue?vue&type=template&id=66cc4046& ***!
+  \******************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_YearSelector_vue_vue_type_template_id_66cc4046___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./YearSelector.vue?vue&type=template&id=66cc4046& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./assets/js/components/YearSelector.vue?vue&type=template&id=66cc4046&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_YearSelector_vue_vue_type_template_id_66cc4046___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_YearSelector_vue_vue_type_template_id_66cc4046___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -3439,6 +3577,149 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   created: function created() {
     this.getAllCities();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./assets/js/components/CitySelector.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./assets/js/components/CitySelector.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'CitySelector',
+  props: ['cityId'],
+  data: function data() {
+    return {
+      cities: [],
+      selectedCity: null
+    };
+  },
+  methods: {
+    getCities: function () {
+      var _getCities = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var cities;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return this.$axios.get('master/city/get_all');
+
+              case 3:
+                cities = _context.sent;
+                this.cities = cities.data.data;
+                _context.next = 11;
+                break;
+
+              case 7:
+                _context.prev = 7;
+                _context.t0 = _context["catch"](0);
+                console.log(_context.t0.response);
+                this.$noty.error('Failed Fetch Cities');
+
+              case 11:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[0, 7]]);
+      }));
+
+      function getCities() {
+        return _getCities.apply(this, arguments);
+      }
+
+      return getCities;
+    }(),
+    changeCity: function () {
+      var _changeCity = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return this.$axios.post('setting/update', {
+                  city_id: this.selectedCity
+                });
+
+              case 3:
+                this.$noty.success('Success Update Data');
+                location.reload();
+                _context2.next = 11;
+                break;
+
+              case 7:
+                _context2.prev = 7;
+                _context2.t0 = _context2["catch"](0);
+                console.log(_context2.t0.response);
+                this.$noty.error('Failed Update Data');
+
+              case 11:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[0, 7]]);
+      }));
+
+      function changeCity() {
+        return _changeCity.apply(this, arguments);
+      }
+
+      return changeCity;
+    }()
+  },
+  created: function created() {
+    this.getCities(); // populate city, ambil dari session di parent
+
+    if (this.cityId) {
+      this.selectedCity = this.cityId;
+    }
   }
 });
 
@@ -7306,6 +7587,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _shared__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../shared */ "./assets/js/shared.js");
+/* harmony import */ var _CitySelector__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CitySelector */ "./assets/js/components/CitySelector.vue");
+/* harmony import */ var _YearSelector__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./YearSelector */ "./assets/js/components/YearSelector.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -7630,11 +7913,49 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 var timeoutDebounce = null;
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PlayerDivision',
-  props: ['divisionId'],
+  props: ['divisionId', 'year', 'city', 'city_id'],
+  components: {
+    CitySelector: _CitySelector__WEBPACK_IMPORTED_MODULE_2__["default"],
+    YearSelector: _YearSelector__WEBPACK_IMPORTED_MODULE_3__["default"]
+  },
   data: function data() {
     return {
       poolOptions: [{
@@ -7671,9 +7992,9 @@ var timeoutDebounce = null;
   computed: {
     fieldPlayerDivision: function fieldPlayerDivision() {
       if (this.matchSystem == 'elimination') {
-        return ['name', 'club', 'last_achievement', 'division_winner', 'action'];
+        return ['year', 'city_id', 'name', 'club', 'last_achievement', 'division_winner', 'action'];
       } else {
-        return ['name', 'club', 'last_achievement', 'pool_number', 'win', 'draw', 'lose', 'total_time', 'pool_winner', 'division_winner', 'action'];
+        return ['year', 'city_id', 'name', 'club', 'last_achievement', 'pool_number', 'win', 'draw', 'lose', 'total_time', 'pool_winner', 'division_winner', 'action'];
       }
     },
     lockMatch: function lockMatch() {
@@ -10895,53 +11216,56 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                if (!(this.form.year < new Date().getFullYear() || this.form.year > 2100)) {
-                  _context3.next = 3;
+                console.log(this.form.year);
+                console.log(new Date().getFullYear());
+
+                if (!(this.form.year > new Date().getFullYear() || this.form.year > 2100)) {
+                  _context3.next = 5;
                   break;
                 }
 
                 this.$noty.error('Invalid year');
                 return _context3.abrupt("return");
 
-              case 3:
+              case 5:
                 if (!(this.form.month < 1 || this.form.month > 12)) {
-                  _context3.next = 6;
+                  _context3.next = 8;
                   break;
                 }
 
                 this.$noty.error('Invalid month');
                 return _context3.abrupt("return");
 
-              case 6:
+              case 8:
                 if (!(this.form.regular_time < 1 || this.form.regular_time > 20)) {
-                  _context3.next = 9;
+                  _context3.next = 11;
                   break;
                 }
 
                 this.$noty.error('Invalid regular time');
                 return _context3.abrupt("return");
 
-              case 9:
+              case 11:
                 if (!(this.form.semifinal_time < 1 || this.form.semifinal_time > 20)) {
-                  _context3.next = 12;
+                  _context3.next = 14;
                   break;
                 }
 
                 this.$noty.error('Invalid semifinal time');
                 return _context3.abrupt("return");
 
-              case 12:
+              case 14:
                 if (!(this.form.final_time < 1 || this.form.final_time > 20)) {
-                  _context3.next = 15;
+                  _context3.next = 17;
                   break;
                 }
 
                 this.$noty.error('Invalid final time');
                 return _context3.abrupt("return");
 
-              case 15:
-                _context3.prev = 15;
-                _context3.next = 18;
+              case 17:
+                _context3.prev = 17;
+                _context3.next = 20;
                 return this.$axios.post('setting/update', {
                   year: this.form.year,
                   month: this.form.month,
@@ -10951,25 +11275,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   final_time: this.form.final_time
                 });
 
-              case 18:
+              case 20:
                 this.$noty.success('Success Update Data');
                 this.getSetting();
-                _context3.next = 27;
+                _context3.next = 29;
                 break;
 
-              case 22:
-                _context3.prev = 22;
-                _context3.t0 = _context3["catch"](15);
+              case 24:
+                _context3.prev = 24;
+                _context3.t0 = _context3["catch"](17);
                 console.log(_context3.t0.response);
                 this.errorValidation = _context3.t0.response.data.message;
                 this.$noty.error('Failed Update Data');
 
-              case 27:
+              case 29:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, this, [[15, 22]]);
+        }, _callee3, this, [[17, 24]]);
       }));
 
       function updateData() {
@@ -12414,6 +12738,151 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   created: function created() {
     this.getAllWinnings();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./assets/js/components/YearSelector.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./assets/js/components/YearSelector.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'YearSelector',
+  props: ['year'],
+  data: function data() {
+    return {
+      years: [],
+      selectedYear: null
+    };
+  },
+  methods: {
+    getYears: function () {
+      var _getYears = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var years;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return this.$axios.get('entry/player_division/find_all_year');
+
+              case 3:
+                years = _context.sent;
+                this.years = years.data.data.map(function (i) {
+                  return i.year;
+                });
+                _context.next = 11;
+                break;
+
+              case 7:
+                _context.prev = 7;
+                _context.t0 = _context["catch"](0);
+                console.log(_context.t0.response);
+                this.$noty.error('Failed Fetch Years');
+
+              case 11:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[0, 7]]);
+      }));
+
+      function getYears() {
+        return _getYears.apply(this, arguments);
+      }
+
+      return getYears;
+    }(),
+    changeYear: function () {
+      var _changeYear = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return this.$axios.post('setting/update', {
+                  year: this.selectedYear
+                });
+
+              case 3:
+                this.$noty.success('Success Update Data');
+                location.reload();
+                _context2.next = 11;
+                break;
+
+              case 7:
+                _context2.prev = 7;
+                _context2.t0 = _context2["catch"](0);
+                console.log(_context2.t0.response);
+                this.$noty.error('Failed Update Data');
+
+              case 11:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[0, 7]]);
+      }));
+
+      function changeYear() {
+        return _changeYear.apply(this, arguments);
+      }
+
+      return changeYear;
+    }()
+  },
+  created: function created() {
+    this.getYears(); // populate city, ambil dari session di parent
+
+    if (this.year) {
+      this.selectedYear = this.year;
+    }
   }
 });
 
@@ -46161,6 +46630,87 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./assets/js/components/CitySelector.vue?vue&type=template&id=1a899c0b&":
+/*!************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./assets/js/components/CitySelector.vue?vue&type=template&id=1a899c0b& ***!
+  \************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "input-group input-group-sm" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "select",
+      {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.selectedCity,
+            expression: "selectedCity"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: { name: "select_city", id: "select_city" },
+        on: {
+          change: [
+            function($event) {
+              var $$selectedVal = Array.prototype.filter
+                .call($event.target.options, function(o) {
+                  return o.selected
+                })
+                .map(function(o) {
+                  var val = "_value" in o ? o._value : o.value
+                  return val
+                })
+              _vm.selectedCity = $event.target.multiple
+                ? $$selectedVal
+                : $$selectedVal[0]
+            },
+            _vm.changeCity
+          ]
+        }
+      },
+      [
+        _c("option", { attrs: { disabled: "" }, domProps: { value: null } }, [
+          _vm._v("--- Select City ---")
+        ]),
+        _vm._v(" "),
+        _vm._l(_vm.cities, function(item) {
+          return _c("option", { key: item.id, domProps: { value: item.id } }, [
+            _vm._v(_vm._s(item.city))
+          ])
+        })
+      ],
+      2
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("span", { staticClass: "input-group-text" }, [_vm._v("City")])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./assets/js/components/ClubList.vue?vue&type=template&id=6741c8d6&":
 /*!********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./assets/js/components/ClubList.vue?vue&type=template&id=6741c8d6& ***!
@@ -50109,83 +50659,111 @@ var render = function() {
             _vm._m(0),
             _vm._v(" "),
             _c("div", { staticClass: "mx-3 mt-3" }, [
-              _c("div", { staticClass: "input-group input-group-sm" }, [
-                _vm._m(1),
-                _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
                 _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model.number",
-                        value: _vm.filterDivisionId,
-                        expression: "filterDivisionId",
-                        modifiers: { number: true }
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { name: "filter_division", id: "filter_division" },
-                    on: {
-                      change: [
-                        function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return _vm._n(val)
-                            })
-                          _vm.filterDivisionId = $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        },
-                        function($event) {
-                          return _vm.filterData(_vm.filterDivisionId)
-                        }
-                      ]
-                    }
-                  },
-                  [
-                    _c(
-                      "option",
-                      { attrs: { disabled: "" }, domProps: { value: null } },
-                      [_vm._v("--- Select Division ---")]
-                    ),
-                    _vm._v(" "),
-                    _vm._l(_vm.divisions, function(item) {
-                      return _c(
-                        "option",
-                        { key: item.id, domProps: { value: item.id } },
-                        [_vm._v(_vm._s(item.division))]
-                      )
-                    })
-                  ],
-                  2
+                  "div",
+                  { staticClass: "col-md-2" },
+                  [_c("YearSelector", { attrs: { year: _vm.year } })],
+                  1
                 ),
                 _vm._v(" "),
-                _c("div", { staticClass: "input-group-append" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-sm btn-primary",
-                      attrs: {
-                        title: _vm.lockMatch
-                          ? "Disabled when match has been started"
-                          : "Add player to division",
-                        disabled: _vm.lockMatch,
-                        type: "button"
-                      },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.addData()
+                _c(
+                  "div",
+                  { staticClass: "col-md-2" },
+                  [_c("CitySelector", { attrs: { "city-id": _vm.city_id } })],
+                  1
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-8" }, [
+                  _c("div", { staticClass: "input-group input-group-sm" }, [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model.number",
+                            value: _vm.filterDivisionId,
+                            expression: "filterDivisionId",
+                            modifiers: { number: true }
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          name: "filter_division",
+                          id: "filter_division"
+                        },
+                        on: {
+                          change: [
+                            function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return _vm._n(val)
+                                })
+                              _vm.filterDivisionId = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            },
+                            function($event) {
+                              return _vm.filterData(_vm.filterDivisionId)
+                            }
+                          ]
                         }
-                      }
-                    },
-                    [_vm._v("\n                Add player\n              ")]
-                  )
+                      },
+                      [
+                        _c(
+                          "option",
+                          {
+                            attrs: { disabled: "" },
+                            domProps: { value: null }
+                          },
+                          [_vm._v("--- Select Division ---")]
+                        ),
+                        _vm._v(" "),
+                        _vm._l(_vm.divisions, function(item) {
+                          return _c(
+                            "option",
+                            { key: item.id, domProps: { value: item.id } },
+                            [_vm._v(_vm._s(item.division))]
+                          )
+                        })
+                      ],
+                      2
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "input-group-append" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-sm btn-primary",
+                          attrs: {
+                            title: _vm.lockMatch
+                              ? "Disabled when match has been started"
+                              : "Add player to division",
+                            disabled: _vm.lockMatch,
+                            type: "button"
+                          },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.addData()
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                    Add player\n                  "
+                          )
+                        ]
+                      )
+                    ])
+                  ])
                 ])
               ]),
               _vm._v(" "),
@@ -50261,9 +50839,13 @@ var render = function() {
                                 },
                                 [_vm._v(_vm._s(item))]
                               ),
-                              _vm._v(" : "),
+                              _vm._v(" "),
                               _c("span", { staticClass: "mr-3" }, [
-                                _vm._v(_vm._s(_vm.countPlayerPerPool(item)))
+                                _vm._v(
+                                  _vm._s(
+                                    item ? _vm.countPlayerPerPool(item) : null
+                                  )
+                                )
                               ])
                             ]
                           )
@@ -53278,7 +53860,7 @@ var staticRenderFns = [
         staticClass:
           "card-header d-flex justify-content-between align-items-center"
       },
-      [_c("span", [_vm._v("Setting Kota")])]
+      [_c("span", [_vm._v("Setting")])]
     )
   },
   function() {
@@ -54507,6 +55089,87 @@ var render = function() {
   )
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./assets/js/components/YearSelector.vue?vue&type=template&id=66cc4046&":
+/*!************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./assets/js/components/YearSelector.vue?vue&type=template&id=66cc4046& ***!
+  \************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "input-group input-group-sm" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "select",
+      {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.selectedYear,
+            expression: "selectedYear"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: { name: "select_year", id: "select_year" },
+        on: {
+          change: [
+            function($event) {
+              var $$selectedVal = Array.prototype.filter
+                .call($event.target.options, function(o) {
+                  return o.selected
+                })
+                .map(function(o) {
+                  var val = "_value" in o ? o._value : o.value
+                  return val
+                })
+              _vm.selectedYear = $event.target.multiple
+                ? $$selectedVal
+                : $$selectedVal[0]
+            },
+            _vm.changeYear
+          ]
+        }
+      },
+      [
+        _c("option", { attrs: { disabled: "" }, domProps: { value: null } }, [
+          _vm._v("--- Select Year ---")
+        ]),
+        _vm._v(" "),
+        _vm._l(_vm.years, function(item) {
+          return _c("option", { key: item, domProps: { value: item } }, [
+            _vm._v(_vm._s(item))
+          ])
+        })
+      ],
+      2
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("span", { staticClass: "input-group-text" }, [_vm._v("Year")])
+    ])
+  }
+]
 render._withStripped = true
 
 
