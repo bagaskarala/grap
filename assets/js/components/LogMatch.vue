@@ -58,7 +58,7 @@
                     @click.prevent="generateSchedule()"
                   >Generate</button>
                   <button
-                    class="btn btn-secondary btn-sm"
+                    class="btn btn-danger btn-sm"
                     type="button"
                     title="Clear Schedule"
                     :disabled="logMatchs.length == 0 || filterDivisionId==null"
@@ -74,21 +74,21 @@
                 class="btn btn-sm btn-primary"
                 type="button"
                 title="Generate Player after generate schedule"
-                :disabled="logMatchs.length == 0"
+                :disabled="logMatchs.length == 0 || (logMatchs[0].pd1_id || logMatchs[0].pd2_id)"
                 @click.prevent="generatePlayer()"
               >Generate Player</button>
               <button
-                class="btn btn-sm btn-secondary"
-                type="button"
-                :disabled="logMatchs.length == 0"
-                @click.prevent="confirmResetPlayer()"
-              >Reset Player</button>
-              <button
                 class="btn btn-sm btn-success"
                 type="button"
-                :disabled="logMatchs.length == 0 || lockMatch || !logMatchs[0].pd1_id"
+                :disabled="logMatchs.length == 0 || lockMatch || (!logMatchs[0].pd1_id && !logMatchs[0].pd2_id)"
                 @click.prevent="startMatch()"
               >Start Match</button>
+              <button
+                class="btn btn-sm btn-danger"
+                type="button"
+                :disabled="logMatchs.length == 0 || (!logMatchs[0].pd1_id && !logMatchs[0].pd2_id)"
+                @click.prevent="confirmResetPlayer()"
+              >Reset Player</button>
             </div>
           </div>
 
@@ -160,7 +160,7 @@
 
               <template v-slot:cell(player1_name)="data">
                 <div
-                  v-if="!data.item.player1_name && data.item.match_index == 1 && data.item.match_system == 'elimination' && data.item.winner != -1"
+                  v-if="!data.item.player1_name && data.item.match_index == 1 && data.item.match_system == 'elimination' && data.item.winner != -1 && (data.item.pd1_id || data.item.pd2_id)"
                   class="text-danger font-italic"
                 >Click Start Match to skip 'BYE'</div>
                 <div
@@ -183,7 +183,7 @@
 
               <template v-slot:cell(player2_name)="data">
                 <div
-                  v-if="!data.item.player2_name && data.item.match_index == 1 && data.item.match_system == 'elimination' && data.item.winner != -1"
+                  v-if="!data.item.player2_name && data.item.match_index == 1 && data.item.match_system == 'elimination' && data.item.winner != -1 && (data.item.pd1_id || data.item.pd2_id)"
                   class="text-danger font-italic"
                 >Click Start match to skip 'BYE'</div>
                 <div
@@ -695,6 +695,7 @@ export default {
           division_id: this.filterDivisionId
         });
         this.filterData(this.filterDivisionId);
+        this.lockMatchTemporary = false;
         this.$noty.success('Success Reset Player');
       } catch (error) {
         console.log(error.response);

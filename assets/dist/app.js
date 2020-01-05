@@ -5765,22 +5765,23 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
               case 6:
                 this.filterData(this.filterDivisionId);
+                this.lockMatchTemporary = false;
                 this.$noty.success('Success Reset Player');
-                _context9.next = 14;
+                _context9.next = 15;
                 break;
 
-              case 10:
-                _context9.prev = 10;
+              case 11:
+                _context9.prev = 11;
                 _context9.t0 = _context9["catch"](3);
                 console.log(_context9.t0.response);
                 this.$noty.error('Failed Reset Player');
 
-              case 14:
+              case 15:
               case "end":
                 return _context9.stop();
             }
           }
-        }, _callee9, this, [[3, 10]]);
+        }, _callee9, this, [[3, 11]]);
       }));
 
       function resetPlayer() {
@@ -7687,6 +7688,11 @@ var timeoutDebounce = null;
         return item.pool_number;
       });
       return _toConsumableArray(new Set(poolNumberArr));
+    },
+    isPoolGenerated: function isPoolGenerated() {
+      return this.playerDivisions.find(function (i) {
+        return !!i.pool_number;
+      }) ? true : false;
     }
   },
   methods: {
@@ -47567,7 +47573,7 @@ var render = function() {
                     _c(
                       "button",
                       {
-                        staticClass: "btn btn-secondary btn-sm",
+                        staticClass: "btn btn-danger btn-sm",
                         attrs: {
                           type: "button",
                           title: "Clear Schedule",
@@ -47600,7 +47606,9 @@ var render = function() {
                         attrs: {
                           type: "button",
                           title: "Generate Player after generate schedule",
-                          disabled: _vm.logMatchs.length == 0
+                          disabled:
+                            _vm.logMatchs.length == 0 ||
+                            (_vm.logMatchs[0].pd1_id || _vm.logMatchs[0].pd2_id)
                         },
                         on: {
                           click: function($event) {
@@ -47615,31 +47623,14 @@ var render = function() {
                     _c(
                       "button",
                       {
-                        staticClass: "btn btn-sm btn-secondary",
-                        attrs: {
-                          type: "button",
-                          disabled: _vm.logMatchs.length == 0
-                        },
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            return _vm.confirmResetPlayer()
-                          }
-                        }
-                      },
-                      [_vm._v("Reset Player")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
                         staticClass: "btn btn-sm btn-success",
                         attrs: {
                           type: "button",
                           disabled:
                             _vm.logMatchs.length == 0 ||
                             _vm.lockMatch ||
-                            !_vm.logMatchs[0].pd1_id
+                            (!_vm.logMatchs[0].pd1_id &&
+                              !_vm.logMatchs[0].pd2_id)
                         },
                         on: {
                           click: function($event) {
@@ -47649,6 +47640,27 @@ var render = function() {
                         }
                       },
                       [_vm._v("Start Match")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-sm btn-danger",
+                        attrs: {
+                          type: "button",
+                          disabled:
+                            _vm.logMatchs.length == 0 ||
+                            (!_vm.logMatchs[0].pd1_id &&
+                              !_vm.logMatchs[0].pd2_id)
+                        },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.confirmResetPlayer()
+                          }
+                        }
+                      },
+                      [_vm._v("Reset Player")]
                     )
                   ])
                 : _vm._e()
@@ -47838,7 +47850,8 @@ var render = function() {
                                 !data.item.player1_name &&
                                 data.item.match_index == 1 &&
                                 data.item.match_system == "elimination" &&
-                                data.item.winner != -1
+                                data.item.winner != -1 &&
+                                (data.item.pd1_id || data.item.pd2_id)
                                   ? _c(
                                       "div",
                                       {
@@ -47917,7 +47930,8 @@ var render = function() {
                                 !data.item.player2_name &&
                                 data.item.match_index == 1 &&
                                 data.item.match_system == "elimination" &&
-                                data.item.winner != -1
+                                data.item.winner != -1 &&
+                                (data.item.pd1_id || data.item.pd2_id)
                                   ? _c(
                                       "div",
                                       {
@@ -48066,7 +48080,7 @@ var render = function() {
                         ],
                         null,
                         false,
-                        368890166
+                        2464616182
                       )
                     })
                   : _vm._e()
@@ -50175,7 +50189,8 @@ var render = function() {
                               disabled:
                                 _vm.playerDivisions.length == 0 ||
                                 _vm.lockMatch ||
-                                _vm.matchSystem
+                                _vm.matchSystem ||
+                                _vm.isPoolGenerated
                             },
                             on: {
                               click: function($event) {
@@ -50190,10 +50205,12 @@ var render = function() {
                         _c(
                           "button",
                           {
-                            staticClass: "btn btn-sm btn-secondary mr-1",
+                            staticClass: "btn btn-sm btn-danger mr-1",
                             attrs: {
                               type: "button",
-                              disabled: _vm.playerDivisions.length == 0
+                              disabled:
+                                _vm.playerDivisions.length == 0 ||
+                                !_vm.isPoolGenerated
                             },
                             on: {
                               click: function($event) {

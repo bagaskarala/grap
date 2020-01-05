@@ -52,13 +52,13 @@
                   :title="lockMatch? 'Disabled when match has been started' : 'Generate pool to players'"
                   class="btn btn-sm btn-primary mr-1"
                   type="button"
-                  :disabled="playerDivisions.length==0 || lockMatch || matchSystem"
+                  :disabled="playerDivisions.length==0 || lockMatch || matchSystem || isPoolGenerated"
                   @click.prevent="generatePool()"
                 >Generate Pool</button>
                 <button
-                  class="btn btn-sm btn-secondary mr-1"
+                  class="btn btn-sm btn-danger mr-1"
                   type="button"
-                  :disabled="playerDivisions.length==0"
+                  :disabled="playerDivisions.length==0 || !isPoolGenerated"
                   @click.prevent="confirmResetPool()"
                 >Reset Pool</button>
               </div>
@@ -363,6 +363,10 @@ export default {
     getUniquePool() {
       let poolNumberArr = this.playerDivisions.map(item => item.pool_number);
       return [... new Set(poolNumberArr)];
+    },
+
+    isPoolGenerated() {
+      return this.playerDivisions.find(i => !!i.pool_number) ? true : false;
     }
   },
 
