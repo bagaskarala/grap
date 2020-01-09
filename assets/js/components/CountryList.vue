@@ -63,7 +63,7 @@
 
       <form method="post">
         <div class="form-group">
-          <label for="country">Country</label>
+          <label for="country">Country *</label>
           <input
             id="country"
             v-model="form.country"

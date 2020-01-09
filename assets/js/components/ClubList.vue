@@ -95,7 +95,7 @@
 
       <form method="post">
         <div class="form-group">
-          <label for="club">Club</label>
+          <label for="club">Club *</label>
           <input
             id="club"
             v-model="form.club"

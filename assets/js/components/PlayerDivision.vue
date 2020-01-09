@@ -40,7 +40,7 @@
                   <div class="input-group-append">
                     <button
                       :title="lockMatch? 'Disabled when match has been started' : 'Add player to division'"
-                      :disabled="lockMatch"
+                      :disabled="lockMatch || !filterDivisionId"
                       type="button"
                       class="btn btn-sm btn-primary"
                       @click.prevent="addData()"
@@ -187,18 +187,17 @@
                     v-if="data.item.division_winner"
                     title="Save achievement to player"
                     class="btn btn-success btn-sm"
-                    :disabled="isAchievementSaved(data.item)"
                     @click="saveAchievement(data.item)"
                   ><i class="fa fa-save fa-fw"></i></button>
                   <button
                     :title="lockMatch? 'Disabled when match has been started' : 'Edit player'"
-                    :disabled="lockMatch"
+                    :disabled="lockMatch || matchSystem"
                     class="btn btn-sm btn-warning"
                     @click.prevent="loadData(data.item)"
                   ><i class="fa fa-edit fa-fw"></i></button>
                   <button
                     :title="lockMatch? 'Disabled when match has been started' : 'Delete player from division'"
-                    :disabled="lockMatch"
+                    :disabled="lockMatch || matchSystem"
                     class="btn btn-sm btn-danger"
                     @click.prevent="confirmDelete(data.item)"
                   ><i class="fa fa-trash fa-fw"></i></button>
@@ -224,7 +223,7 @@
 
       <form method="post">
         <div class="form-group">
-          <label for="division_id">Assign to Division</label>
+          <label for="division_id">Assign to Division *</label>
           <select
             name="division_id"
             id="division_id"
@@ -241,7 +240,7 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="player_id">Select Player</label>
+          <label for="player_id">Select Player *</label>
           <div class="input-group input-group-sm mb-2">
             <div class="input-group-prepend">
               <span class="input-group-text">Filter by Weight</span>
@@ -378,9 +377,9 @@ export default {
   computed: {
     fieldPlayerDivision() {
       if (this.matchSystem == 'elimination') {
-        return ['year', 'city_id', 'name', 'club', 'last_achievement', 'division_winner', 'action'];
+        return ['name', 'club', 'last_achievement', 'division_winner', 'action'];
       } else {
-        return ['year', 'city_id', 'name', 'club', 'last_achievement', 'pool_number', 'win', 'draw', 'lose', 'total_time', 'pool_winner', 'division_winner', 'action'];
+        return ['name', 'club', 'last_achievement', 'pool_number', 'win', 'draw', 'lose', 'total_time', 'pool_winner', 'division_winner', 'action'];
       }
     },
 
@@ -732,20 +731,7 @@ export default {
         this.$noty.success('Success Insert Achivement');
       } catch (error) {
         console.log(error.response);
-        this.$noty.error('Failed Insert Achivement');
-      }
-    },
-
-    isAchievementSaved(item) {
-      if (item.last_achievement
-        && item.division_id == item.last_achievement.division_id
-        && item.last_achievement.category == 'grappling'
-        && item.division_winner == item.last_achievement.winner_position
-        && this.setting.year == item.last_achievement.achievement_year
-        && this.setting.city_id == item.last_achievement.city_id) {
-        return true;
-      } else {
-        return false;
+        this.$noty.error('Failed Insert Achivement. ' + error.response.data.message);
       }
     }
   },

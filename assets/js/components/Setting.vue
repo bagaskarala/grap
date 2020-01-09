@@ -10,7 +10,7 @@
           <div class="card-body">
             <form method="post">
               <div class="form-group">
-                <label for="year">Year</label>
+                <label for="year">Year *</label>
                 <input
                   id="year"
                   v-model.number="form.year"
@@ -36,7 +36,7 @@
               </div>
 
               <div class="form-group">
-                <label for="city_id">City</label>
+                <label for="city_id">City *</label>
                 <select
                   name="city_id"
                   id="city_id"

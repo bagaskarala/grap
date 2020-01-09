@@ -7965,7 +7965,6 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
-//
 
 
 
@@ -8019,9 +8018,9 @@ var timeoutDebounce = null;
   computed: {
     fieldPlayerDivision: function fieldPlayerDivision() {
       if (this.matchSystem == 'elimination') {
-        return ['year', 'city_id', 'name', 'club', 'last_achievement', 'division_winner', 'action'];
+        return ['name', 'club', 'last_achievement', 'division_winner', 'action'];
       } else {
-        return ['year', 'city_id', 'name', 'club', 'last_achievement', 'pool_number', 'win', 'draw', 'lose', 'total_time', 'pool_winner', 'division_winner', 'action'];
+        return ['name', 'club', 'last_achievement', 'pool_number', 'win', 'draw', 'lose', 'total_time', 'pool_winner', 'division_winner', 'action'];
       }
     },
     lockMatch: function lockMatch() {
@@ -8757,7 +8756,7 @@ var timeoutDebounce = null;
                 _context14.prev = 7;
                 _context14.t0 = _context14["catch"](0);
                 console.log(_context14.t0.response);
-                this.$noty.error('Failed Insert Achivement');
+                this.$noty.error('Failed Insert Achivement. ' + _context14.t0.response.data.message);
 
               case 11:
               case "end":
@@ -8772,14 +8771,7 @@ var timeoutDebounce = null;
       }
 
       return saveAchievement;
-    }(),
-    isAchievementSaved: function isAchievementSaved(item) {
-      if (item.last_achievement && item.division_id == item.last_achievement.division_id && item.last_achievement.category == 'grappling' && item.division_winner == item.last_achievement.winner_position && this.setting.year == item.last_achievement.achievement_year && this.setting.city_id == item.last_achievement.city_id) {
-        return true;
-      } else {
-        return false;
-      }
-    }
+    }()
   },
   created: function created() {
     // this.getAllPlayerDivisions();
@@ -46573,7 +46565,7 @@ var render = function() {
           _vm._v(" "),
           _c("form", { attrs: { method: "post" } }, [
             _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "city" } }, [_vm._v("City")]),
+              _c("label", { attrs: { for: "city" } }, [_vm._v("City *")]),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -46963,7 +46955,7 @@ var render = function() {
           _vm._v(" "),
           _c("form", { attrs: { method: "post" } }, [
             _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "club" } }, [_vm._v("Club")]),
+              _c("label", { attrs: { for: "club" } }, [_vm._v("Club *")]),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -47270,7 +47262,7 @@ var render = function() {
           _vm._v(" "),
           _c("form", { attrs: { method: "post" } }, [
             _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "country" } }, [_vm._v("Country")]),
+              _c("label", { attrs: { for: "country" } }, [_vm._v("Country *")]),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -47618,7 +47610,7 @@ var render = function() {
           _c("form", { attrs: { method: "post" } }, [
             _c("div", { staticClass: "form-group" }, [
               _c("label", { attrs: { for: "division" } }, [
-                _vm._v("Division Name")
+                _vm._v("Division Name *")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "input-group mb-3" }, [
@@ -47703,7 +47695,7 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
               _c("label", { attrs: { for: "min_weight" } }, [
-                _vm._v("Min. Weight")
+                _vm._v("Min. Weight *")
               ]),
               _vm._v(" "),
               _c("input", {
@@ -47743,7 +47735,7 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
               _c("label", { attrs: { for: "max_weight" } }, [
-                _vm._v("Max. Weight")
+                _vm._v("Max. Weight *")
               ]),
               _vm._v(" "),
               _c("input", {
@@ -50819,7 +50811,7 @@ var render = function() {
                             title: _vm.lockMatch
                               ? "Disabled when match has been started"
                               : "Add player to division",
-                            disabled: _vm.lockMatch,
+                            disabled: _vm.lockMatch || !_vm.filterDivisionId,
                             type: "button"
                           },
                           on: {
@@ -51207,10 +51199,7 @@ var render = function() {
                                               "btn btn-success btn-sm",
                                             attrs: {
                                               title:
-                                                "Save achievement to player",
-                                              disabled: _vm.isAchievementSaved(
-                                                data.item
-                                              )
+                                                "Save achievement to player"
                                             },
                                             on: {
                                               click: function($event) {
@@ -51236,7 +51225,8 @@ var render = function() {
                                           title: _vm.lockMatch
                                             ? "Disabled when match has been started"
                                             : "Edit player",
-                                          disabled: _vm.lockMatch
+                                          disabled:
+                                            _vm.lockMatch || _vm.matchSystem
                                         },
                                         on: {
                                           click: function($event) {
@@ -51260,7 +51250,8 @@ var render = function() {
                                           title: _vm.lockMatch
                                             ? "Disabled when match has been started"
                                             : "Delete player from division",
-                                          disabled: _vm.lockMatch
+                                          disabled:
+                                            _vm.lockMatch || _vm.matchSystem
                                         },
                                         on: {
                                           click: function($event) {
@@ -51283,7 +51274,7 @@ var render = function() {
                         ],
                         null,
                         false,
-                        2199452314
+                        1188322414
                       )
                     })
                   : _vm._e()
@@ -51314,7 +51305,7 @@ var render = function() {
           _c("form", { attrs: { method: "post" } }, [
             _c("div", { staticClass: "form-group" }, [
               _c("label", { attrs: { for: "division_id" } }, [
-                _vm._v("Assign to Division")
+                _vm._v("Assign to Division *")
               ]),
               _vm._v(" "),
               _c(
@@ -51381,7 +51372,7 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
               _c("label", { attrs: { for: "player_id" } }, [
-                _vm._v("Select Player")
+                _vm._v("Select Player *")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "input-group input-group-sm mb-2" }, [
@@ -51953,7 +51944,7 @@ var render = function() {
           _vm._v(" "),
           _c("form", { attrs: { method: "post" } }, [
             _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "name" } }, [_vm._v("Name")]),
+              _c("label", { attrs: { for: "name" } }, [_vm._v("Name *")]),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -51979,8 +51970,39 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "nickname" } }, [_vm._v("Nickname")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.nickname,
+                    expression: "form.nickname"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  id: "nickname",
+                  type: "text",
+                  placeholder: "Enter Nickname",
+                  maxlength: "10"
+                },
+                domProps: { value: _vm.form.nickname },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "nickname", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
               _c("label", { attrs: { for: "country_id" } }, [
-                _vm._v("Country")
+                _vm._v("Country *")
               ]),
               _vm._v(" "),
               _c(
@@ -52035,7 +52057,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "club_id" } }, [_vm._v("Club")]),
+              _c("label", { attrs: { for: "club_id" } }, [_vm._v("Club *")]),
               _vm._v(" "),
               _c(
                 "select",
@@ -52089,38 +52111,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "nickname" } }, [_vm._v("Nickname")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.form.nickname,
-                    expression: "form.nickname"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: {
-                  id: "nickname",
-                  type: "text",
-                  placeholder: "Enter Nickname",
-                  maxlength: "10"
-                },
-                domProps: { value: _vm.form.nickname },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.form, "nickname", $event.target.value)
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "gender" } }, [_vm._v("Gender")]),
+              _c("label", { attrs: { for: "gender" } }, [_vm._v("Gender *")]),
               _vm._v(" "),
               _c(
                 "select",
@@ -52173,49 +52164,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "height" } }, [_vm._v("Height")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "input-group mb-3" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model.number",
-                      value: _vm.form.height,
-                      expression: "form.height",
-                      modifiers: { number: true }
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    id: "height",
-                    type: "number",
-                    placeholder: "Enter height"
-                  },
-                  domProps: { value: _vm.form.height },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.form, "height", _vm._n($event.target.value))
-                    },
-                    blur: function($event) {
-                      return _vm.$forceUpdate()
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("div", { staticClass: "input-group-append" }, [
-                  _c("span", { staticClass: "input-group-text" }, [
-                    _vm._v("cm")
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "weight" } }, [_vm._v("Weight")]),
+              _c("label", { attrs: { for: "weight" } }, [_vm._v("Weight *")]),
               _vm._v(" "),
               _c("div", { staticClass: "input-group mb-3" }, [
                 _c("input", {
@@ -52253,6 +52202,48 @@ var render = function() {
                 _c("div", { staticClass: "input-group-append" }, [
                   _c("span", { staticClass: "input-group-text" }, [
                     _vm._v("kg")
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "height" } }, [_vm._v("Height")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "input-group mb-3" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model.number",
+                      value: _vm.form.height,
+                      expression: "form.height",
+                      modifiers: { number: true }
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    id: "height",
+                    type: "number",
+                    placeholder: "Enter height"
+                  },
+                  domProps: { value: _vm.form.height },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "height", _vm._n($event.target.value))
+                    },
+                    blur: function($event) {
+                      return _vm.$forceUpdate()
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "input-group-append" }, [
+                  _c("span", { staticClass: "input-group-text" }, [
+                    _vm._v("cm")
                   ])
                 ])
               ])
@@ -52595,7 +52586,7 @@ var render = function() {
                           _c("div", { staticClass: "row" }, [
                             _c("div", { staticClass: "col" }, [
                               _c("label", { attrs: { for: "division_id" } }, [
-                                _vm._v("Category")
+                                _vm._v("Category *")
                               ]),
                               _vm._v(" "),
                               _c(
@@ -52653,7 +52644,7 @@ var render = function() {
                             _vm._v(" "),
                             _c("div", { staticClass: "col" }, [
                               _c("label", { attrs: { for: "division_id" } }, [
-                                _vm._v("Division")
+                                _vm._v("Division *")
                               ]),
                               _vm._v(" "),
                               _c(
@@ -52778,7 +52769,7 @@ var render = function() {
                               _c(
                                 "label",
                                 { attrs: { for: "tournament_name" } },
-                                [_vm._v("Winner Position")]
+                                [_vm._v("Winner Position *")]
                               ),
                               _vm._v(" "),
                               _c(
@@ -53248,7 +53239,7 @@ var render = function() {
           _vm._v(" "),
           _c("form", { attrs: { method: "post" } }, [
             _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "name" } }, [_vm._v("Name")]),
+              _c("label", { attrs: { for: "name" } }, [_vm._v("Name *")]),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -53650,7 +53641,7 @@ var render = function() {
           _c("div", { staticClass: "card-body" }, [
             _c("form", { attrs: { method: "post" } }, [
               _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "year" } }, [_vm._v("Year")]),
+                _c("label", { attrs: { for: "year" } }, [_vm._v("Year *")]),
                 _vm._v(" "),
                 _c("input", {
                   directives: [
@@ -53722,7 +53713,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "city_id" } }, [_vm._v("City")]),
+                _c("label", { attrs: { for: "city_id" } }, [_vm._v("City *")]),
                 _vm._v(" "),
                 _c(
                   "select",
@@ -55029,7 +55020,7 @@ var render = function() {
           _c("form", { attrs: { method: "post" } }, [
             _c("div", { staticClass: "form-group" }, [
               _c("label", { attrs: { for: "winning" } }, [
-                _vm._v("Winning by")
+                _vm._v("Winning by *")
               ]),
               _vm._v(" "),
               _c("input", {

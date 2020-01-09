@@ -9,7 +9,7 @@ class Setting_model extends MY_Model
             [
                 'field' => 'year',
                 'label' => 'year',
-                'rules' => 'trim',
+                'rules' => 'trim|required',
             ],
             [
                 'field' => 'month',
@@ -17,8 +17,8 @@ class Setting_model extends MY_Model
                 'rules' => 'trim',
             ],
             [
-                'field' => 'city',
-                'label' => 'city',
+                'field' => 'city_id',
+                'label' => 'city_id',
                 'rules' => 'trim',
             ],
             [

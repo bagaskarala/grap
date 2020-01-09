@@ -72,7 +72,7 @@
 
       <form method="post">
         <div class="form-group">
-          <label for="division">Division Name</label>
+          <label for="division">Division Name *</label>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <div class="input-group-text">
@@ -103,7 +103,7 @@
 
         </div>
         <div class="form-group">
-          <label for="min_weight">Min. Weight</label>
+          <label for="min_weight">Min. Weight *</label>
           <input
             id="min_weight"
             v-model.number="form.min_weight"
@@ -113,7 +113,7 @@
           >
         </div>
         <div class="form-group">
-          <label for="max_weight">Max. Weight</label>
+          <label for="max_weight">Max. Weight *</label>
           <input
             id="max_weight"
             v-model.number="form.max_weight"

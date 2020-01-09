@@ -48,9 +48,24 @@ class Achievement_model extends MY_Model
 
     public function insert_achievement($data)
     {
+
         $this->where('category', $data['category']);
         $this->where('player_id', $data['player_id']);
-        $count_achievement = $this->count();
+        $achievements = $this->get_all_array();
+
+        foreach ($achievements as $ach) {
+            if ($ach['city_id'] == $data['city_id']
+                and $ach['division_id'] == $data['division_id']
+                and $ach['winner_position'] == $data['winner_position']
+                and $ach['achievement_year'] == $data['achievement_year']) {
+                return [
+                    'status'  => false,
+                    'message' => 'This achievement has been saved',
+                ];
+            }
+        }
+
+        $count_achievement = $this->count($achievements);
         if ($count_achievement == 3) {
             // cek achievement terlama
             $this->select('MIN(achievement_year) as oldest_achievement, id');

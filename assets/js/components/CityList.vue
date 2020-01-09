@@ -62,7 +62,7 @@
 
       <form method="post">
         <div class="form-group">
-          <label for="city">City</label>
+          <label for="city">City *</label>
           <input
             id="city"
             v-model="form.city"

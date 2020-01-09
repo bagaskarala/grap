@@ -63,7 +63,7 @@
 
       <form method="post">
         <div class="form-group">
-          <label for="name">Name</label>
+          <label for="name">Name *</label>
           <input
             id="name"
             v-model="form.name"

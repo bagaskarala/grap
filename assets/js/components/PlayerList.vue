@@ -108,7 +108,7 @@
 
       <form method="post">
         <div class="form-group">
-          <label for="name">Name</label>
+          <label for="name">Name *</label>
           <input
             id="name"
             v-model="form.name"
@@ -118,7 +118,18 @@
           >
         </div>
         <div class="form-group">
-          <label for="country_id">Country</label>
+          <label for="nickname">Nickname</label>
+          <input
+            id="nickname"
+            v-model="form.nickname"
+            type="text"
+            class="form-control"
+            placeholder="Enter Nickname"
+            maxlength="10"
+          >
+        </div>
+        <div class="form-group">
+          <label for="country_id">Country *</label>
           <select
             name="country_id"
             id="country_id"
@@ -134,7 +145,7 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="club_id">Club</label>
+          <label for="club_id">Club *</label>
           <select
             name="club_id"
             id="club_id"
@@ -150,18 +161,7 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="nickname">Nickname</label>
-          <input
-            id="nickname"
-            v-model="form.nickname"
-            type="text"
-            class="form-control"
-            placeholder="Enter Nickname"
-            maxlength="10"
-          >
-        </div>
-        <div class="form-group">
-          <label for="gender">Gender</label>
+          <label for="gender">Gender *</label>
           <select
             name="gender"
             id="gender"
@@ -177,22 +177,7 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="height">Height</label>
-          <div class="input-group mb-3">
-            <input
-              id="height"
-              v-model.number="form.height"
-              type="number"
-              class="form-control"
-              placeholder="Enter height"
-            >
-            <div class="input-group-append">
-              <span class="input-group-text">cm</span>
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="weight">Weight</label>
+          <label for="weight">Weight *</label>
           <div class="input-group mb-3">
             <input
               id="weight"
@@ -205,6 +190,21 @@
             >
             <div class="input-group-append">
               <span class="input-group-text">kg</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="height">Height</label>
+          <div class="input-group mb-3">
+            <input
+              id="height"
+              v-model.number="form.height"
+              type="number"
+              class="form-control"
+              placeholder="Enter height"
+            >
+            <div class="input-group-append">
+              <span class="input-group-text">cm</span>
             </div>
           </div>
         </div>
@@ -391,7 +391,7 @@
             <div class="form-group">
               <div class="row">
                 <div class="col">
-                  <label for="division_id">Category</label>
+                  <label for="division_id">Category *</label>
                   <select
                     id="category"
                     class="form-control"
@@ -405,7 +405,7 @@
                   </select>
                 </div>
                 <div class="col">
-                  <label for="division_id">Division</label>
+                  <label for="division_id">Division *</label>
                   <select
                     id="division_id"
                     class="form-control"
@@ -439,7 +439,7 @@
                   >
                 </div>
                 <div class="col">
-                  <label for="tournament_name">Winner Position</label>
+                  <label for="tournament_name">Winner Position *</label>
                   <select
                     name="winner_position"
                     id="winner_position"

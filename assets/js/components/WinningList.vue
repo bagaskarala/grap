@@ -64,7 +64,7 @@
 
       <form method="post">
         <div class="form-group">
-          <label for="winning">Winning by</label>
+          <label for="winning">Winning by *</label>
           <input
             id="winning"
             v-model="form.winning"

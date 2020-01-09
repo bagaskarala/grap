@@ -7,6 +7,8 @@ class Achievement extends MY_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->year    = $this->session->userdata('setting_year');
+        $this->city_id = $this->session->userdata('setting_city_id');
     }
 
     public function index()
@@ -62,15 +64,12 @@ class Achievement extends MY_Controller
             'division_id'      => $request->division_id,
         ];
 
-        // ketika save achievement pada pemenang, ambil setting
-        $setting = $this->achievement->get_single_array('setting');
-
         if ($data['achievement_year'] == null) {
-            $data['achievement_year'] = $setting['year'];
+            $data['achievement_year'] = $this->year;
         }
 
         if ($data['city_id'] == null) {
-            $data['city_id'] = $setting['city_id'];
+            $data['city_id'] = $this->city_id;
         }
 
         if ($data['tournament_name'] == null) {
