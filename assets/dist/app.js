@@ -1459,22 +1459,21 @@ __webpack_require__.r(__webpack_exports__);
 /*!*****************************!*\
   !*** ./assets/js/shared.js ***!
   \*****************************/
-/*! exports provided: getCities, parseWinner */
+/*! exports provided: parseWinner */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCities", function() { return getCities; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "parseWinner", function() { return parseWinner; });
-var cities = ['surabaya', 'jakarta', 'semarang'];
-function getCities() {
-  return cities.map(function (item) {
-    return {
-      value: item,
-      text: item.charAt(0).toUpperCase() + item.slice(1)
-    };
-  });
-}
+// static cities data
+// const cities = ['surabaya', 'jakarta', 'semarang'];
+// export function getCities() {
+//    return cities.map(item => ({
+//       value: item,
+//       text: item.charAt(0).toUpperCase() + item.slice(1)
+//    }));
+// }
+// example input 2, output 2nd
 function parseWinner(num) {
   if (num == 1) {
     return '1st';
@@ -5087,6 +5086,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_tournament_bracket__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-tournament-bracket */ "./node_modules/vue-tournament-bracket/dist/vue-tournament-bracket.common.js");
 /* harmony import */ var vue_tournament_bracket__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_tournament_bracket__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _shared__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../shared */ "./assets/js/shared.js");
+/* harmony import */ var _CitySelector__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CitySelector */ "./assets/js/components/CitySelector.vue");
+/* harmony import */ var _YearSelector__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./YearSelector */ "./assets/js/components/YearSelector.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -5428,16 +5429,32 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'LogMatch',
   props: {
-    baseUrl: String,
-    divisionId: String
+    divisionId: Number,
+    year: Number,
+    cityId: Number,
+    city: String
   },
   components: {
-    Bracket: vue_tournament_bracket__WEBPACK_IMPORTED_MODULE_1___default.a
+    Bracket: vue_tournament_bracket__WEBPACK_IMPORTED_MODULE_1___default.a,
+    CitySelector: _CitySelector__WEBPACK_IMPORTED_MODULE_3__["default"],
+    YearSelector: _YearSelector__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   data: function data() {
     return {
@@ -6175,8 +6192,8 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   created: function created() {
     // auto pilih division yang tersimpan di session
     if (this.divisionId) {
-      this.filterDivisionId = parseInt(this.divisionId);
-      this.filterData(parseInt(this.divisionId));
+      this.filterDivisionId = this.divisionId;
+      this.filterData(this.divisionId);
     }
 
     this.getDivisions();
@@ -7951,7 +7968,12 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 var timeoutDebounce = null;
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PlayerDivision',
-  props: ['divisionId', 'year', 'city', 'city_id'],
+  props: {
+    divisionId: String,
+    year: Number,
+    city: String,
+    city_id: Number
+  },
   components: {
     CitySelector: _CitySelector__WEBPACK_IMPORTED_MODULE_2__["default"],
     YearSelector: _YearSelector__WEBPACK_IMPORTED_MODULE_3__["default"]
@@ -8781,7 +8803,7 @@ var timeoutDebounce = null;
 
       if (this.modalState == 'add') {
         this.form.player_id = null;
-      } // Debounce 1s
+      } // Debounce 500ms
 
 
       clearTimeout(timeoutDebounce);
@@ -48009,65 +48031,86 @@ var render = function() {
             _vm._m(0),
             _vm._v(" "),
             _c("div", { staticClass: "mx-3 mt-3" }, [
-              _c("div", { staticClass: "input-group input-group-sm" }, [
-                _vm._m(1),
+              _c("div", { staticClass: "row" }, [
+                _c(
+                  "div",
+                  { staticClass: "col-md-2" },
+                  [_c("YearSelector", { attrs: { year: _vm.year } })],
+                  1
+                ),
                 _vm._v(" "),
                 _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model.number",
-                        value: _vm.filterDivisionId,
-                        expression: "filterDivisionId",
-                        modifiers: { number: true }
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      name: "filter_division",
-                      id: "filter_division",
-                      autofocus: ""
-                    },
-                    on: {
-                      change: [
-                        function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return _vm._n(val)
-                            })
-                          _vm.filterDivisionId = $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        },
-                        function($event) {
-                          return _vm.filterData(_vm.filterDivisionId)
-                        }
-                      ]
-                    }
-                  },
-                  [
-                    _c(
-                      "option",
-                      { attrs: { disabled: "" }, domProps: { value: null } },
-                      [_vm._v("--- Select Division ---")]
-                    ),
+                  "div",
+                  { staticClass: "col-md-2" },
+                  [_c("CitySelector", { attrs: { "city-id": _vm.cityId } })],
+                  1
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-8" }, [
+                  _c("div", { staticClass: "input-group input-group-sm" }, [
+                    _vm._m(1),
                     _vm._v(" "),
-                    _vm._l(_vm.divisions, function(item) {
-                      return _c(
-                        "option",
-                        { key: item.id, domProps: { value: item.id } },
-                        [_vm._v(_vm._s(item.division))]
-                      )
-                    })
-                  ],
-                  2
-                )
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model.number",
+                            value: _vm.filterDivisionId,
+                            expression: "filterDivisionId",
+                            modifiers: { number: true }
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          name: "filter_division",
+                          id: "filter_division",
+                          autofocus: ""
+                        },
+                        on: {
+                          change: [
+                            function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return _vm._n(val)
+                                })
+                              _vm.filterDivisionId = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            },
+                            function($event) {
+                              return _vm.filterData(_vm.filterDivisionId)
+                            }
+                          ]
+                        }
+                      },
+                      [
+                        _c(
+                          "option",
+                          {
+                            attrs: { disabled: "" },
+                            domProps: { value: null }
+                          },
+                          [_vm._v("--- Select Division ---")]
+                        ),
+                        _vm._v(" "),
+                        _vm._l(_vm.divisions, function(item) {
+                          return _c(
+                            "option",
+                            { key: item.id, domProps: { value: item.id } },
+                            [_vm._v(_vm._s(item.division))]
+                          )
+                        })
+                      ],
+                      2
+                    )
+                  ])
+                ])
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "mt-3" }, [
@@ -49967,51 +50010,51 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "name" } }, [_vm._v("Name")]),
+                    _c("label", { attrs: { for: "name1" } }, [_vm._v("Name")]),
                     _vm._v(" "),
                     _c("input", {
                       staticClass: "form-control",
-                      attrs: { id: "name", readonly: "", type: "text" },
+                      attrs: { id: "name1", readonly: "", type: "text" },
                       domProps: { value: _vm.logMatchDetail.player1_name }
                     })
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "club" } }, [_vm._v("Club")]),
+                    _c("label", { attrs: { for: "club1" } }, [_vm._v("Club")]),
                     _vm._v(" "),
                     _c("input", {
                       staticClass: "form-control",
-                      attrs: { id: "club", readonly: "", type: "text" },
+                      attrs: { id: "club1", readonly: "", type: "text" },
                       domProps: { value: _vm.logMatchDetail.player1_club }
                     })
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "country" } }, [
+                    _c("label", { attrs: { for: "country1" } }, [
                       _vm._v("Country")
                     ]),
                     _vm._v(" "),
                     _c("input", {
                       staticClass: "form-control",
-                      attrs: { id: "country", readonly: "", type: "text" },
+                      attrs: { id: "country1", readonly: "", type: "text" },
                       domProps: { value: _vm.logMatchDetail.player1_country }
                     })
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "weight" } }, [
+                    _c("label", { attrs: { for: "weight1" } }, [
                       _vm._v("Weight")
                     ]),
                     _vm._v(" "),
                     _c("input", {
                       staticClass: "form-control",
-                      attrs: { id: "weight", readonly: "", type: "text" },
+                      attrs: { id: "weight1", readonly: "", type: "text" },
                       domProps: { value: _vm.logMatchDetail.player1_weight }
                     })
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "yellow_card" } }, [
+                    _c("label", { attrs: { for: "yellow_card1" } }, [
                       _vm._v("Yellow card")
                     ]),
                     _vm._v(" "),
@@ -50026,7 +50069,7 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { id: "yellow_card", type: "number" },
+                      attrs: { id: "yellow_card1", type: "number" },
                       domProps: { value: _vm.form.pd1_yellowcard },
                       on: {
                         input: function($event) {
@@ -50047,7 +50090,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "red_card" } }, [
+                    _c("label", { attrs: { for: "red_card1" } }, [
                       _vm._v("Red card")
                     ]),
                     _vm._v(" "),
@@ -50062,7 +50105,7 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { id: "red_card", type: "number" },
+                      attrs: { id: "red_card1", type: "number" },
                       domProps: { value: _vm.form.pd1_redcard },
                       on: {
                         input: function($event) {
@@ -50083,7 +50126,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "green_card" } }, [
+                    _c("label", { attrs: { for: "green_card1" } }, [
                       _vm._v("Green card")
                     ]),
                     _vm._v(" "),
@@ -50098,7 +50141,7 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { id: "green_card", type: "number" },
+                      attrs: { id: "green_card1", type: "number" },
                       domProps: { value: _vm.form.pd1_greencard },
                       on: {
                         input: function($event) {
@@ -50143,51 +50186,51 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "name" } }, [_vm._v("Name")]),
+                    _c("label", { attrs: { for: "name2" } }, [_vm._v("Name")]),
                     _vm._v(" "),
                     _c("input", {
                       staticClass: "form-control",
-                      attrs: { id: "name", readonly: "", type: "text" },
+                      attrs: { id: "name2", readonly: "", type: "text" },
                       domProps: { value: _vm.logMatchDetail.player2_name }
                     })
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "club" } }, [_vm._v("Club")]),
+                    _c("label", { attrs: { for: "club2" } }, [_vm._v("Club")]),
                     _vm._v(" "),
                     _c("input", {
                       staticClass: "form-control",
-                      attrs: { id: "club", readonly: "", type: "text" },
+                      attrs: { id: "club2", readonly: "", type: "text" },
                       domProps: { value: _vm.logMatchDetail.player2_club }
                     })
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "country" } }, [
+                    _c("label", { attrs: { for: "country2" } }, [
                       _vm._v("Country")
                     ]),
                     _vm._v(" "),
                     _c("input", {
                       staticClass: "form-control",
-                      attrs: { id: "country", readonly: "", type: "text" },
+                      attrs: { id: "country2", readonly: "", type: "text" },
                       domProps: { value: _vm.logMatchDetail.player2_country }
                     })
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "weight" } }, [
+                    _c("label", { attrs: { for: "weight2" } }, [
                       _vm._v("Weight")
                     ]),
                     _vm._v(" "),
                     _c("input", {
                       staticClass: "form-control",
-                      attrs: { id: "weight", readonly: "", type: "text" },
+                      attrs: { id: "weight2", readonly: "", type: "text" },
                       domProps: { value: _vm.logMatchDetail.player2_weight }
                     })
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "yellow_card" } }, [
+                    _c("label", { attrs: { for: "yellow_card2" } }, [
                       _vm._v("Yellow card")
                     ]),
                     _vm._v(" "),
@@ -50202,7 +50245,7 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { id: "yellow_card", type: "number" },
+                      attrs: { id: "yellow_card2", type: "number" },
                       domProps: { value: _vm.form.pd2_yellowcard },
                       on: {
                         input: function($event) {
@@ -50223,7 +50266,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "red_card" } }, [
+                    _c("label", { attrs: { for: "red_card2" } }, [
                       _vm._v("Red card")
                     ]),
                     _vm._v(" "),
@@ -50238,7 +50281,7 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { id: "red_card", type: "number" },
+                      attrs: { id: "red_card2", type: "number" },
                       domProps: { value: _vm.form.pd2_redcard },
                       on: {
                         input: function($event) {
@@ -50259,7 +50302,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "green_card" } }, [
+                    _c("label", { attrs: { for: "green_card2" } }, [
                       _vm._v("Green card")
                     ]),
                     _vm._v(" "),
@@ -50274,7 +50317,7 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { id: "green_card", type: "number" },
+                      attrs: { id: "green_card2", type: "number" },
                       domProps: { value: _vm.form.pd2_greencard },
                       on: {
                         input: function($event) {

@@ -347,7 +347,12 @@ import YearSelector from './YearSelector';
 var timeoutDebounce = null;
 export default {
   name: 'PlayerDivision',
-  props: ['divisionId', 'year', 'city', 'city_id'],
+  props: {
+    divisionId: String,
+    year: Number,
+    city: String,
+    city_id: Number
+  },
   components: {
     CitySelector, YearSelector
   },
@@ -789,7 +794,7 @@ export default {
         this.form.player_id = null;
       }
 
-      // Debounce 1s
+      // Debounce 500ms
       clearTimeout(timeoutDebounce);
       var self = this;
       timeoutDebounce = setTimeout(function () {

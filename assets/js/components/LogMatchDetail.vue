@@ -356,9 +356,9 @@
               <span :class="[form.winner==logMatchDetail.pd1_id? 'd-inline-block badge badge-success' : 'd-none']">Winner</span>
             </p>
             <div class="form-group">
-              <label for="name">Name</label>
+              <label for="name1">Name</label>
               <input
-                id="name"
+                id="name1"
                 readonly
                 :value="logMatchDetail.player1_name"
                 type="text"
@@ -367,9 +367,9 @@
             </div>
 
             <div class="form-group">
-              <label for="club">Club</label>
+              <label for="club1">Club</label>
               <input
-                id="club"
+                id="club1"
                 readonly
                 :value="logMatchDetail.player1_club"
                 type="text"
@@ -378,9 +378,9 @@
             </div>
 
             <div class="form-group">
-              <label for="country">Country</label>
+              <label for="country1">Country</label>
               <input
-                id="country"
+                id="country1"
                 readonly
                 :value="logMatchDetail.player1_country"
                 type="text"
@@ -389,9 +389,9 @@
             </div>
 
             <div class="form-group">
-              <label for="weight">Weight</label>
+              <label for="weight1">Weight</label>
               <input
-                id="weight"
+                id="weight1"
                 readonly
                 :value="logMatchDetail.player1_weight"
                 type="text"
@@ -400,9 +400,9 @@
             </div>
 
             <div class="form-group">
-              <label for="yellow_card">Yellow card</label>
+              <label for="yellow_card1">Yellow card</label>
               <input
-                id="yellow_card"
+                id="yellow_card1"
                 v-model.number="form.pd1_yellowcard"
                 type="number"
                 class="form-control"
@@ -410,9 +410,9 @@
             </div>
 
             <div class="form-group">
-              <label for="red_card">Red card</label>
+              <label for="red_card1">Red card</label>
               <input
-                id="red_card"
+                id="red_card1"
                 v-model.number="form.pd1_redcard"
                 type="number"
                 class="form-control"
@@ -420,9 +420,9 @@
             </div>
 
             <div class="form-group">
-              <label for="green_card">Green card</label>
+              <label for="green_card1">Green card</label>
               <input
-                id="green_card"
+                id="green_card1"
                 v-model.number="form.pd1_greencard"
                 type="number"
                 class="form-control"
@@ -438,9 +438,9 @@
               <span :class="[form.winner==logMatchDetail.pd2_id? 'd-inline-block badge badge-success' : 'd-none']">Winner</span>
             </p>
             <div class="form-group">
-              <label for="name">Name</label>
+              <label for="name2">Name</label>
               <input
-                id="name"
+                id="name2"
                 readonly
                 :value="logMatchDetail.player2_name"
                 type="text"
@@ -449,9 +449,9 @@
             </div>
 
             <div class="form-group">
-              <label for="club">Club</label>
+              <label for="club2">Club</label>
               <input
-                id="club"
+                id="club2"
                 readonly
                 :value="logMatchDetail.player2_club"
                 type="text"
@@ -460,9 +460,9 @@
             </div>
 
             <div class="form-group">
-              <label for="country">Country</label>
+              <label for="country2">Country</label>
               <input
-                id="country"
+                id="country2"
                 readonly
                 :value="logMatchDetail.player2_country"
                 type="text"
@@ -471,9 +471,9 @@
             </div>
 
             <div class="form-group">
-              <label for="weight">Weight</label>
+              <label for="weight2">Weight</label>
               <input
-                id="weight"
+                id="weight2"
                 readonly
                 :value="logMatchDetail.player2_weight"
                 type="text"
@@ -482,9 +482,9 @@
             </div>
 
             <div class="form-group">
-              <label for="yellow_card">Yellow card</label>
+              <label for="yellow_card2">Yellow card</label>
               <input
-                id="yellow_card"
+                id="yellow_card2"
                 v-model.number="form.pd2_yellowcard"
                 type="number"
                 class="form-control"
@@ -492,9 +492,9 @@
             </div>
 
             <div class="form-group">
-              <label for="red_card">Red card</label>
+              <label for="red_card2">Red card</label>
               <input
-                id="red_card"
+                id="red_card2"
                 v-model.number="form.pd2_redcard"
                 type="number"
                 class="form-control"
@@ -502,9 +502,9 @@
             </div>
 
             <div class="form-group">
-              <label for="green_card">Green card</label>
+              <label for="green_card2">Green card</label>
               <input
-                id="green_card"
+                id="green_card2"
                 v-model.number="form.pd2_greencard"
                 type="number"
                 class="form-control"

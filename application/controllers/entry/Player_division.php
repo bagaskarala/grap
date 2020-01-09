@@ -135,7 +135,7 @@ class Player_division extends MY_Controller
     {
         $request = parse_post_data();
 
-        $result = $this->player_division->generate_pool($request->division_id);
+        $result = $this->player_division->generate_pool($request->division_id, $this->year, $this->city_id);
 
         if ($result['status']) {
             return $this->send_json_output($result['data'], true, 200);
@@ -150,15 +150,16 @@ class Player_division extends MY_Controller
 
         // ketika reset pool, maka reset schedule juga
         $this->load->model('Log_Match_model', 'log_match');
-        if (count($this->log_match->filter_division($request->division_id)) != 0) {
-            $reset_schedule_result = $this->log_match->reset_schedule($request->division_id);
+        $log_matchs = $this->log_match->filter_division($request->division_id, $this->year, $this->city_id);
+        if (count($log_matchs) != 0) {
+            $reset_schedule_result = $this->log_match->reset_schedule($request->division_id, $this->year, $this->city_id);
         } else {
             $reset_schedule_result = true;
         }
 
         if ($reset_schedule_result) {
-            $this->player_division->reset_classement($request->division_id);
-            $result = $this->player_division->reset_pool($request->division_id);
+            $this->player_division->reset_classement($request->division_id, $this->year, $this->city_id);
+            $result = $this->player_division->reset_pool($request->division_id, $this->year, $this->city_id);
         }
 
         if ($result) {
@@ -170,7 +171,7 @@ class Player_division extends MY_Controller
 
     public function calculate_classement($division_id)
     {
-        $result = $this->player_division->calculate_classement($division_id);
+        $result = $this->player_division->calculate_classement($division_id, $this->year, $this->city_id);
 
         if ($result) {
             return $this->send_json_output($result, true, 200);

@@ -8,28 +8,38 @@
           </div>
 
           <div class="mx-3 mt-3">
-            <div class="input-group input-group-sm">
-              <div class="input-group-prepend">
-                <span class="input-group-text">Division</span>
+            <div class="row">
+              <div class="col-md-2">
+                <YearSelector :year="year"></YearSelector>
               </div>
-              <select
-                name="filter_division"
-                id="filter_division"
-                class="form-control"
-                autofocus
-                v-model.number="filterDivisionId"
-                @change="filterData(filterDivisionId)"
-              >
-                <option
-                  :value="null"
-                  disabled
-                >--- Select Division ---</option>
-                <option
-                  v-for="item in divisions"
-                  :key="item.id"
-                  :value="item.id"
-                >{{item.division}}</option>
-              </select>
+              <div class="col-md-2">
+                <CitySelector :city-id="cityId"></CitySelector>
+              </div>
+              <div class="col-md-8">
+                <div class="input-group input-group-sm">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Division</span>
+                  </div>
+                  <select
+                    name="filter_division"
+                    id="filter_division"
+                    class="form-control"
+                    autofocus
+                    v-model.number="filterDivisionId"
+                    @change="filterData(filterDivisionId)"
+                  >
+                    <option
+                      :value="null"
+                      disabled
+                    >--- Select Division ---</option>
+                    <option
+                      v-for="item in divisions"
+                      :key="item.id"
+                      :value="item.id"
+                    >{{item.division}}</option>
+                  </select>
+                </div>
+              </div>
             </div>
 
             <div class="mt-3">
@@ -328,14 +338,18 @@
 <script>
 import Bracket from 'vue-tournament-bracket';
 import { parseWinner } from '../shared';
+import CitySelector from './CitySelector';
+import YearSelector from './YearSelector';
 export default {
   name: 'LogMatch',
   props: {
-    baseUrl: String,
-    divisionId: String
+    divisionId: Number,
+    year: Number,
+    cityId: Number,
+    city: String
   },
   components: {
-    Bracket
+    Bracket, CitySelector, YearSelector
   },
 
   data() {
@@ -786,8 +800,8 @@ export default {
   created() {
     // auto pilih division yang tersimpan di session
     if (this.divisionId) {
-      this.filterDivisionId = parseInt(this.divisionId);
-      this.filterData(parseInt(this.divisionId));
+      this.filterDivisionId = this.divisionId;
+      this.filterData(this.divisionId);
     }
 
     this.getDivisions();

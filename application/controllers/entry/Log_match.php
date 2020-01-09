@@ -6,6 +6,8 @@ class Log_match extends MY_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->year    = $this->session->userdata('setting_year');
+        $this->city_id = $this->session->userdata('setting_city_id');
     }
 
     public function index()
@@ -38,6 +40,8 @@ class Log_match extends MY_Controller
             'pd1_id'       => $request->pd1_id,
             'pd2_id'       => $request->pd2_id,
             'match_system' => $request->match_system,
+            'year'         => $this->year,
+            'city_id'      => $this->city_id,
         ];
 
         // validasi
@@ -128,8 +132,8 @@ class Log_match extends MY_Controller
         if ($division_id === 'null') {
             $result = $this->log_match->get_all_log_match();
         } else {
-            $this->create_final_match_roundrobin($division_id);
-            $result = $this->log_match->filter_division($division_id);
+            $this->create_final_match_roundrobin($division_id, $this->year, $this->city_id);
+            $result = $this->log_match->filter_division($division_id, $this->year, $this->city_id);
         }
 
         if (count($result) == 0) {
@@ -145,12 +149,7 @@ class Log_match extends MY_Controller
     {
         $request = parse_post_data();
 
-        // demo
-        // $request               = new stdClass();
-        // $request->division_id  = 11;
-        // $request->match_system = 'roundrobin';
-
-        $result = $this->log_match->generate_schedule($request->division_id, $request->match_system);
+        $result = $this->log_match->generate_schedule($request->division_id, $this->year, $this->city_id, $request->match_system);
 
         if ($result['status']) {
             return $this->send_json_output($result['data'], true, 200);
@@ -163,7 +162,7 @@ class Log_match extends MY_Controller
     {
         $request = parse_post_data();
 
-        $result = $this->log_match->reset_schedule($request->division_id);
+        $result = $this->log_match->reset_schedule($request->division_id, $this->year, $this->city_id);
 
         if ($result) {
             return $this->send_json_output($result, true, 200);
@@ -176,7 +175,7 @@ class Log_match extends MY_Controller
     {
         $request = parse_post_data();
 
-        $result = $this->log_match->generate_player($request->division_id, $request->match_system);
+        $result = $this->log_match->generate_player($request->division_id, $this->year, $this->city_id, $request->match_system);
 
         if ($result['status']) {
             return $this->send_json_output($result['data'], true, 200);
@@ -189,7 +188,7 @@ class Log_match extends MY_Controller
     {
         $request = parse_post_data();
 
-        $result = $this->log_match->reset_player($request->division_id);
+        $result = $this->log_match->reset_player($request->division_id, $this->year, $this->city_id);
 
         return $result;
     }
@@ -199,7 +198,7 @@ class Log_match extends MY_Controller
         $request = parse_post_data();
 
         // start play, pemain yang ga punya musuh langsung next ke match berikutnya
-        $result = $this->log_match->start_match($request->division_id);
+        $result = $this->log_match->start_match($request->division_id, $this->year, $this->city_id);
 
         if ($result['status']) {
             return $this->send_json_output($result['data'], true, 200);
@@ -232,9 +231,9 @@ class Log_match extends MY_Controller
     public function create_final_match_roundrobin($division_id)
     {
         $this->load->model('Player_division_model', 'player_division');
-        $this->player_division->calculate_classement($division_id);
+        $this->player_division->calculate_classement($division_id, $this->year, $this->city_id);
 
-        $result = $this->log_match->create_final_match_roundrobin($division_id);
+        $result = $this->log_match->create_final_match_roundrobin($division_id, $this->year, $this->city_id);
 
         if ($result['status']) {
             return $this->send_json_output($result['data'], true, 200);

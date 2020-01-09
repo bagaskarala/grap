@@ -47,7 +47,7 @@ class Player_division_model extends MY_Model
     {
         // hitung win-lose-draw pada divisi terpilih
         // generate winner
-        $this->calculate_classement($division_id);
+        $this->calculate_classement($division_id, $year, $city_id);
 
         // tampilkan player per divisi
         $this->query_player_division();
@@ -91,13 +91,15 @@ class Player_division_model extends MY_Model
         }
     }
 
-    public function calculate_classement($division_id)
+    public function calculate_classement($division_id, $year, $city_id)
     {
         // reset perhitungan classement
-        $this->reset_classement($division_id);
+        $this->reset_classement($division_id, $year, $city_id);
 
         // cek log match
         $this->where('division_id', $division_id);
+        $this->where('year', $year);
+        $this->where('city_id', $city_id);
         $division_match = $this->get_all_array('log_match');
         if (count($division_match) == 0) {
             return [
@@ -107,17 +109,19 @@ class Player_division_model extends MY_Model
         } else {
             // cek match_system pada log match
             if ($division_match[0]['match_system'] == 'roundrobin') {
-                return $this->calculate_classement_roundrobin($division_id);
+                return $this->calculate_classement_roundrobin($division_id, $year, $city_id);
             } else {
-                return $this->calculate_classement_elimination($division_id);
+                return $this->calculate_classement_elimination($division_id, $year, $city_id);
             }
         }
     }
 
-    public function calculate_classement_elimination($division_id)
+    public function calculate_classement_elimination($division_id, $year, $city_id)
     {
         // cek apakah match suatu divisi sudah selesai semua
         $this->where('division_id', $division_id);
+        $this->where('year', $year);
+        $this->where('city_id', $city_id);
         $this->where('winner', null);
         $count_match_unfinished = $this->count('log_match');
         if ($count_match_unfinished > 0) {
@@ -130,11 +134,18 @@ class Player_division_model extends MY_Model
         // cari match index terakhir untuk mengtahui partai final
         $this->db->select('MAX(match_index) as max_match_index');
         $this->where('division_id', $division_id);
+        $this->where('year', $year);
+        $this->where('city_id', $city_id);
         $idx = $this->get_single_array('log_match');
 
         // get pertandingan final
         // untuk ambil juara 1 dan 2
-        $final_match = $this->get_where(['match_index' => $idx['max_match_index'], 'division_id' => $division_id], 'log_match');
+        $final_match = $this->get_where([
+            'match_index' => $idx['max_match_index'],
+            'division_id' => $division_id,
+            'year'        => $year,
+            'city_id'     => $city_id,
+        ], 'log_match');
 
         // update juara 1
         $this->update(['division_winner' => 1], ['id' => $final_match['winner']]);
@@ -149,7 +160,12 @@ class Player_division_model extends MY_Model
 
         // get pertandingan third place
         // untuk ambil juara 3
-        $third_match = $this->get_where(['match_number' => 0, 'division_id' => $division_id], 'log_match', );
+        $third_match = $this->get_where([
+            'match_number' => 0,
+            'division_id'  => $division_id,
+            'year'         => $year,
+            'city_id'      => $city_id,
+        ], 'log_match', );
         $this->update(['division_winner' => 3], ['id' => $third_match['winner']]);
 
         $result = true;
@@ -166,18 +182,24 @@ class Player_division_model extends MY_Model
         }
     }
 
-    public function calculate_classement_roundrobin($division_id)
+    public function calculate_classement_roundrobin($division_id, $year, $city_id)
     {
         // cari logmatch yang sudah ada pemenang
         $this->select('winner, pd1_id, pd2_id,time');
         $this->where('division_id', $division_id);
+        $this->where('year', $year);
+        $this->where('city_id', $city_id);
         $this->where('winner !=', null);
         $this->where('match_number', null); // cari yang bukan final
         $winner_arr = $this->get_all_array('log_match');
 
         // reset total time ketika clear schedule
         if (count($winner_arr) == 0) {
-            $this->update(['total_time' => 0], ['division_id' => $division_id]);
+            $this->update(['total_time' => 0], [
+                'division_id' => $division_id,
+                'year'        => $year,
+                'city_id'     => $city_id,
+            ]);
         }
 
         // hitung win lose draw
@@ -230,10 +252,10 @@ class Player_division_model extends MY_Model
         }
 
         // set pemenang pool
-        $this->get_pool_winner($division_id);
+        $this->get_pool_winner($division_id, $year, $city_id);
 
         // final match roundrobin
-        $this->update_division_winner_roundrobin($division_id);
+        $this->update_division_winner_roundrobin($division_id, $year, $city_id);
 
         return $count_win;
 
@@ -250,18 +272,22 @@ class Player_division_model extends MY_Model
         // }
     }
 
-    public function get_pool_winner($division_id)
+    public function get_pool_winner($division_id, $year, $city_id)
     {
         // ambil semua pool unik yang ada
         $this->db->distinct();
         $this->db->select('pool_number');
         $this->where('division_id', $division_id);
+        $this->where('year', $year);
+        $this->where('city_id', $city_id);
         $this->where('pool_number !=', null);
         $pd_pools = $this->get_all_array();
 
         foreach ($pd_pools as $item) {
             // cek apakah match suatu divisi sudah selesai semua
             $this->where('division_id', $division_id);
+            $this->where('year', $year);
+            $this->where('city_id', $city_id);
             $this->where('pool_number', $item['pool_number']);
             $this->where('winner', null);
             $count_match_unfinished = $this->count('log_match');
@@ -272,6 +298,8 @@ class Player_division_model extends MY_Model
             // cari player yang win paling banyak
             $this->where('pool_number', $item['pool_number']);
             $this->where('division_id', $division_id);
+            $this->where('year', $year);
+            $this->where('city_id', $city_id);
             $this->order_by('win', 'desc');
             $this->order_by('total_time');
             $pd = $this->get_all_array();
@@ -284,19 +312,23 @@ class Player_division_model extends MY_Model
         }
     }
 
-    public function update_division_winner_roundrobin($division_id)
+    public function update_division_winner_roundrobin($division_id, $year, $city_id)
     {
         // ambil semua pool unik yang ada
         $this->db->distinct();
         $this->select('pool_number');
         $this->where('division_id', $division_id);
+        $this->where('year', $year);
+        $this->where('city_id', $city_id);
         $this->where('pool_number !=', null);
         $pools = $this->get_all_array();
 
         if (count($pools) == 1) {
-            // // ambil playerdivision sesuai urutan classsement
+            // ambil playerdivision sesuai urutan classsement
             $this->query_player_division();
             $this->where('division_id', $division_id);
+            $this->where('year', $year);
+            $this->where('city_id', $city_id);
             $this->order_by('pool_number');
             $this->order_by('win', 'desc');
             $this->order_by('total_time');
@@ -313,12 +345,16 @@ class Player_division_model extends MY_Model
         } else if (count($pools) == 2) {
             // ambil final match
             $this->where('division_id', $division_id);
+            $this->where('year', $year);
+            $this->where('city_id', $city_id);
             $this->where('match_index', 1);
             $this->where('match_number', 1);
             $final_match = $this->get_single_array('log_match');
 
             // ambil third place
             $this->where('division_id', $division_id);
+            $this->where('year', $year);
+            $this->where('city_id', $city_id);
             $this->where('match_index', 1);
             $this->where('match_number', 2);
             $third_place = $this->get_single_array('log_match');
@@ -346,19 +382,23 @@ class Player_division_model extends MY_Model
 
     }
 
-    public function reset_classement($division_id)
+    public function reset_classement($division_id, $year, $city_id)
     {
         // reset klasemen win-lose-draw ke 0
         // reset pool_winnerdivision_winner pada divisi terpilih
         $this->db->where('division_id', $division_id);
+        $this->where('year', $year);
+        $this->where('city_id', $city_id);
         $this->db->update('player_division', ['division_winner' => 0, 'win' => 0, 'lose' => 0, 'draw' => 0, 'pool_winner' => 0]);
     }
 
-    public function generate_pool($division_id)
+    public function generate_pool($division_id, $year, $city_id)
     {
         // get player di divisi
         $this->query_player_division();
         $this->where('division_id', $division_id);
+        $this->where('year', $year);
+        $this->where('city_id', $city_id);
         $this->order_by('club_id');
         $players = $this->get_all_array();
 
@@ -393,11 +433,16 @@ class Player_division_model extends MY_Model
         ];
     }
 
-    public function reset_pool($division_id)
+    public function reset_pool($division_id, $year, $city_id)
     {
         // kosongkan pool_number
         $data  = ['pool_number' => null];
-        $where = ['division_id' => $division_id];
+        $where = [
+            'division_id' => $division_id,
+            'year'        => $year,
+            'city_id'     => $city_id,
+        ];
+
         return $this->update($data, $where);
     }
 

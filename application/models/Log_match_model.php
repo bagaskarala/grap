@@ -62,11 +62,13 @@ class Log_match_model extends MY_Model
         return $this->db->get()->result_array();
     }
 
-    public function filter_division($division_id)
+    public function filter_division($division_id, $year, $city_id)
     {
         // ambil list logmatch per divisi
         $this->query_log_match();
-        $this->db->where('lm.division_id', $division_id);
+        $this->where('lm.division_id', $division_id);
+        $this->where('lm.year', $year);
+        $this->where('lm.city_id', $city_id);
         $this->order_by('pool_number');
         $this->order_by('match_index');
         $this->order_by('match_number');
@@ -113,29 +115,33 @@ class Log_match_model extends MY_Model
      * Generate schedule untuk mengacak pemain dari player_division ke log_match
      * Terdapat dua schedule => elimination dan roundrobin
      */
-    public function generate_schedule($division_id, $match_system)
+    public function generate_schedule($division_id, $year, $city_id, $match_system)
     {
         // error jika parameter tidak lengkap
-        if (!$division_id or !$match_system) {
+        if (!$division_id or !$match_system or !$year or !$city_id) {
             return [
                 'status'  => false,
-                'message' => 'Error! division_id or match_system undefined',
+                'message' => 'Error! parameter not completed',
             ];
         }
 
         // error ketika logmatch sudah dibuat
         // hindari generate multiple logmatch per division
         $this->where('division_id', $division_id);
+        $this->where('year', $year);
+        $this->where('city_id', $city_id);
         $log_match_count = $this->count();
         if ($log_match_count > 0) {
             return [
                 'status'  => false,
-                'message' => 'This division log match has been generated',
+                'message' => 'This log match has been generated',
             ];
         }
 
         // error ketika division tidak mempunyai cukup player
         $this->where('division_id', $division_id);
+        $this->where('year', $year);
+        $this->where('city_id', $city_id);
         $player_count = $this->count('player_division');
         if ($player_count == 0) {
             return [
@@ -145,7 +151,7 @@ class Log_match_model extends MY_Model
         } else if ($player_count < 4) {
             return [
                 'status'  => false,
-                'message' => 'Minimal 4 players',
+                'message' => 'Minimum 4 players',
             ];
         }
 
@@ -169,6 +175,8 @@ class Log_match_model extends MY_Model
                     // insert schedule elimination
                     $result = $this->insert([
                         'division_id'  => $division_id,
+                        'year'         => $year,
+                        'city_id'      => $city_id,
                         'match_index'  => $idx,
                         'match_system' => $match_system,
                         'match_number' => $num,
@@ -187,6 +195,8 @@ class Log_match_model extends MY_Model
                 if ($idx == $max_match_index) {
                     $this->insert([
                         'division_id'  => $division_id,
+                        'year'         => $year,
+                        'city_id'      => $city_id,
                         'match_index'  => $idx,
                         'match_system' => $match_system,
                         'match_number' => 0,
@@ -202,6 +212,8 @@ class Log_match_model extends MY_Model
             $this->db->distinct();
             $this->db->select('pool_number');
             $this->where('division_id', $division_id);
+            $this->where('year', $year);
+            $this->where('city_id', $city_id);
             $this->where('pool_number !=', null);
             $pd_pools = $this->get_all_array('player_division');
             // error jika pool belum diset
@@ -214,6 +226,8 @@ class Log_match_model extends MY_Model
 
             // error jika ada player yang poolnya kosong
             $this->where('division_id', $division_id);
+            $this->where('year', $year);
+            $this->where('city_id', $city_id);
             $this->where('pool_number =', null);
             $count_null_pool = $this->get_all_array('player_division');
             // error jika pool belum diset
@@ -228,6 +242,8 @@ class Log_match_model extends MY_Model
             $pool_bucket = [];
             foreach ($pd_pools as $pd_item) {
                 $this->where('division_id', $division_id);
+                $this->where('year', $year);
+                $this->where('city_id', $city_id);
                 $this->where('pool_number', $pd_item['pool_number']);
                 $pd_in_pools = $this->get_all_array('player_division');
                 if (count($pd_in_pools) < 2) {
@@ -266,6 +282,8 @@ class Log_match_model extends MY_Model
                     foreach ($roundrobin as $rr) {
                         $result = $this->insert([
                             'division_id'  => $division_id,
+                            'year'         => $year,
+                            'city_id'      => $city_id,
                             'match_index'  => $index,
                             'match_system' => $match_system,
                             'pd1_id'       => $rr['pd1_id'],
@@ -294,17 +312,21 @@ class Log_match_model extends MY_Model
         }
     }
 
-    public function reset_schedule($division_id)
+    public function reset_schedule($division_id, $year, $city_id)
     {
         // reset total time ketika clear schedule
         $this->update(['total_time' => 0], ['division_id' => $division_id], 'player_division');
 
         // delete logmatch pada divisi terpilih
         $this->where('division_id', $division_id);
-        return $this->delete(['division_id' => $division_id]);
+        return $this->delete([
+            'division_id' => $division_id,
+            'year'        => $year,
+            'city_id'     => $city_id,
+        ]);
     }
 
-    public function generate_player($division_id, $match_system)
+    public function generate_player($division_id, $year, $city_id, $match_system)
     {
         // generate player hanya untuk elimination
         // jika roundrobin maka exit
@@ -317,6 +339,8 @@ class Log_match_model extends MY_Model
 
         // handling, generate player hanya sekali
         $this->where('division_id', $division_id);
+        $this->where('year', $year);
+        $this->where('city_id', $city_id);
         $this->where('pd1_id !=', null);
         $this->where('pd2_id !=', null);
         $count_generated_player = $this->count();
@@ -331,6 +355,8 @@ class Log_match_model extends MY_Model
         $this->select('player_division.*, player.club_id, player.name');
         $this->join_table('player', 'player_division');
         $this->where('division_id', $division_id);
+        $this->where('year', $year);
+        $this->where('city_id', $city_id);
         $this->order_by('club_id');
         $player_divisions = $this->get_all_array('player_division');
         if (count($player_divisions) == 0) {
@@ -342,6 +368,8 @@ class Log_match_model extends MY_Model
 
         // hitung max match index 1
         $this->where('division_id', $division_id);
+        $this->where('year', $year);
+        $this->where('city_id', $city_id);
         $this->where('match_index', 1);
         $first_index_match_count = $this->count();
         if ($first_index_match_count == 0) {
@@ -422,6 +450,8 @@ class Log_match_model extends MY_Model
                     'match_index'  => 1,
                     'match_number' => $index_counter,
                     'division_id'  => $division_id,
+                    'year'         => $year,
+                    'city_id'      => $city_id,
                 ];
                 $result = $this->update(['pd1_id' => $p['pd_id']], $where);
             } else {
@@ -430,6 +460,8 @@ class Log_match_model extends MY_Model
                     'match_index'  => 1,
                     'match_number' => $index_counter,
                     'division_id'  => $division_id,
+                    'year'         => $year,
+                    'city_id'      => $city_id,
                 ];
                 $result = $this->update(['pd2_id' => $p['pd_id']], $where);
             }
@@ -449,7 +481,7 @@ class Log_match_model extends MY_Model
         }
     }
 
-    public function reset_player($division_id)
+    public function reset_player($division_id, $year, $city_id)
     {
         // kosongkan player pada elimination match
         $data = [
@@ -468,7 +500,11 @@ class Log_match_model extends MY_Model
             'match_status'   => 0,
             'time'           => null,
         ];
-        return $this->update($data, ['division_id' => $division_id]);
+        return $this->update($data, [
+            'division_id' => $division_id,
+            'year'        => $year,
+            'city_id'     => $city_id,
+        ]);
     }
 
     public function get_detail_log_match($log_match_id)
@@ -480,13 +516,15 @@ class Log_match_model extends MY_Model
         // cari max match index, untuk mencari tahu seminfinal/final
         $this->db->select('MAX(match_index) as max_match_index');
         $this->where('division_id', $log_match_detail['division_id']);
+        $this->where('year', $log_match_detail['year']);
+        $this->where('city_id', $log_match_detail['city_id']);
         $idx = $this->get_single_array();
 
         $log_match_detail['max_match_index'] = $idx['max_match_index'];
         return $log_match_detail;
     }
 
-    public function start_match($division_id)
+    public function start_match($division_id, $year, $city_id)
     {
         /**
          * Memulai pertandingan dengan melakukan skip match
@@ -494,6 +532,8 @@ class Log_match_model extends MY_Model
          */
         // cari match index 1
         $this->where('division_id', $division_id);
+        $this->where('year', $year);
+        $this->where('city_id', $city_id);
         $this->where('match_index', 1);
         $first_index_match = $this->get_all_array();
 
@@ -529,6 +569,8 @@ class Log_match_model extends MY_Model
                     'match_index'  => $index,
                     'match_number' => $number,
                     'division_id'  => $division_id,
+                    'year'         => $year,
+                    'city_id'      => $city_id,
                 ];
                 $destination = $this->get_where($where);
 
@@ -589,6 +631,8 @@ class Log_match_model extends MY_Model
         // jangan next play untuk match terakhir / match final
         $this->db->select('MAX(match_index) as max_match_index');
         $this->where('division_id', $log_match['division_id']);
+        $this->where('year', $log_match['year']);
+        $this->where('city_id', $log_match['city_id']);
         $idx = $this->get_single_array();
         if ($idx['max_match_index'] == $log_match['match_index']) {
             return [
@@ -606,6 +650,9 @@ class Log_match_model extends MY_Model
             'match_index'  => $index,
             'match_number' => $number,
             'division_id'  => $log_match['division_id'],
+            'year'         => $log_match['year'],
+            'city_id'      => $log_match['city_id'],
+
         ];
         $destination = $this->get_where($where);
 
@@ -636,10 +683,11 @@ class Log_match_model extends MY_Model
                 'match_index'  => $index,
                 'match_number' => 0,
                 'division_id'  => $log_match['division_id'],
+                'year'         => $log_match['year'],
+                'city_id'      => $log_match['city_id'],
             ];
             $destination_third_place = $this->get_where($where_third_place);
 
-            //
             $arr_source_third_place = [$log_match['pd1_id'], $log_match['pd2_id']];
             if ($destination_third_place['pd1_id'] != null) {
                 // cek destination p1, apakah ada player dari sumber
@@ -652,7 +700,6 @@ class Log_match_model extends MY_Model
                         // masukkan p2 yang kalah ke third place
                         $this->update(['pd1_id' => $log_match['pd2_id']], $where_third_place);
                     } else {
-
                         // jika p2 menang
                         // masukkan p1 yang kalah ke third place
                         $this->update(['pd1_id' => $log_match['pd1_id']], $where_third_place);
@@ -700,10 +747,12 @@ class Log_match_model extends MY_Model
         }
     }
 
-    public function create_final_match_roundrobin($division_id)
+    public function create_final_match_roundrobin($division_id, $year, $city_id)
     {
         // hanya untuk match roundrobin dan tidak kosong
         $this->where('division_id', $division_id);
+        $this->where('year', $year);
+        $this->where('city_id', $city_id);
         $log_matchs = $this->get_all_array();
         if (!$log_matchs) {
             return [
@@ -721,6 +770,8 @@ class Log_match_model extends MY_Model
         $this->db->distinct();
         $this->select('pool_number');
         $this->where('division_id', $division_id);
+        $this->where('year', $year);
+        $this->where('city_id', $city_id);
         $this->where('pool_number !=', null);
         $pools = $this->get_all_array();
         if (count($pools) == 1) {
@@ -732,6 +783,8 @@ class Log_match_model extends MY_Model
 
         // jika final udah ada, hapus final dan buat ulang
         $this->where('division_id', $division_id);
+        $this->where('year', $year);
+        $this->where('city_id', $city_id);
         $this->where('match_index', 1); // cari yang final
         $this->where('match_number', 1); // cari yang final
         $final_match = $this->get_all_array();
@@ -744,6 +797,8 @@ class Log_match_model extends MY_Model
 
         // cek apakah match sudah selesai semua
         $this->where('division_id', $division_id);
+        $this->where('year', $year);
+        $this->where('city_id', $city_id);
         $this->where('winner', null);
         $this->where('match_number', null); // cari yang bukan final
         $count_match_unfinished = $this->count();
@@ -757,6 +812,8 @@ class Log_match_model extends MY_Model
         // ambil pemenang pool A dan B
         $this->where('pool_winner', 1);
         $this->where('division_id', $division_id);
+        $this->where('year', $year);
+        $this->where('city_id', $city_id);
         $pool_winner = $this->get_all_array('player_division');
 
         // jika tidak ada pool winner, maka jangan create final
@@ -770,6 +827,8 @@ class Log_match_model extends MY_Model
         // tambahkan match baru final di logmatch
         $this->insert([
             'division_id'  => $division_id,
+            'year'         => $year,
+            'city_id'      => $city_id,
             'match_index'  => 1,
             'match_system' => 'roundrobin',
             'match_number' => 1,
@@ -780,11 +839,15 @@ class Log_match_model extends MY_Model
         // ambil runner-up pool A dan B
         $this->where('pool_winner', 2);
         $this->where('division_id', $division_id);
+        $this->where('year', $year);
+        $this->where('city_id', $city_id);
         $pool_runner_up = $this->get_all_array('player_division');
 
         // tambahkan match baru 3rd di logmatch
         $this->insert([
             'division_id'  => $division_id,
+            'year'         => $year,
+            'city_id'      => $city_id,
             'match_index'  => 1,
             'match_system' => 'roundrobin',
             'match_number' => 2,
