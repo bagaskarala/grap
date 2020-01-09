@@ -127,7 +127,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(bootstrap_vue__WEBPACK_IMPORTED_M
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_4__["TablePlugin"]); // table bootstrap-vue
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_4__["TabsPlugin"]); // membuat instance axios
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_4__["TabsPlugin"]);
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('b-spinner', bootstrap_vue__WEBPACK_IMPORTED_MODULE_4__["BSpinner"]); // membuat instance axios
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.$axios = axios__WEBPACK_IMPORTED_MODULE_5___default.a.create({
@@ -5439,6 +5441,16 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -5478,7 +5490,8 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       errorValidation: null,
       filterDivisionId: null,
       selectedMatchSystem: 'elimination',
-      lockMatchTemporary: false
+      lockMatchTemporary: false,
+      isBusy: false
     };
   },
   computed: {
@@ -5851,11 +5864,12 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                _context5.prev = 0;
-                _context5.next = 3;
+                this.isBusy = true;
+                _context5.prev = 1;
+                _context5.next = 4;
                 return this.$axios.get("entry/log_match/filter_division/".concat(divisionId));
 
-              case 3:
+              case 4:
                 logMatchs = _context5.sent;
                 this.logMatchs = logMatchs.data.data; // set match system from db
 
@@ -5863,21 +5877,24 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                   this.selectedMatchSystem = logMatchs.data.data[0].match_system;
                 }
 
-                _context5.next = 12;
+                _context5.next = 13;
                 break;
 
-              case 8:
-                _context5.prev = 8;
-                _context5.t0 = _context5["catch"](0);
+              case 9:
+                _context5.prev = 9;
+                _context5.t0 = _context5["catch"](1);
                 console.log(_context5.t0.response);
                 this.$noty.error('Failed Filter Data');
 
-              case 12:
+              case 13:
+                this.isBusy = false;
+
+              case 14:
               case "end":
                 return _context5.stop();
             }
           }
-        }, _callee5, this, [[0, 8]]);
+        }, _callee5, this, [[1, 9]]);
       }));
 
       function filterData(_x2) {
@@ -7949,19 +7966,6 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -7969,7 +7973,7 @@ var timeoutDebounce = null;
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PlayerDivision',
   props: {
-    divisionId: String,
+    divisionId: Number,
     year: Number,
     city: String,
     city_id: Number
@@ -8008,7 +8012,8 @@ var timeoutDebounce = null;
       filterDivisionId: null,
       matchSystem: null,
       logMatchs: [],
-      setting: {}
+      setting: {},
+      isBusy: false
     };
   },
   computed: {
@@ -8407,31 +8412,35 @@ var timeoutDebounce = null;
           while (1) {
             switch (_context9.prev = _context9.next) {
               case 0:
+                this.isBusy = true;
                 this.matchSystem = null;
-                _context9.prev = 1;
-                _context9.next = 4;
+                _context9.prev = 2;
+                _context9.next = 5;
                 return this.$axios.get("entry/player_division/filter_division/".concat(divisionId));
 
-              case 4:
+              case 5:
                 playerDivisions = _context9.sent;
                 this.playerDivisions = playerDivisions.data.data; // panggil check match
 
                 this.checkDivisionLogMatch(divisionId);
-                _context9.next = 13;
+                _context9.next = 14;
                 break;
 
-              case 9:
-                _context9.prev = 9;
-                _context9.t0 = _context9["catch"](1);
+              case 10:
+                _context9.prev = 10;
+                _context9.t0 = _context9["catch"](2);
                 console.log(_context9.t0.response);
                 this.$noty.error('Failed Filter Data');
 
-              case 13:
+              case 14:
+                this.isBusy = false;
+
+              case 15:
               case "end":
                 return _context9.stop();
             }
           }
-        }, _callee9, this, [[1, 9]]);
+        }, _callee9, this, [[2, 10]]);
       }));
 
       function filterData(_x2) {
@@ -8776,8 +8785,8 @@ var timeoutDebounce = null;
     // this.getAllPlayerDivisions();
     // auto pilih division yang tersimpan di session
     if (this.divisionId) {
-      this.filterDivisionId = parseInt(this.divisionId);
-      this.filterData(parseInt(this.divisionId));
+      this.filterDivisionId = this.divisionId;
+      this.filterData(this.divisionId);
     }
 
     this.getDivisions();
@@ -48288,8 +48297,29 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.logMatchs.length == 0,
-                        expression: "logMatchs.length == 0"
+                        value: _vm.isBusy,
+                        expression: "isBusy"
+                      }
+                    ],
+                    staticClass: "my-3 text-center"
+                  },
+                  [
+                    _c("b-spinner", {
+                      attrs: { variant: "primary", label: "Spinning" }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.logMatchs.length == 0 && !_vm.isBusy,
+                        expression: "logMatchs.length == 0 && !isBusy"
                       }
                     ],
                     staticClass: "my-3 text-center"
@@ -48372,7 +48402,7 @@ var render = function() {
                     )
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.logMatchs.length != 0
+                _vm.logMatchs.length != 0 && !_vm.isBusy
                   ? _c("b-table", {
                       attrs: {
                         striped: "",
@@ -50735,8 +50765,8 @@ var render = function() {
                         ],
                         staticClass: "form-control",
                         attrs: {
-                          name: "filter_division",
-                          id: "filter_division"
+                          id: "filter_division",
+                          name: "filter_division"
                         },
                         on: {
                           change: [
@@ -50950,8 +50980,29 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.playerDivisions.length == 0,
-                        expression: "playerDivisions.length == 0"
+                        value: _vm.isBusy,
+                        expression: "isBusy"
+                      }
+                    ],
+                    staticClass: "my-3 text-center"
+                  },
+                  [
+                    _c("b-spinner", {
+                      attrs: { variant: "primary", label: "Spinning" }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.playerDivisions.length == 0 && !_vm.isBusy,
+                        expression: "playerDivisions.length == 0 && !isBusy"
                       }
                     ],
                     staticClass: "my-3 text-center"
@@ -50967,7 +51018,7 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                _vm.playerDivisions.length != 0
+                _vm.playerDivisions.length != 0 && !_vm.isBusy
                   ? _c("b-table", {
                       attrs: {
                         striped: "",

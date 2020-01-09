@@ -10,31 +10,9 @@
           <div class="mx-3 mt-3">
             <div class="row">
               <div class="col-md-2">
-                <!-- <div class="input-group input-group-sm">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">Year</span>
-                  </div>
-                  <input
-                    :value="year"
-                    type="number"
-                    class="form-control"
-                    disabled
-                  >
-                </div> -->
                 <YearSelector :year="year"></YearSelector>
               </div>
               <div class="col-md-2">
-                <!-- <div class="input-group input-group-sm">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">City</span>
-                  </div>
-                  <input
-                    :value="city + ' ' + city_id "
-                    type="text"
-                    class="form-control"
-                    disabled
-                  >
-                </div> -->
                 <CitySelector :city-id="city_id"></CitySelector>
               </div>
               <div class="col-md-8">
@@ -43,8 +21,8 @@
                     <span class="input-group-text">Division</span>
                   </div>
                   <select
-                    name="filter_division"
                     id="filter_division"
+                    name="filter_division"
                     class="form-control"
                     v-model.number="filterDivisionId"
                     @change="filterData(filterDivisionId)"
@@ -127,12 +105,21 @@
 
           <div class="card-body">
             <div
-              v-show="playerDivisions.length == 0"
+              v-show="isBusy"
+              class="my-3 text-center"
+            >
+              <b-spinner
+                variant="primary"
+                label="Spinning"
+              ></b-spinner>
+            </div>
+            <div
+              v-show="playerDivisions.length == 0 && !isBusy"
               class="my-3 text-center"
             >{{filterDivisionId == null? 'Select division to view player' : 'Empty Data'}}</div>
 
             <b-table
-              v-if="playerDivisions.length != 0"
+              v-if="playerDivisions.length != 0 && !isBusy"
               striped
               hover
               responsive
@@ -348,7 +335,7 @@ var timeoutDebounce = null;
 export default {
   name: 'PlayerDivision',
   props: {
-    divisionId: String,
+    divisionId: Number,
     year: Number,
     city: String,
     city_id: Number
@@ -383,7 +370,8 @@ export default {
       filterDivisionId: null,
       matchSystem: null,
       logMatchs: [],
-      setting: {}
+      setting: {},
+      isBusy: false
     };
   },
 
@@ -556,6 +544,7 @@ export default {
     },
 
     async filterData(divisionId) {
+      this.isBusy = true;
       this.matchSystem = null;
       try {
         const playerDivisions = await this.$axios.get(`entry/player_division/filter_division/${divisionId}`);
@@ -567,6 +556,7 @@ export default {
         console.log(error.response);
         this.$noty.error('Failed Filter Data');
       }
+      this.isBusy = false;
     },
 
     async checkDivisionLogMatch(divisionId) {
@@ -765,8 +755,8 @@ export default {
 
     // auto pilih division yang tersimpan di session
     if (this.divisionId) {
-      this.filterDivisionId = parseInt(this.divisionId);
-      this.filterData(parseInt(this.divisionId));
+      this.filterDivisionId = this.divisionId;
+      this.filterData(this.divisionId);
     }
 
     this.getDivisions();

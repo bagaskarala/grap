@@ -104,7 +104,17 @@
 
           <div class="card-body">
             <div
-              v-show="logMatchs.length == 0"
+              v-show="isBusy"
+              class="my-3 text-center"
+            >
+              <b-spinner
+                variant="primary"
+                label="Spinning"
+              ></b-spinner>
+            </div>
+
+            <div
+              v-show="logMatchs.length == 0 && !isBusy"
               class="my-3 text-center"
             >{{filterDivisionId == null? 'Select division to view log match' : 'Empty Data'}}</div>
 
@@ -132,7 +142,7 @@
             </div>
 
             <b-table
-              v-if="logMatchs.length != 0"
+              v-if="logMatchs.length != 0 && !isBusy"
               striped
               hover
               responsive
@@ -371,7 +381,8 @@ export default {
       errorValidation: null,
       filterDivisionId: null,
       selectedMatchSystem: 'elimination',
-      lockMatchTemporary: false
+      lockMatchTemporary: false,
+      isBusy: false
     };
   },
 
@@ -627,6 +638,7 @@ export default {
     },
 
     async filterData(divisionId) {
+      this.isBusy = true;
       try {
         const logMatchs = await this.$axios.get(`entry/log_match/filter_division/${divisionId}`);
         this.logMatchs = logMatchs.data.data;
@@ -639,6 +651,7 @@ export default {
         console.log(error.response);
         this.$noty.error('Failed Filter Data');
       }
+      this.isBusy = false;
     },
 
     async generateSchedule() {

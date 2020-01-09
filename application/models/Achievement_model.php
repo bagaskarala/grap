@@ -8,7 +8,7 @@ class Achievement_model extends MY_Model
         $validationRules = [
             [
                 'field' => 'player_id',
-                'label' => 'player_id',
+                'label' => 'player id',
                 'rules' => 'required|trim',
             ],
             [
@@ -38,7 +38,7 @@ class Achievement_model extends MY_Model
             ],
             [
                 'field' => 'division_id',
-                'label' => 'division_id',
+                'label' => 'division',
                 'rules' => 'required|trim',
             ],
         ];

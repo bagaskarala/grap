@@ -26,6 +26,9 @@ Vue.use(TablePlugin);
 import { TabsPlugin } from 'bootstrap-vue';
 Vue.use(TabsPlugin);
 
+import { BSpinner } from 'bootstrap-vue';
+Vue.component('b-spinner', BSpinner);
+
 // membuat instance axios
 import Axios from 'axios';
 Vue.prototype.$axios = Axios.create({
