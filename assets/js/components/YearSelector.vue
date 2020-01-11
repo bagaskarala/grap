@@ -41,7 +41,6 @@ export default {
         this.years = years.data.data.map(i => i.year);
       } catch (error) {
         console.log(error.response);
-        this.$noty.error('Failed Fetch Years');
       }
     },
 
@@ -65,6 +64,12 @@ export default {
     // populate city, ambil dari session di parent
     if (this.year) {
       this.selectedYear = this.year;
+    }
+
+    if (this.years.length == 0) {
+      this.$emit('reload-page', true);
+    } else {
+      this.$emit('reload-page', false);
     }
   }
 };

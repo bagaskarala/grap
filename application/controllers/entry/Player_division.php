@@ -183,11 +183,6 @@ class Player_division extends MY_Controller
     public function find_all_year()
     {
         $result = $this->player_division->find_all_year();
-
-        if ($result) {
-            return $this->send_json_output($result, true, 200);
-        } else {
-            return $this->send_json_output("Failed find max year", false, 400);
-        }
+        return $this->send_json_output($result, true, 200);
     }
 };

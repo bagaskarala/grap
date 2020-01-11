@@ -12805,16 +12805,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.years = years.data.data.map(function (i) {
                   return i.year;
                 });
-                _context.next = 11;
+                _context.next = 10;
                 break;
 
               case 7:
                 _context.prev = 7;
                 _context.t0 = _context["catch"](0);
                 console.log(_context.t0.response);
-                this.$noty.error('Failed Fetch Years');
 
-              case 11:
+              case 10:
               case "end":
                 return _context.stop();
             }
@@ -12874,6 +12873,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     if (this.year) {
       this.selectedYear = this.year;
+    }
+
+    if (this.years.length == 0) {
+      this.$emit('reload-page', true);
+    } else {
+      this.$emit('reload-page', false);
     }
   }
 });
