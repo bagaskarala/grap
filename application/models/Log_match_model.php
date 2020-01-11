@@ -74,12 +74,6 @@ class Log_match_model extends MY_Model
         $this->order_by('match_number');
         $log_matchs = $this->db->get()->result_array();
 
-        // cari max year grappling, untuk mencari tahu grappling terakhir
-        $this->select('MAX(achievement_year) as latest_grappling_year');
-        $this->where('category', 'grappling');
-        $this->where('division_id', $division_id);
-        $ach = $this->get_single_array('achievement');
-
         $result   = [];
         $category = 'grappling';
         foreach ($log_matchs as $value) {
@@ -90,8 +84,8 @@ class Log_match_model extends MY_Model
             $this->where('player_id', $value['player1_id']);
             $this->where('category', $category);
             $this->where('division_id', $division_id);
-            $this->where('achievement_year', $ach['latest_grappling_year']);
-            $this->order_by('achievement_year', 'desc');
+            $this->where('achievement_year', $year - 1);
+            $this->where('city_id', $city_id);
             $this->order_by('id', 'desc');
             $value['player1_last_achievement'] = $this->get_single_array('achievement');
 
@@ -101,8 +95,8 @@ class Log_match_model extends MY_Model
             $this->where('player_id', $value['player2_id']);
             $this->where('category', $category);
             $this->where('division_id', $division_id);
-            $this->where('achievement_year', $ach['latest_grappling_year']);
-            $this->order_by('achievement_year', 'desc');
+            $this->where('achievement_year', $year - 1);
+            $this->where('city_id', $city_id);
             $this->order_by('id', 'desc');
             $value['player2_last_achievement'] = $this->get_single_array('achievement');
 
@@ -379,12 +373,6 @@ class Log_match_model extends MY_Model
             ];
         }
 
-        // cari max year grappling, untuk mencari tahu grappling terakhir
-        $this->select('MAX(achievement_year) as latest_grappling_year');
-        $this->where('category', 'grappling');
-        $this->where('division_id', $division_id);
-        $ach = $this->get_single_array('achievement');
-
         $category            = 'grappling';
         $arr_generate_player = [];
         // generate array dengan achievement
@@ -393,8 +381,8 @@ class Log_match_model extends MY_Model
             $this->where('player_id', $player_division['player_id']);
             $this->where('category', $category);
             $this->where('division_id', $division_id);
-            $this->where('achievement_year', $ach['latest_grappling_year']);
-            $this->order_by('achievement_year', 'desc');
+            $this->where('achievement_year', $year - 1);
+            $this->where('city_id', $city_id);
             $this->order_by('id', 'desc');
             $last_year_achievement = $this->get_single_array('achievement');
 

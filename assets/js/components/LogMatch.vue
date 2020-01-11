@@ -4,9 +4,8 @@
       <div class="col">
         <div class="card card-default">
           <div class="card-header d-flex justify-content-between align-items-center">
-            <span>Log Match</span>
+            <span @click="overrideLockMatch = !overrideLockMatch">Log Match</span>
           </div>
-
           <div class="mx-3 mt-3">
             <div class="row">
               <div class="col-md-2">
@@ -101,18 +100,19 @@
               >Reset Player</button>
             </div>
           </div>
-
-          <div class="card-body">
-            <div
-              v-show="isBusy"
-              class="my-3 text-center"
-            >
-              <b-spinner
-                variant="primary"
-                label="Spinning"
-              ></b-spinner>
-            </div>
-
+          <div
+            v-if="isBusy"
+            class="m-5 text-center"
+          >
+            <b-spinner
+              variant="primary"
+              label="Spinning"
+            ></b-spinner>
+          </div>
+          <div
+            v-else
+            class="card-body"
+          >
             <div
               v-show="logMatchs.length == 0 && !isBusy"
               class="my-3 text-center"
@@ -382,7 +382,8 @@ export default {
       filterDivisionId: null,
       selectedMatchSystem: 'elimination',
       lockMatchTemporary: false,
-      isBusy: false
+      isBusy: false,
+      overrideLockMatch: false
     };
   },
 
@@ -481,10 +482,11 @@ export default {
     countMatchFinished() {
       return this.logMatchs.filter(item => item.winner != null && item.winner != -1).length
         + ' / ' +
-        this.logMatchs.length;
+        this.logMatchs.filter(item => item.winner != -1).length;
     },
 
     lockMatch() {
+      if (this.overrideLockMatch) return false;
       return this.logMatchs.find(item => item.winner != null && item.winner >= 0 || item.match_status == 2 || this.lockMatchTemporary) ? true : false;
     }
   },
@@ -578,28 +580,6 @@ export default {
         console.log(error.response);
         this.errorValidation = error.response.data.message;
         this.$noty.error('Failed Update Data');
-      }
-    },
-
-    async deleteData(item) {
-      try {
-        await this.$axios.post('entry/log_match/delete', {
-          id: item.id
-        });
-
-        // tampilkan data setelah aksi
-        if (this.filterDivisionId) {
-          this.filterData(this.filterDivisionId);
-        } else {
-          this.getAllPlayerDivisions();
-        }
-
-        this.$noty.success('Success Delete Data');
-        this.$bvModal.hide('modal-log-match');
-
-      } catch (error) {
-        console.log(error.response);
-        this.$noty.error('Failed Delete Data');
       }
     },
 

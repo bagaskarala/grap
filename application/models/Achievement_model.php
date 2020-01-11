@@ -60,7 +60,7 @@ class Achievement_model extends MY_Model
                 and $ach['achievement_year'] == $data['achievement_year']) {
                 return [
                     'status'  => false,
-                    'message' => 'This achievement has been saved',
+                    'message' => 'This achievement has been saved to this player',
                 ];
             }
         }

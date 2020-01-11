@@ -5491,7 +5491,8 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       filterDivisionId: null,
       selectedMatchSystem: 'elimination',
       lockMatchTemporary: false,
-      isBusy: false
+      isBusy: false,
+      overrideLockMatch: false
     };
   },
   computed: {
@@ -5586,11 +5587,14 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     countMatchFinished: function countMatchFinished() {
       return this.logMatchs.filter(function (item) {
         return item.winner != null && item.winner != -1;
-      }).length + ' / ' + this.logMatchs.length;
+      }).length + ' / ' + this.logMatchs.filter(function (item) {
+        return item.winner != -1;
+      }).length;
     },
     lockMatch: function lockMatch() {
       var _this2 = this;
 
+      if (this.overrideLockMatch) return false;
       return this.logMatchs.find(function (item) {
         return item.winner != null && item.winner >= 0 || item.match_status == 2 || _this2.lockMatchTemporary;
       }) ? true : false;
@@ -5776,53 +5780,6 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
       return updateData;
     }(),
-    deleteData: function () {
-      var _deleteData = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(item) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                _context4.prev = 0;
-                _context4.next = 3;
-                return this.$axios.post('entry/log_match/delete', {
-                  id: item.id
-                });
-
-              case 3:
-                // tampilkan data setelah aksi
-                if (this.filterDivisionId) {
-                  this.filterData(this.filterDivisionId);
-                } else {
-                  this.getAllPlayerDivisions();
-                }
-
-                this.$noty.success('Success Delete Data');
-                this.$bvModal.hide('modal-log-match');
-                _context4.next = 12;
-                break;
-
-              case 8:
-                _context4.prev = 8;
-                _context4.t0 = _context4["catch"](0);
-                console.log(_context4.t0.response);
-                this.$noty.error('Failed Delete Data');
-
-              case 12:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4, this, [[0, 8]]);
-      }));
-
-      function deleteData(_x) {
-        return _deleteData.apply(this, arguments);
-      }
-
-      return deleteData;
-    }(),
     confirmResetSchedule: function confirmResetSchedule() {
       var _this4 = this;
 
@@ -5858,32 +5815,32 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     filterData: function () {
       var _filterData = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(divisionId) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(divisionId) {
         var logMatchs;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 this.isBusy = true;
-                _context5.prev = 1;
-                _context5.next = 4;
+                _context4.prev = 1;
+                _context4.next = 4;
                 return this.$axios.get("entry/log_match/filter_division/".concat(divisionId));
 
               case 4:
-                logMatchs = _context5.sent;
+                logMatchs = _context4.sent;
                 this.logMatchs = logMatchs.data.data; // set match system from db
 
                 if (logMatchs.data.data.length != 0) {
                   this.selectedMatchSystem = logMatchs.data.data[0].match_system;
                 }
 
-                _context5.next = 13;
+                _context4.next = 13;
                 break;
 
               case 9:
-                _context5.prev = 9;
-                _context5.t0 = _context5["catch"](1);
-                console.log(_context5.t0.response);
+                _context4.prev = 9;
+                _context4.t0 = _context4["catch"](1);
+                console.log(_context4.t0.response);
                 this.$noty.error('Failed Filter Data');
 
               case 13:
@@ -5891,13 +5848,13 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
               case 14:
               case "end":
-                return _context5.stop();
+                return _context4.stop();
             }
           }
-        }, _callee5, this, [[1, 9]]);
+        }, _callee4, this, [[1, 9]]);
       }));
 
-      function filterData(_x2) {
+      function filterData(_x) {
         return _filterData.apply(this, arguments);
       }
 
@@ -5906,48 +5863,48 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     generateSchedule: function () {
       var _generateSchedule = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
         var a;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context6.prev = _context6.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
                 if (!(this.filterDivisionId == null)) {
-                  _context6.next = 3;
+                  _context5.next = 3;
                   break;
                 }
 
                 this.$noty.warning('Select division first before generate schedule');
-                return _context6.abrupt("return");
+                return _context5.abrupt("return");
 
               case 3:
-                _context6.prev = 3;
-                _context6.next = 6;
+                _context5.prev = 3;
+                _context5.next = 6;
                 return this.$axios.post('entry/log_match/generate_schedule', {
                   division_id: this.filterDivisionId,
                   match_system: this.selectedMatchSystem
                 });
 
               case 6:
-                a = _context6.sent;
+                a = _context5.sent;
                 console.log(a.data.data);
                 this.filterData(this.filterDivisionId);
                 this.$noty.success('Success Generate Schedule');
-                _context6.next = 16;
+                _context5.next = 16;
                 break;
 
               case 12:
-                _context6.prev = 12;
-                _context6.t0 = _context6["catch"](3);
-                console.log(_context6.t0.response);
-                this.$noty.error('Failed Generate Schedule. ' + _context6.t0.response.data.message);
+                _context5.prev = 12;
+                _context5.t0 = _context5["catch"](3);
+                console.log(_context5.t0.response);
+                this.$noty.error('Failed Generate Schedule. ' + _context5.t0.response.data.message);
 
               case 16:
               case "end":
-                return _context6.stop();
+                return _context5.stop();
             }
           }
-        }, _callee6, this, [[3, 12]]);
+        }, _callee5, this, [[3, 12]]);
       }));
 
       function generateSchedule() {
@@ -5959,22 +5916,22 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     resetSchedule: function () {
       var _resetSchedule = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context7.prev = _context7.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
                 if (!(this.filterDivisionId == null)) {
-                  _context7.next = 3;
+                  _context6.next = 3;
                   break;
                 }
 
                 this.$noty.warning('Select division first before reset schedule');
-                return _context7.abrupt("return");
+                return _context6.abrupt("return");
 
               case 3:
-                _context7.prev = 3;
-                _context7.next = 6;
+                _context6.prev = 3;
+                _context6.next = 6;
                 return this.$axios.post('entry/log_match/reset_schedule', {
                   division_id: this.filterDivisionId
                 });
@@ -5982,21 +5939,21 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
               case 6:
                 this.filterData(this.filterDivisionId);
                 this.$noty.success('Success Reset Schedule');
-                _context7.next = 14;
+                _context6.next = 14;
                 break;
 
               case 10:
-                _context7.prev = 10;
-                _context7.t0 = _context7["catch"](3);
-                console.log(_context7.t0.response);
+                _context6.prev = 10;
+                _context6.t0 = _context6["catch"](3);
+                console.log(_context6.t0.response);
                 this.$noty.error('Failed Reset Schedule');
 
               case 14:
               case "end":
-                return _context7.stop();
+                return _context6.stop();
             }
           }
-        }, _callee7, this, [[3, 10]]);
+        }, _callee6, this, [[3, 10]]);
       }));
 
       function resetSchedule() {
@@ -6008,22 +5965,22 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     generatePlayer: function () {
       var _generatePlayer = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context8.prev = _context8.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
                 if (!(this.filterDivisionId == null)) {
-                  _context8.next = 3;
+                  _context7.next = 3;
                   break;
                 }
 
                 this.$noty.warning('Select division first before generate player');
-                return _context8.abrupt("return");
+                return _context7.abrupt("return");
 
               case 3:
-                _context8.prev = 3;
-                _context8.next = 6;
+                _context7.prev = 3;
+                _context7.next = 6;
                 return this.$axios.post('entry/log_match/generate_player', {
                   division_id: this.filterDivisionId,
                   match_system: this.selectedMatchSystem
@@ -6032,21 +5989,21 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
               case 6:
                 this.filterData(this.filterDivisionId);
                 this.$noty.success('Success Generate Player');
-                _context8.next = 14;
+                _context7.next = 14;
                 break;
 
               case 10:
-                _context8.prev = 10;
-                _context8.t0 = _context8["catch"](3);
-                console.log(_context8.t0.response);
-                this.$noty.error('Failed Generate Player. ' + _context8.t0.response.data.message);
+                _context7.prev = 10;
+                _context7.t0 = _context7["catch"](3);
+                console.log(_context7.t0.response);
+                this.$noty.error('Failed Generate Player. ' + _context7.t0.response.data.message);
 
               case 14:
               case "end":
-                return _context8.stop();
+                return _context7.stop();
             }
           }
-        }, _callee8, this, [[3, 10]]);
+        }, _callee7, this, [[3, 10]]);
       }));
 
       function generatePlayer() {
@@ -6058,22 +6015,22 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     resetPlayer: function () {
       var _resetPlayer = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
           while (1) {
-            switch (_context9.prev = _context9.next) {
+            switch (_context8.prev = _context8.next) {
               case 0:
                 if (!(this.filterDivisionId == null)) {
-                  _context9.next = 3;
+                  _context8.next = 3;
                   break;
                 }
 
                 this.$noty.warning('Select division first before reset player');
-                return _context9.abrupt("return");
+                return _context8.abrupt("return");
 
               case 3:
-                _context9.prev = 3;
-                _context9.next = 6;
+                _context8.prev = 3;
+                _context8.next = 6;
                 return this.$axios.post('entry/log_match/reset_player', {
                   division_id: this.filterDivisionId
                 });
@@ -6082,21 +6039,21 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 this.filterData(this.filterDivisionId);
                 this.lockMatchTemporary = false;
                 this.$noty.success('Success Reset Player');
-                _context9.next = 15;
+                _context8.next = 15;
                 break;
 
               case 11:
-                _context9.prev = 11;
-                _context9.t0 = _context9["catch"](3);
-                console.log(_context9.t0.response);
+                _context8.prev = 11;
+                _context8.t0 = _context8["catch"](3);
+                console.log(_context8.t0.response);
                 this.$noty.error('Failed Reset Player');
 
               case 15:
               case "end":
-                return _context9.stop();
+                return _context8.stop();
             }
           }
-        }, _callee9, this, [[3, 11]]);
+        }, _callee8, this, [[3, 11]]);
       }));
 
       function resetPlayer() {
@@ -6108,14 +6065,14 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     startMatch: function () {
       var _startMatch = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
           while (1) {
-            switch (_context10.prev = _context10.next) {
+            switch (_context9.prev = _context9.next) {
               case 0:
                 this.lockMatchTemporary = true;
-                _context10.prev = 1;
-                _context10.next = 4;
+                _context9.prev = 1;
+                _context9.next = 4;
                 return this.$axios.post('entry/log_match/start_match', {
                   division_id: this.filterDivisionId
                 });
@@ -6123,21 +6080,21 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
               case 4:
                 this.filterData(this.filterDivisionId);
                 this.$noty.success('Success Start Match');
-                _context10.next = 12;
+                _context9.next = 12;
                 break;
 
               case 8:
-                _context10.prev = 8;
-                _context10.t0 = _context10["catch"](1);
-                console.log(_context10.t0.response);
-                this.$noty.error('Failed Start Match. ' + _context10.t0.response.data.message);
+                _context9.prev = 8;
+                _context9.t0 = _context9["catch"](1);
+                console.log(_context9.t0.response);
+                this.$noty.error('Failed Start Match. ' + _context9.t0.response.data.message);
 
               case 12:
               case "end":
-                return _context10.stop();
+                return _context9.stop();
             }
           }
-        }, _callee10, this, [[1, 8]]);
+        }, _callee9, this, [[1, 8]]);
       }));
 
       function startMatch() {
@@ -8726,6 +8683,22 @@ var timeoutDebounce = null;
         };
       }
     },
+    confirmSaveAchievement: function confirmSaveAchievement(item) {
+      var _this4 = this;
+
+      this.$bvModal.msgBoxConfirm('Please confirm that you want save achievement to this player', {
+        title: 'Save Achievement',
+        size: 'md',
+        okVariant: 'success',
+        centered: true
+      }).then(function (value) {
+        if (value) {
+          _this4.saveAchievement(item);
+        }
+      })["catch"](function (err) {
+        console.log('Error ', err);
+      });
+    },
     saveAchievement: function () {
       var _saveAchievement = _asyncToGenerator(
       /*#__PURE__*/
@@ -8774,7 +8747,6 @@ var timeoutDebounce = null;
     }()
   },
   created: function created() {
-    // this.getAllPlayerDivisions();
     // auto pilih division yang tersimpan di session
     if (this.divisionId) {
       this.filterDivisionId = this.divisionId;
@@ -11239,56 +11211,53 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                console.log(this.form.year);
-                console.log(new Date().getFullYear());
-
                 if (!(this.form.year > new Date().getFullYear() || this.form.year > 2100)) {
-                  _context3.next = 5;
+                  _context3.next = 3;
                   break;
                 }
 
                 this.$noty.error('Invalid year');
                 return _context3.abrupt("return");
 
-              case 5:
+              case 3:
                 if (!(this.form.month < 1 || this.form.month > 12)) {
-                  _context3.next = 8;
+                  _context3.next = 6;
                   break;
                 }
 
                 this.$noty.error('Invalid month');
                 return _context3.abrupt("return");
 
-              case 8:
+              case 6:
                 if (!(this.form.regular_time < 1 || this.form.regular_time > 20)) {
-                  _context3.next = 11;
+                  _context3.next = 9;
                   break;
                 }
 
                 this.$noty.error('Invalid regular time');
                 return _context3.abrupt("return");
 
-              case 11:
+              case 9:
                 if (!(this.form.semifinal_time < 1 || this.form.semifinal_time > 20)) {
-                  _context3.next = 14;
+                  _context3.next = 12;
                   break;
                 }
 
                 this.$noty.error('Invalid semifinal time');
                 return _context3.abrupt("return");
 
-              case 14:
+              case 12:
                 if (!(this.form.final_time < 1 || this.form.final_time > 20)) {
-                  _context3.next = 17;
+                  _context3.next = 15;
                   break;
                 }
 
                 this.$noty.error('Invalid final time');
                 return _context3.abrupt("return");
 
-              case 17:
-                _context3.prev = 17;
-                _context3.next = 20;
+              case 15:
+                _context3.prev = 15;
+                _context3.next = 18;
                 return this.$axios.post('setting/update', {
                   year: this.form.year,
                   month: this.form.month,
@@ -11298,25 +11267,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   final_time: this.form.final_time
                 });
 
-              case 20:
+              case 18:
                 this.$noty.success('Success Update Data');
                 this.getSetting();
-                _context3.next = 29;
+                _context3.next = 27;
                 break;
 
-              case 24:
-                _context3.prev = 24;
-                _context3.t0 = _context3["catch"](17);
+              case 22:
+                _context3.prev = 22;
+                _context3.t0 = _context3["catch"](15);
                 console.log(_context3.t0.response);
                 this.errorValidation = _context3.t0.response.data.message;
                 this.$noty.error('Failed Update Data');
 
-              case 29:
+              case 27:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, this, [[17, 24]]);
+        }, _callee3, this, [[15, 22]]);
       }));
 
       function updateData() {
@@ -48029,7 +47998,26 @@ var render = function() {
       _c("div", { staticClass: "row justify-content-center" }, [
         _c("div", { staticClass: "col" }, [
           _c("div", { staticClass: "card card-default" }, [
-            _vm._m(0),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "card-header d-flex justify-content-between align-items-center"
+              },
+              [
+                _c(
+                  "span",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.overrideLockMatch = !_vm.overrideLockMatch
+                      }
+                    }
+                  },
+                  [_vm._v("Log Match")]
+                )
+              ]
+            ),
             _vm._v(" "),
             _c("div", { staticClass: "mx-3 mt-3" }, [
               _c("div", { staticClass: "row" }, [
@@ -48049,7 +48037,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-8" }, [
                   _c("div", { staticClass: "input-group input-group-sm" }, [
-                    _vm._m(1),
+                    _vm._m(0),
                     _vm._v(" "),
                     _c(
                       "select",
@@ -48116,7 +48104,7 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "mt-3" }, [
                 _c("div", { staticClass: "input-group input-group-sm" }, [
-                  _vm._m(2),
+                  _vm._m(1),
                   _vm._v(" "),
                   _c(
                     "select",
@@ -48209,7 +48197,7 @@ var render = function() {
               _vm.filterDivisionId != null &&
               _vm.selectedMatchSystem == "elimination"
                 ? _c("div", [
-                    _vm._m(3),
+                    _vm._m(2),
                     _vm._v(" "),
                     _c(
                       "button",
@@ -48278,448 +48266,466 @@ var render = function() {
                 : _vm._e()
             ]),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "card-body" },
-              [
-                _c(
+            _vm.isBusy
+              ? _c(
                   "div",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.isBusy,
-                        expression: "isBusy"
-                      }
-                    ],
-                    staticClass: "my-3 text-center"
-                  },
+                  { staticClass: "m-5 text-center" },
                   [
                     _c("b-spinner", {
                       attrs: { variant: "primary", label: "Spinning" }
                     })
                   ],
                   1
-                ),
-                _vm._v(" "),
-                _c(
+                )
+              : _c(
                   "div",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.logMatchs.length == 0 && !_vm.isBusy,
-                        expression: "logMatchs.length == 0 && !isBusy"
-                      }
-                    ],
-                    staticClass: "my-3 text-center"
-                  },
+                  { staticClass: "card-body" },
                   [
-                    _vm._v(
-                      _vm._s(
-                        _vm.filterDivisionId == null
-                          ? "Select division to view log match"
-                          : "Empty Data"
-                      )
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _vm.filterDivisionId && _vm.logMatchs.length != 0
-                  ? _c("div", { staticClass: "alert alert-info" }, [
-                      _vm._v(
-                        "Match Finished : " + _vm._s(_vm.countMatchFinished)
-                      )
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.selectedMatchSystem == "elimination"
-                  ? _c(
+                    _c(
                       "div",
-                      { staticClass: "mb-4" },
-                      [
-                        _c("Bracket", {
-                          attrs: { rounds: _vm.matchRounds },
-                          scopedSlots: _vm._u(
-                            [
-                              {
-                                key: "player",
-                                fn: function(player) {
-                                  return [
-                                    _vm._v(
-                                      "\n                " +
-                                        _vm._s(player.player.name) +
-                                        "\n              "
-                                    )
-                                  ]
-                                }
-                              }
-                            ],
-                            null,
-                            false,
-                            487926107
-                          )
-                        }),
-                        _vm._v(" "),
-                        _vm.thirdPlaceRound.length != 0
-                          ? _c("span", [_vm._v("3rd place")])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _c("Bracket", {
-                          attrs: { rounds: _vm.thirdPlaceRound },
-                          scopedSlots: _vm._u(
-                            [
-                              {
-                                key: "player",
-                                fn: function(player) {
-                                  return [
-                                    _vm._v(
-                                      "\n                " +
-                                        _vm._s(player.player.name) +
-                                        "\n              "
-                                    )
-                                  ]
-                                }
-                              }
-                            ],
-                            null,
-                            false,
-                            487926107
-                          )
-                        })
-                      ],
-                      1
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.logMatchs.length != 0 && !_vm.isBusy
-                  ? _c("b-table", {
-                      attrs: {
-                        striped: "",
-                        hover: "",
-                        responsive: "",
-                        items: _vm.logMatchs,
-                        fields: _vm.fieldLogMatch,
-                        "tbody-tr-class": _vm.rowClass
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.logMatchs.length == 0 && !_vm.isBusy,
+                            expression: "logMatchs.length == 0 && !isBusy"
+                          }
+                        ],
+                        staticClass: "my-3 text-center"
                       },
-                      scopedSlots: _vm._u(
-                        [
-                          {
-                            key: "cell(division)",
-                            fn: function(data) {
-                              return [
-                                _c("div", { staticClass: "min-width-7" }, [
-                                  _c("span", [
-                                    _vm._v(_vm._s(data.item.division))
-                                  ]),
-                                  _c("br")
-                                ])
-                              ]
-                            }
-                          },
-                          {
-                            key: "cell(pool_number)",
-                            fn: function(data) {
-                              return [
-                                data.item.match_index == 1 &&
-                                data.item.match_number == 1 &&
-                                !data.item.pool_number
-                                  ? _c(
-                                      "span",
-                                      { staticClass: "badge badge-primary" },
-                                      [
-                                        _vm._v(
-                                          "\n                FINAL\n              "
-                                        )
-                                      ]
-                                    )
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                data.item.match_index == 1 &&
-                                data.item.match_number == 2 &&
-                                !data.item.pool_number
-                                  ? _c(
-                                      "span",
-                                      { staticClass: "badge badge-primary" },
-                                      [
-                                        _vm._v(
-                                          "\n                3rd\n              "
-                                        )
-                                      ]
-                                    )
-                                  : _c(
-                                      "span",
-                                      {
-                                        staticClass: "badge",
-                                        class: [
-                                          data.item.pool_number
-                                            ? data.item.pool_number == "A"
-                                              ? "badge-dark"
-                                              : "badge-danger"
-                                            : null
-                                        ]
-                                      },
-                                      [
+                      [
+                        _vm._v(
+                          _vm._s(
+                            _vm.filterDivisionId == null
+                              ? "Select division to view log match"
+                              : "Empty Data"
+                          )
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _vm.filterDivisionId && _vm.logMatchs.length != 0
+                      ? _c("div", { staticClass: "alert alert-info" }, [
+                          _vm._v(
+                            "Match Finished : " + _vm._s(_vm.countMatchFinished)
+                          )
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.selectedMatchSystem == "elimination"
+                      ? _c(
+                          "div",
+                          { staticClass: "mb-4" },
+                          [
+                            _c("Bracket", {
+                              attrs: { rounds: _vm.matchRounds },
+                              scopedSlots: _vm._u(
+                                [
+                                  {
+                                    key: "player",
+                                    fn: function(player) {
+                                      return [
                                         _vm._v(
                                           "\n                " +
-                                            _vm._s(
-                                              data.item.pool_number != null
-                                                ? data.item.pool_number
-                                                : ""
-                                            ) +
+                                            _vm._s(player.player.name) +
                                             "\n              "
                                         )
                                       ]
-                                    )
-                              ]
-                            }
-                          },
-                          {
-                            key: "cell(player1_name)",
-                            fn: function(data) {
-                              return [
-                                !data.item.player1_name &&
-                                data.item.match_index == 1 &&
-                                data.item.match_system == "elimination" &&
-                                data.item.winner != -1 &&
-                                (data.item.pd1_id || data.item.pd2_id)
-                                  ? _c(
-                                      "div",
-                                      {
-                                        staticClass: "text-danger font-italic"
-                                      },
-                                      [
+                                    }
+                                  }
+                                ],
+                                null,
+                                false,
+                                487926107
+                              )
+                            }),
+                            _vm._v(" "),
+                            _vm.thirdPlaceRound.length != 0
+                              ? _c("span", [_vm._v("3rd place")])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c("Bracket", {
+                              attrs: { rounds: _vm.thirdPlaceRound },
+                              scopedSlots: _vm._u(
+                                [
+                                  {
+                                    key: "player",
+                                    fn: function(player) {
+                                      return [
                                         _vm._v(
-                                          "Click Start Match to skip 'BYE'"
+                                          "\n                " +
+                                            _vm._s(player.player.name) +
+                                            "\n              "
                                         )
                                       ]
-                                    )
-                                  : _c(
-                                      "div",
-                                      {
-                                        staticClass: "min-width-10",
-                                        class: _vm.winnerMark(data.item, 1)
-                                      },
-                                      [
-                                        _c(
-                                          "span",
-                                          { staticClass: "font-weight-bold" },
-                                          [
-                                            _vm._v(
-                                              _vm._s(data.item.player1_name)
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        data.item.player1_last_achievement
-                                          ? _c(
-                                              "span",
-                                              {
-                                                staticClass:
-                                                  "badge badge-secondary",
-                                                attrs: {
-                                                  title: _vm.tooltipAchievement(
-                                                    data.item
-                                                      .player1_last_achievement
-                                                  )
-                                                }
-                                              },
-                                              [
-                                                _vm._v(
-                                                  "\n                  " +
-                                                    _vm._s(
-                                                      data.item
-                                                        .player1_last_achievement
-                                                        .winner_position
-                                                    ) +
-                                                    "\n                "
-                                                )
-                                              ]
-                                            )
-                                          : _vm._e(),
-                                        _vm._v(" "),
-                                        _c("br"),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "small text-muted" },
-                                          [
-                                            _vm._v(
-                                              _vm._s(data.item.player1_club)
-                                            )
-                                          ]
-                                        )
-                                      ]
-                                    )
-                              ]
-                            }
+                                    }
+                                  }
+                                ],
+                                null,
+                                false,
+                                487926107
+                              )
+                            })
+                          ],
+                          1
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.logMatchs.length != 0 && !_vm.isBusy
+                      ? _c("b-table", {
+                          attrs: {
+                            striped: "",
+                            hover: "",
+                            responsive: "",
+                            items: _vm.logMatchs,
+                            fields: _vm.fieldLogMatch,
+                            "tbody-tr-class": _vm.rowClass
                           },
-                          {
-                            key: "cell(player2_name)",
-                            fn: function(data) {
-                              return [
-                                !data.item.player2_name &&
-                                data.item.match_index == 1 &&
-                                data.item.match_system == "elimination" &&
-                                data.item.winner != -1 &&
-                                (data.item.pd1_id || data.item.pd2_id)
-                                  ? _c(
-                                      "div",
-                                      {
-                                        staticClass: "text-danger font-italic"
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Click Start match to skip 'BYE'"
-                                        )
-                                      ]
-                                    )
-                                  : _c(
-                                      "div",
-                                      {
-                                        staticClass: "min-width-10",
-                                        class: _vm.winnerMark(data.item, 2)
-                                      },
-                                      [
-                                        _c(
-                                          "span",
-                                          { staticClass: "font-weight-bold" },
-                                          [
-                                            _vm._v(
-                                              _vm._s(data.item.player2_name)
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        data.item.player2_last_achievement
-                                          ? _c(
-                                              "span",
-                                              {
-                                                staticClass:
-                                                  "badge badge-secondary",
-                                                attrs: {
-                                                  title: _vm.tooltipAchievement(
-                                                    data.item
-                                                      .player2_last_achievement
-                                                  )
-                                                }
-                                              },
-                                              [
-                                                _vm._v(
-                                                  "\n                  " +
-                                                    _vm._s(
-                                                      data.item
-                                                        .player2_last_achievement
-                                                        .winner_position
-                                                    ) +
-                                                    "\n                "
-                                                )
-                                              ]
-                                            )
-                                          : _vm._e(),
-                                        _vm._v(" "),
-                                        _c("br"),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "small text-muted" },
-                                          [
-                                            _vm._v(
-                                              _vm._s(data.item.player2_club)
-                                            )
-                                          ]
-                                        )
-                                      ]
-                                    )
-                              ]
-                            }
-                          },
-                          {
-                            key: "cell(vs)",
-                            fn: function(data) {
-                              return [
-                                _c(
-                                  "span",
-                                  { staticClass: "h5 font-weight-bold" },
-                                  [_vm._v("VS")]
-                                )
-                              ]
-                            }
-                          },
-                          {
-                            key: "cell(action)",
-                            fn: function(data) {
-                              return [
-                                data.item.winner != -1
-                                  ? _c("div", { staticClass: "min-width-10" }, [
-                                      _c(
-                                        "button",
-                                        {
-                                          staticClass: "btn btn-sm btn-primary",
-                                          attrs: {
-                                            disabled:
-                                              (data.item.pd1_id == null ||
-                                                data.item.pd2_id == null) &&
-                                              data.item.winner == -1
-                                          },
-                                          on: {
-                                            click: function($event) {
-                                              $event.preventDefault()
-                                              return _vm.goToDetail(data.item)
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c("i", {
-                                            staticClass: "fa fa-eye fa-fw"
-                                          })
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "button",
-                                        {
-                                          staticClass: "btn btn-sm btn-warning",
-                                          attrs: {
-                                            title: _vm.lockMatch
-                                              ? "Disabled when match has been started"
-                                              : "Edit player matching",
-                                            disabled: _vm.lockMatch
-                                          },
-                                          on: {
-                                            click: function($event) {
-                                              $event.preventDefault()
-                                              return _vm.loadData(data.item)
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c("i", {
-                                            staticClass: "fa fa-edit fa-fw"
-                                          })
-                                        ]
-                                      )
+                          scopedSlots: _vm._u(
+                            [
+                              {
+                                key: "cell(division)",
+                                fn: function(data) {
+                                  return [
+                                    _c("div", { staticClass: "min-width-7" }, [
+                                      _c("span", [
+                                        _vm._v(_vm._s(data.item.division))
+                                      ]),
+                                      _c("br")
                                     ])
-                                  : _c(
-                                      "div",
-                                      { staticClass: "text-left text-danger" },
-                                      [_vm._v("BYE")]
+                                  ]
+                                }
+                              },
+                              {
+                                key: "cell(pool_number)",
+                                fn: function(data) {
+                                  return [
+                                    data.item.match_index == 1 &&
+                                    data.item.match_number == 1 &&
+                                    !data.item.pool_number
+                                      ? _c(
+                                          "span",
+                                          {
+                                            staticClass: "badge badge-primary"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                FINAL\n              "
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    data.item.match_index == 1 &&
+                                    data.item.match_number == 2 &&
+                                    !data.item.pool_number
+                                      ? _c(
+                                          "span",
+                                          {
+                                            staticClass: "badge badge-primary"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                3rd\n              "
+                                            )
+                                          ]
+                                        )
+                                      : _c(
+                                          "span",
+                                          {
+                                            staticClass: "badge",
+                                            class: [
+                                              data.item.pool_number
+                                                ? data.item.pool_number == "A"
+                                                  ? "badge-dark"
+                                                  : "badge-danger"
+                                                : null
+                                            ]
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                " +
+                                                _vm._s(
+                                                  data.item.pool_number != null
+                                                    ? data.item.pool_number
+                                                    : ""
+                                                ) +
+                                                "\n              "
+                                            )
+                                          ]
+                                        )
+                                  ]
+                                }
+                              },
+                              {
+                                key: "cell(player1_name)",
+                                fn: function(data) {
+                                  return [
+                                    !data.item.player1_name &&
+                                    data.item.match_index == 1 &&
+                                    data.item.match_system == "elimination" &&
+                                    data.item.winner != -1 &&
+                                    (data.item.pd1_id || data.item.pd2_id)
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "text-danger font-italic"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "Click Start Match to skip 'BYE'"
+                                            )
+                                          ]
+                                        )
+                                      : _c(
+                                          "div",
+                                          {
+                                            staticClass: "min-width-10",
+                                            class: _vm.winnerMark(data.item, 1)
+                                          },
+                                          [
+                                            _c(
+                                              "span",
+                                              {
+                                                staticClass: "font-weight-bold"
+                                              },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(data.item.player1_name)
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            data.item.player1_last_achievement
+                                              ? _c(
+                                                  "span",
+                                                  {
+                                                    staticClass:
+                                                      "badge badge-secondary",
+                                                    attrs: {
+                                                      title: _vm.tooltipAchievement(
+                                                        data.item
+                                                          .player1_last_achievement
+                                                      )
+                                                    }
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                  " +
+                                                        _vm._s(
+                                                          data.item
+                                                            .player1_last_achievement
+                                                            .winner_position
+                                                        ) +
+                                                        "\n                "
+                                                    )
+                                                  ]
+                                                )
+                                              : _vm._e(),
+                                            _vm._v(" "),
+                                            _c("br"),
+                                            _vm._v(" "),
+                                            _c(
+                                              "span",
+                                              {
+                                                staticClass: "small text-muted"
+                                              },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(data.item.player1_club)
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        )
+                                  ]
+                                }
+                              },
+                              {
+                                key: "cell(player2_name)",
+                                fn: function(data) {
+                                  return [
+                                    !data.item.player2_name &&
+                                    data.item.match_index == 1 &&
+                                    data.item.match_system == "elimination" &&
+                                    data.item.winner != -1 &&
+                                    (data.item.pd1_id || data.item.pd2_id)
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "text-danger font-italic"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "Click Start match to skip 'BYE'"
+                                            )
+                                          ]
+                                        )
+                                      : _c(
+                                          "div",
+                                          {
+                                            staticClass: "min-width-10",
+                                            class: _vm.winnerMark(data.item, 2)
+                                          },
+                                          [
+                                            _c(
+                                              "span",
+                                              {
+                                                staticClass: "font-weight-bold"
+                                              },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(data.item.player2_name)
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            data.item.player2_last_achievement
+                                              ? _c(
+                                                  "span",
+                                                  {
+                                                    staticClass:
+                                                      "badge badge-secondary",
+                                                    attrs: {
+                                                      title: _vm.tooltipAchievement(
+                                                        data.item
+                                                          .player2_last_achievement
+                                                      )
+                                                    }
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                  " +
+                                                        _vm._s(
+                                                          data.item
+                                                            .player2_last_achievement
+                                                            .winner_position
+                                                        ) +
+                                                        "\n                "
+                                                    )
+                                                  ]
+                                                )
+                                              : _vm._e(),
+                                            _vm._v(" "),
+                                            _c("br"),
+                                            _vm._v(" "),
+                                            _c(
+                                              "span",
+                                              {
+                                                staticClass: "small text-muted"
+                                              },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(data.item.player2_club)
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        )
+                                  ]
+                                }
+                              },
+                              {
+                                key: "cell(vs)",
+                                fn: function(data) {
+                                  return [
+                                    _c(
+                                      "span",
+                                      { staticClass: "h5 font-weight-bold" },
+                                      [_vm._v("VS")]
                                     )
-                              ]
-                            }
-                          }
-                        ],
-                        null,
-                        false,
-                        2464616182
-                      )
-                    })
-                  : _vm._e()
-              ],
-              1
-            )
+                                  ]
+                                }
+                              },
+                              {
+                                key: "cell(action)",
+                                fn: function(data) {
+                                  return [
+                                    data.item.winner != -1
+                                      ? _c(
+                                          "div",
+                                          { staticClass: "min-width-10" },
+                                          [
+                                            _c(
+                                              "button",
+                                              {
+                                                staticClass:
+                                                  "btn btn-sm btn-primary",
+                                                attrs: {
+                                                  disabled:
+                                                    (data.item.pd1_id == null ||
+                                                      data.item.pd2_id ==
+                                                        null) &&
+                                                    data.item.winner == -1
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    $event.preventDefault()
+                                                    return _vm.goToDetail(
+                                                      data.item
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c("i", {
+                                                  staticClass: "fa fa-eye fa-fw"
+                                                })
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "button",
+                                              {
+                                                staticClass:
+                                                  "btn btn-sm btn-warning",
+                                                attrs: {
+                                                  title: _vm.lockMatch
+                                                    ? "Disabled when match has been started"
+                                                    : "Edit player matching",
+                                                  disabled: _vm.lockMatch
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    $event.preventDefault()
+                                                    return _vm.loadData(
+                                                      data.item
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c("i", {
+                                                  staticClass:
+                                                    "fa fa-edit fa-fw"
+                                                })
+                                              ]
+                                            )
+                                          ]
+                                        )
+                                      : _c(
+                                          "div",
+                                          {
+                                            staticClass: "text-left text-danger"
+                                          },
+                                          [_vm._v("BYE")]
+                                        )
+                                  ]
+                                }
+                              }
+                            ],
+                            null,
+                            false,
+                            2464616182
+                          )
+                        })
+                      : _vm._e()
+                  ],
+                  1
+                )
           ])
         ])
       ]),
@@ -48985,19 +48991,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "card-header d-flex justify-content-between align-items-center"
-      },
-      [_c("span", [_vm._v("Log Match")])]
-    )
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -51203,7 +51196,7 @@ var render = function() {
                                             },
                                             on: {
                                               click: function($event) {
-                                                return _vm.saveAchievement(
+                                                return _vm.confirmSaveAchievement(
                                                   data.item
                                                 )
                                               }
@@ -51274,7 +51267,7 @@ var render = function() {
                         ],
                         null,
                         false,
-                        1188322414
+                        2437210332
                       )
                     })
                   : _vm._e()

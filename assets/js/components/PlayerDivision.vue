@@ -187,7 +187,7 @@
                     v-if="data.item.division_winner"
                     title="Save achievement to player"
                     class="btn btn-success btn-sm"
-                    @click="saveAchievement(data.item)"
+                    @click="confirmSaveAchievement(data.item)"
                   ><i class="fa fa-save fa-fw"></i></button>
                   <button
                     :title="lockMatch? 'Disabled when match has been started' : 'Edit player'"
@@ -716,6 +716,23 @@ export default {
       }
     },
 
+    confirmSaveAchievement(item) {
+      this.$bvModal.msgBoxConfirm('Please confirm that you want save achievement to this player', {
+        title: 'Save Achievement',
+        size: 'md',
+        okVariant: 'success',
+        centered: true
+      })
+        .then(value => {
+          if (value) {
+            this.saveAchievement(item);
+          }
+        })
+        .catch(err => {
+          console.log('Error ', err);
+        });
+    },
+
     async saveAchievement(item) {
       try {
         await this.$axios.post('master/achievement/insert', {
@@ -737,8 +754,6 @@ export default {
   },
 
   created() {
-    // this.getAllPlayerDivisions();
-
     // auto pilih division yang tersimpan di session
     if (this.divisionId) {
       this.filterDivisionId = this.divisionId;

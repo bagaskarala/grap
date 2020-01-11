@@ -167,8 +167,6 @@ export default {
     },
 
     async updateData() {
-      console.log(this.form.year);
-      console.log(new Date().getFullYear());
       if (this.form.year > new Date().getFullYear() || this.form.year > 2100) {
         this.$noty.error('Invalid year');
         return;
