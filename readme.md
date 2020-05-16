@@ -29,7 +29,7 @@ Grappling Match System
 - Visual Studio Code
 
 ### Formatting
-- Install **'Format HTML in PHP'**, **'phpfmt'**, **'eslint'**, **'vetur'** plugin from vs code marketplace
+- Install **'Format HTML in PHP'**, **'PHP intelephense'**, **'eslint'**, **'vetur'** plugin from vs code marketplace
 - Add config below to setting.json in VS code
 
 ```json
@@ -46,42 +46,16 @@ Grappling Match System
     "html.format.indentInnerHtml": false,
     "html.format.maxPreserveNewLines": null,
     "html.format.preserveNewLines": true,
-    "html.format.wrapLineLength": 120,
     "html.format.wrapAttributes": "force-expand-multiline",
     // PHP formatting (phpfmt)
-    "intelephense.format.enable": false,
-    "phpfmt.passes": [
-        "PSR2KeywordsLowerCase",
-        "PSR2LnAfterNamespace",
-        "PSR2CurlyOpenNextLine",
-        "PSR2ModifierVisibilityStaticOrder",
-        "PSR2SingleEmptyLineAndStripClosingTag",
-        "ReindentSwitchBlocks"
-    ],
-    "phpfmt.exclude": [
-        "ReindentComments",
-        "StripNewlineWithinClassBody"
-    ],
-    "phpfmt.enable_auto_align": true,
+    "[php]": {
+        "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
+        "editor.formatOnSave": true
+    },
     // Javascript-vue formatting (Vetur)
-    "eslint.autoFixOnSave": true,
-    "eslint.validate": [
-        {
-            "language": "vue",
-            "autoFix": true
-        },
-        {
-            "language": "html",
-            "autoFix": true
-        },
-        {
-            "language": "javascript",
-            "autoFix": true
-        }
-    ],
     "javascript.preferences.quoteStyle": "single",
     "vetur.experimental.templateInterpolationService": false,
-    "vetur.format.defaultFormatter.js": "vscode-typescript",
     "vetur.validation.template": false,
+    "vetur.format.defaultFormatter.js": "vscode-typescript",
     "vetur.format.defaultFormatter.html": "js-beautify-html",
 ```
