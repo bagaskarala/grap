@@ -4,7 +4,7 @@
       <div class="col">
         <div class="card card-default">
           <div class="card-header d-flex justify-content-between align-items-center">
-            <span>Player List</span>
+            <span>Player List <span class="badge badge-secondary">{{players.length}}</span></span>
             <!-- Button trigger modal -->
             <button
               type="button"
@@ -621,6 +621,7 @@ export default {
         this.$noty.error('Failed Fetch Division');
       }
     },
+
     async getPlayerAchivements(playerId) {
       try {
         const achievements = await this.$axios.get(`master/achievement/filter/${playerId}`);

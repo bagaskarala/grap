@@ -4,7 +4,7 @@
       <div class="col">
         <div class="card card-default">
           <div class="card-header d-flex justify-content-between align-items-center">
-            <span @click="overrideLockMatch = !overrideLockMatch">Log Match</span>
+            <span @click="overrideLockMatch = !overrideLockMatch">Log Match <span class="badge badge-secondary">{{logMatchs.length}}</span></span>
           </div>
           <div class="mx-3 mt-3">
             <div class="row">

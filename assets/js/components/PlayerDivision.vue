@@ -4,7 +4,7 @@
       <div class="col">
         <div class="card card-default">
           <div class="card-header d-flex justify-content-between align-items-center">
-            <span>Player Division List</span>
+            <span>Player Division List <span class="badge badge-secondary">{{playerDivisions.length}}</span></span>
           </div>
 
           <div class="mx-3 mt-3">
@@ -229,7 +229,7 @@
             id="division_id"
             class="form-control"
             v-model.number="form.division_id"
-            :disabled="modalState == 'update'"
+            disabled
           >
             <option :value="null">Select Division</option>
             <option
@@ -269,6 +269,7 @@
             >
           </div>
           <select
+            v-if="modalState == 'update'"
             name="player_id"
             id="player_id"
             class="form-control"
@@ -282,6 +283,15 @@
               :value="item.id"
             >{{item.name}} ({{item.club}}) {{item.weight}}kg</option>
           </select>
+          <vSelect
+            v-if="modalState == 'add'"
+            v-model.number="form.player_arr"
+            class="custom-v-select"
+            :options="playerOptions"
+            label="displayName"
+            multiple
+            placeholder="Select multiple players"
+          ></vSelect>
         </div>
         <div class="form-group">
           <label for="pool_number">Pool Number</label>
@@ -330,7 +340,10 @@
 import { parseWinner } from '../shared';
 import CitySelector from './CitySelector';
 import YearSelector from './YearSelector';
+import vSelect from 'vue-select';
+import 'vue-select/dist/vue-select.css';
 var timeoutDebounce = null;
+
 export default {
   name: 'PlayerDivision',
   props: {
@@ -340,7 +353,7 @@ export default {
     city_id: Number
   },
   components: {
-    CitySelector, YearSelector
+    CitySelector, YearSelector, vSelect
   },
   data() {
     return {
@@ -355,6 +368,7 @@ export default {
         division_id: null,
         name: null,
         player_id: null,
+        player_arr: [],
         height: null,
         weight: null,
         achievement: null,
@@ -398,6 +412,15 @@ export default {
 
     isPoolGenerated() {
       return this.playerDivisions.find(i => !!i.pool_number) ? true : false;
+    },
+
+    playerOptions() {
+      return this.players.map(player => {
+        return {
+          ...player,
+          displayName: `${player.name} (${player.club}) ${player.weight} kg`
+        };
+      });
     }
   },
 
@@ -461,11 +484,14 @@ export default {
 
     async insertData() {
       try {
-        await this.$axios.post('entry/player_division/insert', {
+        const response = await this.$axios.post('entry/player_division/insert', {
           division_id: this.form.division_id,
           player_id: this.form.player_id,
-          pool_number: this.form.pool_number
+          pool_number: this.form.pool_number,
+          player_arr: this.form.player_arr
         });
+
+        console.log(response);
 
         // tampilkan data setelah aksi
         // menuju tampilan divisi yang telah terinput
@@ -694,6 +720,7 @@ export default {
       this.form.division_id = null;
       this.form.player_id = null;
       this.form.pool_number = null;
+      this.form.player_arr = [];
     },
 
     countPlayerPerPool(pool) {
@@ -825,5 +852,24 @@ export default {
 }
 .min-width-double {
   min-width: 5rem;
+}
+
+.custom-v-select .vs__dropdown-toggle,
+.custom-v-select-multiple .vs__dropdown-toggle {
+  min-height: 2.5em;
+}
+
+.v-select-error .vs__dropdown-toggle {
+  border: 1px solid #f86c6b;
+  min-height: 2.5em;
+}
+
+.custom-v-select .vs__search::placeholder {
+  color: #5c6873;
+}
+
+.custom-v-select-multiple .vs__clear,
+.custom-v-select .vs__clear {
+  line-height: 0;
 }
 </style>

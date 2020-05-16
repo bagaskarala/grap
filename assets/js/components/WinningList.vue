@@ -4,7 +4,7 @@
       <div class="col">
         <div class="card card-default">
           <div class="card-header d-flex justify-content-between align-items-center">
-            <span>Winning List</span>
+            <span>Winning List <span class="badge badge-secondary">{{winnings.length}}</span></span>
             <!-- Button trigger modal -->
             <button
               type="button"

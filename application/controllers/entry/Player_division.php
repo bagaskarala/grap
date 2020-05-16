@@ -35,31 +35,68 @@ class Player_division extends MY_Controller
     {
         $request = parse_post_data();
 
-        $data = [
-            'division_id' => $request->division_id,
-            'player_id'   => $request->player_id,
-            'pool_number' => $request->pool_number,
-            'year'        => $this->year,
-            'city_id'     => $this->city_id,
-        ];
+        if (count($request->player_arr) == 0) {
+            // player array validations
+            return $this->send_json_output('No player selected', false, 400);
+        }
+
+        $player_arr_data = [];
+        foreach ($request->player_arr as $player) {
+            // loop only player_id
+            $data = [
+                'player_id'   => $player->id,
+                'division_id' => $request->division_id,
+                'pool_number' => $request->pool_number,
+                'year'        => $this->year,
+                'city_id'     => $this->city_id,
+            ];
+
+            if (!$this->player_division->check_player($data)) {
+                return $this->send_json_output('Some selected players have been added to division', false, 422);
+            }
+
+            $player_arr_data[] = $data;
+        }
+
+        if ($this->player_division->insert_batch($player_arr_data)) {
+            $result = [
+                'status' => true,
+                'data'   => 'Success Insert Player to Division',
+            ];
+        } else {
+            $result = [
+                'status'  => false,
+                'message' => 'Failed Insert Player',
+            ];
+        }
+
+
+
+        // $data = [
+        //     'division_id' => $request->division_id,
+        //     'player_id'   => $request->player_id,
+        //     'pool_number' => $request->pool_number,
+        //     'year'        => $this->year,
+        //     'city_id'     => $this->city_id,
+        // ];
 
         // validasi
-        if ($this->player_division->validate($data) == false) {
-            return $this->send_json_output(validation_errors(), false, 422);
-        } else {
-            if ($this->player_division->check_player($data)) {
-                $this->player_division->insert($data);
-                $result = [
-                    'status' => true,
-                    'data'   => 'Success Insert Player to Division',
-                ];
-            } else {
-                $result = [
-                    'status'  => false,
-                    'message' => 'Selected player has been added to division',
-                ];
-            }
-        }
+        // if ($this->player_division->validate($data) == false) {
+        //     return $this->send_json_output(validation_errors(), false, 422);
+        // } else {
+        //     if ($this->player_division->check_player($data)) {
+        //         $this->player_division->insert($data);
+        //         $result = [
+        //             'status' => true,
+        //             'data'   => 'Success Insert Player to Division',
+        //         ];
+        //     } else {
+        //         $result = [
+        //             'status'  => false,
+        //             'message' => 'Selected player has been added to division',
+        //         ];
+        //     }
+        // }
 
         if ($result['status']) {
             return $this->send_json_output($result['data'], true, 200);

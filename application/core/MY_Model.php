@@ -71,6 +71,12 @@ class MY_Model extends CI_Model
         }
     }
 
+    public function insert_batch($data, $table = "")
+    {
+        $table = $this->checkTable($table);
+        return $this->db->insert_batch($table, $data);
+    }
+
     public function update($data, $where, $table = null)
     {
         $table = $this->checkTable($table);
