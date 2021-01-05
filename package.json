@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "- Clone this repo\r - Import database .sql\r - Set application/config/database.php\r - Run Xampp Apache & Mysql\r - Open browser and enter localhost/grap",
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "bootstrap-vue": "^2.0.4",
     "vue": "^2.6.10",
     "vue-select": "^3.10.3",
